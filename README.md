@@ -35,6 +35,7 @@ python -I tools/split.py <файл.html> src   # розібрати готови
 | `tools/validate.py` | перевіряє всі завдання (має завершитися словом `OK`) |
 | `tools/zno_keycheck.py` | звіряє ключі історії з офіційними аркушами УЦОЯО (`sources/keys`); потрібен pymupdf, запускати простим `python` |
 | `tools/zno2_keycheck.py` | звіряє ключі української, математики й англійської (`src/zno2-bank.json`) з аркушами УЦОЯО в `sources/keys/zno2` (список — `sources/keys/zno2-list.txt`); скани й аркуші без текстового шару прочитані вручну в `sources/keys/zno2/manual.json`; розбіжності пише в `sources/keys/zno2/mismatches.json`; потрібен pymupdf, запускати простим `python` |
+| `tools/zno2_explain_batch.py`, `zno2_explain_merge.py` | розбори до офіційних завдань: `batch` друкує завдання без розбору (предмет, теми, зсув, кількість), `merge` перевіряє файл `{id: текст}` (ключова буква замикає абзац, у «відповідностях» рядок закінчується «— Х.») і зливає його в `src/zno2-explanations.json`; запускати `python -I` |
 | `tools/program_gaps.py` | порівнює картки історії з переліками програми (`sources/program/hist.md`) |
 | `tools/zno_explain_merge.py <файл.json>` | додає розбори завдань історії до `src/history-explanations.json` |
 | `tools/content_math_variants.py` | генерує `src/content/65-math-variants.json`: різні числа у варіантах v2–v5 родин математики |
