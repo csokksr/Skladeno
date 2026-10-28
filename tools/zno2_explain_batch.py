@@ -11,6 +11,7 @@ ex = json.load(open(os.path.join(ROOT, 'src', 'zno2-explanations.json'), encodin
 extra = {}
 L = 'АБВГД'
 seen = set()
+SEEN_PARAS = set()
 
 
 def clean(s):
@@ -30,7 +31,19 @@ print('remaining in', cats, ':', len(todo))
 for q in todo[start:start + count]:
     a = q['answer']
     print('=' * 3, q['id'], q['topicId'], q['source'], '№%s' % q['number'], q['type'])
-    print(clean(q['prompt']))
+    imgs = bool(opts_all := (q.get('options') or [])) and all(not clean(o) for o in opts_all)
+    out = []
+    for para in clean(q['prompt']).split(chr(10)):
+        if len(para) > 160 and para in SEEN_PARAS:
+            if not out or out[-1] != '[текст як вище]':
+                out.append('[текст як вище]')
+            continue
+        if len(para) > 160:
+            SEEN_PARAS.add(para)
+        out.append(para)
+    print(chr(10).join(out))
+    if imgs:
+        print('  [УВАГА: варіанти відповідей — зображення, їх не видно; пропусти]')
     opts = q.get('options') or []
     if q['type'] == 'match':
         left = q.get('left') or []
