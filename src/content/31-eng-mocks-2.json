@@ -1,0 +1,2522 @@
+{
+ "topicQuestions": [
+  {
+   "id": "eng-v6-notice-1",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Watch your step: the floor in the east corridor has just been polished and may be slippery until 3 p.m.",
+   "options": [
+    "A change of venue",
+    "A new rule for members",
+    "A warning about safety",
+    "Registration closes soon",
+    "Help is needed",
+    "A service that is free of charge",
+    "Something has been found",
+    "Tickets are cheaper for a limited time"
+   ],
+   "answer": 2,
+   "explanation": "Ключові слова: watch your step, slippery — попередження про небезпеку. Про правила для членів клубу чи знахідки тут не йдеться.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v6-notices"
+  },
+  {
+   "id": "eng-v6-notice-2",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Early-bird offer: buy your festival pass before 1 June and pay 30% less than the standard price.",
+   "options": [
+    "A change of venue",
+    "A new rule for members",
+    "A warning about safety",
+    "Registration closes soon",
+    "Help is needed",
+    "A service that is free of charge",
+    "Something has been found",
+    "Tickets are cheaper for a limited time"
+   ],
+   "answer": 7,
+   "explanation": "Pay 30% less … before 1 June — знижка діє обмежений час. Це не «Registration closes soon»: квитки можна купити й пізніше, лише дорожче.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v6-notices"
+  },
+  {
+   "id": "eng-v6-notice-3",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "From next month, all gym members must scan their card at the entrance. Paper passes will no longer be accepted.",
+   "options": [
+    "A change of venue",
+    "A new rule for members",
+    "A warning about safety",
+    "Registration closes soon",
+    "Help is needed",
+    "A service that is free of charge",
+    "Something has been found",
+    "Tickets are cheaper for a limited time"
+   ],
+   "answer": 1,
+   "explanation": "All gym members must scan their card — нове правило для членів клубу. Місце занять не змінюється.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v6-notices"
+  },
+  {
+   "id": "eng-v6-notice-4",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "The book club will meet in the café on Green Street this Thursday because the library is closed for painting.",
+   "options": [
+    "A change of venue",
+    "A new rule for members",
+    "A warning about safety",
+    "Registration closes soon",
+    "Help is needed",
+    "A service that is free of charge",
+    "Something has been found",
+    "Tickets are cheaper for a limited time"
+   ],
+   "answer": 0,
+   "explanation": "Зустріч переносять з бібліотеки до кав’ярні — змінилося місце. Дата лишилася та сама, тож це не скасування.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v6-notices"
+  },
+  {
+   "id": "eng-v6-notice-5",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Our students offer free help with smartphones and email every Wednesday afternoon. No appointment needed.",
+   "options": [
+    "A change of venue",
+    "A new rule for members",
+    "A warning about safety",
+    "Registration closes soon",
+    "Help is needed",
+    "A service that is free of charge",
+    "Something has been found",
+    "Tickets are cheaper for a limited time"
+   ],
+   "answer": 5,
+   "explanation": "Free help — безкоштовна послуга. Це не «Help is needed»: допомогу пропонують, а не шукають.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v6-notices"
+  },
+  {
+   "id": "eng-v6-read-1",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What did Marko discover while writing his report?",
+   "passage": "Three years ago, Marko Hnatiuk was asked to write a school report on insects. He chose bees because he thought it would be easy. Instead, he discovered that wild bees in his city were disappearing faster than anyone had expected, mainly because there were too few flowers between the parks.\n\nMarko's idea was simple: if the parks were islands, the bees needed bridges. He drew a map of the empty spaces that separated them – bus-stop roofs, school fences, the narrow strips of grass beside the tram line – and calculated that planting wild flowers on just a fraction of them would create an unbroken 'corridor' across the city.\n\nThe city council liked the map but said it had no money for the project. Marko did not give up. He sent his plan to local businesses and asked each of them to 'adopt' one small patch. A bakery paid for seeds, a building company lent a truck, and a retired gardener offered to train volunteers. Within a year, more than two hundred patches had been planted.\n\nNot everyone was enthusiastic. Some residents complained that the wild flowers looked untidy compared with neatly cut lawns, and one neighbour worried that the bees would sting children. Marko responded by putting up small signs explaining that most wild bees are gentle and that the 'messy' look was exactly what the insects needed.\n\nScientists from the local university now count the bees every summer. Their figures show that the number of species visiting the corridor has almost doubled, although they warn that one good year does not prove a long-term trend. Marko, now seventeen, says the project taught him something unexpected. 'I thought my job was to understand bees,' he says. 'It turned out the hardest part was understanding people – and persuading them to change their minds.'",
+   "options": [
+    "Several parks in his city were being closed.",
+    "Wild bees were disappearing because there were too few flowers between the parks.",
+    "Insects are easy to study in a city.",
+    "Bees prefer school gardens to city parks."
+   ],
+   "answer": 1,
+   "explanation": "Доказ: wild bees … were disappearing … mainly because there were too few flowers between the parks. Що комах легко вивчати, Марко лише думав спочатку; про закриття парків не сказано.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v6-text"
+  },
+  {
+   "id": "eng-v6-read-2",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What was the council's reaction to the plan?",
+   "passage": "Three years ago, Marko Hnatiuk was asked to write a school report on insects. He chose bees because he thought it would be easy. Instead, he discovered that wild bees in his city were disappearing faster than anyone had expected, mainly because there were too few flowers between the parks.\n\nMarko's idea was simple: if the parks were islands, the bees needed bridges. He drew a map of the empty spaces that separated them – bus-stop roofs, school fences, the narrow strips of grass beside the tram line – and calculated that planting wild flowers on just a fraction of them would create an unbroken 'corridor' across the city.\n\nThe city council liked the map but said it had no money for the project. Marko did not give up. He sent his plan to local businesses and asked each of them to 'adopt' one small patch. A bakery paid for seeds, a building company lent a truck, and a retired gardener offered to train volunteers. Within a year, more than two hundred patches had been planted.\n\nNot everyone was enthusiastic. Some residents complained that the wild flowers looked untidy compared with neatly cut lawns, and one neighbour worried that the bees would sting children. Marko responded by putting up small signs explaining that most wild bees are gentle and that the 'messy' look was exactly what the insects needed.\n\nScientists from the local university now count the bees every summer. Their figures show that the number of species visiting the corridor has almost doubled, although they warn that one good year does not prove a long-term trend. Marko, now seventeen, says the project taught him something unexpected. 'I thought my job was to understand bees,' he says. 'It turned out the hardest part was understanding people – and persuading them to change their minds.'",
+   "options": [
+    "It rejected the map as unrealistic.",
+    "It was worried that bees would sting children.",
+    "It liked the idea but could not pay for it.",
+    "It wanted the lawns to stay neatly cut."
+   ],
+   "answer": 2,
+   "explanation": "The city council liked the map but said it had no money. Скарги на укуси й неохайний вигляд — від мешканців, а не від ради.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v6-text"
+  },
+  {
+   "id": "eng-v6-read-3",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "How was the corridor finally created?",
+   "passage": "Three years ago, Marko Hnatiuk was asked to write a school report on insects. He chose bees because he thought it would be easy. Instead, he discovered that wild bees in his city were disappearing faster than anyone had expected, mainly because there were too few flowers between the parks.\n\nMarko's idea was simple: if the parks were islands, the bees needed bridges. He drew a map of the empty spaces that separated them – bus-stop roofs, school fences, the narrow strips of grass beside the tram line – and calculated that planting wild flowers on just a fraction of them would create an unbroken 'corridor' across the city.\n\nThe city council liked the map but said it had no money for the project. Marko did not give up. He sent his plan to local businesses and asked each of them to 'adopt' one small patch. A bakery paid for seeds, a building company lent a truck, and a retired gardener offered to train volunteers. Within a year, more than two hundred patches had been planted.\n\nNot everyone was enthusiastic. Some residents complained that the wild flowers looked untidy compared with neatly cut lawns, and one neighbour worried that the bees would sting children. Marko responded by putting up small signs explaining that most wild bees are gentle and that the 'messy' look was exactly what the insects needed.\n\nScientists from the local university now count the bees every summer. Their figures show that the number of species visiting the corridor has almost doubled, although they warn that one good year does not prove a long-term trend. Marko, now seventeen, says the project taught him something unexpected. 'I thought my job was to understand bees,' he says. 'It turned out the hardest part was understanding people – and persuading them to change their minds.'",
+   "options": [
+    "By the university's scientists.",
+    "By Marko working on his own.",
+    "By the council's own gardeners.",
+    "With help from local businesses and volunteers."
+   ],
+   "answer": 3,
+   "explanation": "Пекарня оплатила насіння, будівельна компанія дала вантажівку, садівник навчав волонтерів. Науковці лише рахують бджіл.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v6-text"
+  },
+  {
+   "id": "eng-v6-read-4",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "How did Marko respond to complaints from residents?",
+   "passage": "Three years ago, Marko Hnatiuk was asked to write a school report on insects. He chose bees because he thought it would be easy. Instead, he discovered that wild bees in his city were disappearing faster than anyone had expected, mainly because there were too few flowers between the parks.\n\nMarko's idea was simple: if the parks were islands, the bees needed bridges. He drew a map of the empty spaces that separated them – bus-stop roofs, school fences, the narrow strips of grass beside the tram line – and calculated that planting wild flowers on just a fraction of them would create an unbroken 'corridor' across the city.\n\nThe city council liked the map but said it had no money for the project. Marko did not give up. He sent his plan to local businesses and asked each of them to 'adopt' one small patch. A bakery paid for seeds, a building company lent a truck, and a retired gardener offered to train volunteers. Within a year, more than two hundred patches had been planted.\n\nNot everyone was enthusiastic. Some residents complained that the wild flowers looked untidy compared with neatly cut lawns, and one neighbour worried that the bees would sting children. Marko responded by putting up small signs explaining that most wild bees are gentle and that the 'messy' look was exactly what the insects needed.\n\nScientists from the local university now count the bees every summer. Their figures show that the number of species visiting the corridor has almost doubled, although they warn that one good year does not prove a long-term trend. Marko, now seventeen, says the project taught him something unexpected. 'I thought my job was to understand bees,' he says. 'It turned out the hardest part was understanding people – and persuading them to change their minds.'",
+   "options": [
+    "He asked the council to cut the grass.",
+    "He put up signs explaining why the flowers looked the way they did.",
+    "He moved the patches away from homes.",
+    "He removed the flowers near schools."
+   ],
+   "answer": 1,
+   "explanation": "Marko responded by putting up small signs explaining… Квіти він не прибирав і ділянок не переносив.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v6-text"
+  },
+  {
+   "id": "eng-v6-read-5",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What does Marko say was the hardest part of the project?",
+   "passage": "Three years ago, Marko Hnatiuk was asked to write a school report on insects. He chose bees because he thought it would be easy. Instead, he discovered that wild bees in his city were disappearing faster than anyone had expected, mainly because there were too few flowers between the parks.\n\nMarko's idea was simple: if the parks were islands, the bees needed bridges. He drew a map of the empty spaces that separated them – bus-stop roofs, school fences, the narrow strips of grass beside the tram line – and calculated that planting wild flowers on just a fraction of them would create an unbroken 'corridor' across the city.\n\nThe city council liked the map but said it had no money for the project. Marko did not give up. He sent his plan to local businesses and asked each of them to 'adopt' one small patch. A bakery paid for seeds, a building company lent a truck, and a retired gardener offered to train volunteers. Within a year, more than two hundred patches had been planted.\n\nNot everyone was enthusiastic. Some residents complained that the wild flowers looked untidy compared with neatly cut lawns, and one neighbour worried that the bees would sting children. Marko responded by putting up small signs explaining that most wild bees are gentle and that the 'messy' look was exactly what the insects needed.\n\nScientists from the local university now count the bees every summer. Their figures show that the number of species visiting the corridor has almost doubled, although they warn that one good year does not prove a long-term trend. Marko, now seventeen, says the project taught him something unexpected. 'I thought my job was to understand bees,' he says. 'It turned out the hardest part was understanding people – and persuading them to change their minds.'",
+   "options": [
+    "Persuading people to change their minds.",
+    "Understanding how bees live.",
+    "Counting the bees every summer.",
+    "Finding enough flower seeds."
+   ],
+   "answer": 0,
+   "explanation": "The hardest part was understanding people – and persuading them. Він думав, що головне — зрозуміти бджіл, але виявилося інакше.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v6-text"
+  },
+  {
+   "id": "eng-v6-sent-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [11]. Two options are extra.",
+   "passage": "Almost everyone has put off an important task until the last minute. [11] Researchers now believe that procrastination is less about time and more about emotions.\n\nWhen a task makes us feel bored, anxious or unsure, our brain looks for a quick way to feel better. [12] The relief is real, but it lasts only a few minutes, and the task is still waiting.\n\nInterestingly, people who procrastinate are often not lazy at all. [13] They delay starting because they are afraid the result will not be good enough.\n\nSo what helps? One effective method is to make the first step ridiculously small. [14] Once we have started, continuing is usually much easier than we expected.\n\nAnother strategy is to be kind to yourself after a delay. [15] Students who forgave themselves for procrastinating before one exam were less likely to do it again before the next.\n\nFinally, it helps to remove temptations before you begin. [16] Out of sight really can mean out of mind.",
+   "options": [
+    "Many are perfectionists who set themselves extremely high standards.",
+    "This may sound surprising, but research supports it.",
+    "Instead of 'write the essay', the goal becomes 'write one sentence'.",
+    "Good time management apps are usually very expensive.",
+    "Most students finish their homework long before the deadline.",
+    "Many people think it simply shows poor time management.",
+    "Leaving your phone in another room removes the most common distraction.",
+    "Checking a phone or tidying the desk provides exactly that."
+   ],
+   "answer": 5,
+   "explanation": "Після загального факту — поширена думка (погане планування часу), яку наступне речення спростовує: насправді причина в емоціях.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-sent"
+  },
+  {
+   "id": "eng-v6-sent-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [12]. Two options are extra.",
+   "passage": "Almost everyone has put off an important task until the last minute. [11] Researchers now believe that procrastination is less about time and more about emotions.\n\nWhen a task makes us feel bored, anxious or unsure, our brain looks for a quick way to feel better. [12] The relief is real, but it lasts only a few minutes, and the task is still waiting.\n\nInterestingly, people who procrastinate are often not lazy at all. [13] They delay starting because they are afraid the result will not be good enough.\n\nSo what helps? One effective method is to make the first step ridiculously small. [14] Once we have started, continuing is usually much easier than we expected.\n\nAnother strategy is to be kind to yourself after a delay. [15] Students who forgave themselves for procrastinating before one exam were less likely to do it again before the next.\n\nFinally, it helps to remove temptations before you begin. [16] Out of sight really can mean out of mind.",
+   "options": [
+    "Many are perfectionists who set themselves extremely high standards.",
+    "This may sound surprising, but research supports it.",
+    "Instead of 'write the essay', the goal becomes 'write one sentence'.",
+    "Good time management apps are usually very expensive.",
+    "Most students finish their homework long before the deadline.",
+    "Many people think it simply shows poor time management.",
+    "Leaving your phone in another room removes the most common distraction.",
+    "Checking a phone or tidying the desk provides exactly that."
+   ],
+   "answer": 7,
+   "explanation": "Мозок шукає швидкий спосіб почуватися краще → телефон чи прибирання дають саме це (exactly that); далі — «полегшення справжнє, але коротке».",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-sent"
+  },
+  {
+   "id": "eng-v6-sent-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [13]. Two options are extra.",
+   "passage": "Almost everyone has put off an important task until the last minute. [11] Researchers now believe that procrastination is less about time and more about emotions.\n\nWhen a task makes us feel bored, anxious or unsure, our brain looks for a quick way to feel better. [12] The relief is real, but it lasts only a few minutes, and the task is still waiting.\n\nInterestingly, people who procrastinate are often not lazy at all. [13] They delay starting because they are afraid the result will not be good enough.\n\nSo what helps? One effective method is to make the first step ridiculously small. [14] Once we have started, continuing is usually much easier than we expected.\n\nAnother strategy is to be kind to yourself after a delay. [15] Students who forgave themselves for procrastinating before one exam were less likely to do it again before the next.\n\nFinally, it helps to remove temptations before you begin. [16] Out of sight really can mean out of mind.",
+   "options": [
+    "Many are perfectionists who set themselves extremely high standards.",
+    "This may sound surprising, but research supports it.",
+    "Instead of 'write the essay', the goal becomes 'write one sentence'.",
+    "Good time management apps are usually very expensive.",
+    "Most students finish their homework long before the deadline.",
+    "Many people think it simply shows poor time management.",
+    "Leaving your phone in another room removes the most common distraction.",
+    "Checking a phone or tidying the desk provides exactly that."
+   ],
+   "answer": 0,
+   "explanation": "Прокрастинатори не ліниві → часто це перфекціоністи; наступне речення пояснює: бояться, що результат буде недостатньо добрим.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-sent"
+  },
+  {
+   "id": "eng-v6-sent-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [14]. Two options are extra.",
+   "passage": "Almost everyone has put off an important task until the last minute. [11] Researchers now believe that procrastination is less about time and more about emotions.\n\nWhen a task makes us feel bored, anxious or unsure, our brain looks for a quick way to feel better. [12] The relief is real, but it lasts only a few minutes, and the task is still waiting.\n\nInterestingly, people who procrastinate are often not lazy at all. [13] They delay starting because they are afraid the result will not be good enough.\n\nSo what helps? One effective method is to make the first step ridiculously small. [14] Once we have started, continuing is usually much easier than we expected.\n\nAnother strategy is to be kind to yourself after a delay. [15] Students who forgave themselves for procrastinating before one exam were less likely to do it again before the next.\n\nFinally, it helps to remove temptations before you begin. [16] Out of sight really can mean out of mind.",
+   "options": [
+    "Many are perfectionists who set themselves extremely high standards.",
+    "This may sound surprising, but research supports it.",
+    "Instead of 'write the essay', the goal becomes 'write one sentence'.",
+    "Good time management apps are usually very expensive.",
+    "Most students finish their homework long before the deadline.",
+    "Many people think it simply shows poor time management.",
+    "Leaving your phone in another room removes the most common distraction.",
+    "Checking a phone or tidying the desk provides exactly that."
+   ],
+   "answer": 2,
+   "explanation": "Зробити перший крок смішно малим → приклад: не «написати есе», а «написати одне речення».",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-sent"
+  },
+  {
+   "id": "eng-v6-sent-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [15]. Two options are extra.",
+   "passage": "Almost everyone has put off an important task until the last minute. [11] Researchers now believe that procrastination is less about time and more about emotions.\n\nWhen a task makes us feel bored, anxious or unsure, our brain looks for a quick way to feel better. [12] The relief is real, but it lasts only a few minutes, and the task is still waiting.\n\nInterestingly, people who procrastinate are often not lazy at all. [13] They delay starting because they are afraid the result will not be good enough.\n\nSo what helps? One effective method is to make the first step ridiculously small. [14] Once we have started, continuing is usually much easier than we expected.\n\nAnother strategy is to be kind to yourself after a delay. [15] Students who forgave themselves for procrastinating before one exam were less likely to do it again before the next.\n\nFinally, it helps to remove temptations before you begin. [16] Out of sight really can mean out of mind.",
+   "options": [
+    "Many are perfectionists who set themselves extremely high standards.",
+    "This may sound surprising, but research supports it.",
+    "Instead of 'write the essay', the goal becomes 'write one sentence'.",
+    "Good time management apps are usually very expensive.",
+    "Most students finish their homework long before the deadline.",
+    "Many people think it simply shows poor time management.",
+    "Leaving your phone in another room removes the most common distraction.",
+    "Checking a phone or tidying the desk provides exactly that."
+   ],
+   "answer": 1,
+   "explanation": "Бути добрим до себе — порада, що звучить несподівано, тому далі дослідження її підтверджує.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-sent"
+  },
+  {
+   "id": "eng-v6-sent-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [16]. Two options are extra.",
+   "passage": "Almost everyone has put off an important task until the last minute. [11] Researchers now believe that procrastination is less about time and more about emotions.\n\nWhen a task makes us feel bored, anxious or unsure, our brain looks for a quick way to feel better. [12] The relief is real, but it lasts only a few minutes, and the task is still waiting.\n\nInterestingly, people who procrastinate are often not lazy at all. [13] They delay starting because they are afraid the result will not be good enough.\n\nSo what helps? One effective method is to make the first step ridiculously small. [14] Once we have started, continuing is usually much easier than we expected.\n\nAnother strategy is to be kind to yourself after a delay. [15] Students who forgave themselves for procrastinating before one exam were less likely to do it again before the next.\n\nFinally, it helps to remove temptations before you begin. [16] Out of sight really can mean out of mind.",
+   "options": [
+    "Many are perfectionists who set themselves extremely high standards.",
+    "This may sound surprising, but research supports it.",
+    "Instead of 'write the essay', the goal becomes 'write one sentence'.",
+    "Good time management apps are usually very expensive.",
+    "Most students finish their homework long before the deadline.",
+    "Many people think it simply shows poor time management.",
+    "Leaving your phone in another room removes the most common distraction.",
+    "Checking a phone or tidying the desk provides exactly that."
+   ],
+   "answer": 6,
+   "explanation": "Прибрати спокуси → телефон в іншій кімнаті; out of sight, out of mind. Речення про домашнє завдання й дорогі застосунки не пов’язані з текстом.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-sent"
+  },
+  {
+   "id": "eng-v6-phrase-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [17]. Two options are extra.",
+   "passage": "For decades, night trains in Europe seemed to belong to the past. Cheap flights were faster, and many railway companies [17]. Recently, however, the sleeper train has made a surprising comeback.\n\nOne reason is concern about climate change. A journey by train produces far less carbon dioxide than the same trip by plane, [18]. Another is comfort: passengers can board in the city centre in the evening and wake up [19], without airport queues or security checks.\n\nNot everything is perfect. Tickets are often more expensive than flights, [20], and the cabins are small. Some routes also suffer from delays [21].\n\nStill, demand is growing, and several new routes have opened in the last few years. For many travellers, the night train offers something a plane cannot: the chance to treat the journey [22].",
+   "options": [
+    "because they cross several countries with different rail systems",
+    "at their destination the next morning",
+    "especially when booked at the last minute",
+    "stopped running them because they were losing money",
+    "so most passengers prefer to travel by car",
+    "as part of the holiday rather than a waste of time",
+    "which matters to a growing number of travellers",
+    "which was built more than a hundred years ago"
+   ],
+   "answer": 3,
+   "explanation": "Many railway companies … stopped running them — пояснює, чому нічні потяги «залишилися в минулому».",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-phrase"
+  },
+  {
+   "id": "eng-v6-phrase-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [18]. Two options are extra.",
+   "passage": "For decades, night trains in Europe seemed to belong to the past. Cheap flights were faster, and many railway companies [17]. Recently, however, the sleeper train has made a surprising comeback.\n\nOne reason is concern about climate change. A journey by train produces far less carbon dioxide than the same trip by plane, [18]. Another is comfort: passengers can board in the city centre in the evening and wake up [19], without airport queues or security checks.\n\nNot everything is perfect. Tickets are often more expensive than flights, [20], and the cabins are small. Some routes also suffer from delays [21].\n\nStill, demand is growing, and several new routes have opened in the last few years. For many travellers, the night train offers something a plane cannot: the chance to treat the journey [22].",
+   "options": [
+    "because they cross several countries with different rail systems",
+    "at their destination the next morning",
+    "especially when booked at the last minute",
+    "stopped running them because they were losing money",
+    "so most passengers prefer to travel by car",
+    "as part of the holiday rather than a waste of time",
+    "which matters to a growing number of travellers",
+    "which was built more than a hundred years ago"
+   ],
+   "answer": 6,
+   "explanation": "Менше вуглекислого газу — це важливо (matters) для багатьох мандрівників; which відсилає до всього попереднього факту.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-phrase"
+  },
+  {
+   "id": "eng-v6-phrase-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [19]. Two options are extra.",
+   "passage": "For decades, night trains in Europe seemed to belong to the past. Cheap flights were faster, and many railway companies [17]. Recently, however, the sleeper train has made a surprising comeback.\n\nOne reason is concern about climate change. A journey by train produces far less carbon dioxide than the same trip by plane, [18]. Another is comfort: passengers can board in the city centre in the evening and wake up [19], without airport queues or security checks.\n\nNot everything is perfect. Tickets are often more expensive than flights, [20], and the cabins are small. Some routes also suffer from delays [21].\n\nStill, demand is growing, and several new routes have opened in the last few years. For many travellers, the night train offers something a plane cannot: the chance to treat the journey [22].",
+   "options": [
+    "because they cross several countries with different rail systems",
+    "at their destination the next morning",
+    "especially when booked at the last minute",
+    "stopped running them because they were losing money",
+    "so most passengers prefer to travel by car",
+    "as part of the holiday rather than a waste of time",
+    "which matters to a growing number of travellers",
+    "which was built more than a hundred years ago"
+   ],
+   "answer": 1,
+   "explanation": "Wake up at their destination the next morning — сіли ввечері, прокинулися на місці.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-phrase"
+  },
+  {
+   "id": "eng-v6-phrase-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [20]. Two options are extra.",
+   "passage": "For decades, night trains in Europe seemed to belong to the past. Cheap flights were faster, and many railway companies [17]. Recently, however, the sleeper train has made a surprising comeback.\n\nOne reason is concern about climate change. A journey by train produces far less carbon dioxide than the same trip by plane, [18]. Another is comfort: passengers can board in the city centre in the evening and wake up [19], without airport queues or security checks.\n\nNot everything is perfect. Tickets are often more expensive than flights, [20], and the cabins are small. Some routes also suffer from delays [21].\n\nStill, demand is growing, and several new routes have opened in the last few years. For many travellers, the night train offers something a plane cannot: the chance to treat the journey [22].",
+   "options": [
+    "because they cross several countries with different rail systems",
+    "at their destination the next morning",
+    "especially when booked at the last minute",
+    "stopped running them because they were losing money",
+    "so most passengers prefer to travel by car",
+    "as part of the holiday rather than a waste of time",
+    "which matters to a growing number of travellers",
+    "which was built more than a hundred years ago"
+   ],
+   "answer": 2,
+   "explanation": "Квитки дорожчі, особливо якщо купувати в останню мить — уточнення до ціни.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-phrase"
+  },
+  {
+   "id": "eng-v6-phrase-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [21]. Two options are extra.",
+   "passage": "For decades, night trains in Europe seemed to belong to the past. Cheap flights were faster, and many railway companies [17]. Recently, however, the sleeper train has made a surprising comeback.\n\nOne reason is concern about climate change. A journey by train produces far less carbon dioxide than the same trip by plane, [18]. Another is comfort: passengers can board in the city centre in the evening and wake up [19], without airport queues or security checks.\n\nNot everything is perfect. Tickets are often more expensive than flights, [20], and the cabins are small. Some routes also suffer from delays [21].\n\nStill, demand is growing, and several new routes have opened in the last few years. For many travellers, the night train offers something a plane cannot: the chance to treat the journey [22].",
+   "options": [
+    "because they cross several countries with different rail systems",
+    "at their destination the next morning",
+    "especially when booked at the last minute",
+    "stopped running them because they were losing money",
+    "so most passengers prefer to travel by car",
+    "as part of the holiday rather than a waste of time",
+    "which matters to a growing number of travellers",
+    "which was built more than a hundred years ago"
+   ],
+   "answer": 0,
+   "explanation": "Затримки — бо маршрути перетинають кілька країн з різними залізницями. Варіант про будівлю граматично не пасує до delays.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-phrase"
+  },
+  {
+   "id": "eng-v6-phrase-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [22]. Two options are extra.",
+   "passage": "For decades, night trains in Europe seemed to belong to the past. Cheap flights were faster, and many railway companies [17]. Recently, however, the sleeper train has made a surprising comeback.\n\nOne reason is concern about climate change. A journey by train produces far less carbon dioxide than the same trip by plane, [18]. Another is comfort: passengers can board in the city centre in the evening and wake up [19], without airport queues or security checks.\n\nNot everything is perfect. Tickets are often more expensive than flights, [20], and the cabins are small. Some routes also suffer from delays [21].\n\nStill, demand is growing, and several new routes have opened in the last few years. For many travellers, the night train offers something a plane cannot: the chance to treat the journey [22].",
+   "options": [
+    "because they cross several countries with different rail systems",
+    "at their destination the next morning",
+    "especially when booked at the last minute",
+    "stopped running them because they were losing money",
+    "so most passengers prefer to travel by car",
+    "as part of the holiday rather than a waste of time",
+    "which matters to a growing number of travellers",
+    "which was built more than a hundred years ago"
+   ],
+   "answer": 5,
+   "explanation": "Treat the journey as part of the holiday — подорож як частина відпочинку. Варіант про авто суперечить змісту тексту.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-phrase"
+  },
+  {
+   "id": "eng-v6-grammar-1",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [23].",
+   "passage": "My grandmother's garden\n\nMy grandmother [23] in the same village all her life. Every summer, when I was a child, my parents [24] me to stay with her for a month. She taught me how to grow tomatoes, [25] I still do today. Last year she [26] a prize at the local flower show, and she was so proud that she framed the certificate. If she [27] younger, she says, she would start a business selling her plants.",
+   "options": [
+    "has lived",
+    "had been living",
+    "lives",
+    "is living"
+   ],
+   "answer": 0,
+   "explanation": "All her life — період до теперішнього, і бабуся досі там живе: Present Perfect has lived. Had been living потребує іншої минулої події.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-grammar"
+  },
+  {
+   "id": "eng-v6-grammar-2",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [24].",
+   "passage": "My grandmother's garden\n\nMy grandmother [23] in the same village all her life. Every summer, when I was a child, my parents [24] me to stay with her for a month. She taught me how to grow tomatoes, [25] I still do today. Last year she [26] a prize at the local flower show, and she was so proud that she framed the certificate. If she [27] younger, she says, she would start a business selling her plants.",
+   "options": [
+    "used to send",
+    "send",
+    "were sending",
+    "have sent"
+   ],
+   "answer": 0,
+   "explanation": "Повторювана дія в минулому (every summer, when I was a child) — used to send. Were sending описує процес у конкретний момент.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-grammar"
+  },
+  {
+   "id": "eng-v6-grammar-3",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [25].",
+   "passage": "My grandmother's garden\n\nMy grandmother [23] in the same village all her life. Every summer, when I was a child, my parents [24] me to stay with her for a month. She taught me how to grow tomatoes, [25] I still do today. Last year she [26] a prize at the local flower show, and she was so proud that she framed the certificate. If she [27] younger, she says, she would start a business selling her plants.",
+   "options": [
+    "what",
+    "who",
+    "which",
+    "that"
+   ],
+   "answer": 2,
+   "explanation": "Після коми відносний займенник, що стосується всієї попередньої дії: which. That після коми не вживаємо, what не вводить такого речення.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-grammar"
+  },
+  {
+   "id": "eng-v6-grammar-4",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [26].",
+   "passage": "My grandmother's garden\n\nMy grandmother [23] in the same village all her life. Every summer, when I was a child, my parents [24] me to stay with her for a month. She taught me how to grow tomatoes, [25] I still do today. Last year she [26] a prize at the local flower show, and she was so proud that she framed the certificate. If she [27] younger, she says, she would start a business selling her plants.",
+   "options": [
+    "won",
+    "has won",
+    "had won",
+    "wins"
+   ],
+   "answer": 0,
+   "explanation": "Last year — завершена подія в минулому: Past Simple won.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-grammar"
+  },
+  {
+   "id": "eng-v6-grammar-5",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [27].",
+   "passage": "My grandmother's garden\n\nMy grandmother [23] in the same village all her life. Every summer, when I was a child, my parents [24] me to stay with her for a month. She taught me how to grow tomatoes, [25] I still do today. Last year she [26] a prize at the local flower show, and she was so proud that she framed the certificate. If she [27] younger, she says, she would start a business selling her plants.",
+   "options": [
+    "will be",
+    "were",
+    "is",
+    "had been"
+   ],
+   "answer": 1,
+   "explanation": "Уявна теперішня умова (would start) — Second Conditional: if she were younger.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-grammar"
+  },
+  {
+   "id": "eng-v6-vocab-1",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [28].",
+   "passage": "Choosing a university\n\nChoosing a university is one of the biggest decisions young people [28]. It is worth visiting several campuses before you [29] your mind. Talk to current students: they can [30] you an honest picture of everyday life. Do not forget to [31] into account the cost of living in the city, not just the tuition fees. Finally, remember that a course you are genuinely interested in will be much easier to [32] with for three or four years.",
+   "options": [
+    "give",
+    "put",
+    "make",
+    "do"
+   ],
+   "answer": 2,
+   "explanation": "Стале сполучення make a decision.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-vocab"
+  },
+  {
+   "id": "eng-v6-vocab-2",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [29].",
+   "passage": "Choosing a university\n\nChoosing a university is one of the biggest decisions young people [28]. It is worth visiting several campuses before you [29] your mind. Talk to current students: they can [30] you an honest picture of everyday life. Do not forget to [31] into account the cost of living in the city, not just the tuition fees. Finally, remember that a course you are genuinely interested in will be much easier to [32] with for three or four years.",
+   "options": [
+    "make up",
+    "give up",
+    "set up",
+    "take up"
+   ],
+   "answer": 0,
+   "explanation": "Make up your mind — ухвалити рішення. Take up — почати займатися, set up — заснувати, give up — здатися.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-vocab"
+  },
+  {
+   "id": "eng-v6-vocab-3",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [30].",
+   "passage": "Choosing a university\n\nChoosing a university is one of the biggest decisions young people [28]. It is worth visiting several campuses before you [29] your mind. Talk to current students: they can [30] you an honest picture of everyday life. Do not forget to [31] into account the cost of living in the city, not just the tuition fees. Finally, remember that a course you are genuinely interested in will be much easier to [32] with for three or four years.",
+   "options": [
+    "give",
+    "speak",
+    "tell",
+    "say"
+   ],
+   "answer": 0,
+   "explanation": "Give somebody a picture of something — дати уявлення. Say і speak не мають двох додатків, tell не поєднується з picture.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-vocab"
+  },
+  {
+   "id": "eng-v6-vocab-4",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [31].",
+   "passage": "Choosing a university\n\nChoosing a university is one of the biggest decisions young people [28]. It is worth visiting several campuses before you [29] your mind. Talk to current students: they can [30] you an honest picture of everyday life. Do not forget to [31] into account the cost of living in the city, not just the tuition fees. Finally, remember that a course you are genuinely interested in will be much easier to [32] with for three or four years.",
+   "options": [
+    "take",
+    "bring",
+    "hold",
+    "put"
+   ],
+   "answer": 0,
+   "explanation": "Стале сполучення take into account — брати до уваги.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-vocab"
+  },
+  {
+   "id": "eng-v6-vocab-5",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [32].",
+   "passage": "Choosing a university\n\nChoosing a university is one of the biggest decisions young people [28]. It is worth visiting several campuses before you [29] your mind. Talk to current students: they can [30] you an honest picture of everyday life. Do not forget to [31] into account the cost of living in the city, not just the tuition fees. Finally, remember that a course you are genuinely interested in will be much easier to [32] with for three or four years.",
+   "options": [
+    "hold",
+    "stick",
+    "go",
+    "keep"
+   ],
+   "answer": 1,
+   "explanation": "Stick with something — не кидати, триматися обраного.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v6-vocab"
+  },
+  {
+   "id": "eng-v7-notice-1",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Sorry! Saturday's open-air concert will not take place due to the storm warning. All tickets will be refunded automatically.",
+   "options": [
+    "Not open to the public",
+    "Bring your own food",
+    "Book in advance online",
+    "An event has been cancelled",
+    "Children travel free",
+    "A reminder about a deadline",
+    "Please return it",
+    "Volunteers are wanted"
+   ],
+   "answer": 3,
+   "explanation": "Will not take place — концерт скасовано; кошти повернуть автоматично, тож бронювати нічого не треба.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v7-notices"
+  },
+  {
+   "id": "eng-v7-notice-2",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Has anyone borrowed the blue toolbox from the workshop? It's needed for Monday's class – please put it back on the shelf.",
+   "options": [
+    "Not open to the public",
+    "Bring your own food",
+    "Book in advance online",
+    "An event has been cancelled",
+    "Children travel free",
+    "A reminder about a deadline",
+    "Please return it",
+    "Volunteers are wanted"
+   ],
+   "answer": 6,
+   "explanation": "Please put it back — прохання повернути річ. Волонтерів тут не шукають.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v7-notices"
+  },
+  {
+   "id": "eng-v7-notice-3",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "We're looking for friendly people to help at the charity run on 12 May. You'll hand out water and cheer runners on.",
+   "options": [
+    "Not open to the public",
+    "Bring your own food",
+    "Book in advance online",
+    "An event has been cancelled",
+    "Children travel free",
+    "A reminder about a deadline",
+    "Please return it",
+    "Volunteers are wanted"
+   ],
+   "answer": 7,
+   "explanation": "Looking for people to help — шукають волонтерів. Про їжу йдеться лише як про воду для бігунів.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v7-notices"
+  },
+  {
+   "id": "eng-v7-notice-4",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Applications for the summer language camp must be received by Friday at noon. Late forms cannot be accepted.",
+   "options": [
+    "Not open to the public",
+    "Bring your own food",
+    "Book in advance online",
+    "An event has been cancelled",
+    "Children travel free",
+    "A reminder about a deadline",
+    "Please return it",
+    "Volunteers are wanted"
+   ],
+   "answer": 5,
+   "explanation": "Must be received by Friday at noon — крайній строк. Це не «Book in advance online»: про онлайн-бронювання не сказано.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v7-notices"
+  },
+  {
+   "id": "eng-v7-notice-5",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "This area is for staff only. Visitors must stay behind the yellow line at all times.",
+   "options": [
+    "Not open to the public",
+    "Bring your own food",
+    "Book in advance online",
+    "An event has been cancelled",
+    "Children travel free",
+    "A reminder about a deadline",
+    "Please return it",
+    "Volunteers are wanted"
+   ],
+   "answer": 0,
+   "explanation": "For staff only — сюди не пускають відвідувачів.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v7-notices"
+  },
+  {
+   "id": "eng-v7-read-1",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "Why did the writer start cooking?",
+   "passage": "When I was fifteen, my mother broke her arm, and for six weeks I had to cook dinner for our family of five. I had never followed a recipe before, and my first attempts were not a success. On the second evening, I burnt the rice so badly that we had to open every window in the flat.\n\nWhat surprised me was how much maths was hidden in the kitchen. Most recipes in my grandmother's notebook were written for four people, so I constantly had to multiply or divide the quantities. When a recipe asked for 300 grams of flour and our scales were broken, I had to work out how many spoonfuls that would be. For the first time, fractions stopped being symbols on a page and became something I could touch and taste.\n\nMy maths teacher noticed the change before I did. My marks did not improve immediately, but I started asking different questions in class – practical ones, like how much paint you would need for a room. She told me that this was the kind of thinking the exam actually rewarded.\n\nCooking also taught me to plan. A good dinner is like a timetable: the potatoes need forty minutes, the salad five, and everything has to be ready at the same moment. I began organising my revision in the same way, starting with the subjects that needed the most time.\n\nMy mother's arm healed long ago, but I still cook twice a week. My brothers complain that I talk about ratios at the dinner table. I tell them it is the price they pay for a good meal.",
+   "options": [
+    "Her grandmother asked her to learn.",
+    "Her mother was unable to cook for several weeks.",
+    "Her school gave her a cooking project.",
+    "She wanted to become a professional chef."
+   ],
+   "answer": 1,
+   "explanation": "My mother broke her arm, and for six weeks I had to cook. Інших причин у тексті немає.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v7-text"
+  },
+  {
+   "id": "eng-v7-read-2",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What does she say about her first attempts?",
+   "passage": "When I was fifteen, my mother broke her arm, and for six weeks I had to cook dinner for our family of five. I had never followed a recipe before, and my first attempts were not a success. On the second evening, I burnt the rice so badly that we had to open every window in the flat.\n\nWhat surprised me was how much maths was hidden in the kitchen. Most recipes in my grandmother's notebook were written for four people, so I constantly had to multiply or divide the quantities. When a recipe asked for 300 grams of flour and our scales were broken, I had to work out how many spoonfuls that would be. For the first time, fractions stopped being symbols on a page and became something I could touch and taste.\n\nMy maths teacher noticed the change before I did. My marks did not improve immediately, but I started asking different questions in class – practical ones, like how much paint you would need for a room. She told me that this was the kind of thinking the exam actually rewarded.\n\nCooking also taught me to plan. A good dinner is like a timetable: the potatoes need forty minutes, the salad five, and everything has to be ready at the same moment. I began organising my revision in the same way, starting with the subjects that needed the most time.\n\nMy mother's arm healed long ago, but I still cook twice a week. My brothers complain that I talk about ratios at the dinner table. I tell them it is the price they pay for a good meal.",
+   "options": [
+    "They were better than she had expected.",
+    "Some of them went badly wrong.",
+    "Her brothers helped her with them.",
+    "She followed the recipes exactly."
+   ],
+   "answer": 1,
+   "explanation": "My first attempts were not a success… I burnt the rice so badly. Вона раніше ніколи не готувала за рецептом.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v7-text"
+  },
+  {
+   "id": "eng-v7-read-3",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "How did cooking change her attitude to fractions?",
+   "passage": "When I was fifteen, my mother broke her arm, and for six weeks I had to cook dinner for our family of five. I had never followed a recipe before, and my first attempts were not a success. On the second evening, I burnt the rice so badly that we had to open every window in the flat.\n\nWhat surprised me was how much maths was hidden in the kitchen. Most recipes in my grandmother's notebook were written for four people, so I constantly had to multiply or divide the quantities. When a recipe asked for 300 grams of flour and our scales were broken, I had to work out how many spoonfuls that would be. For the first time, fractions stopped being symbols on a page and became something I could touch and taste.\n\nMy maths teacher noticed the change before I did. My marks did not improve immediately, but I started asking different questions in class – practical ones, like how much paint you would need for a room. She told me that this was the kind of thinking the exam actually rewarded.\n\nCooking also taught me to plan. A good dinner is like a timetable: the potatoes need forty minutes, the salad five, and everything has to be ready at the same moment. I began organising my revision in the same way, starting with the subjects that needed the most time.\n\nMy mother's arm healed long ago, but I still cook twice a week. My brothers complain that I talk about ratios at the dinner table. I tell them it is the price they pay for a good meal.",
+   "options": [
+    "She used them only for baking.",
+    "They became real and practical for her.",
+    "She found them harder than before.",
+    "She stopped needing them."
+   ],
+   "answer": 1,
+   "explanation": "Fractions stopped being symbols on a page and became something I could touch and taste.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v7-text"
+  },
+  {
+   "id": "eng-v7-read-4",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What did her maths teacher notice?",
+   "passage": "When I was fifteen, my mother broke her arm, and for six weeks I had to cook dinner for our family of five. I had never followed a recipe before, and my first attempts were not a success. On the second evening, I burnt the rice so badly that we had to open every window in the flat.\n\nWhat surprised me was how much maths was hidden in the kitchen. Most recipes in my grandmother's notebook were written for four people, so I constantly had to multiply or divide the quantities. When a recipe asked for 300 grams of flour and our scales were broken, I had to work out how many spoonfuls that would be. For the first time, fractions stopped being symbols on a page and became something I could touch and taste.\n\nMy maths teacher noticed the change before I did. My marks did not improve immediately, but I started asking different questions in class – practical ones, like how much paint you would need for a room. She told me that this was the kind of thinking the exam actually rewarded.\n\nCooking also taught me to plan. A good dinner is like a timetable: the potatoes need forty minutes, the salad five, and everything has to be ready at the same moment. I began organising my revision in the same way, starting with the subjects that needed the most time.\n\nMy mother's arm healed long ago, but I still cook twice a week. My brothers complain that I talk about ratios at the dinner table. I tell them it is the price they pay for a good meal.",
+   "options": [
+    "Her marks had improved at once.",
+    "She was asking more practical questions.",
+    "She was cooking at school.",
+    "She was too tired to concentrate."
+   ],
+   "answer": 1,
+   "explanation": "I started asking different questions in class – practical ones. Оцінки не покращилися одразу (did not improve immediately).",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v7-text"
+  },
+  {
+   "id": "eng-v7-read-5",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "How did cooking influence the way she revised?",
+   "passage": "When I was fifteen, my mother broke her arm, and for six weeks I had to cook dinner for our family of five. I had never followed a recipe before, and my first attempts were not a success. On the second evening, I burnt the rice so badly that we had to open every window in the flat.\n\nWhat surprised me was how much maths was hidden in the kitchen. Most recipes in my grandmother's notebook were written for four people, so I constantly had to multiply or divide the quantities. When a recipe asked for 300 grams of flour and our scales were broken, I had to work out how many spoonfuls that would be. For the first time, fractions stopped being symbols on a page and became something I could touch and taste.\n\nMy maths teacher noticed the change before I did. My marks did not improve immediately, but I started asking different questions in class – practical ones, like how much paint you would need for a room. She told me that this was the kind of thinking the exam actually rewarded.\n\nCooking also taught me to plan. A good dinner is like a timetable: the potatoes need forty minutes, the salad five, and everything has to be ready at the same moment. I began organising my revision in the same way, starting with the subjects that needed the most time.\n\nMy mother's arm healed long ago, but I still cook twice a week. My brothers complain that I talk about ratios at the dinner table. I tell them it is the price they pay for a good meal.",
+   "options": [
+    "She stopped revising maths.",
+    "She began planning her time more carefully.",
+    "She studied together with her brothers.",
+    "She revised only in the kitchen."
+   ],
+   "answer": 1,
+   "explanation": "I began organising my revision in the same way — як розклад приготування вечері, починаючи з предметів, що потребують найбільше часу.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v7-text"
+  },
+  {
+   "id": "eng-v7-sent-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [11]. Two options are extra.",
+   "passage": "Standing in front of a class can make even confident students nervous. The good news is that presenting is a skill, not a talent you are born with. [11]\n\nStart by thinking about your audience rather than yourself. [12] If you know what they want to learn, you will find it much easier to decide what to include.\n\nNext, plan a clear structure. [13] Listeners remember a talk far better when they can see where it is going.\n\nSlides can help, but only if they are simple. [14] Your audience cannot read and listen at the same time.\n\nPractise out loud, ideally in front of a friend or family member. [15] It will also show you which parts are too long.\n\nFinally, accept that you will feel some nerves. [16] A little adrenaline can actually make you sound more energetic.",
+   "options": [
+    "Reading your notes word for word is the safest approach.",
+    "Most teachers prefer written reports to presentations.",
+    "Like any skill, it improves with practice and a few simple techniques.",
+    "Hearing yourself speak helps you notice words you stumble over.",
+    "Tell them at the beginning what you are going to cover.",
+    "Even experienced speakers say they never completely lose them.",
+    "Ask yourself what they already know and what might interest them.",
+    "A slide full of long sentences is more likely to distract than help."
+   ],
+   "answer": 2,
+   "explanation": "Presenting is a skill → як будь-яка навичка, покращується практикою.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-sent"
+  },
+  {
+   "id": "eng-v7-sent-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [12]. Two options are extra.",
+   "passage": "Standing in front of a class can make even confident students nervous. The good news is that presenting is a skill, not a talent you are born with. [11]\n\nStart by thinking about your audience rather than yourself. [12] If you know what they want to learn, you will find it much easier to decide what to include.\n\nNext, plan a clear structure. [13] Listeners remember a talk far better when they can see where it is going.\n\nSlides can help, but only if they are simple. [14] Your audience cannot read and listen at the same time.\n\nPractise out loud, ideally in front of a friend or family member. [15] It will also show you which parts are too long.\n\nFinally, accept that you will feel some nerves. [16] A little adrenaline can actually make you sound more energetic.",
+   "options": [
+    "Reading your notes word for word is the safest approach.",
+    "Most teachers prefer written reports to presentations.",
+    "Like any skill, it improves with practice and a few simple techniques.",
+    "Hearing yourself speak helps you notice words you stumble over.",
+    "Tell them at the beginning what you are going to cover.",
+    "Even experienced speakers say they never completely lose them.",
+    "Ask yourself what they already know and what might interest them.",
+    "A slide full of long sentences is more likely to distract than help."
+   ],
+   "answer": 6,
+   "explanation": "Думай про аудиторію → запитай себе, що вони вже знають і що їм цікаво; далі — «якщо знаєш, що вони хочуть дізнатися».",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-sent"
+  },
+  {
+   "id": "eng-v7-sent-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [13]. Two options are extra.",
+   "passage": "Standing in front of a class can make even confident students nervous. The good news is that presenting is a skill, not a talent you are born with. [11]\n\nStart by thinking about your audience rather than yourself. [12] If you know what they want to learn, you will find it much easier to decide what to include.\n\nNext, plan a clear structure. [13] Listeners remember a talk far better when they can see where it is going.\n\nSlides can help, but only if they are simple. [14] Your audience cannot read and listen at the same time.\n\nPractise out loud, ideally in front of a friend or family member. [15] It will also show you which parts are too long.\n\nFinally, accept that you will feel some nerves. [16] A little adrenaline can actually make you sound more energetic.",
+   "options": [
+    "Reading your notes word for word is the safest approach.",
+    "Most teachers prefer written reports to presentations.",
+    "Like any skill, it improves with practice and a few simple techniques.",
+    "Hearing yourself speak helps you notice words you stumble over.",
+    "Tell them at the beginning what you are going to cover.",
+    "Even experienced speakers say they never completely lose them.",
+    "Ask yourself what they already know and what might interest them.",
+    "A slide full of long sentences is more likely to distract than help."
+   ],
+   "answer": 4,
+   "explanation": "Чітка структура → на початку скажи, про що говоритимеш; слухачі бачать, куди рухається виступ.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-sent"
+  },
+  {
+   "id": "eng-v7-sent-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [14]. Two options are extra.",
+   "passage": "Standing in front of a class can make even confident students nervous. The good news is that presenting is a skill, not a talent you are born with. [11]\n\nStart by thinking about your audience rather than yourself. [12] If you know what they want to learn, you will find it much easier to decide what to include.\n\nNext, plan a clear structure. [13] Listeners remember a talk far better when they can see where it is going.\n\nSlides can help, but only if they are simple. [14] Your audience cannot read and listen at the same time.\n\nPractise out loud, ideally in front of a friend or family member. [15] It will also show you which parts are too long.\n\nFinally, accept that you will feel some nerves. [16] A little adrenaline can actually make you sound more energetic.",
+   "options": [
+    "Reading your notes word for word is the safest approach.",
+    "Most teachers prefer written reports to presentations.",
+    "Like any skill, it improves with practice and a few simple techniques.",
+    "Hearing yourself speak helps you notice words you stumble over.",
+    "Tell them at the beginning what you are going to cover.",
+    "Even experienced speakers say they never completely lose them.",
+    "Ask yourself what they already know and what might interest them.",
+    "A slide full of long sentences is more likely to distract than help."
+   ],
+   "answer": 7,
+   "explanation": "Прості слайди → слайд з довгими реченнями відволікає; аудиторія не може одночасно читати й слухати.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-sent"
+  },
+  {
+   "id": "eng-v7-sent-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [15]. Two options are extra.",
+   "passage": "Standing in front of a class can make even confident students nervous. The good news is that presenting is a skill, not a talent you are born with. [11]\n\nStart by thinking about your audience rather than yourself. [12] If you know what they want to learn, you will find it much easier to decide what to include.\n\nNext, plan a clear structure. [13] Listeners remember a talk far better when they can see where it is going.\n\nSlides can help, but only if they are simple. [14] Your audience cannot read and listen at the same time.\n\nPractise out loud, ideally in front of a friend or family member. [15] It will also show you which parts are too long.\n\nFinally, accept that you will feel some nerves. [16] A little adrenaline can actually make you sound more energetic.",
+   "options": [
+    "Reading your notes word for word is the safest approach.",
+    "Most teachers prefer written reports to presentations.",
+    "Like any skill, it improves with practice and a few simple techniques.",
+    "Hearing yourself speak helps you notice words you stumble over.",
+    "Tell them at the beginning what you are going to cover.",
+    "Even experienced speakers say they never completely lose them.",
+    "Ask yourself what they already know and what might interest them.",
+    "A slide full of long sentences is more likely to distract than help."
+   ],
+   "answer": 3,
+   "explanation": "Практикуйся вголос → чуєш, на яких словах спотикаєшся; also — ще й видно задовгі частини.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-sent"
+  },
+  {
+   "id": "eng-v7-sent-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [16]. Two options are extra.",
+   "passage": "Standing in front of a class can make even confident students nervous. The good news is that presenting is a skill, not a talent you are born with. [11]\n\nStart by thinking about your audience rather than yourself. [12] If you know what they want to learn, you will find it much easier to decide what to include.\n\nNext, plan a clear structure. [13] Listeners remember a talk far better when they can see where it is going.\n\nSlides can help, but only if they are simple. [14] Your audience cannot read and listen at the same time.\n\nPractise out loud, ideally in front of a friend or family member. [15] It will also show you which parts are too long.\n\nFinally, accept that you will feel some nerves. [16] A little adrenaline can actually make you sound more energetic.",
+   "options": [
+    "Reading your notes word for word is the safest approach.",
+    "Most teachers prefer written reports to presentations.",
+    "Like any skill, it improves with practice and a few simple techniques.",
+    "Hearing yourself speak helps you notice words you stumble over.",
+    "Tell them at the beginning what you are going to cover.",
+    "Even experienced speakers say they never completely lose them.",
+    "Ask yourself what they already know and what might interest them.",
+    "A slide full of long sentences is more likely to distract than help."
+   ],
+   "answer": 5,
+   "explanation": "Хвилювання буде → навіть досвідчені промовці не позбуваються його (them = nerves). Порада читати нотатки дослівно суперечить тексту.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-sent"
+  },
+  {
+   "id": "eng-v7-phrase-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [17]. Two options are extra.",
+   "passage": "Bike-sharing schemes now operate in hundreds of cities around the world. The idea is simple: you unlock a bike with an app, ride it across town and leave it [17].\n\nSupporters say the schemes reduce traffic and pollution, [18]. In some cities, people who once drove short distances now cycle instead.\n\nHowever, the first schemes faced serious problems. Bikes were often left blocking pavements, [19], and many were damaged or stolen. Some companies went out of business within a year.\n\nCities have learned from these mistakes. Many now require bikes to be returned to marked parking areas, [20]. Others have built more cycle lanes, [21].\n\nExperts agree that bike-sharing works best when it is part of a wider plan. A bike is only useful [22].",
+   "options": [
+    "because many people do not feel safe cycling in traffic",
+    "if people can ride it safely to where they need to go",
+    "so the schemes were closed in every city",
+    "while also encouraging people to be more active",
+    "which made life difficult for pedestrians and wheelchair users",
+    "at a station or parking area near your destination",
+    "and users who ignore this rule pay a fine",
+    "which is why bikes are usually free for tourists"
+   ],
+   "answer": 5,
+   "explanation": "Leave it at a station or parking area — де залишають велосипед.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-phrase"
+  },
+  {
+   "id": "eng-v7-phrase-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [18]. Two options are extra.",
+   "passage": "Bike-sharing schemes now operate in hundreds of cities around the world. The idea is simple: you unlock a bike with an app, ride it across town and leave it [17].\n\nSupporters say the schemes reduce traffic and pollution, [18]. In some cities, people who once drove short distances now cycle instead.\n\nHowever, the first schemes faced serious problems. Bikes were often left blocking pavements, [19], and many were damaged or stolen. Some companies went out of business within a year.\n\nCities have learned from these mistakes. Many now require bikes to be returned to marked parking areas, [20]. Others have built more cycle lanes, [21].\n\nExperts agree that bike-sharing works best when it is part of a wider plan. A bike is only useful [22].",
+   "options": [
+    "because many people do not feel safe cycling in traffic",
+    "if people can ride it safely to where they need to go",
+    "so the schemes were closed in every city",
+    "while also encouraging people to be more active",
+    "which made life difficult for pedestrians and wheelchair users",
+    "at a station or parking area near your destination",
+    "and users who ignore this rule pay a fine",
+    "which is why bikes are usually free for tourists"
+   ],
+   "answer": 3,
+   "explanation": "Зменшують затори й забруднення, водночас заохочуючи рухатися.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-phrase"
+  },
+  {
+   "id": "eng-v7-phrase-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [19]. Two options are extra.",
+   "passage": "Bike-sharing schemes now operate in hundreds of cities around the world. The idea is simple: you unlock a bike with an app, ride it across town and leave it [17].\n\nSupporters say the schemes reduce traffic and pollution, [18]. In some cities, people who once drove short distances now cycle instead.\n\nHowever, the first schemes faced serious problems. Bikes were often left blocking pavements, [19], and many were damaged or stolen. Some companies went out of business within a year.\n\nCities have learned from these mistakes. Many now require bikes to be returned to marked parking areas, [20]. Others have built more cycle lanes, [21].\n\nExperts agree that bike-sharing works best when it is part of a wider plan. A bike is only useful [22].",
+   "options": [
+    "because many people do not feel safe cycling in traffic",
+    "if people can ride it safely to where they need to go",
+    "so the schemes were closed in every city",
+    "while also encouraging people to be more active",
+    "which made life difficult for pedestrians and wheelchair users",
+    "at a station or parking area near your destination",
+    "and users who ignore this rule pay a fine",
+    "which is why bikes are usually free for tourists"
+   ],
+   "answer": 4,
+   "explanation": "Велосипеди на тротуарах заважали пішоходам і людям на візках.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-phrase"
+  },
+  {
+   "id": "eng-v7-phrase-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [20]. Two options are extra.",
+   "passage": "Bike-sharing schemes now operate in hundreds of cities around the world. The idea is simple: you unlock a bike with an app, ride it across town and leave it [17].\n\nSupporters say the schemes reduce traffic and pollution, [18]. In some cities, people who once drove short distances now cycle instead.\n\nHowever, the first schemes faced serious problems. Bikes were often left blocking pavements, [19], and many were damaged or stolen. Some companies went out of business within a year.\n\nCities have learned from these mistakes. Many now require bikes to be returned to marked parking areas, [20]. Others have built more cycle lanes, [21].\n\nExperts agree that bike-sharing works best when it is part of a wider plan. A bike is only useful [22].",
+   "options": [
+    "because many people do not feel safe cycling in traffic",
+    "if people can ride it safely to where they need to go",
+    "so the schemes were closed in every city",
+    "while also encouraging people to be more active",
+    "which made life difficult for pedestrians and wheelchair users",
+    "at a station or parking area near your destination",
+    "and users who ignore this rule pay a fine",
+    "which is why bikes are usually free for tourists"
+   ],
+   "answer": 6,
+   "explanation": "Правило повертати на стоянки — і штраф за порушення.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-phrase"
+  },
+  {
+   "id": "eng-v7-phrase-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [21]. Two options are extra.",
+   "passage": "Bike-sharing schemes now operate in hundreds of cities around the world. The idea is simple: you unlock a bike with an app, ride it across town and leave it [17].\n\nSupporters say the schemes reduce traffic and pollution, [18]. In some cities, people who once drove short distances now cycle instead.\n\nHowever, the first schemes faced serious problems. Bikes were often left blocking pavements, [19], and many were damaged or stolen. Some companies went out of business within a year.\n\nCities have learned from these mistakes. Many now require bikes to be returned to marked parking areas, [20]. Others have built more cycle lanes, [21].\n\nExperts agree that bike-sharing works best when it is part of a wider plan. A bike is only useful [22].",
+   "options": [
+    "because many people do not feel safe cycling in traffic",
+    "if people can ride it safely to where they need to go",
+    "so the schemes were closed in every city",
+    "while also encouraging people to be more active",
+    "which made life difficult for pedestrians and wheelchair users",
+    "at a station or parking area near your destination",
+    "and users who ignore this rule pay a fine",
+    "which is why bikes are usually free for tourists"
+   ],
+   "answer": 0,
+   "explanation": "Більше велодоріжок, бо багато хто боїться їздити в потоці машин.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-phrase"
+  },
+  {
+   "id": "eng-v7-phrase-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [22]. Two options are extra.",
+   "passage": "Bike-sharing schemes now operate in hundreds of cities around the world. The idea is simple: you unlock a bike with an app, ride it across town and leave it [17].\n\nSupporters say the schemes reduce traffic and pollution, [18]. In some cities, people who once drove short distances now cycle instead.\n\nHowever, the first schemes faced serious problems. Bikes were often left blocking pavements, [19], and many were damaged or stolen. Some companies went out of business within a year.\n\nCities have learned from these mistakes. Many now require bikes to be returned to marked parking areas, [20]. Others have built more cycle lanes, [21].\n\nExperts agree that bike-sharing works best when it is part of a wider plan. A bike is only useful [22].",
+   "options": [
+    "because many people do not feel safe cycling in traffic",
+    "if people can ride it safely to where they need to go",
+    "so the schemes were closed in every city",
+    "while also encouraging people to be more active",
+    "which made life difficult for pedestrians and wheelchair users",
+    "at a station or parking area near your destination",
+    "and users who ignore this rule pay a fine",
+    "which is why bikes are usually free for tourists"
+   ],
+   "answer": 1,
+   "explanation": "Велосипед корисний, лише якщо ним безпечно доїхати куди треба. Варіант про закриття в усіх містах суперечить тексту.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-phrase"
+  },
+  {
+   "id": "eng-v7-grammar-1",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [23].",
+   "passage": "A message to a friend\n\nHi Max! Sorry I [23] you back yesterday – my phone battery was dead. I [24] for my exams all week, so I haven't had much free time. By the time you get this message, I [25] my last test! Shall we meet on Saturday? There's a new café near the station [26] everyone is talking about. If you [27] free, text me and we'll decide on a time.",
+   "options": [
+    "wasn't calling",
+    "haven't called",
+    "didn't call",
+    "don't call"
+   ],
+   "answer": 2,
+   "explanation": "Yesterday — завершений минулий момент: Past Simple didn’t call.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-grammar"
+  },
+  {
+   "id": "eng-v7-grammar-2",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [24].",
+   "passage": "A message to a friend\n\nHi Max! Sorry I [23] you back yesterday – my phone battery was dead. I [24] for my exams all week, so I haven't had much free time. By the time you get this message, I [25] my last test! Shall we meet on Saturday? There's a new café near the station [26] everyone is talking about. If you [27] free, text me and we'll decide on a time.",
+   "options": [
+    "studied",
+    "had studied",
+    "am studying",
+    "have been studying"
+   ],
+   "answer": 3,
+   "explanation": "All week і наслідок зараз (so I haven’t had much free time) — Present Perfect Continuous.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-grammar"
+  },
+  {
+   "id": "eng-v7-grammar-3",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [25].",
+   "passage": "A message to a friend\n\nHi Max! Sorry I [23] you back yesterday – my phone battery was dead. I [24] for my exams all week, so I haven't had much free time. By the time you get this message, I [25] my last test! Shall we meet on Saturday? There's a new café near the station [26] everyone is talking about. If you [27] free, text me and we'll decide on a time.",
+   "options": [
+    "will have finished",
+    "will finish",
+    "finish",
+    "have finished"
+   ],
+   "answer": 0,
+   "explanation": "By the time you get this — дія завершиться до моменту в майбутньому: Future Perfect.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-grammar"
+  },
+  {
+   "id": "eng-v7-grammar-4",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [26].",
+   "passage": "A message to a friend\n\nHi Max! Sorry I [23] you back yesterday – my phone battery was dead. I [24] for my exams all week, so I haven't had much free time. By the time you get this message, I [25] my last test! Shall we meet on Saturday? There's a new café near the station [26] everyone is talking about. If you [27] free, text me and we'll decide on a time.",
+   "options": [
+    "where",
+    "that",
+    "who",
+    "what"
+   ],
+   "answer": 1,
+   "explanation": "Означальне речення про предмет (café), який обговорюють: that. Where потребувало б іншої будови (where everyone meets).",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-grammar"
+  },
+  {
+   "id": "eng-v7-grammar-5",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [27].",
+   "passage": "A message to a friend\n\nHi Max! Sorry I [23] you back yesterday – my phone battery was dead. I [24] for my exams all week, so I haven't had much free time. By the time you get this message, I [25] my last test! Shall we meet on Saturday? There's a new café near the station [26] everyone is talking about. If you [27] free, text me and we'll decide on a time.",
+   "options": [
+    "would be",
+    "will be",
+    "are",
+    "were"
+   ],
+   "answer": 2,
+   "explanation": "Реальна умова в майбутньому — First Conditional: if + Present Simple, тож are.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-grammar"
+  },
+  {
+   "id": "eng-v7-vocab-1",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [28].",
+   "passage": "Saving energy at home\n\nSmall changes at home can [28] a big difference to your energy bills. For example, remember to [29] off lights when you leave a room. Washing clothes at a lower temperature uses less electricity and also helps them [30] longer. If your windows let in cold air, it may be worth investing in better insulation – it will [31] for itself within a few years. Most importantly, try to [32] these habits every day, not just when the bills arrive.",
+   "options": [
+    "give",
+    "make",
+    "do",
+    "take"
+   ],
+   "answer": 1,
+   "explanation": "Стале сполучення make a difference.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-vocab"
+  },
+  {
+   "id": "eng-v7-vocab-2",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [29].",
+   "passage": "Saving energy at home\n\nSmall changes at home can [28] a big difference to your energy bills. For example, remember to [29] off lights when you leave a room. Washing clothes at a lower temperature uses less electricity and also helps them [30] longer. If your windows let in cold air, it may be worth investing in better insulation – it will [31] for itself within a few years. Most importantly, try to [32] these habits every day, not just when the bills arrive.",
+   "options": [
+    "close",
+    "set",
+    "switch",
+    "put"
+   ],
+   "answer": 2,
+   "explanation": "Switch off — вимикати світло.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-vocab"
+  },
+  {
+   "id": "eng-v7-vocab-3",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [30].",
+   "passage": "Saving energy at home\n\nSmall changes at home can [28] a big difference to your energy bills. For example, remember to [29] off lights when you leave a room. Washing clothes at a lower temperature uses less electricity and also helps them [30] longer. If your windows let in cold air, it may be worth investing in better insulation – it will [31] for itself within a few years. Most importantly, try to [32] these habits every day, not just when the bills arrive.",
+   "options": [
+    "last",
+    "remain",
+    "stay",
+    "hold"
+   ],
+   "answer": 0,
+   "explanation": "Last longer — довше служити.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-vocab"
+  },
+  {
+   "id": "eng-v7-vocab-4",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [31].",
+   "passage": "Saving energy at home\n\nSmall changes at home can [28] a big difference to your energy bills. For example, remember to [29] off lights when you leave a room. Washing clothes at a lower temperature uses less electricity and also helps them [30] longer. If your windows let in cold air, it may be worth investing in better insulation – it will [31] for itself within a few years. Most importantly, try to [32] these habits every day, not just when the bills arrive.",
+   "options": [
+    "cost",
+    "pay",
+    "buy",
+    "earn"
+   ],
+   "answer": 1,
+   "explanation": "Pay for itself — окупитися.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-vocab"
+  },
+  {
+   "id": "eng-v7-vocab-5",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [32].",
+   "passage": "Saving energy at home\n\nSmall changes at home can [28] a big difference to your energy bills. For example, remember to [29] off lights when you leave a room. Washing clothes at a lower temperature uses less electricity and also helps them [30] longer. If your windows let in cold air, it may be worth investing in better insulation – it will [31] for itself within a few years. Most importantly, try to [32] these habits every day, not just when the bills arrive.",
+   "options": [
+    "keep on",
+    "stick to",
+    "hold on",
+    "carry"
+   ],
+   "answer": 1,
+   "explanation": "Stick to habits — дотримуватися звичок. Keep on потребує -ing, hold on — «зачекати».",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v7-vocab"
+  },
+  {
+   "id": "eng-v8-notice-1",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Ski and snowboard sets available for hire by the day or week at the reception desk.",
+   "options": [
+    "A lost pet",
+    "A space is available",
+    "Opening hours have changed",
+    "The price includes a meal",
+    "Quiet is required",
+    "Equipment can be rented",
+    "Not suitable for beginners",
+    "Only for registered students"
+   ],
+   "answer": 5,
+   "explanation": "Available for hire — спорядження можна взяти напрокат.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v8-notices"
+  },
+  {
+   "id": "eng-v8-notice-2",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Missing since Sunday: a small grey cat with a red collar answering to 'Smoke'. Please call if you see her.",
+   "options": [
+    "A lost pet",
+    "A space is available",
+    "Opening hours have changed",
+    "The price includes a meal",
+    "Quiet is required",
+    "Equipment can be rented",
+    "Not suitable for beginners",
+    "Only for registered students"
+   ],
+   "answer": 0,
+   "explanation": "Missing … a small grey cat — загубилася тварина.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v8-notices"
+  },
+  {
+   "id": "eng-v8-notice-3",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Advanced climbing course: participants must already be able to lead a route without help.",
+   "options": [
+    "A lost pet",
+    "A space is available",
+    "Opening hours have changed",
+    "The price includes a meal",
+    "Quiet is required",
+    "Equipment can be rented",
+    "Not suitable for beginners",
+    "Only for registered students"
+   ],
+   "answer": 6,
+   "explanation": "Advanced … must already be able — курс не для початківців. Про реєстрацію студентів не сказано.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v8-notices"
+  },
+  {
+   "id": "eng-v8-notice-4",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Room to rent in a shared flat near the university, available from 1 September.",
+   "options": [
+    "A lost pet",
+    "A space is available",
+    "Opening hours have changed",
+    "The price includes a meal",
+    "Quiet is required",
+    "Equipment can be rented",
+    "Not suitable for beginners",
+    "Only for registered students"
+   ],
+   "answer": 1,
+   "explanation": "Room to rent, available — є вільне місце. Це не «Only for registered students»: умови для орендаря не названі.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v8-notices"
+  },
+  {
+   "id": "eng-v8-notice-5",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Cooking evening: €15 per person, dinner and a drink included.",
+   "options": [
+    "A lost pet",
+    "A space is available",
+    "Opening hours have changed",
+    "The price includes a meal",
+    "Quiet is required",
+    "Equipment can be rented",
+    "Not suitable for beginners",
+    "Only for registered students"
+   ],
+   "answer": 3,
+   "explanation": "Dinner and a drink included — у ціну входить їжа.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v8-notices"
+  },
+  {
+   "id": "eng-v8-read-1",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "Why did Halyna start the project?",
+   "passage": "In the small town of Ostrivka, history teacher Halyna Bondar had a problem: the nearest museum was eighty kilometres away, and most of her students had never visited it. 'They thought history was something that happened somewhere else, to other people,' she says.\n\nHer solution was to turn the town itself into a museum. With her Year 10 class, she chose twelve places with a story to tell – the old mill, the railway station, a house where a famous poet had once stayed. The students interviewed older residents, searched the town archive and photographed old documents. Then they wrote a short text for each place and attached a sign with a code that visitors can scan with a phone.\n\nThe work was harder than anyone expected. Some stories turned out to be legends with no evidence behind them, and the students had to decide whether to include them. In the end they did, but with a clear note saying which parts could be proved and which could not. 'That discussion taught them more about how historians work than any textbook,' Halyna says.\n\nThe trail opened last spring, and the reaction surprised everyone. Tourists began to stop in Ostrivka on their way to the mountains, and a café near the station started selling postcards designed by the students. Several older residents, who had at first been shy about giving interviews, now offer to guide visitors themselves.\n\nHalyna admits the project is far from finished. Two of the signs have already been damaged by the weather, and the texts exist only in Ukrainian. Next year's class plans to replace the signs and add English translations. 'A museum is never complete,' she says. 'Neither is a town's memory.'",
+   "options": [
+    "The regional museum asked her for help.",
+    "The town council wanted more tourists.",
+    "Her class had to write about a famous poet.",
+    "Her students thought history had nothing to do with their own town."
+   ],
+   "answer": 3,
+   "explanation": "They thought history was something that happened somewhere else, to other people. Туристи — несподіваний наслідок, а не причина.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v8-text"
+  },
+  {
+   "id": "eng-v8-read-2",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "How did the students collect information?",
+   "passage": "In the small town of Ostrivka, history teacher Halyna Bondar had a problem: the nearest museum was eighty kilometres away, and most of her students had never visited it. 'They thought history was something that happened somewhere else, to other people,' she says.\n\nHer solution was to turn the town itself into a museum. With her Year 10 class, she chose twelve places with a story to tell – the old mill, the railway station, a house where a famous poet had once stayed. The students interviewed older residents, searched the town archive and photographed old documents. Then they wrote a short text for each place and attached a sign with a code that visitors can scan with a phone.\n\nThe work was harder than anyone expected. Some stories turned out to be legends with no evidence behind them, and the students had to decide whether to include them. In the end they did, but with a clear note saying which parts could be proved and which could not. 'That discussion taught them more about how historians work than any textbook,' Halyna says.\n\nThe trail opened last spring, and the reaction surprised everyone. Tourists began to stop in Ostrivka on their way to the mountains, and a café near the station started selling postcards designed by the students. Several older residents, who had at first been shy about giving interviews, now offer to guide visitors themselves.\n\nHalyna admits the project is far from finished. Two of the signs have already been damaged by the weather, and the texts exist only in Ukrainian. Next year's class plans to replace the signs and add English translations. 'A museum is never complete,' she says. 'Neither is a town's memory.'",
+   "options": [
+    "Only from history textbooks.",
+    "By visiting the regional museum.",
+    "By copying texts from other trails.",
+    "By interviewing older residents and searching the town archive."
+   ],
+   "answer": 3,
+   "explanation": "The students interviewed older residents, searched the town archive and photographed old documents.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v8-text"
+  },
+  {
+   "id": "eng-v8-read-3",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What did the students decide to do with the legends?",
+   "passage": "In the small town of Ostrivka, history teacher Halyna Bondar had a problem: the nearest museum was eighty kilometres away, and most of her students had never visited it. 'They thought history was something that happened somewhere else, to other people,' she says.\n\nHer solution was to turn the town itself into a museum. With her Year 10 class, she chose twelve places with a story to tell – the old mill, the railway station, a house where a famous poet had once stayed. The students interviewed older residents, searched the town archive and photographed old documents. Then they wrote a short text for each place and attached a sign with a code that visitors can scan with a phone.\n\nThe work was harder than anyone expected. Some stories turned out to be legends with no evidence behind them, and the students had to decide whether to include them. In the end they did, but with a clear note saying which parts could be proved and which could not. 'That discussion taught them more about how historians work than any textbook,' Halyna says.\n\nThe trail opened last spring, and the reaction surprised everyone. Tourists began to stop in Ostrivka on their way to the mountains, and a café near the station started selling postcards designed by the students. Several older residents, who had at first been shy about giving interviews, now offer to guide visitors themselves.\n\nHalyna admits the project is far from finished. Two of the signs have already been damaged by the weather, and the texts exist only in Ukrainian. Next year's class plans to replace the signs and add English translations. 'A museum is never complete,' she says. 'Neither is a town's memory.'",
+   "options": [
+    "Include them with a note on what could be proved.",
+    "Replace them with new stories.",
+    "Leave them out completely.",
+    "Tell them only to tourists."
+   ],
+   "answer": 0,
+   "explanation": "In the end they did [include them], but with a clear note saying which parts could be proved.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v8-text"
+  },
+  {
+   "id": "eng-v8-read-4",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "Which result of the trail was unexpected?",
+   "passage": "In the small town of Ostrivka, history teacher Halyna Bondar had a problem: the nearest museum was eighty kilometres away, and most of her students had never visited it. 'They thought history was something that happened somewhere else, to other people,' she says.\n\nHer solution was to turn the town itself into a museum. With her Year 10 class, she chose twelve places with a story to tell – the old mill, the railway station, a house where a famous poet had once stayed. The students interviewed older residents, searched the town archive and photographed old documents. Then they wrote a short text for each place and attached a sign with a code that visitors can scan with a phone.\n\nThe work was harder than anyone expected. Some stories turned out to be legends with no evidence behind them, and the students had to decide whether to include them. In the end they did, but with a clear note saying which parts could be proved and which could not. 'That discussion taught them more about how historians work than any textbook,' Halyna says.\n\nThe trail opened last spring, and the reaction surprised everyone. Tourists began to stop in Ostrivka on their way to the mountains, and a café near the station started selling postcards designed by the students. Several older residents, who had at first been shy about giving interviews, now offer to guide visitors themselves.\n\nHalyna admits the project is far from finished. Two of the signs have already been damaged by the weather, and the texts exist only in Ukrainian. Next year's class plans to replace the signs and add English translations. 'A museum is never complete,' she says. 'Neither is a town's memory.'",
+   "options": [
+    "Older residents began to act as guides for visitors.",
+    "The students opened a café.",
+    "The regional museum closed.",
+    "Visitors stole several signs."
+   ],
+   "answer": 0,
+   "explanation": "Residents, who had at first been shy… now offer to guide visitors. Кав’ярня вже існувала й лише продає листівки учнів; таблички пошкодила погода, а не крадії.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v8-text"
+  },
+  {
+   "id": "eng-v8-read-5",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What problem does the project still have?",
+   "passage": "In the small town of Ostrivka, history teacher Halyna Bondar had a problem: the nearest museum was eighty kilometres away, and most of her students had never visited it. 'They thought history was something that happened somewhere else, to other people,' she says.\n\nHer solution was to turn the town itself into a museum. With her Year 10 class, she chose twelve places with a story to tell – the old mill, the railway station, a house where a famous poet had once stayed. The students interviewed older residents, searched the town archive and photographed old documents. Then they wrote a short text for each place and attached a sign with a code that visitors can scan with a phone.\n\nThe work was harder than anyone expected. Some stories turned out to be legends with no evidence behind them, and the students had to decide whether to include them. In the end they did, but with a clear note saying which parts could be proved and which could not. 'That discussion taught them more about how historians work than any textbook,' Halyna says.\n\nThe trail opened last spring, and the reaction surprised everyone. Tourists began to stop in Ostrivka on their way to the mountains, and a café near the station started selling postcards designed by the students. Several older residents, who had at first been shy about giving interviews, now offer to guide visitors themselves.\n\nHalyna admits the project is far from finished. Two of the signs have already been damaged by the weather, and the texts exist only in Ukrainian. Next year's class plans to replace the signs and add English translations. 'A museum is never complete,' she says. 'Neither is a town's memory.'",
+   "options": [
+    "Some signs need replacing and the texts need translating.",
+    "The trail has too many places on it.",
+    "Tourists do not scan the codes.",
+    "Residents refuse to take part."
+   ],
+   "answer": 0,
+   "explanation": "Two of the signs have already been damaged… the texts exist only in Ukrainian — наступний клас замінить таблички й додасть переклади.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v8-text"
+  },
+  {
+   "id": "eng-v8-sent-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [11]. Two options are extra.",
+   "passage": "Many parents encourage their children to learn a musical instrument, but the benefits go well beyond being able to play a tune. [11]\n\nFirst, playing music trains the memory. [12] Over time, this makes it easier to remember other kinds of information too.\n\nMusic also teaches patience. [13] Learners discover that progress comes from regular practice, not sudden talent.\n\nPlaying in a group adds another advantage. [14] Musicians must listen carefully to one another and adjust their playing.\n\nOf course, not every learner will become a professional. [15] Even adults who stopped playing years ago often say the skills stayed with them.\n\nIf you have always wanted to try, it is never too late to start. [16]",
+   "options": [
+    "Most instruments are too expensive for schools to buy.",
+    "Research suggests it can also improve concentration and confidence.",
+    "Many teachers offer lessons for complete beginners of any age.",
+    "However, that was never the main point.",
+    "In an orchestra or band, nobody can succeed alone.",
+    "Singing is the only activity that has these effects.",
+    "Musicians have to remember long sequences of notes and movements.",
+    "A difficult piece may take weeks of daily effort to master."
+   ],
+   "answer": 1,
+   "explanation": "Користь більша за вміння зіграти мелодію → дослідження: ще й концентрація та впевненість.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-sent"
+  },
+  {
+   "id": "eng-v8-sent-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [12]. Two options are extra.",
+   "passage": "Many parents encourage their children to learn a musical instrument, but the benefits go well beyond being able to play a tune. [11]\n\nFirst, playing music trains the memory. [12] Over time, this makes it easier to remember other kinds of information too.\n\nMusic also teaches patience. [13] Learners discover that progress comes from regular practice, not sudden talent.\n\nPlaying in a group adds another advantage. [14] Musicians must listen carefully to one another and adjust their playing.\n\nOf course, not every learner will become a professional. [15] Even adults who stopped playing years ago often say the skills stayed with them.\n\nIf you have always wanted to try, it is never too late to start. [16]",
+   "options": [
+    "Most instruments are too expensive for schools to buy.",
+    "Research suggests it can also improve concentration and confidence.",
+    "Many teachers offer lessons for complete beginners of any age.",
+    "However, that was never the main point.",
+    "In an orchestra or band, nobody can succeed alone.",
+    "Singing is the only activity that has these effects.",
+    "Musicians have to remember long sequences of notes and movements.",
+    "A difficult piece may take weeks of daily effort to master."
+   ],
+   "answer": 6,
+   "explanation": "Музика тренує пам’ять → музиканти запам’ятовують довгі послідовності нот і рухів; this далі відсилає до цього.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-sent"
+  },
+  {
+   "id": "eng-v8-sent-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [13]. Two options are extra.",
+   "passage": "Many parents encourage their children to learn a musical instrument, but the benefits go well beyond being able to play a tune. [11]\n\nFirst, playing music trains the memory. [12] Over time, this makes it easier to remember other kinds of information too.\n\nMusic also teaches patience. [13] Learners discover that progress comes from regular practice, not sudden talent.\n\nPlaying in a group adds another advantage. [14] Musicians must listen carefully to one another and adjust their playing.\n\nOf course, not every learner will become a professional. [15] Even adults who stopped playing years ago often say the skills stayed with them.\n\nIf you have always wanted to try, it is never too late to start. [16]",
+   "options": [
+    "Most instruments are too expensive for schools to buy.",
+    "Research suggests it can also improve concentration and confidence.",
+    "Many teachers offer lessons for complete beginners of any age.",
+    "However, that was never the main point.",
+    "In an orchestra or band, nobody can succeed alone.",
+    "Singing is the only activity that has these effects.",
+    "Musicians have to remember long sequences of notes and movements.",
+    "A difficult piece may take weeks of daily effort to master."
+   ],
+   "answer": 7,
+   "explanation": "Музика вчить терпіння → складний твір потребує тижнів щоденної праці.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-sent"
+  },
+  {
+   "id": "eng-v8-sent-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [14]. Two options are extra.",
+   "passage": "Many parents encourage their children to learn a musical instrument, but the benefits go well beyond being able to play a tune. [11]\n\nFirst, playing music trains the memory. [12] Over time, this makes it easier to remember other kinds of information too.\n\nMusic also teaches patience. [13] Learners discover that progress comes from regular practice, not sudden talent.\n\nPlaying in a group adds another advantage. [14] Musicians must listen carefully to one another and adjust their playing.\n\nOf course, not every learner will become a professional. [15] Even adults who stopped playing years ago often say the skills stayed with them.\n\nIf you have always wanted to try, it is never too late to start. [16]",
+   "options": [
+    "Most instruments are too expensive for schools to buy.",
+    "Research suggests it can also improve concentration and confidence.",
+    "Many teachers offer lessons for complete beginners of any age.",
+    "However, that was never the main point.",
+    "In an orchestra or band, nobody can succeed alone.",
+    "Singing is the only activity that has these effects.",
+    "Musicians have to remember long sequences of notes and movements.",
+    "A difficult piece may take weeks of daily effort to master."
+   ],
+   "answer": 4,
+   "explanation": "Перевага гри в гурті → в оркестрі ніхто не досягне успіху сам; далі — слухати одне одного.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-sent"
+  },
+  {
+   "id": "eng-v8-sent-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [15]. Two options are extra.",
+   "passage": "Many parents encourage their children to learn a musical instrument, but the benefits go well beyond being able to play a tune. [11]\n\nFirst, playing music trains the memory. [12] Over time, this makes it easier to remember other kinds of information too.\n\nMusic also teaches patience. [13] Learners discover that progress comes from regular practice, not sudden talent.\n\nPlaying in a group adds another advantage. [14] Musicians must listen carefully to one another and adjust their playing.\n\nOf course, not every learner will become a professional. [15] Even adults who stopped playing years ago often say the skills stayed with them.\n\nIf you have always wanted to try, it is never too late to start. [16]",
+   "options": [
+    "Most instruments are too expensive for schools to buy.",
+    "Research suggests it can also improve concentration and confidence.",
+    "Many teachers offer lessons for complete beginners of any age.",
+    "However, that was never the main point.",
+    "In an orchestra or band, nobody can succeed alone.",
+    "Singing is the only activity that has these effects.",
+    "Musicians have to remember long sequences of notes and movements.",
+    "A difficult piece may take weeks of daily effort to master."
+   ],
+   "answer": 3,
+   "explanation": "Не кожен стане професіоналом → але це ніколи й не було головним; навички лишаються.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-sent"
+  },
+  {
+   "id": "eng-v8-sent-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [16]. Two options are extra.",
+   "passage": "Many parents encourage their children to learn a musical instrument, but the benefits go well beyond being able to play a tune. [11]\n\nFirst, playing music trains the memory. [12] Over time, this makes it easier to remember other kinds of information too.\n\nMusic also teaches patience. [13] Learners discover that progress comes from regular practice, not sudden talent.\n\nPlaying in a group adds another advantage. [14] Musicians must listen carefully to one another and adjust their playing.\n\nOf course, not every learner will become a professional. [15] Even adults who stopped playing years ago often say the skills stayed with them.\n\nIf you have always wanted to try, it is never too late to start. [16]",
+   "options": [
+    "Most instruments are too expensive for schools to buy.",
+    "Research suggests it can also improve concentration and confidence.",
+    "Many teachers offer lessons for complete beginners of any age.",
+    "However, that was never the main point.",
+    "In an orchestra or band, nobody can succeed alone.",
+    "Singing is the only activity that has these effects.",
+    "Musicians have to remember long sequences of notes and movements.",
+    "A difficult piece may take weeks of daily effort to master."
+   ],
+   "answer": 2,
+   "explanation": "Ніколи не пізно почати → уроки для початківців будь-якого віку. Речення про спів суперечить тексту.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-sent"
+  },
+  {
+   "id": "eng-v8-phrase-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [17]. Two options are extra.",
+   "passage": "Swimming in rivers, lakes and the sea, often called 'wild swimming', has become popular [17]. Many people say that cold water makes them feel more awake and helps them cope with stress.\n\nHowever, swimming outdoors is very different from swimming in a pool. The water can be much colder [18], and currents can be strong even when the surface looks calm.\n\nExperts advise beginners to swim with others [19]. It is also important to enter the water slowly, [20].\n\nWater quality is another concern. After heavy rain, rivers can become polluted, [21].\n\nWith the right preparation, wild swimming can be a safe and enjoyable activity. As one experienced swimmer puts it, 'Respect the water, [22].'",
+   "options": [
+    "than people expect, even in summer",
+    "with people of all ages in recent years",
+    "which is why swimming is forbidden in all rivers",
+    "because pools are usually closed in winter",
+    "and it will give you a great deal in return",
+    "so it is wise to check local reports before going in",
+    "giving the body time to get used to the cold",
+    "and to stay close to the shore at first"
+   ],
+   "answer": 1,
+   "explanation": "Has become popular with people of all ages in recent years — коли й серед кого.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-phrase"
+  },
+  {
+   "id": "eng-v8-phrase-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [18]. Two options are extra.",
+   "passage": "Swimming in rivers, lakes and the sea, often called 'wild swimming', has become popular [17]. Many people say that cold water makes them feel more awake and helps them cope with stress.\n\nHowever, swimming outdoors is very different from swimming in a pool. The water can be much colder [18], and currents can be strong even when the surface looks calm.\n\nExperts advise beginners to swim with others [19]. It is also important to enter the water slowly, [20].\n\nWater quality is another concern. After heavy rain, rivers can become polluted, [21].\n\nWith the right preparation, wild swimming can be a safe and enjoyable activity. As one experienced swimmer puts it, 'Respect the water, [22].'",
+   "options": [
+    "than people expect, even in summer",
+    "with people of all ages in recent years",
+    "which is why swimming is forbidden in all rivers",
+    "because pools are usually closed in winter",
+    "and it will give you a great deal in return",
+    "so it is wise to check local reports before going in",
+    "giving the body time to get used to the cold",
+    "and to stay close to the shore at first"
+   ],
+   "answer": 0,
+   "explanation": "Much colder than people expect — після порівняльного ступеня потрібне than.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-phrase"
+  },
+  {
+   "id": "eng-v8-phrase-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [19]. Two options are extra.",
+   "passage": "Swimming in rivers, lakes and the sea, often called 'wild swimming', has become popular [17]. Many people say that cold water makes them feel more awake and helps them cope with stress.\n\nHowever, swimming outdoors is very different from swimming in a pool. The water can be much colder [18], and currents can be strong even when the surface looks calm.\n\nExperts advise beginners to swim with others [19]. It is also important to enter the water slowly, [20].\n\nWater quality is another concern. After heavy rain, rivers can become polluted, [21].\n\nWith the right preparation, wild swimming can be a safe and enjoyable activity. As one experienced swimmer puts it, 'Respect the water, [22].'",
+   "options": [
+    "than people expect, even in summer",
+    "with people of all ages in recent years",
+    "which is why swimming is forbidden in all rivers",
+    "because pools are usually closed in winter",
+    "and it will give you a great deal in return",
+    "so it is wise to check local reports before going in",
+    "giving the body time to get used to the cold",
+    "and to stay close to the shore at first"
+   ],
+   "answer": 7,
+   "explanation": "Плавати з іншими й спершу триматися біля берега — дві поради, з’єднані and.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-phrase"
+  },
+  {
+   "id": "eng-v8-phrase-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [20]. Two options are extra.",
+   "passage": "Swimming in rivers, lakes and the sea, often called 'wild swimming', has become popular [17]. Many people say that cold water makes them feel more awake and helps them cope with stress.\n\nHowever, swimming outdoors is very different from swimming in a pool. The water can be much colder [18], and currents can be strong even when the surface looks calm.\n\nExperts advise beginners to swim with others [19]. It is also important to enter the water slowly, [20].\n\nWater quality is another concern. After heavy rain, rivers can become polluted, [21].\n\nWith the right preparation, wild swimming can be a safe and enjoyable activity. As one experienced swimmer puts it, 'Respect the water, [22].'",
+   "options": [
+    "than people expect, even in summer",
+    "with people of all ages in recent years",
+    "which is why swimming is forbidden in all rivers",
+    "because pools are usually closed in winter",
+    "and it will give you a great deal in return",
+    "so it is wise to check local reports before going in",
+    "giving the body time to get used to the cold",
+    "and to stay close to the shore at first"
+   ],
+   "answer": 6,
+   "explanation": "Заходити повільно, даючи тілу звикнути до холоду.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-phrase"
+  },
+  {
+   "id": "eng-v8-phrase-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [21]. Two options are extra.",
+   "passage": "Swimming in rivers, lakes and the sea, often called 'wild swimming', has become popular [17]. Many people say that cold water makes them feel more awake and helps them cope with stress.\n\nHowever, swimming outdoors is very different from swimming in a pool. The water can be much colder [18], and currents can be strong even when the surface looks calm.\n\nExperts advise beginners to swim with others [19]. It is also important to enter the water slowly, [20].\n\nWater quality is another concern. After heavy rain, rivers can become polluted, [21].\n\nWith the right preparation, wild swimming can be a safe and enjoyable activity. As one experienced swimmer puts it, 'Respect the water, [22].'",
+   "options": [
+    "than people expect, even in summer",
+    "with people of all ages in recent years",
+    "which is why swimming is forbidden in all rivers",
+    "because pools are usually closed in winter",
+    "and it will give you a great deal in return",
+    "so it is wise to check local reports before going in",
+    "giving the body time to get used to the cold",
+    "and to stay close to the shore at first"
+   ],
+   "answer": 5,
+   "explanation": "Після дощу річки бувають забруднені, тож варто перевіряти місцеві повідомлення. Варіант про повну заборону суперечить висновку тексту.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-phrase"
+  },
+  {
+   "id": "eng-v8-phrase-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [22]. Two options are extra.",
+   "passage": "Swimming in rivers, lakes and the sea, often called 'wild swimming', has become popular [17]. Many people say that cold water makes them feel more awake and helps them cope with stress.\n\nHowever, swimming outdoors is very different from swimming in a pool. The water can be much colder [18], and currents can be strong even when the surface looks calm.\n\nExperts advise beginners to swim with others [19]. It is also important to enter the water slowly, [20].\n\nWater quality is another concern. After heavy rain, rivers can become polluted, [21].\n\nWith the right preparation, wild swimming can be a safe and enjoyable activity. As one experienced swimmer puts it, 'Respect the water, [22].'",
+   "options": [
+    "than people expect, even in summer",
+    "with people of all ages in recent years",
+    "which is why swimming is forbidden in all rivers",
+    "because pools are usually closed in winter",
+    "and it will give you a great deal in return",
+    "so it is wise to check local reports before going in",
+    "giving the body time to get used to the cold",
+    "and to stay close to the shore at first"
+   ],
+   "answer": 4,
+   "explanation": "Respect the water, and it will give you a great deal in return — порада з наслідком.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-phrase"
+  },
+  {
+   "id": "eng-v8-grammar-1",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [23].",
+   "passage": "An unusual journey\n\nLast summer my cousin [23] across Ukraine by bike. She [24] the trip for months, so she knew exactly which roads to take. Every evening she [25] a short post about the day. On the tenth day her bike [26] in a village near Poltava, and a local mechanic fixed it for free. She says the trip was the best experience she [27] ever had.",
+   "options": [
+    "had cycled",
+    "cycled",
+    "cycles",
+    "has cycled"
+   ],
+   "answer": 1,
+   "explanation": "Last summer — завершена подія в минулому: Past Simple.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-grammar"
+  },
+  {
+   "id": "eng-v8-grammar-2",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [24].",
+   "passage": "An unusual journey\n\nLast summer my cousin [23] across Ukraine by bike. She [24] the trip for months, so she knew exactly which roads to take. Every evening she [25] a short post about the day. On the tenth day her bike [26] in a village near Poltava, and a local mechanic fixed it for free. She says the trip was the best experience she [27] ever had.",
+   "options": [
+    "is planning",
+    "has planned",
+    "had been planning",
+    "plans"
+   ],
+   "answer": 2,
+   "explanation": "Планування тривало до поїздки, тобто до іншої минулої події: Past Perfect Continuous.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-grammar"
+  },
+  {
+   "id": "eng-v8-grammar-3",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [25].",
+   "passage": "An unusual journey\n\nLast summer my cousin [23] across Ukraine by bike. She [24] the trip for months, so she knew exactly which roads to take. Every evening she [25] a short post about the day. On the tenth day her bike [26] in a village near Poltava, and a local mechanic fixed it for free. She says the trip was the best experience she [27] ever had.",
+   "options": [
+    "wrote",
+    "had written",
+    "writes",
+    "has written"
+   ],
+   "answer": 0,
+   "explanation": "Повторювана дія в минулій розповіді (every evening): Past Simple.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-grammar"
+  },
+  {
+   "id": "eng-v8-grammar-4",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [26].",
+   "passage": "An unusual journey\n\nLast summer my cousin [23] across Ukraine by bike. She [24] the trip for months, so she knew exactly which roads to take. Every evening she [25] a short post about the day. On the tenth day her bike [26] in a village near Poltava, and a local mechanic fixed it for free. She says the trip was the best experience she [27] ever had.",
+   "options": [
+    "broke into",
+    "broke down",
+    "broke up",
+    "broke out"
+   ],
+   "answer": 1,
+   "explanation": "Break down — зламатися (про техніку). Break up — розійтися, break out — спалахнути, break into — вдертися.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-grammar"
+  },
+  {
+   "id": "eng-v8-grammar-5",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [27].",
+   "passage": "An unusual journey\n\nLast summer my cousin [23] across Ukraine by bike. She [24] the trip for months, so she knew exactly which roads to take. Every evening she [25] a short post about the day. On the tenth day her bike [26] in a village near Poltava, and a local mechanic fixed it for free. She says the trip was the best experience she [27] ever had.",
+   "options": [
+    "has",
+    "had",
+    "was",
+    "is"
+   ],
+   "answer": 0,
+   "explanation": "Після she says часи не зсуваються: the best experience she has ever had — Present Perfect із ever.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-grammar"
+  },
+  {
+   "id": "eng-v8-vocab-1",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [28].",
+   "passage": "Online safety\n\nMost of us spend several hours online every day, so it is important to [28] care of our personal information. Never [29] your password with anyone, even a close friend. Be careful about clicking on links in messages from people you do not [30]. If a website asks for more information than it really needs, it is better to [31] it altogether. And remember: once something is posted online, it can be very difficult to [32] it completely.",
+   "options": [
+    "have",
+    "make",
+    "give",
+    "take"
+   ],
+   "answer": 3,
+   "explanation": "Стале сполучення take care of — дбати про.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-vocab"
+  },
+  {
+   "id": "eng-v8-vocab-2",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [29].",
+   "passage": "Online safety\n\nMost of us spend several hours online every day, so it is important to [28] care of our personal information. Never [29] your password with anyone, even a close friend. Be careful about clicking on links in messages from people you do not [30]. If a website asks for more information than it really needs, it is better to [31] it altogether. And remember: once something is posted online, it can be very difficult to [32] it completely.",
+   "options": [
+    "divide",
+    "share",
+    "split",
+    "tell"
+   ],
+   "answer": 1,
+   "explanation": "Share something with somebody — ділитися. Tell не поєднується з with у цьому значенні.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-vocab"
+  },
+  {
+   "id": "eng-v8-vocab-3",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [30].",
+   "passage": "Online safety\n\nMost of us spend several hours online every day, so it is important to [28] care of our personal information. Never [29] your password with anyone, even a close friend. Be careful about clicking on links in messages from people you do not [30]. If a website asks for more information than it really needs, it is better to [31] it altogether. And remember: once something is posted online, it can be very difficult to [32] it completely.",
+   "options": [
+    "realise",
+    "know",
+    "meet",
+    "learn"
+   ],
+   "answer": 1,
+   "explanation": "People you do not know — незнайомі люди.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-vocab"
+  },
+  {
+   "id": "eng-v8-vocab-4",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [31].",
+   "passage": "Online safety\n\nMost of us spend several hours online every day, so it is important to [28] care of our personal information. Never [29] your password with anyone, even a close friend. Be careful about clicking on links in messages from people you do not [30]. If a website asks for more information than it really needs, it is better to [31] it altogether. And remember: once something is posted online, it can be very difficult to [32] it completely.",
+   "options": [
+    "refuse",
+    "prevent",
+    "avoid",
+    "escape"
+   ],
+   "answer": 2,
+   "explanation": "Avoid a website altogether — зовсім не користуватися ним. Prevent — запобігти чомусь, escape — утекти.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-vocab"
+  },
+  {
+   "id": "eng-v8-vocab-5",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [32].",
+   "passage": "Online safety\n\nMost of us spend several hours online every day, so it is important to [28] care of our personal information. Never [29] your password with anyone, even a close friend. Be careful about clicking on links in messages from people you do not [30]. If a website asks for more information than it really needs, it is better to [31] it altogether. And remember: once something is posted online, it can be very difficult to [32] it completely.",
+   "options": [
+    "remove",
+    "empty",
+    "wash",
+    "clean"
+   ],
+   "answer": 0,
+   "explanation": "Remove something from the internet — видалити.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v8-vocab"
+  }
+ ],
+ "mockSets": {
+  "eng": [
+   [
+    "eng-v6-notice-1",
+    "eng-v6-notice-2",
+    "eng-v6-notice-3",
+    "eng-v6-notice-4",
+    "eng-v6-notice-5",
+    "eng-v6-read-1",
+    "eng-v6-read-2",
+    "eng-v6-read-3",
+    "eng-v6-read-4",
+    "eng-v6-read-5",
+    "eng-v6-sent-1",
+    "eng-v6-sent-2",
+    "eng-v6-sent-3",
+    "eng-v6-sent-4",
+    "eng-v6-sent-5",
+    "eng-v6-sent-6",
+    "eng-v6-phrase-1",
+    "eng-v6-phrase-2",
+    "eng-v6-phrase-3",
+    "eng-v6-phrase-4",
+    "eng-v6-phrase-5",
+    "eng-v6-phrase-6",
+    "eng-v6-grammar-1",
+    "eng-v6-grammar-2",
+    "eng-v6-grammar-3",
+    "eng-v6-grammar-4",
+    "eng-v6-grammar-5",
+    "eng-v6-vocab-1",
+    "eng-v6-vocab-2",
+    "eng-v6-vocab-3",
+    "eng-v6-vocab-4",
+    "eng-v6-vocab-5"
+   ],
+   [
+    "eng-v7-notice-1",
+    "eng-v7-notice-2",
+    "eng-v7-notice-3",
+    "eng-v7-notice-4",
+    "eng-v7-notice-5",
+    "eng-v7-read-1",
+    "eng-v7-read-2",
+    "eng-v7-read-3",
+    "eng-v7-read-4",
+    "eng-v7-read-5",
+    "eng-v7-sent-1",
+    "eng-v7-sent-2",
+    "eng-v7-sent-3",
+    "eng-v7-sent-4",
+    "eng-v7-sent-5",
+    "eng-v7-sent-6",
+    "eng-v7-phrase-1",
+    "eng-v7-phrase-2",
+    "eng-v7-phrase-3",
+    "eng-v7-phrase-4",
+    "eng-v7-phrase-5",
+    "eng-v7-phrase-6",
+    "eng-v7-grammar-1",
+    "eng-v7-grammar-2",
+    "eng-v7-grammar-3",
+    "eng-v7-grammar-4",
+    "eng-v7-grammar-5",
+    "eng-v7-vocab-1",
+    "eng-v7-vocab-2",
+    "eng-v7-vocab-3",
+    "eng-v7-vocab-4",
+    "eng-v7-vocab-5"
+   ],
+   [
+    "eng-v8-notice-1",
+    "eng-v8-notice-2",
+    "eng-v8-notice-3",
+    "eng-v8-notice-4",
+    "eng-v8-notice-5",
+    "eng-v8-read-1",
+    "eng-v8-read-2",
+    "eng-v8-read-3",
+    "eng-v8-read-4",
+    "eng-v8-read-5",
+    "eng-v8-sent-1",
+    "eng-v8-sent-2",
+    "eng-v8-sent-3",
+    "eng-v8-sent-4",
+    "eng-v8-sent-5",
+    "eng-v8-sent-6",
+    "eng-v8-phrase-1",
+    "eng-v8-phrase-2",
+    "eng-v8-phrase-3",
+    "eng-v8-phrase-4",
+    "eng-v8-phrase-5",
+    "eng-v8-phrase-6",
+    "eng-v8-grammar-1",
+    "eng-v8-grammar-2",
+    "eng-v8-grammar-3",
+    "eng-v8-grammar-4",
+    "eng-v8-grammar-5",
+    "eng-v8-vocab-1",
+    "eng-v8-vocab-2",
+    "eng-v8-vocab-3",
+    "eng-v8-vocab-4",
+    "eng-v8-vocab-5"
+   ]
+  ]
+ }
+}

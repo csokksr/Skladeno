@@ -1,0 +1,13 @@
+# згенероване збіркою
+dist/
+skladeno-nmt-latest.html
+# завантажені джерела (відтворюються скриптами з tools/)
+sources/zno/html/
+sources/zno/img/
+sources/keys/*.pdf
+sources/zno2/html/
+sources/zno2/img/
+sources/keys/zno2/*.pdf
+research/
+__pycache__/
+*.pyc

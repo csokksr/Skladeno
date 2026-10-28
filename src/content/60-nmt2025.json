@@ -1,0 +1,1926 @@
+{
+ "extend": {
+  "officialPapers": [
+   {
+    "id": "nmt2025-ukr",
+    "subject": "ukr",
+    "year": 2025,
+    "variant": 2,
+    "title": "НМТ-2025, варіант 2",
+    "kind": "real",
+    "sourceUrl": "https://osvita.ua/test/answers/95541/",
+    "documents": {
+     "questions": {
+      "filename": "1_Ukr_mova_2.pdf",
+      "sha256": "74ba81a0595dfcbefba28b0e3292c0fc2b211841e72c80bf36e40dc9f021376b",
+      "bytes": 252782,
+      "data": "@@blob:nmt2025.ukr.questions"
+     },
+     "keys": {
+      "filename": "Ukr_mova_vidp_2.pdf",
+      "sha256": "56be334f38cc885356c4bd12eb0550c20a30ae3d482ebb9627cc784225212d36",
+      "bytes": 125540,
+      "data": "@@blob:nmt2025.ukr.keys"
+     }
+    },
+    "questions": [
+     {
+      "number": 1,
+      "sourceKey": "Б",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 2,
+      "sourceKey": "Б",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 3,
+      "sourceKey": "В",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 4,
+      "sourceKey": "В",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 5,
+      "sourceKey": "Г",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 6,
+      "sourceKey": "А",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 7,
+      "sourceKey": "А",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 8,
+      "sourceKey": "Б",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 9,
+      "sourceKey": "В",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 10,
+      "sourceKey": "Г",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 11,
+      "sourceKey": "Д",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 12,
+      "sourceKey": "Д",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 13,
+      "sourceKey": "Г",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 14,
+      "sourceKey": "Б",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 15,
+      "sourceKey": "Д",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 16,
+      "sourceKey": "Д",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 17,
+      "sourceKey": "Г",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 18,
+      "sourceKey": "Д",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 19,
+      "sourceKey": "Б",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 20,
+      "sourceKey": "А",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 21,
+      "sourceKey": "В",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 22,
+      "sourceKey": "Г",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 23,
+      "sourceKey": "В",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 24,
+      "sourceKey": "А",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 25,
+      "sourceKey": "Г",
+      "subject": "ukr",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 26,
+      "sourceKey": "ГВАД",
+      "subject": "ukr",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       3,
+       2,
+       0,
+       4
+      ]
+     },
+     {
+      "number": 27,
+      "sourceKey": "ГВАБ",
+      "subject": "ukr",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       3,
+       2,
+       0,
+       1
+      ]
+     },
+     {
+      "number": 28,
+      "sourceKey": "ВГАД",
+      "subject": "ukr",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       2,
+       3,
+       0,
+       4
+      ]
+     },
+     {
+      "number": 29,
+      "sourceKey": "ВАБГ",
+      "subject": "ukr",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       2,
+       0,
+       1,
+       3
+      ]
+     },
+     {
+      "number": 30,
+      "sourceKey": "ГАВД",
+      "subject": "ukr",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       3,
+       0,
+       2,
+       4
+      ]
+     }
+    ]
+   },
+   {
+    "id": "nmt2025-math",
+    "subject": "math",
+    "year": 2025,
+    "variant": 2,
+    "title": "НМТ-2025, варіант 2",
+    "kind": "real",
+    "sourceUrl": "https://osvita.ua/test/answers/95542/",
+    "documents": {
+     "questions": {
+      "filename": "1_Mat_2.pdf",
+      "sha256": "c6ba190baa21df2070790a73d39f891ab4166d609ab1b889d185586da856665a",
+      "bytes": 304520,
+      "data": "@@blob:nmt2025.math.questions"
+     }
+    },
+    "questions": [
+     {
+      "number": 1,
+      "sourceKey": "Г",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 2,
+      "sourceKey": "А",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 3,
+      "sourceKey": "В",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 4,
+      "sourceKey": "Г",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 5,
+      "sourceKey": "В",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 6,
+      "sourceKey": "Б",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 7,
+      "sourceKey": "Б",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 8,
+      "sourceKey": "Д",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 9,
+      "sourceKey": "Д",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 10,
+      "sourceKey": "Б",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 11,
+      "sourceKey": "Д",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 12,
+      "sourceKey": "Б",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 13,
+      "sourceKey": "Б",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 14,
+      "sourceKey": "Б",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 15,
+      "sourceKey": "В",
+      "subject": "math",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 16,
+      "sourceKey": "ГАБ",
+      "subject": "math",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       3,
+       0,
+       1
+      ]
+     },
+     {
+      "number": 17,
+      "sourceKey": "ВГБ",
+      "subject": "math",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       2,
+       3,
+       1
+      ]
+     },
+     {
+      "number": 18,
+      "sourceKey": "ВАГ",
+      "subject": "math",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       2,
+       0,
+       3
+      ]
+     },
+     {
+      "number": 19,
+      "sourceKey": "2,8",
+      "subject": "math",
+      "type": "numeric",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": "2.8"
+     },
+     {
+      "number": 20,
+      "sourceKey": "42",
+      "subject": "math",
+      "type": "numeric",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": "42"
+     },
+     {
+      "number": 21,
+      "sourceKey": "900",
+      "subject": "math",
+      "type": "numeric",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": "900"
+     },
+     {
+      "number": 22,
+      "sourceKey": "−2,4",
+      "subject": "math",
+      "type": "numeric",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": "-2.4"
+     }
+    ]
+   },
+   {
+    "id": "nmt2025-hist",
+    "subject": "hist",
+    "year": 2025,
+    "variant": 2,
+    "title": "НМТ-2025, варіант 2",
+    "kind": "real",
+    "sourceUrl": "https://osvita.ua/test/answers/95543/",
+    "documents": {
+     "questions": {
+      "filename": "1_Ist_2.pdf",
+      "sha256": "5b7062a27209f8c089dfd6fc9e230c29bd0fdb89a2eeaf5367b0fcc0ebd93b0f",
+      "bytes": 4506333,
+      "data": "@@blob:nmt2025.hist.questions"
+     },
+     "keys": {
+      "filename": "Ist_vidp_2.pdf",
+      "sha256": "d832ac04db749ba9262b26a1924e741cebd4020bb6d6bf173019d8656f3cefa7",
+      "bytes": 130900,
+      "data": "@@blob:nmt2025.hist.keys"
+     }
+    },
+    "questions": [
+     {
+      "number": 1,
+      "sourceKey": "А",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 2,
+      "sourceKey": "Б",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 3,
+      "sourceKey": "Г",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 4,
+      "sourceKey": "В",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 5,
+      "sourceKey": "А",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 6,
+      "sourceKey": "А",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 7,
+      "sourceKey": "Б",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 8,
+      "sourceKey": "Г",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 9,
+      "sourceKey": "Б",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 10,
+      "sourceKey": "А",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 11,
+      "sourceKey": "Б",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 12,
+      "sourceKey": "Б",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 13,
+      "sourceKey": "В",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 14,
+      "sourceKey": "Г",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 15,
+      "sourceKey": "А",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 16,
+      "sourceKey": "В",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 17,
+      "sourceKey": "Б",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 18,
+      "sourceKey": "В",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 19,
+      "sourceKey": "А",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 20,
+      "sourceKey": "А",
+      "subject": "hist",
+      "type": "single",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 21,
+      "sourceKey": "ВАГБ",
+      "subject": "hist",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       2,
+       0,
+       3,
+       1
+      ]
+     },
+     {
+      "number": 22,
+      "sourceKey": "БГАВ",
+      "subject": "hist",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       1,
+       3,
+       0,
+       2
+      ]
+     },
+     {
+      "number": 23,
+      "sourceKey": "БГДА",
+      "subject": "hist",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       1,
+       3,
+       4,
+       0
+      ]
+     },
+     {
+      "number": 24,
+      "sourceKey": "ВБДГ",
+      "subject": "hist",
+      "type": "match",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "left": [
+       "1",
+       "2",
+       "3",
+       "4"
+      ],
+      "right": [
+       "А",
+       "Б",
+       "В",
+       "Г",
+       "Д"
+      ],
+      "answer": [
+       2,
+       1,
+       4,
+       3
+      ]
+     },
+     {
+      "number": 25,
+      "sourceKey": "АГВБ",
+      "subject": "hist",
+      "type": "order",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": [
+       0,
+       3,
+       2,
+       1
+      ]
+     },
+     {
+      "number": 26,
+      "sourceKey": "БАГВ",
+      "subject": "hist",
+      "type": "order",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": [
+       1,
+       0,
+       3,
+       2
+      ]
+     },
+     {
+      "number": 27,
+      "sourceKey": "ВГАБ",
+      "subject": "hist",
+      "type": "order",
+      "options": [
+       "А",
+       "Б",
+       "В",
+       "Г"
+      ],
+      "answer": [
+       2,
+       3,
+       0,
+       1
+      ]
+     },
+     {
+      "number": 28,
+      "sourceKey": "135",
+      "subject": "hist",
+      "type": "multi",
+      "options": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7"
+      ],
+      "answer": [
+       0,
+       2,
+       4
+      ]
+     },
+     {
+      "number": 29,
+      "sourceKey": "236",
+      "subject": "hist",
+      "type": "multi",
+      "options": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7"
+      ],
+      "answer": [
+       1,
+       2,
+       5
+      ]
+     },
+     {
+      "number": 30,
+      "sourceKey": "256",
+      "subject": "hist",
+      "type": "multi",
+      "options": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5",
+       "6",
+       "7"
+      ],
+      "answer": [
+       1,
+       4,
+       5
+      ]
+     }
+    ]
+   },
+   {
+    "id": "nmt2025-eng",
+    "subject": "eng",
+    "year": 2025,
+    "variant": 2,
+    "title": "НМТ-2025, варіант 2",
+    "kind": "real",
+    "sourceUrl": "https://osvita.ua/test/answers/95547/",
+    "documents": {
+     "questions": {
+      "filename": "Anhl_2.pdf",
+      "sha256": "968d6d96b8175f83ff05fdfa08c5a7786878958089bb3d232ee42f86d170d90b",
+      "bytes": 1199596,
+      "data": "@@blob:nmt2025.eng.questions"
+     },
+     "keys": {
+      "filename": "Anhl_vidp_2.pdf",
+      "sha256": "2aa29768c41df910bde9f9825fad5dc766fc629a5ba97d624c25c2465833ea1f",
+      "bytes": 132264,
+      "data": "@@blob:nmt2025.eng.keys"
+     }
+    },
+    "questions": [
+     {
+      "number": 1,
+      "sourceKey": "F",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 5
+     },
+     {
+      "number": 2,
+      "sourceKey": "H",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 7
+     },
+     {
+      "number": 3,
+      "sourceKey": "E",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 4,
+      "sourceKey": "C",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 5,
+      "sourceKey": "B",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 6,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 7,
+      "sourceKey": "D",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 8,
+      "sourceKey": "B",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 9,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 10,
+      "sourceKey": "C",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 11,
+      "sourceKey": "H",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 7
+     },
+     {
+      "number": 12,
+      "sourceKey": "F",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 5
+     },
+     {
+      "number": 13,
+      "sourceKey": "B",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 14,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 15,
+      "sourceKey": "D",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 16,
+      "sourceKey": "E",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 17,
+      "sourceKey": "F",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 5
+     },
+     {
+      "number": 18,
+      "sourceKey": "H",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 7
+     },
+     {
+      "number": 19,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 20,
+      "sourceKey": "E",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 4
+     },
+     {
+      "number": 21,
+      "sourceKey": "D",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 22,
+      "sourceKey": "B",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D",
+       "E",
+       "F",
+       "G",
+       "H"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 23,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 24,
+      "sourceKey": "B",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 25,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 26,
+      "sourceKey": "C",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 27,
+      "sourceKey": "D",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 28,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 0
+     },
+     {
+      "number": 29,
+      "sourceKey": "C",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 2
+     },
+     {
+      "number": 30,
+      "sourceKey": "B",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 1
+     },
+     {
+      "number": 31,
+      "sourceKey": "D",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 3
+     },
+     {
+      "number": 32,
+      "sourceKey": "A",
+      "subject": "eng",
+      "type": "single",
+      "options": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "answer": 0
+     }
+    ]
+   }
+  ]
+ }
+}

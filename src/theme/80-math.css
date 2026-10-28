@@ -1,0 +1,8 @@
+/* Formulas of official tasks (MathML made by modules/55-math.js) */
+math{math-style:normal;font-size:1.12em;font-family:"Latin Modern Math","Cambria Math","STIX Two Math","Noto Sans Math",serif;color:inherit}
+.mj-raw{font-family:var(--mono,monospace);font-size:.92em}
+.qimg{background:#fff;border-radius:8px}
+/* Sentence marks (△ ○ ◇ □ ▽) shown in place of the official page's picture cells */
+.mark-img .qimg{display:inline-block;height:1.3em;width:auto;max-height:none;margin:0 .45em 0 0;vertical-align:-.25em;border-radius:3px;cursor:default}
+/* Highlighted letters and words of official tasks (bold italic on the original page) */
+.mk{color:var(--pen);font-weight:800}

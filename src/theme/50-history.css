@@ -1,0 +1,116 @@
+/* Історія: розгорнутий конспект, таблиці, архів, галерея, мапа; старі компоненти тренувань. */
+.history-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 16px}
+.history-tools .p-tabs{margin:0}
+.history-reading-layout{display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px;align-items:start}
+.history-outline{position:sticky;top:68px;max-height:calc(100dvh - 96px);overflow:auto;padding:4px 0 4px 12px;border-left:2px solid var(--line)}
+.history-outline button{display:block;width:100%;min-height:0;padding:7px 8px;border:0;border-radius:6px;background:transparent;color:var(--ink-2);font-size:.8125rem;font-weight:550;line-height:1.5;text-align:left}
+.history-outline button:hover{background:var(--sheet-2);color:var(--ink)}
+.history-outline a{display:block;padding:10px 8px;font-size:.8125rem}
+.history-reading{max-width:76ch;min-width:0}
+.history-section{scroll-margin-top:68px;margin-bottom:26px;padding-bottom:26px;border-bottom:1px solid var(--line)}
+.history-section h2,.history-table h2{margin-bottom:12px}
+.history-section p{line-height:1.9;white-space:pre-line}
+.history-section ul,.history-pitfalls ul{margin:14px 0 0;padding-left:22px}
+.history-section li,.history-pitfalls li{margin-bottom:8px;line-height:1.8}
+.history-table{margin:28px 0}
+.history-table table{min-width:480px;background:var(--sheet);border:0;border-radius:var(--r)}
+.history-table th{background:var(--sheet-2);color:var(--ink)}
+.history-table td:first-child{font-weight:600}
+.history-pitfalls{margin:26px 0;padding:20px 22px;border-radius:var(--r);background:var(--mark-soft);border-left:3px solid var(--mark)}
+.history-next,.history-checklist,.history-coverage-summary,.history-archive-lead{margin:26px 0;padding:22px;border:0;border-radius:var(--r-lg);background:var(--sheet)}
+.history-next p,.history-checklist>p,.history-archive-lead p,.history-coverage-summary>p{margin:10px 0 16px;color:var(--ink-2);font-size:.9375rem}
+.history-checklist article{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 0;border-top:1px solid var(--line)}
+.history-checklist h3{font-size:.9375rem;max-width:60ch}
+.history-checklist article p{margin-top:4px;font-size:.8125rem;color:var(--muted)}
+.history-checklist .p-actions{margin:0;flex-shrink:0}
+.history-sources{padding:18px 0;border-top:1px solid var(--line);font-size:.8125rem}
+.history-sources li{margin:8px 0}
+.history-external{display:flex;flex-wrap:wrap;gap:10px 24px;margin:0 0 22px;font-size:.875rem}
+.history-archive-lead{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.history-archive-section{margin:30px 0}
+.history-archive-section>h2{margin-bottom:16px}
+.history-archive-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.history-archive-grid>a{display:flex;flex-direction:column;gap:6px;min-height:86px;padding:14px 16px;border:0;border-radius:var(--r);background:var(--sheet);color:var(--ink);text-decoration:none}
+.history-archive-grid>a:hover{background:var(--sheet-2)}
+.history-archive-grid strong{font-size:.875rem}
+.history-archive-grid span{font-size:.75rem;color:var(--muted)}
+.p-topic-row[hidden]{display:none!important}
+/* Факти, галерея, мапа. */
+.fact{padding:18px 0;border-bottom:1px solid var(--line)}
+.fact:last-child{border:0}
+.fact h3{margin:6px 0}
+.fact p{font-size:.9375rem;color:var(--ink-2)}
+.fact img{float:right;max-width:160px;height:130px;margin:4px 0 10px 18px;object-fit:contain;border-radius:8px;background:var(--sheet-2);cursor:zoom-in}
+.fact::after{content:'';display:block;clear:both}
+.facttools{display:flex;gap:8px;margin-top:12px}
+.facttools button{min-height:32px;padding:4px 10px;font-size:.75rem}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px}
+.visual{display:flex;flex-direction:column;min-height:0;padding:0;overflow:hidden;border:0;border-radius:var(--r-lg);background:var(--sheet);text-align:left;align-items:stretch;justify-content:flex-start}
+.visual:hover{background:var(--sheet-2)}
+.visual img{width:100%;height:170px;padding:10px;object-fit:contain;background:var(--sheet-2)}
+.visual>div{padding:14px}
+.visual h3{margin-top:6px;font-size:.9375rem}
+.visual p{margin-top:6px;font-size:.75rem;color:var(--muted)}
+.portrait-images{display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+.portrait-images img{height:220px;width:auto;max-width:100%;object-fit:contain;border-radius:8px;background:var(--sheet-2)}
+.map{width:100%;max-height:440px;border-radius:var(--r-lg);background:var(--sheet-2)}
+.map path{fill:color-mix(in srgb,var(--pen) 14%,var(--sheet));stroke:color-mix(in srgb,var(--pen) 45%,var(--sheet));stroke-width:1}
+.map circle{fill:var(--ink);stroke:var(--sheet);stroke-width:2}
+.map text{fill:var(--paper);font-size:10px;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.map g{cursor:pointer}
+.map g:hover circle{fill:var(--pen)}
+.timeline{margin-left:8px;padding-left:24px;border-left:2px solid var(--line-2)}
+.timeitem{position:relative;padding-bottom:22px}
+.timeitem::before{content:'';position:absolute;left:-31px;top:7px;width:12px;height:12px;border:2px solid var(--pen);border-radius:50%;background:var(--paper)}
+.timeitem p{margin-top:4px;font-size:.875rem;color:var(--ink-2)}
+.topic{display:flex;flex-direction:column;gap:12px;width:100%;min-height:180px;padding:20px;border:0;border-radius:var(--r-lg);background:var(--sheet);text-align:left;align-items:stretch;justify-content:flex-start}
+.topic:hover{background:var(--sheet-2)}
+.topic h3{flex:1}
+.topic .row{font-size:.75rem;color:var(--muted)}
+.learncards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.learncards button{display:grid;gap:6px;padding:18px;text-align:left;justify-content:stretch}
+.pinned{background:var(--warn-soft)}
+/* Старий тренажер (резервний маршрут #quiz). */
+.q-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:start}
+.q-card h2{margin:14px 0 20px;font:600 1.3125rem/1.5 var(--f-body)}
+.choices{display:grid;gap:8px}
+.choice{display:flex;align-items:flex-start;gap:12px;width:100%;padding:12px 14px;text-align:left;justify-content:flex-start;font-weight:500}
+.choice b{display:grid;place-items:center;flex:0 0 28px;height:28px;border:0;border-radius:50%;background:var(--sheet-2);font:600 .8125rem var(--f-mono)}
+.choice.selected{border-color:var(--pen);background:var(--pen-soft)}
+.choice.correct{border-color:var(--ok);background:var(--ok-soft)}
+.choice.wrong{border-color:var(--mark);background:var(--mark-soft)}
+.choice:disabled{opacity:1}
+.matchopts{padding:14px 16px;border-radius:var(--r);background:var(--sheet-2);font-size:.9375rem;margin-bottom:14px}
+.matchopts p+p{margin-top:8px}
+.actions{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+/* Довідкові картки й пошук. */
+.ref-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:800px;margin-bottom:14px}
+.ref-field{display:flex;flex-direction:column;gap:6px}
+.ref-field label{font-weight:600;font-size:.875rem}
+.ref-field select,.ref-field input{width:100%;min-width:0}
+.ref-wide{grid-column:1/-1}
+.ref-search{display:flex;gap:10px}
+.ref-search button{flex-shrink:0}
+.find-form{display:flex;flex-wrap:wrap;align-items:end;gap:14px}
+.find-form .ref-field{flex:1 1 180px;min-width:0}
+.find-form .find-query{flex:2 1 280px}
+.find-results{display:grid;gap:14px}
+.find-results h2,.find-results p{overflow-wrap:anywhere}
+.math-deep-lessons,.math-review-summary{margin:24px 0}
+/* Картки-довідки: одна велика картка по центру, як слайд; фільтри — тихим рядком під нею. */
+.ref-card{--subject:var(--pen);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:min(56vh,460px);margin:0 0 24px;padding:clamp(32px,5vw,64px) clamp(20px,5vw,72px);border-radius:var(--r-xl);background:var(--sheet);text-align:center}
+.ref-card.is-open{justify-content:flex-start}
+.ref-card .p-kicker{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.ref-card .p-kicker::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--subject)}
+.ref-card h2{max-width:20ch;font-size:clamp(2rem,1.4rem + 2.6vw,3.5rem);line-height:1.1;letter-spacing:-.03em}
+.ref-hint{max-width:46ch;margin-top:16px;font-size:1.0625rem;color:var(--muted)}
+.ref-card .p-reading{max-width:62ch;margin-top:28px;text-align:left}
+.ref-card .p-example{background:var(--paper)}
+.ref-card>a{margin-top:20px}
+.ref-card .p-caption{margin-top:12px}
+.ref-card .p-caption button{min-height:30px;padding:3px 12px;font-size:.8125rem}
+.ref-nav{justify-content:center;margin-top:36px}
+.ref-filter .ref-controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,2fr);align-items:end;max-width:none}
+.ref-filter .ref-wide{grid-column:auto}
+.ref-filter .ref-field label{font-size:.8125rem;font-weight:500;color:var(--muted)}
+@media (max-width:860px){.ref-filter .ref-controls{grid-template-columns:1fr 1fr}.ref-filter .ref-wide{grid-column:1/-1}}

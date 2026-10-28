@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "skladeno",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8765",
+        "--directory",
+        "C:/Study/dist"
+      ],
+      "port": 8765
+    },
+    {
+      "name": "skladeno-web",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8766",
+        "--directory",
+        "C:/Study/dist/web"
+      ],
+      "port": 8766
+    }
+  ]
+}

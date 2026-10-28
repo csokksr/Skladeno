@@ -1,0 +1,58 @@
+{
+ "note": "Theory cards aligned with the programme lists (sources/program/hist.md, tools/program_gaps.py): the missing personality added, duplicates and off-programme analytic cards dropped, labels in programme spelling.",
+ "addFacts": {
+  "21": [
+   {
+    "id": "prog-21-chelebidzhykhan",
+    "topic": 21,
+    "kind": "P",
+    "label": "Номан Челебіджихан",
+    "text": "Кримськотатарський діяч, муфтій; 1917 року — голова Курултаю й першого кримськотатарського уряду (Директорії), автор гімну «Я присягнув». Розстріляний більшовиками 1918 року."
+   }
+  ]
+ },
+ "dropFacts": [
+  "t1-f27c4a6b32",
+  "t1-2a7ac3d563",
+  "t1-7f137dc074",
+  "enrich-1-f10",
+  "histmap-33",
+  "histmap-78",
+  "enrich-12-f01",
+  "enrich-14-f04",
+  "enrich-15-f08",
+  "enrich-17-f02",
+  "enrich-17-f06",
+  "enrich-17-f10",
+  "enrich-18-f01",
+  "enrich-18-f03",
+  "enrich-18-f09",
+  "enrich-18-f10",
+  "enrich-19-f01",
+  "enrich-20-f09",
+  "enrich-22-f09",
+  "enrich-23-f10",
+  "enrich-29-f03",
+  "enrich-29-f04",
+  "enrich-29-f10",
+  "enrich-29-f13",
+  "enrich-29-f14",
+  "enrich-29-f11",
+  "enrich-29-f08",
+  "enrich-26-f08"
+ ],
+ "factPatch": {
+  "t4-47514ab450": {
+   "label": "Роман Мстиславович"
+  },
+  "t3-f3f7683c45": {
+   "label": "Мстислав Володимирович (Великий)"
+  },
+  "t5-2efc8f291c": {
+   "label": "Хаджі-Гірей (у програмі — Хаджі-Герей)"
+  },
+  "t22-7b078f398a": {
+   "label": "Георгій Нарбут (у програмі ЗНО — Григорій)"
+  }
+ }
+}

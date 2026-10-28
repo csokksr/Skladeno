@@ -1,0 +1,1684 @@
+{
+ "topicQuestions": [
+  {
+   "id": "eng-v4-notice-1",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Due to repairs to the roof, the school swimming pool will remain closed until 14 March. Swimming lessons for Year 9 will take place in the sports hall instead.",
+   "options": [
+    "A service is temporarily unavailable",
+    "Free entry for a limited group",
+    "The event has moved to a new date",
+    "A new club is looking for members",
+    "A competition with a prize",
+    "Booking is essential",
+    "Lost property can be collected",
+    "Equipment will be provided"
+   ],
+   "answer": 0,
+   "explanation": "Басейн тимчасово зачинено на ремонт — послуга тимчасово недоступна.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v4-notices"
+  },
+  {
+   "id": "eng-v4-notice-2",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Spaces in Saturday's pottery workshop are limited to twelve. Please reserve your place at the front desk or online; unfortunately, we cannot accept people who simply turn up on the day.",
+   "options": [
+    "A service is temporarily unavailable",
+    "Free entry for a limited group",
+    "The event has moved to a new date",
+    "A new club is looking for members",
+    "A competition with a prize",
+    "Booking is essential",
+    "Lost property can be collected",
+    "Equipment will be provided"
+   ],
+   "answer": 5,
+   "explanation": "Без попереднього запису не пускають: booking is essential.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v4-notices"
+  },
+  {
+   "id": "eng-v4-notice-3",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Found in the main hall after Friday's concert: two umbrellas, a blue scarf and a set of keys. Items can be picked up from the caretaker's office before 4 p.m.",
+   "options": [
+    "A service is temporarily unavailable",
+    "Free entry for a limited group",
+    "The event has moved to a new date",
+    "A new club is looking for members",
+    "A competition with a prize",
+    "Booking is essential",
+    "Lost property can be collected",
+    "Equipment will be provided"
+   ],
+   "answer": 6,
+   "explanation": "Знайдені речі можна забрати в кабінеті завгоспа — lost property.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v4-notices"
+  },
+  {
+   "id": "eng-v4-notice-4",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Write a short story of no more than 800 words on the theme 'A door I never opened'. The winning entry will be published in the town magazine, and its author will receive a tablet.",
+   "options": [
+    "A service is temporarily unavailable",
+    "Free entry for a limited group",
+    "The event has moved to a new date",
+    "A new club is looking for members",
+    "A competition with a prize",
+    "Booking is essential",
+    "Lost property can be collected",
+    "Equipment will be provided"
+   ],
+   "answer": 4,
+   "explanation": "Конкурс оповідань із призом-планшетом.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v4-notices"
+  },
+  {
+   "id": "eng-v4-notice-5",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "The river clean-up planned for 2 May has been postponed because of the flood warning. It will now take place on 16 May at the same time and place.",
+   "options": [
+    "A service is temporarily unavailable",
+    "Free entry for a limited group",
+    "The event has moved to a new date",
+    "A new club is looking for members",
+    "A competition with a prize",
+    "Booking is essential",
+    "Lost property can be collected",
+    "Equipment will be provided"
+   ],
+   "answer": 2,
+   "explanation": "Ключове слово postponed: подію перенесено на іншу дату. Волонтерів прямо не шукають.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v4-notices"
+  },
+  {
+   "id": "eng-v4-read-1",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What made Olena start the project?",
+   "passage": "When Olena Marchuk retired from teaching, she expected to spend her mornings in the garden. Instead, she spends three days a week behind the wheel of an old delivery van that she and her neighbours have turned into a library.\n\nThe idea came from a conversation at the village shop. A grandmother complained that her grandchildren had stopped reading because the nearest library was forty kilometres away and the bus ran only twice a day. 'Everyone agreed it was a pity,' Olena remembers, 'but nobody thought it was their job to do something about it. I realised that if I waited for someone else, I would be waiting for ever.'\n\nThe van cost less than a second-hand car, but turning it into a library took most of a year. A local carpenter built the shelves for free, and a group of teenagers painted the outside with characters from children's books. The books themselves came from donations. 'At first we accepted everything,' Olena admits, 'and ended up with boxes of old phone directories and cookery magazines. Now we are much more selective.'\n\nToday the van visits eleven villages on a fixed timetable. Children borrow most of the books, but the most loyal visitors are elderly people who live alone. For some of them, the fifteen minutes they spend choosing a novel and chatting is the only conversation they have all week. 'I used to think we were delivering books,' Olena says. 'Now I think we are delivering company.'\n\nNot everything has gone smoothly. In winter the roads are sometimes too icy to drive, and last year the van broke down twice, leaving readers waiting in the cold. The project also depends entirely on volunteers, and two of the original drivers have moved to the city. Olena is now training a group of sixth-formers, who will be able to help once they pass their driving tests.\n\nAsked what advice she would give to anyone starting a similar project, Olena does not hesitate. 'Don't spend months planning. Start small, make mistakes in public and let people help you fix them. A project that belongs to everyone is much harder to stop.'",
+   "options": [
+    "She saw that nobody else was going to act on a shared concern.",
+    "The bus service to the town was cancelled.",
+    "She was bored after she retired.",
+    "A neighbour asked her to run the village library."
+   ],
+   "answer": 0,
+   "explanation": "У другому абзаці: nobody thought it was their job… if I waited for someone else, I would be waiting for ever. Автобус не скасували — він ходить двічі на день.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v4-text"
+  },
+  {
+   "id": "eng-v4-read-2",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What does Olena say about the first donations?",
+   "passage": "When Olena Marchuk retired from teaching, she expected to spend her mornings in the garden. Instead, she spends three days a week behind the wheel of an old delivery van that she and her neighbours have turned into a library.\n\nThe idea came from a conversation at the village shop. A grandmother complained that her grandchildren had stopped reading because the nearest library was forty kilometres away and the bus ran only twice a day. 'Everyone agreed it was a pity,' Olena remembers, 'but nobody thought it was their job to do something about it. I realised that if I waited for someone else, I would be waiting for ever.'\n\nThe van cost less than a second-hand car, but turning it into a library took most of a year. A local carpenter built the shelves for free, and a group of teenagers painted the outside with characters from children's books. The books themselves came from donations. 'At first we accepted everything,' Olena admits, 'and ended up with boxes of old phone directories and cookery magazines. Now we are much more selective.'\n\nToday the van visits eleven villages on a fixed timetable. Children borrow most of the books, but the most loyal visitors are elderly people who live alone. For some of them, the fifteen minutes they spend choosing a novel and chatting is the only conversation they have all week. 'I used to think we were delivering books,' Olena says. 'Now I think we are delivering company.'\n\nNot everything has gone smoothly. In winter the roads are sometimes too icy to drive, and last year the van broke down twice, leaving readers waiting in the cold. The project also depends entirely on volunteers, and two of the original drivers have moved to the city. Olena is now training a group of sixth-formers, who will be able to help once they pass their driving tests.\n\nAsked what advice she would give to anyone starting a similar project, Olena does not hesitate. 'Don't spend months planning. Start small, make mistakes in public and let people help you fix them. A project that belongs to everyone is much harder to stop.'",
+   "options": [
+    "Many of them were not useful.",
+    "They were mostly children's books.",
+    "They had to be paid for.",
+    "They arrived too late."
+   ],
+   "answer": 0,
+   "explanation": "Спочатку брали все й отримали старі телефонні довідники та журнали — тобто багато непотрібного.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v4-text"
+  },
+  {
+   "id": "eng-v4-read-3",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "According to the text, the van is especially important for",
+   "passage": "When Olena Marchuk retired from teaching, she expected to spend her mornings in the garden. Instead, she spends three days a week behind the wheel of an old delivery van that she and her neighbours have turned into a library.\n\nThe idea came from a conversation at the village shop. A grandmother complained that her grandchildren had stopped reading because the nearest library was forty kilometres away and the bus ran only twice a day. 'Everyone agreed it was a pity,' Olena remembers, 'but nobody thought it was their job to do something about it. I realised that if I waited for someone else, I would be waiting for ever.'\n\nThe van cost less than a second-hand car, but turning it into a library took most of a year. A local carpenter built the shelves for free, and a group of teenagers painted the outside with characters from children's books. The books themselves came from donations. 'At first we accepted everything,' Olena admits, 'and ended up with boxes of old phone directories and cookery magazines. Now we are much more selective.'\n\nToday the van visits eleven villages on a fixed timetable. Children borrow most of the books, but the most loyal visitors are elderly people who live alone. For some of them, the fifteen minutes they spend choosing a novel and chatting is the only conversation they have all week. 'I used to think we were delivering books,' Olena says. 'Now I think we are delivering company.'\n\nNot everything has gone smoothly. In winter the roads are sometimes too icy to drive, and last year the van broke down twice, leaving readers waiting in the cold. The project also depends entirely on volunteers, and two of the original drivers have moved to the city. Olena is now training a group of sixth-formers, who will be able to help once they pass their driving tests.\n\nAsked what advice she would give to anyone starting a similar project, Olena does not hesitate. 'Don't spend months planning. Start small, make mistakes in public and let people help you fix them. A project that belongs to everyone is much harder to stop.'",
+   "options": [
+    "families who have moved to the city.",
+    "older people who live on their own.",
+    "the teenagers who painted it.",
+    "teachers in nearby schools."
+   ],
+   "answer": 1,
+   "explanation": "The most loyal visitors are elderly people who live alone… the only conversation they have all week.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v4-text"
+  },
+  {
+   "id": "eng-v4-read-4",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What is the main problem the project faces now?",
+   "passage": "When Olena Marchuk retired from teaching, she expected to spend her mornings in the garden. Instead, she spends three days a week behind the wheel of an old delivery van that she and her neighbours have turned into a library.\n\nThe idea came from a conversation at the village shop. A grandmother complained that her grandchildren had stopped reading because the nearest library was forty kilometres away and the bus ran only twice a day. 'Everyone agreed it was a pity,' Olena remembers, 'but nobody thought it was their job to do something about it. I realised that if I waited for someone else, I would be waiting for ever.'\n\nThe van cost less than a second-hand car, but turning it into a library took most of a year. A local carpenter built the shelves for free, and a group of teenagers painted the outside with characters from children's books. The books themselves came from donations. 'At first we accepted everything,' Olena admits, 'and ended up with boxes of old phone directories and cookery magazines. Now we are much more selective.'\n\nToday the van visits eleven villages on a fixed timetable. Children borrow most of the books, but the most loyal visitors are elderly people who live alone. For some of them, the fifteen minutes they spend choosing a novel and chatting is the only conversation they have all week. 'I used to think we were delivering books,' Olena says. 'Now I think we are delivering company.'\n\nNot everything has gone smoothly. In winter the roads are sometimes too icy to drive, and last year the van broke down twice, leaving readers waiting in the cold. The project also depends entirely on volunteers, and two of the original drivers have moved to the city. Olena is now training a group of sixth-formers, who will be able to help once they pass their driving tests.\n\nAsked what advice she would give to anyone starting a similar project, Olena does not hesitate. 'Don't spend months planning. Start small, make mistakes in public and let people help you fix them. A project that belongs to everyone is much harder to stop.'",
+   "options": [
+    "There are not enough people to drive the van.",
+    "Readers lose interest in winter.",
+    "The timetable changes every week.",
+    "The van is too expensive to repair."
+   ],
+   "answer": 0,
+   "explanation": "Two of the original drivers have moved to the city, тому Олена навчає старшокласників. Про вартість ремонту в тексті не сказано.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v4-text"
+  },
+  {
+   "id": "eng-v4-read-5",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "Olena's main advice is to",
+   "passage": "When Olena Marchuk retired from teaching, she expected to spend her mornings in the garden. Instead, she spends three days a week behind the wheel of an old delivery van that she and her neighbours have turned into a library.\n\nThe idea came from a conversation at the village shop. A grandmother complained that her grandchildren had stopped reading because the nearest library was forty kilometres away and the bus ran only twice a day. 'Everyone agreed it was a pity,' Olena remembers, 'but nobody thought it was their job to do something about it. I realised that if I waited for someone else, I would be waiting for ever.'\n\nThe van cost less than a second-hand car, but turning it into a library took most of a year. A local carpenter built the shelves for free, and a group of teenagers painted the outside with characters from children's books. The books themselves came from donations. 'At first we accepted everything,' Olena admits, 'and ended up with boxes of old phone directories and cookery magazines. Now we are much more selective.'\n\nToday the van visits eleven villages on a fixed timetable. Children borrow most of the books, but the most loyal visitors are elderly people who live alone. For some of them, the fifteen minutes they spend choosing a novel and chatting is the only conversation they have all week. 'I used to think we were delivering books,' Olena says. 'Now I think we are delivering company.'\n\nNot everything has gone smoothly. In winter the roads are sometimes too icy to drive, and last year the van broke down twice, leaving readers waiting in the cold. The project also depends entirely on volunteers, and two of the original drivers have moved to the city. Olena is now training a group of sixth-formers, who will be able to help once they pass their driving tests.\n\nAsked what advice she would give to anyone starting a similar project, Olena does not hesitate. 'Don't spend months planning. Start small, make mistakes in public and let people help you fix them. A project that belongs to everyone is much harder to stop.'",
+   "options": [
+    "avoid making mistakes in public.",
+    "begin with something small and involve other people.",
+    "plan every detail before starting.",
+    "ask the local council for money."
+   ],
+   "answer": 1,
+   "explanation": "Start small… let people help you fix them. Ретельне планування й уникання публічних помилок прямо суперечать її словам.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v4-text"
+  },
+  {
+   "id": "eng-v4-sent-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [11]. Two options are extra.",
+   "passage": "Most parents have had the experience of trying to wake a teenager who seems to be glued to the bed. It is easy to blame laziness, but scientists say the problem is mostly biological. [11] As a result, a fifteen-year-old who goes to bed at ten often simply lies awake.\n\nThis shift would not matter much if school began later. [12] Many students therefore arrive at their first lesson having slept only six or seven hours, although experts recommend between eight and ten.\n\nThe effects of losing sleep go far beyond yawning in class. [13] Tired students also find it harder to control their emotions, and they are more likely to have accidents on the way to school.\n\nSome schools have decided to act on this research. [14] Teachers there reported that students were more alert, and attendance at the first lesson improved noticeably.\n\nOf course, a later start is not a complete solution. [15] Screens are a particular problem, because the light from phones and laptops tells the brain that it is still daytime.\n\nSpecialists suggest a few simple habits. [16] Keeping the same bedtime at the weekend also helps, even if the temptation to sleep until lunchtime is strong.",
+   "options": [
+    "Putting devices in another room an hour before bed is one of the most effective.",
+    "Research shows that memory and concentration suffer first, so information learned during the day is not stored properly.",
+    "However, in most countries lessons start at around eight o'clock.",
+    "Most adults need much less sleep than they did as children.",
+    "In one American district, classes were moved from 7:30 to 8:30.",
+    "Teenagers may still be short of sleep because of what they do in the evening.",
+    "Some students prefer to study late at night when the house is quiet.",
+    "During adolescence, the body starts producing the sleep hormone melatonin about two hours later than in childhood."
+   ],
+   "answer": 7,
+   "explanation": "Після слів «проблема біологічна» потрібне пояснення механізму (мелатонін), а As a result наступного речення — його наслідок.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-sent"
+  },
+  {
+   "id": "eng-v4-sent-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [12]. Two options are extra.",
+   "passage": "Most parents have had the experience of trying to wake a teenager who seems to be glued to the bed. It is easy to blame laziness, but scientists say the problem is mostly biological. [11] As a result, a fifteen-year-old who goes to bed at ten often simply lies awake.\n\nThis shift would not matter much if school began later. [12] Many students therefore arrive at their first lesson having slept only six or seven hours, although experts recommend between eight and ten.\n\nThe effects of losing sleep go far beyond yawning in class. [13] Tired students also find it harder to control their emotions, and they are more likely to have accidents on the way to school.\n\nSome schools have decided to act on this research. [14] Teachers there reported that students were more alert, and attendance at the first lesson improved noticeably.\n\nOf course, a later start is not a complete solution. [15] Screens are a particular problem, because the light from phones and laptops tells the brain that it is still daytime.\n\nSpecialists suggest a few simple habits. [16] Keeping the same bedtime at the weekend also helps, even if the temptation to sleep until lunchtime is strong.",
+   "options": [
+    "Putting devices in another room an hour before bed is one of the most effective.",
+    "Research shows that memory and concentration suffer first, so information learned during the day is not stored properly.",
+    "However, in most countries lessons start at around eight o'clock.",
+    "Most adults need much less sleep than they did as children.",
+    "In one American district, classes were moved from 7:30 to 8:30.",
+    "Teenagers may still be short of sleep because of what they do in the evening.",
+    "Some students prefer to study late at night when the house is quiet.",
+    "During adolescence, the body starts producing the sleep hormone melatonin about two hours later than in childhood."
+   ],
+   "answer": 2,
+   "explanation": "This shift would not matter much if school began later → However: уроки починаються о восьмій.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-sent"
+  },
+  {
+   "id": "eng-v4-sent-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [13]. Two options are extra.",
+   "passage": "Most parents have had the experience of trying to wake a teenager who seems to be glued to the bed. It is easy to blame laziness, but scientists say the problem is mostly biological. [11] As a result, a fifteen-year-old who goes to bed at ten often simply lies awake.\n\nThis shift would not matter much if school began later. [12] Many students therefore arrive at their first lesson having slept only six or seven hours, although experts recommend between eight and ten.\n\nThe effects of losing sleep go far beyond yawning in class. [13] Tired students also find it harder to control their emotions, and they are more likely to have accidents on the way to school.\n\nSome schools have decided to act on this research. [14] Teachers there reported that students were more alert, and attendance at the first lesson improved noticeably.\n\nOf course, a later start is not a complete solution. [15] Screens are a particular problem, because the light from phones and laptops tells the brain that it is still daytime.\n\nSpecialists suggest a few simple habits. [16] Keeping the same bedtime at the weekend also helps, even if the temptation to sleep until lunchtime is strong.",
+   "options": [
+    "Putting devices in another room an hour before bed is one of the most effective.",
+    "Research shows that memory and concentration suffer first, so information learned during the day is not stored properly.",
+    "However, in most countries lessons start at around eight o'clock.",
+    "Most adults need much less sleep than they did as children.",
+    "In one American district, classes were moved from 7:30 to 8:30.",
+    "Teenagers may still be short of sleep because of what they do in the evening.",
+    "Some students prefer to study late at night when the house is quiet.",
+    "During adolescence, the body starts producing the sleep hormone melatonin about two hours later than in childhood."
+   ],
+   "answer": 1,
+   "explanation": "Абзац про наслідки недосипу: спершу пам’ять і концентрація, далі also — емоції та нещасні випадки.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-sent"
+  },
+  {
+   "id": "eng-v4-sent-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [14]. Two options are extra.",
+   "passage": "Most parents have had the experience of trying to wake a teenager who seems to be glued to the bed. It is easy to blame laziness, but scientists say the problem is mostly biological. [11] As a result, a fifteen-year-old who goes to bed at ten often simply lies awake.\n\nThis shift would not matter much if school began later. [12] Many students therefore arrive at their first lesson having slept only six or seven hours, although experts recommend between eight and ten.\n\nThe effects of losing sleep go far beyond yawning in class. [13] Tired students also find it harder to control their emotions, and they are more likely to have accidents on the way to school.\n\nSome schools have decided to act on this research. [14] Teachers there reported that students were more alert, and attendance at the first lesson improved noticeably.\n\nOf course, a later start is not a complete solution. [15] Screens are a particular problem, because the light from phones and laptops tells the brain that it is still daytime.\n\nSpecialists suggest a few simple habits. [16] Keeping the same bedtime at the weekend also helps, even if the temptation to sleep until lunchtime is strong.",
+   "options": [
+    "Putting devices in another room an hour before bed is one of the most effective.",
+    "Research shows that memory and concentration suffer first, so information learned during the day is not stored properly.",
+    "However, in most countries lessons start at around eight o'clock.",
+    "Most adults need much less sleep than they did as children.",
+    "In one American district, classes were moved from 7:30 to 8:30.",
+    "Teenagers may still be short of sleep because of what they do in the evening.",
+    "Some students prefer to study late at night when the house is quiet.",
+    "During adolescence, the body starts producing the sleep hormone melatonin about two hours later than in childhood."
+   ],
+   "answer": 4,
+   "explanation": "Some schools have decided to act → конкретний приклад; teachers there відсилає до цього округу.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-sent"
+  },
+  {
+   "id": "eng-v4-sent-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [15]. Two options are extra.",
+   "passage": "Most parents have had the experience of trying to wake a teenager who seems to be glued to the bed. It is easy to blame laziness, but scientists say the problem is mostly biological. [11] As a result, a fifteen-year-old who goes to bed at ten often simply lies awake.\n\nThis shift would not matter much if school began later. [12] Many students therefore arrive at their first lesson having slept only six or seven hours, although experts recommend between eight and ten.\n\nThe effects of losing sleep go far beyond yawning in class. [13] Tired students also find it harder to control their emotions, and they are more likely to have accidents on the way to school.\n\nSome schools have decided to act on this research. [14] Teachers there reported that students were more alert, and attendance at the first lesson improved noticeably.\n\nOf course, a later start is not a complete solution. [15] Screens are a particular problem, because the light from phones and laptops tells the brain that it is still daytime.\n\nSpecialists suggest a few simple habits. [16] Keeping the same bedtime at the weekend also helps, even if the temptation to sleep until lunchtime is strong.",
+   "options": [
+    "Putting devices in another room an hour before bed is one of the most effective.",
+    "Research shows that memory and concentration suffer first, so information learned during the day is not stored properly.",
+    "However, in most countries lessons start at around eight o'clock.",
+    "Most adults need much less sleep than they did as children.",
+    "In one American district, classes were moved from 7:30 to 8:30.",
+    "Teenagers may still be short of sleep because of what they do in the evening.",
+    "Some students prefer to study late at night when the house is quiet.",
+    "During adolescence, the body starts producing the sleep hormone melatonin about two hours later than in childhood."
+   ],
+   "answer": 5,
+   "explanation": "A later start is not a complete solution → причина у вечірніх звичках; далі уточнення про екрани.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-sent"
+  },
+  {
+   "id": "eng-v4-sent-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [16]. Two options are extra.",
+   "passage": "Most parents have had the experience of trying to wake a teenager who seems to be glued to the bed. It is easy to blame laziness, but scientists say the problem is mostly biological. [11] As a result, a fifteen-year-old who goes to bed at ten often simply lies awake.\n\nThis shift would not matter much if school began later. [12] Many students therefore arrive at their first lesson having slept only six or seven hours, although experts recommend between eight and ten.\n\nThe effects of losing sleep go far beyond yawning in class. [13] Tired students also find it harder to control their emotions, and they are more likely to have accidents on the way to school.\n\nSome schools have decided to act on this research. [14] Teachers there reported that students were more alert, and attendance at the first lesson improved noticeably.\n\nOf course, a later start is not a complete solution. [15] Screens are a particular problem, because the light from phones and laptops tells the brain that it is still daytime.\n\nSpecialists suggest a few simple habits. [16] Keeping the same bedtime at the weekend also helps, even if the temptation to sleep until lunchtime is strong.",
+   "options": [
+    "Putting devices in another room an hour before bed is one of the most effective.",
+    "Research shows that memory and concentration suffer first, so information learned during the day is not stored properly.",
+    "However, in most countries lessons start at around eight o'clock.",
+    "Most adults need much less sleep than they did as children.",
+    "In one American district, classes were moved from 7:30 to 8:30.",
+    "Teenagers may still be short of sleep because of what they do in the evening.",
+    "Some students prefer to study late at night when the house is quiet.",
+    "During adolescence, the body starts producing the sleep hormone melatonin about two hours later than in childhood."
+   ],
+   "answer": 0,
+   "explanation": "A few simple habits → перша звичка (one of the most effective), далі also helps — друга.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-sent"
+  },
+  {
+   "id": "eng-v4-phrase-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [17]. Two options are extra.",
+   "passage": "Ten years ago, the centre of Pontevedra, a small city in north-west Spain, was [17]. Today, children play football in squares that used to be car parks, and the only sound in the main street is conversation.\n\nThe change began when a new mayor decided that public space should belong to people [18]. Instead of building more roads, the city closed the centre to private traffic, [19]. Delivery vans are allowed in for a few hours each morning, and residents can still reach their garages.\n\nMany shop owners were furious at first, [20]. In fact, the opposite happened: the number of people walking through the centre grew, and most shops reported higher sales.\n\nThe policy has also had a surprising effect on the population. While many similar towns in the region have been losing residents, Pontevedra has grown, [21].\n\nOther cities have studied the example, but the mayor warns that copying it is not simple. 'You cannot just put up a sign,' he says. 'Change works only [22].'",
+   "options": [
+    "partly because young families want to live somewhere safe and quiet",
+    "rather than to vehicles",
+    "which forced most residents to sell their cars",
+    "because they believed customers would stop coming",
+    "keeping it open only for emergency vehicles and deliveries",
+    "full of traffic jams and noisy with engines",
+    "when people can see the benefits in their own daily lives",
+    "although the mayor had never visited another country"
+   ],
+   "answer": 5,
+   "explanation": "Контраст Ten years ago … Today: тоді — затори й шум, тепер — тиша.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-phrase"
+  },
+  {
+   "id": "eng-v4-phrase-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [18]. Two options are extra.",
+   "passage": "Ten years ago, the centre of Pontevedra, a small city in north-west Spain, was [17]. Today, children play football in squares that used to be car parks, and the only sound in the main street is conversation.\n\nThe change began when a new mayor decided that public space should belong to people [18]. Instead of building more roads, the city closed the centre to private traffic, [19]. Delivery vans are allowed in for a few hours each morning, and residents can still reach their garages.\n\nMany shop owners were furious at first, [20]. In fact, the opposite happened: the number of people walking through the centre grew, and most shops reported higher sales.\n\nThe policy has also had a surprising effect on the population. While many similar towns in the region have been losing residents, Pontevedra has grown, [21].\n\nOther cities have studied the example, but the mayor warns that copying it is not simple. 'You cannot just put up a sign,' he says. 'Change works only [22].'",
+   "options": [
+    "partly because young families want to live somewhere safe and quiet",
+    "rather than to vehicles",
+    "which forced most residents to sell their cars",
+    "because they believed customers would stop coming",
+    "keeping it open only for emergency vehicles and deliveries",
+    "full of traffic jams and noisy with engines",
+    "when people can see the benefits in their own daily lives",
+    "although the mayor had never visited another country"
+   ],
+   "answer": 1,
+   "explanation": "Should belong to people rather than to vehicles — протиставлення.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-phrase"
+  },
+  {
+   "id": "eng-v4-phrase-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [19]. Two options are extra.",
+   "passage": "Ten years ago, the centre of Pontevedra, a small city in north-west Spain, was [17]. Today, children play football in squares that used to be car parks, and the only sound in the main street is conversation.\n\nThe change began when a new mayor decided that public space should belong to people [18]. Instead of building more roads, the city closed the centre to private traffic, [19]. Delivery vans are allowed in for a few hours each morning, and residents can still reach their garages.\n\nMany shop owners were furious at first, [20]. In fact, the opposite happened: the number of people walking through the centre grew, and most shops reported higher sales.\n\nThe policy has also had a surprising effect on the population. While many similar towns in the region have been losing residents, Pontevedra has grown, [21].\n\nOther cities have studied the example, but the mayor warns that copying it is not simple. 'You cannot just put up a sign,' he says. 'Change works only [22].'",
+   "options": [
+    "partly because young families want to live somewhere safe and quiet",
+    "rather than to vehicles",
+    "which forced most residents to sell their cars",
+    "because they believed customers would stop coming",
+    "keeping it open only for emergency vehicles and deliveries",
+    "full of traffic jams and noisy with engines",
+    "when people can see the benefits in their own daily lives",
+    "although the mayor had never visited another country"
+   ],
+   "answer": 4,
+   "explanation": "Закрили для приватного транспорту, лишивши доступ екстреним службам і доставці; далі про фургони доставки. Варіант про примусовий продаж авто суперечить тому, що мешканці доїжджають до гаражів.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-phrase"
+  },
+  {
+   "id": "eng-v4-phrase-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [20]. Two options are extra.",
+   "passage": "Ten years ago, the centre of Pontevedra, a small city in north-west Spain, was [17]. Today, children play football in squares that used to be car parks, and the only sound in the main street is conversation.\n\nThe change began when a new mayor decided that public space should belong to people [18]. Instead of building more roads, the city closed the centre to private traffic, [19]. Delivery vans are allowed in for a few hours each morning, and residents can still reach their garages.\n\nMany shop owners were furious at first, [20]. In fact, the opposite happened: the number of people walking through the centre grew, and most shops reported higher sales.\n\nThe policy has also had a surprising effect on the population. While many similar towns in the region have been losing residents, Pontevedra has grown, [21].\n\nOther cities have studied the example, but the mayor warns that copying it is not simple. 'You cannot just put up a sign,' he says. 'Change works only [22].'",
+   "options": [
+    "partly because young families want to live somewhere safe and quiet",
+    "rather than to vehicles",
+    "which forced most residents to sell their cars",
+    "because they believed customers would stop coming",
+    "keeping it open only for emergency vehicles and deliveries",
+    "full of traffic jams and noisy with engines",
+    "when people can see the benefits in their own daily lives",
+    "although the mayor had never visited another country"
+   ],
+   "answer": 3,
+   "explanation": "Furious … because they believed customers would stop coming; In fact, the opposite happened.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-phrase"
+  },
+  {
+   "id": "eng-v4-phrase-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [21]. Two options are extra.",
+   "passage": "Ten years ago, the centre of Pontevedra, a small city in north-west Spain, was [17]. Today, children play football in squares that used to be car parks, and the only sound in the main street is conversation.\n\nThe change began when a new mayor decided that public space should belong to people [18]. Instead of building more roads, the city closed the centre to private traffic, [19]. Delivery vans are allowed in for a few hours each morning, and residents can still reach their garages.\n\nMany shop owners were furious at first, [20]. In fact, the opposite happened: the number of people walking through the centre grew, and most shops reported higher sales.\n\nThe policy has also had a surprising effect on the population. While many similar towns in the region have been losing residents, Pontevedra has grown, [21].\n\nOther cities have studied the example, but the mayor warns that copying it is not simple. 'You cannot just put up a sign,' he says. 'Change works only [22].'",
+   "options": [
+    "partly because young families want to live somewhere safe and quiet",
+    "rather than to vehicles",
+    "which forced most residents to sell their cars",
+    "because they believed customers would stop coming",
+    "keeping it open only for emergency vehicles and deliveries",
+    "full of traffic jams and noisy with engines",
+    "when people can see the benefits in their own daily lives",
+    "although the mayor had never visited another country"
+   ],
+   "answer": 0,
+   "explanation": "Місто зросло — пояснення причини (молоді родини).",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-phrase"
+  },
+  {
+   "id": "eng-v4-phrase-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [22]. Two options are extra.",
+   "passage": "Ten years ago, the centre of Pontevedra, a small city in north-west Spain, was [17]. Today, children play football in squares that used to be car parks, and the only sound in the main street is conversation.\n\nThe change began when a new mayor decided that public space should belong to people [18]. Instead of building more roads, the city closed the centre to private traffic, [19]. Delivery vans are allowed in for a few hours each morning, and residents can still reach their garages.\n\nMany shop owners were furious at first, [20]. In fact, the opposite happened: the number of people walking through the centre grew, and most shops reported higher sales.\n\nThe policy has also had a surprising effect on the population. While many similar towns in the region have been losing residents, Pontevedra has grown, [21].\n\nOther cities have studied the example, but the mayor warns that copying it is not simple. 'You cannot just put up a sign,' he says. 'Change works only [22].'",
+   "options": [
+    "partly because young families want to live somewhere safe and quiet",
+    "rather than to vehicles",
+    "which forced most residents to sell their cars",
+    "because they believed customers would stop coming",
+    "keeping it open only for emergency vehicles and deliveries",
+    "full of traffic jams and noisy with engines",
+    "when people can see the benefits in their own daily lives",
+    "although the mayor had never visited another country"
+   ],
+   "answer": 6,
+   "explanation": "Change works only when … — умова, за якої зміни працюють.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-phrase"
+  },
+  {
+   "id": "eng-v4-grammar-1",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [23].",
+   "passage": "My first job\n\nWhen I was sixteen, I [23] a summer job at a café near the beach. I had never worked before, so I was nervous on my first day. The manager, a tall woman [24] name was Irena, showed me how to use the coffee machine and told me that I [25] to wear a uniform. By the end of the first week I [26] more than two hundred cups of coffee! It was hard work, but I learned that being polite to customers is [27] important than being fast.",
+   "options": [
+    "was getting",
+    "have got",
+    "got",
+    "get"
+   ],
+   "answer": 2,
+   "explanation": "Завершена дія в минулому (When I was sixteen) — Past Simple got.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-grammar"
+  },
+  {
+   "id": "eng-v4-grammar-2",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [24].",
+   "passage": "My first job\n\nWhen I was sixteen, I [23] a summer job at a café near the beach. I had never worked before, so I was nervous on my first day. The manager, a tall woman [24] name was Irena, showed me how to use the coffee machine and told me that I [25] to wear a uniform. By the end of the first week I [26] more than two hundred cups of coffee! It was hard work, but I learned that being polite to customers is [27] important than being fast.",
+   "options": [
+    "who",
+    "whose",
+    "that",
+    "which"
+   ],
+   "answer": 1,
+   "explanation": "Ім’я належить жінці: a woman whose name was Irena.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-grammar"
+  },
+  {
+   "id": "eng-v4-grammar-3",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [25].",
+   "passage": "My first job\n\nWhen I was sixteen, I [23] a summer job at a café near the beach. I had never worked before, so I was nervous on my first day. The manager, a tall woman [24] name was Irena, showed me how to use the coffee machine and told me that I [25] to wear a uniform. By the end of the first week I [26] more than two hundred cups of coffee! It was hard work, but I learned that being polite to customers is [27] important than being fast.",
+   "options": [
+    "had",
+    "would",
+    "should",
+    "must"
+   ],
+   "answer": 0,
+   "explanation": "Після пропуску стоїть to: had to wear. Must/should/would не поєднуються з to.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-grammar"
+  },
+  {
+   "id": "eng-v4-grammar-4",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [26].",
+   "passage": "My first job\n\nWhen I was sixteen, I [23] a summer job at a café near the beach. I had never worked before, so I was nervous on my first day. The manager, a tall woman [24] name was Irena, showed me how to use the coffee machine and told me that I [25] to wear a uniform. By the end of the first week I [26] more than two hundred cups of coffee! It was hard work, but I learned that being polite to customers is [27] important than being fast.",
+   "options": [
+    "made",
+    "was making",
+    "had made",
+    "have made"
+   ],
+   "answer": 2,
+   "explanation": "By the end of the first week — дія завершилася до моменту в минулому: Past Perfect.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-grammar"
+  },
+  {
+   "id": "eng-v4-grammar-5",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [27].",
+   "passage": "My first job\n\nWhen I was sixteen, I [23] a summer job at a café near the beach. I had never worked before, so I was nervous on my first day. The manager, a tall woman [24] name was Irena, showed me how to use the coffee machine and told me that I [25] to wear a uniform. By the end of the first week I [26] more than two hundred cups of coffee! It was hard work, but I learned that being polite to customers is [27] important than being fast.",
+   "options": [
+    "the more",
+    "most",
+    "more",
+    "much"
+   ],
+   "answer": 2,
+   "explanation": "Порівняння двох речей з than: more important than.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-grammar"
+  },
+  {
+   "id": "eng-v4-vocab-1",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [28].",
+   "passage": "Learning a language online\n\nThousands of people now [28] advantage of free apps to learn foreign languages. These programs are popular because users can study whenever they like and [29] their own progress. However, teachers point out that apps cannot completely [30] a real conversation. To become fluent, learners need to stop worrying about [31] mistakes, listen to native speakers and practise speaking regularly. The best results usually come when online tools are combined [32] lessons with a teacher.",
+   "options": [
+    "have",
+    "make",
+    "take",
+    "get"
+   ],
+   "answer": 2,
+   "explanation": "Стале сполучення take advantage of.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-vocab"
+  },
+  {
+   "id": "eng-v4-vocab-2",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [29].",
+   "passage": "Learning a language online\n\nThousands of people now [28] advantage of free apps to learn foreign languages. These programs are popular because users can study whenever they like and [29] their own progress. However, teachers point out that apps cannot completely [30] a real conversation. To become fluent, learners need to stop worrying about [31] mistakes, listen to native speakers and practise speaking regularly. The best results usually come when online tools are combined [32] lessons with a teacher.",
+   "options": [
+    "spend",
+    "pass",
+    "track",
+    "lead"
+   ],
+   "answer": 2,
+   "explanation": "Track progress — стежити за прогресом.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-vocab"
+  },
+  {
+   "id": "eng-v4-vocab-3",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [30].",
+   "passage": "Learning a language online\n\nThousands of people now [28] advantage of free apps to learn foreign languages. These programs are popular because users can study whenever they like and [29] their own progress. However, teachers point out that apps cannot completely [30] a real conversation. To become fluent, learners need to stop worrying about [31] mistakes, listen to native speakers and practise speaking regularly. The best results usually come when online tools are combined [32] lessons with a teacher.",
+   "options": [
+    "exchange",
+    "replace",
+    "change",
+    "remove"
+   ],
+   "answer": 1,
+   "explanation": "Застосунки не можуть повністю замінити (replace) розмову.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-vocab"
+  },
+  {
+   "id": "eng-v4-vocab-4",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [31].",
+   "passage": "Learning a language online\n\nThousands of people now [28] advantage of free apps to learn foreign languages. These programs are popular because users can study whenever they like and [29] their own progress. However, teachers point out that apps cannot completely [30] a real conversation. To become fluent, learners need to stop worrying about [31] mistakes, listen to native speakers and practise speaking regularly. The best results usually come when online tools are combined [32] lessons with a teacher.",
+   "options": [
+    "having",
+    "making",
+    "doing",
+    "taking"
+   ],
+   "answer": 1,
+   "explanation": "Make mistakes; після about — герундій making.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-vocab"
+  },
+  {
+   "id": "eng-v4-vocab-5",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [32].",
+   "passage": "Learning a language online\n\nThousands of people now [28] advantage of free apps to learn foreign languages. These programs are popular because users can study whenever they like and [29] their own progress. However, teachers point out that apps cannot completely [30] a real conversation. To become fluent, learners need to stop worrying about [31] mistakes, listen to native speakers and practise speaking regularly. The best results usually come when online tools are combined [32] lessons with a teacher.",
+   "options": [
+    "to",
+    "by",
+    "from",
+    "with"
+   ],
+   "answer": 3,
+   "explanation": "Combine something with something.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v4-vocab"
+  },
+  {
+   "id": "eng-v5-notice-1",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "From Monday, the town museum will open at 11 a.m. instead of 9 a.m. on weekdays, but it will now stay open until 7 p.m.",
+   "options": [
+    "A change in opening hours",
+    "Help for people with no internet access",
+    "Bring something to exchange",
+    "An activity for the whole family",
+    "Places are still available",
+    "Payment is now online only",
+    "A request for quiet",
+    "Not suitable for young children"
+   ],
+   "answer": 0,
+   "explanation": "Змінено години роботи музею.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v5-notices"
+  },
+  {
+   "id": "eng-v5-notice-2",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Clothes swap at the youth centre! Leave one item you no longer wear and take home something new to you. No money changes hands.",
+   "options": [
+    "A change in opening hours",
+    "Help for people with no internet access",
+    "Bring something to exchange",
+    "An activity for the whole family",
+    "Places are still available",
+    "Payment is now online only",
+    "A request for quiet",
+    "Not suitable for young children"
+   ],
+   "answer": 2,
+   "explanation": "Обмін одягом: принеси річ, візьми іншу.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v5-notices"
+  },
+  {
+   "id": "eng-v5-notice-3",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Our next escape-room game contains loud sound effects, flashing lights and scenes of crime. We do not admit players under 14.",
+   "options": [
+    "A change in opening hours",
+    "Help for people with no internet access",
+    "Bring something to exchange",
+    "An activity for the whole family",
+    "Places are still available",
+    "Payment is now online only",
+    "A request for quiet",
+    "Not suitable for young children"
+   ],
+   "answer": 7,
+   "explanation": "Гравців до 14 років не допускають.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v5-notices"
+  },
+  {
+   "id": "eng-v5-notice-4",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Exam season has started. Students revising in the reading room are asked to switch phones to silent and to take conversations into the corridor.",
+   "options": [
+    "A change in opening hours",
+    "Help for people with no internet access",
+    "Bring something to exchange",
+    "An activity for the whole family",
+    "Places are still available",
+    "Payment is now online only",
+    "A request for quiet",
+    "Not suitable for young children"
+   ],
+   "answer": 6,
+   "explanation": "Прохання не шуміти в читальній залі.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v5-notices"
+  },
+  {
+   "id": "eng-v5-notice-5",
+   "subject": "eng",
+   "topicId": "eng-matching",
+   "type": "single",
+   "format": "matching",
+   "prompt": "Оберіть заголовок, що найточніше відповідає оголошенню. Три варіанти в блоці зайві.",
+   "passage": "Not sure how to fill in an application on a government website? Every Thursday our librarians help visitors who do not have a computer at home to complete online forms.",
+   "options": [
+    "A change in opening hours",
+    "Help for people with no internet access",
+    "Bring something to exchange",
+    "An activity for the whole family",
+    "Places are still available",
+    "Payment is now online only",
+    "A request for quiet",
+    "Not suitable for young children"
+   ],
+   "answer": 1,
+   "explanation": "Допомога тим, у кого вдома немає комп’ютера й інтернету.",
+   "level": 2,
+   "tags": [
+    "matching",
+    "reading"
+   ],
+   "groupId": "eng-v5-notices"
+  },
+  {
+   "id": "eng-v5-read-1",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "Why did Daria first test the well water?",
+   "passage": "At fourteen, Daria Kovalenko could not understand why her grandmother refused to drink water from the well in her village. 'She told me it made people ill after heavy rain,' Daria says. 'I thought she was being old-fashioned. Then I tested a sample in the school laboratory and found she was right.'\n\nThat discovery became the starting point of a three-year project. Daria knew that proper filters existed, but they were too expensive for most families in the village, and they needed replacement parts that could only be ordered from the city. She set herself a simple goal: a filter that cost less than a pair of trainers and could be repaired with materials sold in any village shop.\n\nHer first designs were failures. One clogged after two days; another worked perfectly but was so heavy that nobody could lift it. 'I kept a notebook of everything that went wrong,' she explains. 'Looking back, that notebook taught me more than the experiments that worked.' Her chemistry teacher allowed her to use the laboratory after lessons, but he refused to give her the answers. 'He only asked questions,' Daria laughs. 'It drove me mad at the time.'\n\nThe final version uses layers of sand, gravel and charcoal from burnt wood inside an ordinary plastic bucket. Independent tests carried out by a university showed that it removes most harmful bacteria, although the scientists stressed that the water should still be boiled after heavy flooding.\n\nLast spring the filter won a national science competition, and several families in Daria's village now use it. She has decided not to patent the design. Instead, she has published step-by-step instructions online so that anyone can build one. 'If I sold it, I could make some money,' she says. 'But the people who need it most would be the last to get it.'\n\nDaria now plans to study environmental engineering. Her grandmother, she adds, still prefers to boil her water — just in case.",
+   "options": [
+    "She needed a topic for a competition.",
+    "She doubted what her grandmother had told her.",
+    "Her teacher asked her to.",
+    "Many villagers had fallen ill."
+   ],
+   "answer": 1,
+   "explanation": "I thought she was being old-fashioned. Then I tested a sample — вона сумнівалася в словах бабусі.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v5-text"
+  },
+  {
+   "id": "eng-v5-read-2",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What was Daria's main aim when designing the filter?",
+   "passage": "At fourteen, Daria Kovalenko could not understand why her grandmother refused to drink water from the well in her village. 'She told me it made people ill after heavy rain,' Daria says. 'I thought she was being old-fashioned. Then I tested a sample in the school laboratory and found she was right.'\n\nThat discovery became the starting point of a three-year project. Daria knew that proper filters existed, but they were too expensive for most families in the village, and they needed replacement parts that could only be ordered from the city. She set herself a simple goal: a filter that cost less than a pair of trainers and could be repaired with materials sold in any village shop.\n\nHer first designs were failures. One clogged after two days; another worked perfectly but was so heavy that nobody could lift it. 'I kept a notebook of everything that went wrong,' she explains. 'Looking back, that notebook taught me more than the experiments that worked.' Her chemistry teacher allowed her to use the laboratory after lessons, but he refused to give her the answers. 'He only asked questions,' Daria laughs. 'It drove me mad at the time.'\n\nThe final version uses layers of sand, gravel and charcoal from burnt wood inside an ordinary plastic bucket. Independent tests carried out by a university showed that it removes most harmful bacteria, although the scientists stressed that the water should still be boiled after heavy flooding.\n\nLast spring the filter won a national science competition, and several families in Daria's village now use it. She has decided not to patent the design. Instead, she has published step-by-step instructions online so that anyone can build one. 'If I sold it, I could make some money,' she says. 'But the people who need it most would be the last to get it.'\n\nDaria now plans to study environmental engineering. Her grandmother, she adds, still prefers to boil her water — just in case.",
+   "options": [
+    "To make it more effective than filters sold in shops.",
+    "To make it light enough for children to carry.",
+    "To keep it cheap and easy to repair locally.",
+    "To sell it to families in the city."
+   ],
+   "answer": 2,
+   "explanation": "A filter that cost less than a pair of trainers and could be repaired with materials sold in any village shop.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v5-text"
+  },
+  {
+   "id": "eng-v5-read-3",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What does Daria say about her failed designs?",
+   "passage": "At fourteen, Daria Kovalenko could not understand why her grandmother refused to drink water from the well in her village. 'She told me it made people ill after heavy rain,' Daria says. 'I thought she was being old-fashioned. Then I tested a sample in the school laboratory and found she was right.'\n\nThat discovery became the starting point of a three-year project. Daria knew that proper filters existed, but they were too expensive for most families in the village, and they needed replacement parts that could only be ordered from the city. She set herself a simple goal: a filter that cost less than a pair of trainers and could be repaired with materials sold in any village shop.\n\nHer first designs were failures. One clogged after two days; another worked perfectly but was so heavy that nobody could lift it. 'I kept a notebook of everything that went wrong,' she explains. 'Looking back, that notebook taught me more than the experiments that worked.' Her chemistry teacher allowed her to use the laboratory after lessons, but he refused to give her the answers. 'He only asked questions,' Daria laughs. 'It drove me mad at the time.'\n\nThe final version uses layers of sand, gravel and charcoal from burnt wood inside an ordinary plastic bucket. Independent tests carried out by a university showed that it removes most harmful bacteria, although the scientists stressed that the water should still be boiled after heavy flooding.\n\nLast spring the filter won a national science competition, and several families in Daria's village now use it. She has decided not to patent the design. Instead, she has published step-by-step instructions online so that anyone can build one. 'If I sold it, I could make some money,' she says. 'But the people who need it most would be the last to get it.'\n\nDaria now plans to study environmental engineering. Her grandmother, she adds, still prefers to boil her water — just in case.",
+   "options": [
+    "Her teacher helped her to avoid them.",
+    "They were caused by poor materials.",
+    "Recording them taught her a lot.",
+    "She was embarrassed by them."
+   ],
+   "answer": 2,
+   "explanation": "That notebook taught me more than the experiments that worked.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v5-text"
+  },
+  {
+   "id": "eng-v5-read-4",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "What did the university tests show?",
+   "passage": "At fourteen, Daria Kovalenko could not understand why her grandmother refused to drink water from the well in her village. 'She told me it made people ill after heavy rain,' Daria says. 'I thought she was being old-fashioned. Then I tested a sample in the school laboratory and found she was right.'\n\nThat discovery became the starting point of a three-year project. Daria knew that proper filters existed, but they were too expensive for most families in the village, and they needed replacement parts that could only be ordered from the city. She set herself a simple goal: a filter that cost less than a pair of trainers and could be repaired with materials sold in any village shop.\n\nHer first designs were failures. One clogged after two days; another worked perfectly but was so heavy that nobody could lift it. 'I kept a notebook of everything that went wrong,' she explains. 'Looking back, that notebook taught me more than the experiments that worked.' Her chemistry teacher allowed her to use the laboratory after lessons, but he refused to give her the answers. 'He only asked questions,' Daria laughs. 'It drove me mad at the time.'\n\nThe final version uses layers of sand, gravel and charcoal from burnt wood inside an ordinary plastic bucket. Independent tests carried out by a university showed that it removes most harmful bacteria, although the scientists stressed that the water should still be boiled after heavy flooding.\n\nLast spring the filter won a national science competition, and several families in Daria's village now use it. She has decided not to patent the design. Instead, she has published step-by-step instructions online so that anyone can build one. 'If I sold it, I could make some money,' she says. 'But the people who need it most would be the last to get it.'\n\nDaria now plans to study environmental engineering. Her grandmother, she adds, still prefers to boil her water — just in case.",
+   "options": [
+    "The filter removes most harmful bacteria.",
+    "The filter makes boiling unnecessary.",
+    "The filter works only after floods.",
+    "The filter needs expensive parts."
+   ],
+   "answer": 0,
+   "explanation": "It removes most harmful bacteria; після повені воду все одно треба кип’ятити, тож твердження, що кип’ятити не потрібно, хибне.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v5-text"
+  },
+  {
+   "id": "eng-v5-read-5",
+   "subject": "eng",
+   "topicId": "eng-reading",
+   "type": "single",
+   "format": "reading",
+   "prompt": "Why has Daria not patented the filter?",
+   "passage": "At fourteen, Daria Kovalenko could not understand why her grandmother refused to drink water from the well in her village. 'She told me it made people ill after heavy rain,' Daria says. 'I thought she was being old-fashioned. Then I tested a sample in the school laboratory and found she was right.'\n\nThat discovery became the starting point of a three-year project. Daria knew that proper filters existed, but they were too expensive for most families in the village, and they needed replacement parts that could only be ordered from the city. She set herself a simple goal: a filter that cost less than a pair of trainers and could be repaired with materials sold in any village shop.\n\nHer first designs were failures. One clogged after two days; another worked perfectly but was so heavy that nobody could lift it. 'I kept a notebook of everything that went wrong,' she explains. 'Looking back, that notebook taught me more than the experiments that worked.' Her chemistry teacher allowed her to use the laboratory after lessons, but he refused to give her the answers. 'He only asked questions,' Daria laughs. 'It drove me mad at the time.'\n\nThe final version uses layers of sand, gravel and charcoal from burnt wood inside an ordinary plastic bucket. Independent tests carried out by a university showed that it removes most harmful bacteria, although the scientists stressed that the water should still be boiled after heavy flooding.\n\nLast spring the filter won a national science competition, and several families in Daria's village now use it. She has decided not to patent the design. Instead, she has published step-by-step instructions online so that anyone can build one. 'If I sold it, I could make some money,' she says. 'But the people who need it most would be the last to get it.'\n\nDaria now plans to study environmental engineering. Her grandmother, she adds, still prefers to boil her water — just in case.",
+   "options": [
+    "She wants it to reach the people who need it.",
+    "The design is not original.",
+    "Her teacher advised her against it.",
+    "The competition rules did not allow it."
+   ],
+   "answer": 0,
+   "explanation": "The people who need it most would be the last to get it.",
+   "level": 3,
+   "tags": [
+    "reading",
+    "reading"
+   ],
+   "groupId": "eng-v5-text"
+  },
+  {
+   "id": "eng-v5-sent-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [11]. Two options are extra.",
+   "passage": "A day in the mountains can be one of the most rewarding experiences of the summer, but it can also go wrong surprisingly quickly. Good preparation starts long before you put on your boots.\n\nFirst, choose a route that matches your fitness. [11] If you have never walked more than ten kilometres, a twenty-kilometre trail with steep climbs is not the place to start.\n\nNext, check the weather forecast on the evening before and again in the morning. [12] Thunderstorms, in particular, can develop within an hour, and an exposed ridge is the worst place to be when lightning strikes.\n\nYour rucksack does not need to be heavy, but some items are essential. [13] Many walkers also forget that a phone battery drains quickly in the cold, so a small power bank is worth carrying.\n\nAlways tell someone where you are going and when you expect to return. [14] It sounds old-fashioned, but in remote areas there is often no mobile signal at all.\n\nFinally, be prepared to change your plans. [15] Experienced mountaineers say that the summit will still be there next year, but you might not be if you take unnecessary risks.\n\nAfter the hike, take a few minutes to note what went well and what did not. [16]",
+   "options": [
+    "Wearing new boots for the first time on a long walk is a common mistake.",
+    "Look carefully at both the distance and the total height you will have to climb.",
+    "Conditions in the mountains change much faster than in the valley.",
+    "Most mountain paths are closed during the summer season.",
+    "Turning back when the weather gets worse is a sign of good judgement, not weakness.",
+    "Those notes will make your next trip safer and more enjoyable.",
+    "That way, they can raise the alarm if you do not come back on time.",
+    "Water, a warm layer, a map and some high-energy food should always go in first."
+   ],
+   "answer": 1,
+   "explanation": "Вибір маршруту за силами: відстань і набір висоти; далі приклад про 20 км із крутими підйомами.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-sent"
+  },
+  {
+   "id": "eng-v5-sent-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [12]. Two options are extra.",
+   "passage": "A day in the mountains can be one of the most rewarding experiences of the summer, but it can also go wrong surprisingly quickly. Good preparation starts long before you put on your boots.\n\nFirst, choose a route that matches your fitness. [11] If you have never walked more than ten kilometres, a twenty-kilometre trail with steep climbs is not the place to start.\n\nNext, check the weather forecast on the evening before and again in the morning. [12] Thunderstorms, in particular, can develop within an hour, and an exposed ridge is the worst place to be when lightning strikes.\n\nYour rucksack does not need to be heavy, but some items are essential. [13] Many walkers also forget that a phone battery drains quickly in the cold, so a small power bank is worth carrying.\n\nAlways tell someone where you are going and when you expect to return. [14] It sounds old-fashioned, but in remote areas there is often no mobile signal at all.\n\nFinally, be prepared to change your plans. [15] Experienced mountaineers say that the summit will still be there next year, but you might not be if you take unnecessary risks.\n\nAfter the hike, take a few minutes to note what went well and what did not. [16]",
+   "options": [
+    "Wearing new boots for the first time on a long walk is a common mistake.",
+    "Look carefully at both the distance and the total height you will have to climb.",
+    "Conditions in the mountains change much faster than in the valley.",
+    "Most mountain paths are closed during the summer season.",
+    "Turning back when the weather gets worse is a sign of good judgement, not weakness.",
+    "Those notes will make your next trip safer and more enjoyable.",
+    "That way, they can raise the alarm if you do not come back on time.",
+    "Water, a warm layer, a map and some high-energy food should always go in first."
+   ],
+   "answer": 2,
+   "explanation": "Перевір прогноз → у горах погода змінюється швидше; далі in particular — грози.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-sent"
+  },
+  {
+   "id": "eng-v5-sent-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [13]. Two options are extra.",
+   "passage": "A day in the mountains can be one of the most rewarding experiences of the summer, but it can also go wrong surprisingly quickly. Good preparation starts long before you put on your boots.\n\nFirst, choose a route that matches your fitness. [11] If you have never walked more than ten kilometres, a twenty-kilometre trail with steep climbs is not the place to start.\n\nNext, check the weather forecast on the evening before and again in the morning. [12] Thunderstorms, in particular, can develop within an hour, and an exposed ridge is the worst place to be when lightning strikes.\n\nYour rucksack does not need to be heavy, but some items are essential. [13] Many walkers also forget that a phone battery drains quickly in the cold, so a small power bank is worth carrying.\n\nAlways tell someone where you are going and when you expect to return. [14] It sounds old-fashioned, but in remote areas there is often no mobile signal at all.\n\nFinally, be prepared to change your plans. [15] Experienced mountaineers say that the summit will still be there next year, but you might not be if you take unnecessary risks.\n\nAfter the hike, take a few minutes to note what went well and what did not. [16]",
+   "options": [
+    "Wearing new boots for the first time on a long walk is a common mistake.",
+    "Look carefully at both the distance and the total height you will have to climb.",
+    "Conditions in the mountains change much faster than in the valley.",
+    "Most mountain paths are closed during the summer season.",
+    "Turning back when the weather gets worse is a sign of good judgement, not weakness.",
+    "Those notes will make your next trip safer and more enjoyable.",
+    "That way, they can raise the alarm if you do not come back on time.",
+    "Water, a warm layer, a map and some high-energy food should always go in first."
+   ],
+   "answer": 7,
+   "explanation": "Some items are essential → перелік речей; далі also — повербанк.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-sent"
+  },
+  {
+   "id": "eng-v5-sent-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [14]. Two options are extra.",
+   "passage": "A day in the mountains can be one of the most rewarding experiences of the summer, but it can also go wrong surprisingly quickly. Good preparation starts long before you put on your boots.\n\nFirst, choose a route that matches your fitness. [11] If you have never walked more than ten kilometres, a twenty-kilometre trail with steep climbs is not the place to start.\n\nNext, check the weather forecast on the evening before and again in the morning. [12] Thunderstorms, in particular, can develop within an hour, and an exposed ridge is the worst place to be when lightning strikes.\n\nYour rucksack does not need to be heavy, but some items are essential. [13] Many walkers also forget that a phone battery drains quickly in the cold, so a small power bank is worth carrying.\n\nAlways tell someone where you are going and when you expect to return. [14] It sounds old-fashioned, but in remote areas there is often no mobile signal at all.\n\nFinally, be prepared to change your plans. [15] Experienced mountaineers say that the summit will still be there next year, but you might not be if you take unnecessary risks.\n\nAfter the hike, take a few minutes to note what went well and what did not. [16]",
+   "options": [
+    "Wearing new boots for the first time on a long walk is a common mistake.",
+    "Look carefully at both the distance and the total height you will have to climb.",
+    "Conditions in the mountains change much faster than in the valley.",
+    "Most mountain paths are closed during the summer season.",
+    "Turning back when the weather gets worse is a sign of good judgement, not weakness.",
+    "Those notes will make your next trip safer and more enjoyable.",
+    "That way, they can raise the alarm if you do not come back on time.",
+    "Water, a warm layer, a map and some high-energy food should always go in first."
+   ],
+   "answer": 6,
+   "explanation": "Tell someone… → That way, they can raise the alarm.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-sent"
+  },
+  {
+   "id": "eng-v5-sent-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [15]. Two options are extra.",
+   "passage": "A day in the mountains can be one of the most rewarding experiences of the summer, but it can also go wrong surprisingly quickly. Good preparation starts long before you put on your boots.\n\nFirst, choose a route that matches your fitness. [11] If you have never walked more than ten kilometres, a twenty-kilometre trail with steep climbs is not the place to start.\n\nNext, check the weather forecast on the evening before and again in the morning. [12] Thunderstorms, in particular, can develop within an hour, and an exposed ridge is the worst place to be when lightning strikes.\n\nYour rucksack does not need to be heavy, but some items are essential. [13] Many walkers also forget that a phone battery drains quickly in the cold, so a small power bank is worth carrying.\n\nAlways tell someone where you are going and when you expect to return. [14] It sounds old-fashioned, but in remote areas there is often no mobile signal at all.\n\nFinally, be prepared to change your plans. [15] Experienced mountaineers say that the summit will still be there next year, but you might not be if you take unnecessary risks.\n\nAfter the hike, take a few minutes to note what went well and what did not. [16]",
+   "options": [
+    "Wearing new boots for the first time on a long walk is a common mistake.",
+    "Look carefully at both the distance and the total height you will have to climb.",
+    "Conditions in the mountains change much faster than in the valley.",
+    "Most mountain paths are closed during the summer season.",
+    "Turning back when the weather gets worse is a sign of good judgement, not weakness.",
+    "Those notes will make your next trip safer and more enjoyable.",
+    "That way, they can raise the alarm if you do not come back on time.",
+    "Water, a warm layer, a map and some high-energy food should always go in first."
+   ],
+   "answer": 4,
+   "explanation": "Be prepared to change your plans → повернутися — це розважливо.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-sent"
+  },
+  {
+   "id": "eng-v5-sent-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [16]. Two options are extra.",
+   "passage": "A day in the mountains can be one of the most rewarding experiences of the summer, but it can also go wrong surprisingly quickly. Good preparation starts long before you put on your boots.\n\nFirst, choose a route that matches your fitness. [11] If you have never walked more than ten kilometres, a twenty-kilometre trail with steep climbs is not the place to start.\n\nNext, check the weather forecast on the evening before and again in the morning. [12] Thunderstorms, in particular, can develop within an hour, and an exposed ridge is the worst place to be when lightning strikes.\n\nYour rucksack does not need to be heavy, but some items are essential. [13] Many walkers also forget that a phone battery drains quickly in the cold, so a small power bank is worth carrying.\n\nAlways tell someone where you are going and when you expect to return. [14] It sounds old-fashioned, but in remote areas there is often no mobile signal at all.\n\nFinally, be prepared to change your plans. [15] Experienced mountaineers say that the summit will still be there next year, but you might not be if you take unnecessary risks.\n\nAfter the hike, take a few minutes to note what went well and what did not. [16]",
+   "options": [
+    "Wearing new boots for the first time on a long walk is a common mistake.",
+    "Look carefully at both the distance and the total height you will have to climb.",
+    "Conditions in the mountains change much faster than in the valley.",
+    "Most mountain paths are closed during the summer season.",
+    "Turning back when the weather gets worse is a sign of good judgement, not weakness.",
+    "Those notes will make your next trip safer and more enjoyable.",
+    "That way, they can raise the alarm if you do not come back on time.",
+    "Water, a warm layer, a map and some high-energy food should always go in first."
+   ],
+   "answer": 5,
+   "explanation": "Note what went well → those notes допоможуть наступного разу.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-sent"
+  },
+  {
+   "id": "eng-v5-phrase-1",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [17]. Two options are extra.",
+   "passage": "Most of us were taught as children not to talk to strangers, and many adults still follow this rule [17]. Yet a growing body of research suggests that short conversations with people we do not know can make us happier.\n\nIn one well-known experiment, commuters on a train were asked either to sit in silence or to start a conversation with the person next to them. Before the journey, most predicted that talking would be awkward [18]. In reality, those who chatted reported a more pleasant journey, and almost nobody was rejected.\n\nWhy do we expect the worst? Psychologists believe we underestimate how much other people want to connect, [19]. Each side waits for the other to begin, so nobody does.\n\nThe benefits are not limited to mood. Brief exchanges with a shop assistant or a neighbour can give people a sense of belonging, [20].\n\nOf course, there are situations where caution is wise, [21]. But in a queue, at a bus stop or in a waiting room, a friendly comment about the weather costs nothing.\n\nIf you find the idea uncomfortable, start small. A smile or a simple 'thank you' [22].",
+   "options": [
+    "and that the other person would not enjoy it",
+    "is often enough to open the door to a longer chat",
+    "without ever asking whether it makes sense",
+    "and nobody should feel forced to speak to anyone",
+    "and the people around us make the same mistake about us",
+    "because trains are usually too crowded to sit together",
+    "which is especially important for those who live alone",
+    "so most passengers refused to take part in the study"
+   ],
+   "answer": 2,
+   "explanation": "Дорослі досі дотримуються правила, не замислюючись, чи воно має сенс; далі Yet — протиставлення.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-phrase"
+  },
+  {
+   "id": "eng-v5-phrase-2",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [18]. Two options are extra.",
+   "passage": "Most of us were taught as children not to talk to strangers, and many adults still follow this rule [17]. Yet a growing body of research suggests that short conversations with people we do not know can make us happier.\n\nIn one well-known experiment, commuters on a train were asked either to sit in silence or to start a conversation with the person next to them. Before the journey, most predicted that talking would be awkward [18]. In reality, those who chatted reported a more pleasant journey, and almost nobody was rejected.\n\nWhy do we expect the worst? Psychologists believe we underestimate how much other people want to connect, [19]. Each side waits for the other to begin, so nobody does.\n\nThe benefits are not limited to mood. Brief exchanges with a shop assistant or a neighbour can give people a sense of belonging, [20].\n\nOf course, there are situations where caution is wise, [21]. But in a queue, at a bus stop or in a waiting room, a friendly comment about the weather costs nothing.\n\nIf you find the idea uncomfortable, start small. A smile or a simple 'thank you' [22].",
+   "options": [
+    "and that the other person would not enjoy it",
+    "is often enough to open the door to a longer chat",
+    "without ever asking whether it makes sense",
+    "and nobody should feel forced to speak to anyone",
+    "and the people around us make the same mistake about us",
+    "because trains are usually too crowded to sit together",
+    "which is especially important for those who live alone",
+    "so most passengers refused to take part in the study"
+   ],
+   "answer": 0,
+   "explanation": "Прогноз учасників: незручно й неприємно співрозмовнику; In reality — навпаки. Варіант про відмову пасажирів суперечить тексту.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-phrase"
+  },
+  {
+   "id": "eng-v5-phrase-3",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [19]. Two options are extra.",
+   "passage": "Most of us were taught as children not to talk to strangers, and many adults still follow this rule [17]. Yet a growing body of research suggests that short conversations with people we do not know can make us happier.\n\nIn one well-known experiment, commuters on a train were asked either to sit in silence or to start a conversation with the person next to them. Before the journey, most predicted that talking would be awkward [18]. In reality, those who chatted reported a more pleasant journey, and almost nobody was rejected.\n\nWhy do we expect the worst? Psychologists believe we underestimate how much other people want to connect, [19]. Each side waits for the other to begin, so nobody does.\n\nThe benefits are not limited to mood. Brief exchanges with a shop assistant or a neighbour can give people a sense of belonging, [20].\n\nOf course, there are situations where caution is wise, [21]. But in a queue, at a bus stop or in a waiting room, a friendly comment about the weather costs nothing.\n\nIf you find the idea uncomfortable, start small. A smile or a simple 'thank you' [22].",
+   "options": [
+    "and that the other person would not enjoy it",
+    "is often enough to open the door to a longer chat",
+    "without ever asking whether it makes sense",
+    "and nobody should feel forced to speak to anyone",
+    "and the people around us make the same mistake about us",
+    "because trains are usually too crowded to sit together",
+    "which is especially important for those who live alone",
+    "so most passengers refused to take part in the study"
+   ],
+   "answer": 4,
+   "explanation": "Обидві сторони недооцінюють бажання спілкуватися: Each side waits for the other.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-phrase"
+  },
+  {
+   "id": "eng-v5-phrase-4",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [20]. Two options are extra.",
+   "passage": "Most of us were taught as children not to talk to strangers, and many adults still follow this rule [17]. Yet a growing body of research suggests that short conversations with people we do not know can make us happier.\n\nIn one well-known experiment, commuters on a train were asked either to sit in silence or to start a conversation with the person next to them. Before the journey, most predicted that talking would be awkward [18]. In reality, those who chatted reported a more pleasant journey, and almost nobody was rejected.\n\nWhy do we expect the worst? Psychologists believe we underestimate how much other people want to connect, [19]. Each side waits for the other to begin, so nobody does.\n\nThe benefits are not limited to mood. Brief exchanges with a shop assistant or a neighbour can give people a sense of belonging, [20].\n\nOf course, there are situations where caution is wise, [21]. But in a queue, at a bus stop or in a waiting room, a friendly comment about the weather costs nothing.\n\nIf you find the idea uncomfortable, start small. A smile or a simple 'thank you' [22].",
+   "options": [
+    "and that the other person would not enjoy it",
+    "is often enough to open the door to a longer chat",
+    "without ever asking whether it makes sense",
+    "and nobody should feel forced to speak to anyone",
+    "and the people around us make the same mistake about us",
+    "because trains are usually too crowded to sit together",
+    "which is especially important for those who live alone",
+    "so most passengers refused to take part in the study"
+   ],
+   "answer": 6,
+   "explanation": "Відчуття приналежності особливо важливе для самотніх людей.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-phrase"
+  },
+  {
+   "id": "eng-v5-phrase-5",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [21]. Two options are extra.",
+   "passage": "Most of us were taught as children not to talk to strangers, and many adults still follow this rule [17]. Yet a growing body of research suggests that short conversations with people we do not know can make us happier.\n\nIn one well-known experiment, commuters on a train were asked either to sit in silence or to start a conversation with the person next to them. Before the journey, most predicted that talking would be awkward [18]. In reality, those who chatted reported a more pleasant journey, and almost nobody was rejected.\n\nWhy do we expect the worst? Psychologists believe we underestimate how much other people want to connect, [19]. Each side waits for the other to begin, so nobody does.\n\nThe benefits are not limited to mood. Brief exchanges with a shop assistant or a neighbour can give people a sense of belonging, [20].\n\nOf course, there are situations where caution is wise, [21]. But in a queue, at a bus stop or in a waiting room, a friendly comment about the weather costs nothing.\n\nIf you find the idea uncomfortable, start small. A smile or a simple 'thank you' [22].",
+   "options": [
+    "and that the other person would not enjoy it",
+    "is often enough to open the door to a longer chat",
+    "without ever asking whether it makes sense",
+    "and nobody should feel forced to speak to anyone",
+    "and the people around us make the same mistake about us",
+    "because trains are usually too crowded to sit together",
+    "which is especially important for those who live alone",
+    "so most passengers refused to take part in the study"
+   ],
+   "answer": 3,
+   "explanation": "Обережність доречна, і ніхто не мусить говорити силоміць.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-phrase"
+  },
+  {
+   "id": "eng-v5-phrase-6",
+   "subject": "eng",
+   "topicId": "eng-cohesion",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the best option (A–H) for gap [22]. Two options are extra.",
+   "passage": "Most of us were taught as children not to talk to strangers, and many adults still follow this rule [17]. Yet a growing body of research suggests that short conversations with people we do not know can make us happier.\n\nIn one well-known experiment, commuters on a train were asked either to sit in silence or to start a conversation with the person next to them. Before the journey, most predicted that talking would be awkward [18]. In reality, those who chatted reported a more pleasant journey, and almost nobody was rejected.\n\nWhy do we expect the worst? Psychologists believe we underestimate how much other people want to connect, [19]. Each side waits for the other to begin, so nobody does.\n\nThe benefits are not limited to mood. Brief exchanges with a shop assistant or a neighbour can give people a sense of belonging, [20].\n\nOf course, there are situations where caution is wise, [21]. But in a queue, at a bus stop or in a waiting room, a friendly comment about the weather costs nothing.\n\nIf you find the idea uncomfortable, start small. A smile or a simple 'thank you' [22].",
+   "options": [
+    "and that the other person would not enjoy it",
+    "is often enough to open the door to a longer chat",
+    "without ever asking whether it makes sense",
+    "and nobody should feel forced to speak to anyone",
+    "and the people around us make the same mistake about us",
+    "because trains are usually too crowded to sit together",
+    "which is especially important for those who live alone",
+    "so most passengers refused to take part in the study"
+   ],
+   "answer": 1,
+   "explanation": "Start small: усмішки або «дякую» часто досить, щоб почати розмову.",
+   "level": 3,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-phrase"
+  },
+  {
+   "id": "eng-v5-grammar-1",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [23].",
+   "passage": "A trip to remember\n\nLast year our class [23] to Lviv for three days. We left very early in the morning because the train [24] at 5:40. Although we were tired, everybody was excited. If I [25] that the old town was so beautiful, I would have taken a better camera. Our guide, [26] had lived in the city all her life, told us stories about every building we passed. I hope we [27] there again next year.",
+   "options": [
+    "goes",
+    "had been going",
+    "has gone",
+    "went"
+   ],
+   "answer": 3,
+   "explanation": "Last year — завершена подія в минулому: Past Simple.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-grammar"
+  },
+  {
+   "id": "eng-v5-grammar-2",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [24].",
+   "passage": "A trip to remember\n\nLast year our class [23] to Lviv for three days. We left very early in the morning because the train [24] at 5:40. Although we were tired, everybody was excited. If I [25] that the old town was so beautiful, I would have taken a better camera. Our guide, [26] had lived in the city all her life, told us stories about every building we passed. I hope we [27] there again next year.",
+   "options": [
+    "has left",
+    "had been leaving",
+    "left",
+    "leaves"
+   ],
+   "answer": 2,
+   "explanation": "Розповідь у минулому, разова дія за розкладом того дня: left.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-grammar"
+  },
+  {
+   "id": "eng-v5-grammar-3",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [25].",
+   "passage": "A trip to remember\n\nLast year our class [23] to Lviv for three days. We left very early in the morning because the train [24] at 5:40. Although we were tired, everybody was excited. If I [25] that the old town was so beautiful, I would have taken a better camera. Our guide, [26] had lived in the city all her life, told us stories about every building we passed. I hope we [27] there again next year.",
+   "options": [
+    "know",
+    "had known",
+    "knew",
+    "would know"
+   ],
+   "answer": 1,
+   "explanation": "Третій тип умовних речень: If I had known…, I would have taken.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-grammar"
+  },
+  {
+   "id": "eng-v5-grammar-4",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [26].",
+   "passage": "A trip to remember\n\nLast year our class [23] to Lviv for three days. We left very early in the morning because the train [24] at 5:40. Although we were tired, everybody was excited. If I [25] that the old town was so beautiful, I would have taken a better camera. Our guide, [26] had lived in the city all her life, told us stories about every building we passed. I hope we [27] there again next year.",
+   "options": [
+    "whose",
+    "which",
+    "whom",
+    "who"
+   ],
+   "answer": 3,
+   "explanation": "Відокремлене означальне речення про людину в ролі підмета: who.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-grammar"
+  },
+  {
+   "id": "eng-v5-grammar-5",
+   "subject": "eng",
+   "topicId": "eng-tenses",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [27].",
+   "passage": "A trip to remember\n\nLast year our class [23] to Lviv for three days. We left very early in the morning because the train [24] at 5:40. Although we were tired, everybody was excited. If I [25] that the old town was so beautiful, I would have taken a better camera. Our guide, [26] had lived in the city all her life, told us stories about every building we passed. I hope we [27] there again next year.",
+   "options": [
+    "will go",
+    "went",
+    "would have gone",
+    "have gone"
+   ],
+   "answer": 0,
+   "explanation": "Next year — майбутнє: I hope we will go.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-grammar"
+  },
+  {
+   "id": "eng-v5-vocab-1",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [28].",
+   "passage": "Volunteering abroad\n\nMore and more young people decide to spend a gap year volunteering in another country. Supporters say it helps them [28] confidence and learn to cope with unfamiliar situations. Critics, however, argue that some programmes are more interested in [29] money than in helping local communities. Before signing up, it is worth doing some research and asking former volunteers about their [30]. A good organisation will explain exactly what your work will [31] and how it benefits the people you are going to help. Above all, remember that you are a guest, so try to [32] local customs.",
+   "options": [
+    "build",
+    "grow up",
+    "rise",
+    "make"
+   ],
+   "answer": 0,
+   "explanation": "Build confidence — набувати впевненості.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-vocab"
+  },
+  {
+   "id": "eng-v5-vocab-2",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [29].",
+   "passage": "Volunteering abroad\n\nMore and more young people decide to spend a gap year volunteering in another country. Supporters say it helps them [28] confidence and learn to cope with unfamiliar situations. Critics, however, argue that some programmes are more interested in [29] money than in helping local communities. Before signing up, it is worth doing some research and asking former volunteers about their [30]. A good organisation will explain exactly what your work will [31] and how it benefits the people you are going to help. Above all, remember that you are a guest, so try to [32] local customs.",
+   "options": [
+    "making",
+    "taking",
+    "doing",
+    "winning"
+   ],
+   "answer": 0,
+   "explanation": "Make money; після in — герундій making.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-vocab"
+  },
+  {
+   "id": "eng-v5-vocab-3",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [30].",
+   "passage": "Volunteering abroad\n\nMore and more young people decide to spend a gap year volunteering in another country. Supporters say it helps them [28] confidence and learn to cope with unfamiliar situations. Critics, however, argue that some programmes are more interested in [29] money than in helping local communities. Before signing up, it is worth doing some research and asking former volunteers about their [30]. A good organisation will explain exactly what your work will [31] and how it benefits the people you are going to help. Above all, remember that you are a guest, so try to [32] local customs.",
+   "options": [
+    "experts",
+    "experiments",
+    "exercises",
+    "experiences"
+   ],
+   "answer": 3,
+   "explanation": "Розпитати колишніх волонтерів про їхній досвід — experiences.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-vocab"
+  },
+  {
+   "id": "eng-v5-vocab-4",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [31].",
+   "passage": "Volunteering abroad\n\nMore and more young people decide to spend a gap year volunteering in another country. Supporters say it helps them [28] confidence and learn to cope with unfamiliar situations. Critics, however, argue that some programmes are more interested in [29] money than in helping local communities. Before signing up, it is worth doing some research and asking former volunteers about their [30]. A good organisation will explain exactly what your work will [31] and how it benefits the people you are going to help. Above all, remember that you are a guest, so try to [32] local customs.",
+   "options": [
+    "include in",
+    "involve",
+    "contain",
+    "consist"
+   ],
+   "answer": 1,
+   "explanation": "What your work will involve — з чого складатиметься робота.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-vocab"
+  },
+  {
+   "id": "eng-v5-vocab-5",
+   "subject": "eng",
+   "topicId": "eng-vocabulary",
+   "type": "single",
+   "format": "gapfill",
+   "prompt": "Choose the correct option for gap [32].",
+   "passage": "Volunteering abroad\n\nMore and more young people decide to spend a gap year volunteering in another country. Supporters say it helps them [28] confidence and learn to cope with unfamiliar situations. Critics, however, argue that some programmes are more interested in [29] money than in helping local communities. Before signing up, it is worth doing some research and asking former volunteers about their [30]. A good organisation will explain exactly what your work will [31] and how it benefits the people you are going to help. Above all, remember that you are a guest, so try to [32] local customs.",
+   "options": [
+    "admire to",
+    "attend",
+    "respect",
+    "regard to"
+   ],
+   "answer": 2,
+   "explanation": "Respect local customs — поважати місцеві звичаї.",
+   "level": 2,
+   "tags": [
+    "gapfill",
+    "use-of-english"
+   ],
+   "groupId": "eng-v5-vocab"
+  }
+ ],
+ "mockSets": {
+  "eng": [
+   [
+    "eng-v4-notice-1",
+    "eng-v4-notice-2",
+    "eng-v4-notice-3",
+    "eng-v4-notice-4",
+    "eng-v4-notice-5",
+    "eng-v4-read-1",
+    "eng-v4-read-2",
+    "eng-v4-read-3",
+    "eng-v4-read-4",
+    "eng-v4-read-5",
+    "eng-v4-sent-1",
+    "eng-v4-sent-2",
+    "eng-v4-sent-3",
+    "eng-v4-sent-4",
+    "eng-v4-sent-5",
+    "eng-v4-sent-6",
+    "eng-v4-phrase-1",
+    "eng-v4-phrase-2",
+    "eng-v4-phrase-3",
+    "eng-v4-phrase-4",
+    "eng-v4-phrase-5",
+    "eng-v4-phrase-6",
+    "eng-v4-grammar-1",
+    "eng-v4-grammar-2",
+    "eng-v4-grammar-3",
+    "eng-v4-grammar-4",
+    "eng-v4-grammar-5",
+    "eng-v4-vocab-1",
+    "eng-v4-vocab-2",
+    "eng-v4-vocab-3",
+    "eng-v4-vocab-4",
+    "eng-v4-vocab-5"
+   ],
+   [
+    "eng-v5-notice-1",
+    "eng-v5-notice-2",
+    "eng-v5-notice-3",
+    "eng-v5-notice-4",
+    "eng-v5-notice-5",
+    "eng-v5-read-1",
+    "eng-v5-read-2",
+    "eng-v5-read-3",
+    "eng-v5-read-4",
+    "eng-v5-read-5",
+    "eng-v5-sent-1",
+    "eng-v5-sent-2",
+    "eng-v5-sent-3",
+    "eng-v5-sent-4",
+    "eng-v5-sent-5",
+    "eng-v5-sent-6",
+    "eng-v5-phrase-1",
+    "eng-v5-phrase-2",
+    "eng-v5-phrase-3",
+    "eng-v5-phrase-4",
+    "eng-v5-phrase-5",
+    "eng-v5-phrase-6",
+    "eng-v5-grammar-1",
+    "eng-v5-grammar-2",
+    "eng-v5-grammar-3",
+    "eng-v5-grammar-4",
+    "eng-v5-grammar-5",
+    "eng-v5-vocab-1",
+    "eng-v5-vocab-2",
+    "eng-v5-vocab-3",
+    "eng-v5-vocab-4",
+    "eng-v5-vocab-5"
+   ]
+  ]
+ }
+}
