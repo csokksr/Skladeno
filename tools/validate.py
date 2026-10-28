@@ -44,6 +44,19 @@ for s in d['subjects']:
         if len(st) != 32 or len(set(st)) != 32: problems['eng mock set size'].append(i + 1)
 for i, st in enumerate(d['ukrainianFiveOptionSets']):
     if len(st) != 15 or len(set(st)) != 15: problems['ukr five set size'].append(i + 1)
+# Secrets and risky sinks in the code we write (the data blobs are base64 and would give false hits).
+import glob, os
+_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_secret = re.compile(r'AKIA[0-9A-Z]{16}|sk-[A-Za-z0-9]{32,}|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_|xox[baprs]-[0-9A-Za-z-]{10,}|-----BEGIN [A-Z ]*PRIVATE KEY|(?:api[_-]?key|secret|token|passwd|password)[\x22\x27]?\s*[:=]\s*[\x22\x27][^\x22\x27]{8,}[\x22\x27]', re.I)
+_sink = re.compile(r'(?<![\w$.])(?:eval\(|new Function\(|debugger\b|console\.(?:log|debug)\()|document\.write\(|javascript:')
+_files = [os.path.join(_root, f) for f in ('src/app.js', 'src/shell.html', 'README.md', 'CLAUDE.md')]
+_files += glob.glob(os.path.join(_root, 'src/modules/*.js')) + glob.glob(os.path.join(_root, 'src/web/*.js')) + glob.glob(os.path.join(_root, 'tools/*.py')) + glob.glob(os.path.join(_root, '.claude/**/*.*'), recursive=True)
+for f in _files:
+    t = open(f, encoding='utf-8').read()
+    if f.endswith('validate.py'): continue
+    for m in _secret.finditer(t): problems['secret-like text in ' + os.path.relpath(f, _root)].append(m.group(0)[:30])
+    if f.endswith('.js') or f.endswith('.html'):
+        for m in _sink.finditer(t): problems['risky call in ' + os.path.relpath(f, _root)].append(m.group(0))
 print('questions checked:', len(qs))
 for k, v in problems.items(): print(f'{k}: {len(v)}  e.g. {v[:8]}')
 print('OK' if not problems else 'PROBLEMS FOUND')

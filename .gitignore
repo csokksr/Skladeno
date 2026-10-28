@@ -11,3 +11,9 @@ sources/keys/zno2/*.pdf
 research/
 __pycache__/
 *.pyc
+# секрети (у проєкті їх немає; на випадок майбутніх ключів)
+.env
+.env.*
+*.pem
+*.key
+secrets.*

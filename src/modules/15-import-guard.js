@@ -5,6 +5,7 @@ function guardRun(e){
  let started=Number.isFinite(e.started)?e.started:Date.now(),subject=SUB[e.subject]||e.subject==='all'?e.subject:null;
  if(!subject)return null;
  e.id=/^exam-\d{1,16}$/.test(e.id)?e.id:'exam-'+started;e.subject=subject;if('full' in e)e.full=subject==='all';
+ for(const k of ['started','finished','deadline'])if(k in e&&e[k]!==null)e[k]=Number.isFinite(e[k])?e[k]:k==='started'?started:null;
  e.variant=Math.max(1,Math.min(99,Math.trunc(Number(e.variant)||1)));e.title=(subject==='all'?'Повна симуляція':SUB[subject].name)+' · варіант '+e.variant;
  return e;
 }
