@@ -28,10 +28,15 @@ todo = [q for q in b if q['subject'] == subject and q['id'] not in ex and q['id'
 order = {c: i for i, c in enumerate(cats)}
 todo.sort(key=lambda q: (order[q['topicId']], -q['year'], q['source'], q['number']))
 print('remaining in', cats, ':', len(todo))
+SKIPPED = []
 for q in todo[start:start + count]:
     a = q['answer']
+    opts_all = q.get('options') or []
+    if q['type'] == 'single' and opts_all and all(not clean(o) for o in opts_all) or ('нижче тексти' in q['prompt'] and len(q['prompt']) < 400):
+        SKIPPED.append(q['id'])
+        continue
     print('=' * 3, q['id'], q['topicId'], q['source'], '№%s' % q['number'], q['type'])
-    imgs = bool(opts_all := (q.get('options') or [])) and all(not clean(o) for o in opts_all)
+    imgs = False
     out = []
     for para in clean(q['prompt']).split(chr(10)):
         if len(para) > 160 and para in SEEN_PARAS:
@@ -55,3 +60,4 @@ for q in todo[start:start + count]:
         for i, o in enumerate(opts):
             print('  %s%s %s' % (L[i], '*' if i == a else ' ', clean(o) or '[зображення]'))
         print('KEY:', L[a])
+print('SKIPPED (варіанти-зображення або немає тексту):', ' '.join(SKIPPED))
