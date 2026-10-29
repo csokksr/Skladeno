@@ -1,0 +1,17 @@
+{
+ "zm-6109": {
+  "prompt": "Функція ⟦f(x)⟧ в точці ⟦x_0=5⟧ має похідну ⟦f'(5)=-1⟧. Обчисліть значення похідної функції ⟦g(x)=f(x)\\cdot x⟧ в точці ⟦x_0⟧, якщо ⟦f(5)=3⟧."
+ },
+ "zm-6120": {
+  "prompt": "Основою прямої трикутної призми ⟦ABCA_1B_1C_1⟧ є рівнобедрений трикутник ⟦ABC⟧, де ⟦AB=BC=25⟧ см, ⟦AC=30⟧ см. Через бічне ребро ⟦AA_1⟧ призми проведено площину, перпендикулярну до ребра ⟦BC⟧. Визначте об'єм призми (у см⟦^3⟧), якщо площа утвореного перерізу дорівнює ⟦72⟧ см⟦^2⟧."
+ },
+ "zm-6255": {
+  "options": [
+   "⟦\\overrightarrow{AB}⟧ і ⟦\\overrightarrow{BC}⟧",
+   "⟦\\overrightarrow{AC}⟧ і ⟦\\overrightarrow{BD}⟧",
+   "⟦\\overrightarrow{AO}⟧ і ⟦\\overrightarrow{OD}⟧",
+   "⟦\\overrightarrow{BO}⟧ і ⟦\\overrightarrow{BD}⟧",
+   "⟦\\overrightarrow{BC}⟧ і ⟦\\overrightarrow{BD}⟧"
+  ]
+ }
+}

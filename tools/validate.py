@@ -13,6 +13,9 @@ for s in d['subjects']:
 for k in ('advanced', 'auditQuestions', 'visualBank', 'controlBank'):
     qs += [(q.get('subject'), q.get('topicId'), q) for q in d.get(k, [])]
 problems = collections.defaultdict(list)
+_leftover = re.compile(r'\\\)|\\\(|</?latex|</?nobr|&lt;|&gt;|&nbsp;|[\x00-\x08\x0b-\x1f\u00ad]')
+_word = re.compile(r"[A-Za-z\u0400-\u04ff]+(?:['’ʼ][A-Za-z\u0400-\u04ff]+)*")
+_mixed_ok = {'zu-21254', 'zu-15199'}
 ids = collections.Counter(q['id'] for _, _, q in qs)
 for sid, tid, q in qs:
     p = lambda m: problems[m].append(q['id'])
@@ -24,6 +27,14 @@ for sid, tid, q in qs:
         if k not in d['assets']: p('missing image asset')
     if q.get('optionImages') and len(q['optionImages']) != len(opts): p('optionImages length')
     if not str(q.get('prompt', '')).strip(): p('no prompt')
+    # Text the importer failed to clean, and words that mix look-alike letters of both alphabets (build.py repairs the
+    # unambiguous ones; zu-21254 and zu-15199 are spelling tasks where the letters themselves are the content).
+    for k in ('prompt', 'passage', 'options', 'left', 'right', 'rows'):
+        v = q.get(k)
+        for s in [v] if isinstance(v, str) else v if isinstance(v, list) else []:
+            if not isinstance(s, str): continue
+            if _leftover.search(s): p('unconverted markup in text')
+            if q['id'] not in _mixed_ok and any(re.search('[A-Za-z]', w) and re.search('[\u0400-\u04ff]', w) for w in _word.findall(re.sub('⟦.*?⟧', '', s, flags=re.S))): p('word mixes Latin and Cyrillic letters')
     if typ == 'single':
         if not isinstance(ans, int) or not 0 <= ans < len(opts): p('single: key out of range')
         if len(opts) < 3: p('single: fewer than 3 options')

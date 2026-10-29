@@ -9,6 +9,65 @@ S = os.path.join(ROOT, 'src')
 WEB = '--web' in sys.argv
 
 
+# Official texts typed on the source site sometimes mix look-alike letters of the two alphabets in one word («нa», «Нow», «ХVІІ»).
+# A word whose letters can be unified in only one direction is repaired; a tie stays as it is. Formulas (⟦…⟧) are never touched.
+_C2L = dict(zip('АВЕКМНОРСТХІаеорсхуі', 'ABEKMHOPCTXIaeopcxyi'))
+_L2C = {v: k for k, v in _C2L.items()}
+_WORD = re.compile(r"[A-Za-z\u0400-\u04ff]+(?:['’ʼ][A-Za-z\u0400-\u04ff]+)*")
+_TEXT_FIELDS = ('prompt', 'passage', 'options', 'left', 'right', 'rows')
+
+
+def _scripts(w):
+    lat = [c for c in w if c.isascii() and c.isalpha()]
+    return lat, [c for c in w if '\u0400' <= c <= '\u04ff']
+
+
+_ROMAN = re.compile(r'(?=[IVXLCDM])M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})')
+
+
+def _fix_word(w, prefer='cyr'):
+    lat, cyr = _scripts(w)
+    if not lat or not cyr:
+        return w
+    to_cyr, to_lat = all(c in _L2C for c in lat), all(c in _C2L for c in cyr)
+    as_lat = ''.join(_C2L.get(c, c) for c in w)
+    if to_lat and _ROMAN.fullmatch(as_lat):  # Roman numerals are always Latin: XVII, not ХVІІ
+        return as_lat
+    if to_cyr and (not to_lat or len(cyr) > len(lat) or (len(cyr) == len(lat) and prefer == 'cyr')):
+        return ''.join(_L2C.get(c, c) for c in w)
+    if to_lat and (not to_cyr or len(lat) > len(cyr) or (len(cyr) == len(lat) and prefer == 'lat')):
+        return as_lat
+    return w
+
+
+def fix_scripts(s, prefer='cyr'):
+    parts = re.split(r'(⟦.*?⟧)', s.replace('\u00ad', ''), flags=re.S)
+    for i in range(0, len(parts), 2):
+        parts[i] = _WORD.sub(lambda m: _fix_word(m.group(0), prefer), parts[i])
+    return ''.join(parts)
+
+
+def fix_question_scripts(q):
+    """Repair mixed-script words in the visible texts of one official task; returns True if anything changed. Ukrainian-language
+    tasks that mix scripts inside their answer options are left alone: there the letters themselves can be the point."""
+    if q.get('subject') == 'ukr' and any(
+            all(_scripts(w)) for k in ('options', 'left', 'right', 'rows') for s in q.get(k) or []
+            if isinstance(s, str) for w in _WORD.findall(re.sub(r'⟦.*?⟧', '', s, flags=re.S))):
+        return False
+    changed, prefer = False, 'lat' if q.get('subject') == 'eng' else 'cyr'
+    for k in _TEXT_FIELDS:
+        v = q.get(k)
+        if isinstance(v, str):
+            new = fix_scripts(v, prefer)
+        elif isinstance(v, list):
+            new = [fix_scripts(x, prefer) if isinstance(x, str) else x for x in v]
+        else:
+            continue
+        if new != v:
+            q[k], changed = new, True
+    return changed
+
+
 def load_data():
     data = json.load(open(f'{S}/data.json', encoding='utf-8'))
     # Content modules: each src/content/*.json is {"merge": {key: value}, "extend": {key: [items]}}
@@ -96,6 +155,7 @@ def load_data():
     bank_path = f'{S}/history-bank.json'
     if os.path.exists(bank_path):
         bank = json.load(open(bank_path, encoding='utf-8'))
+        print('history tasks with repaired letters:', sum(fix_question_scripts(q) for q in bank['questions']))
         old = {q['id'] for q in data['questions']}
         # «L» cards were phrases lifted from generated tasks (answers, «Послідовність: …»), not facts of the programme.
         lifted = {f['id'] for t in data['topics'] for f in t['facts'] if f['kind'] == 'L'}
@@ -170,6 +230,14 @@ def official_subjects(data):
     if not os.path.exists(path):
         return data
     bank = json.load(open(path, encoding='utf-8'))
+    # Hand corrections of texts that the importer could not read (src/zno2-fixes.json: {id: {field: value}}); every id must exist.
+    fix_path = f'{S}/zno2-fixes.json'
+    if os.path.exists(fix_path):
+        fixes, by_id = json.load(open(fix_path, encoding='utf-8')), {q['id']: q for q in bank['questions']}
+        assert set(fixes) <= set(by_id), 'zno2-fixes.json: unknown ids %s' % sorted(set(fixes) - set(by_id))[:5]
+        for qid, fields in fixes.items():
+            by_id[qid].update(fields)
+    print('official tasks with repaired letters:', sum(fix_question_scripts(q) for q in bank['questions']))
     by_sub = {}
     for q in bank['questions']:
         by_sub.setdefault(q['subject'], []).append(q)
