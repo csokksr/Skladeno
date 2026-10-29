@@ -283,7 +283,7 @@ def fill(x, files_dir=None):
     return x
 
 
-def app_js(extra_dirs):
+def app_js(extra_dirs, offline_mb=100):
     app = open(f'{S}/app.js', encoding='utf-8').read()
     # Feature modules load after the base app and wrap its functions, like the layers inside app.js.
     # They go before the final first render so the first screen already uses them.
@@ -294,16 +294,17 @@ def app_js(extra_dirs):
         for path in sorted(glob.glob(f'{S}/{d}/*.js')):
             app += '\n' + open(path, encoding='utf-8').read()
     app += '\n' + boot + '\n'
+    app = app.replace('@@OFFLINE_MB@@', str(offline_mb))  # size quoted by the «offline version» page
     assert '</script' not in app.lower()
     return app
 
 
-def page(data, modules):
+def page(data, modules, offline_mb=100):
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     shell = open(f'{S}/shell.html', encoding='utf-8').read()
     css = '\n'.join(open(p, encoding='utf-8').read() for p in sorted(glob.glob(f'{S}/theme/*.css')))
     assert '</style' not in css.lower()
-    return shell.replace('@@CSS@@', css, 1).replace('@@DATA@@', blob, 1).replace('@@APP@@', app_js(modules), 1)
+    return shell.replace('@@CSS@@', css, 1).replace('@@DATA@@', blob, 1).replace('@@APP@@', app_js(modules, offline_mb), 1)
 
 
 def build_offline():
@@ -334,7 +335,7 @@ def build_web(offline_bytes):
         data['assets'][k] = '@zno:' + name
     for name, pack in packs.items():
         json.dump(pack, open(os.path.join(out, 'files', 'zno-%s.json' % name), 'w', encoding='ascii'), separators=(',', ':'))
-    html = page(fill(data, os.path.join(out, 'files')), ['modules', 'web'])
+    html = page(fill(data, os.path.join(out, 'files')), ['modules', 'web'], round(len(offline_bytes) / 1e6))
     # The artifact viewer wraps the page in its own document: keep only title, style and body content.
     head, body = html.split('</head>', 1)
     style = head[head.index('<style>'):]

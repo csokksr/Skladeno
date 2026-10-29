@@ -49,7 +49,7 @@ function parse(src){
   if(IGNORE.has(n)){if(n==='mathop'||n==='mathord'){return isCh(peek(),'{')?group():null}return null}
   if(FUNC.has(n))return '<mi mathvariant="normal">'+n+'</mi>'+'<mo>&#x2061;</mo>';
   if(n==='\\')return null;
-  if(n in SYM){const v=SYM[n];if(!v)return null;if(n==='int'||n==='sum'||n==='prod')return '<mo largeop="true">'+v+'</mo>';if(['alpha','beta','gamma','delta','Delta','varphi','phi','pi','rho','theta','lambda','mu','sigma','omega'].includes(n))return '<mi>'+v+'</mi>';if(n==='circ'||n==='infty')return '<mo>'+v+'</mo>';if(n===','||n===';'||n===' '||n==='colon'&&false)return '<mspace width="0.25em"></mspace>';return '<mo>'+ESC(v)+'</mo>'}
+  if(Object.hasOwn(SYM,n)){const v=SYM[n];if(!v)return null;if(n==='int'||n==='sum'||n==='prod')return '<mo largeop="true">'+v+'</mo>';if(['alpha','beta','gamma','delta','Delta','varphi','phi','pi','rho','theta','lambda','mu','sigma','omega'].includes(n))return '<mi>'+v+'</mi>';if(n==='circ'||n==='infty')return '<mo>'+v+'</mo>';if(n===','||n===';'||n===' '||n==='colon'&&false)return '<mspace width="0.25em"></mspace>';return '<mo>'+ESC(v)+'</mo>'}
   unknown.push(n);return '<mi>'+ESC(n)+'</mi>'}
  let nodes;try{nodes=seq(()=>false)}catch(e){return {err:e.message}}
  return {html:'<math>'+row(nodes)+'</math>',unknown}}
