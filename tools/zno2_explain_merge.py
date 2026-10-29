@@ -1,5 +1,6 @@
 """python -I tools/zno2_explain_merge.py file.json [...]  -> checks analyses of official ukr tasks and merges them into src/zno2-explanations.json
 
+Math/eng: a value may be {"t": text, "a": answer} -- "a" is the answer solved independently (single: letter, numeric: number, match: letters like "БВА"); it must equal the bank key and only "t" is stored.
 Checks: id exists and has no analysis yet; single: the key letter closes a paragraph and no other letter closes a paragraph
 that is not a «Чому не інші»/«Помилки в…» one; match: row N line starts «N.» and ends «— Х.» with the key letter."""
 import json, sys, re
@@ -15,14 +16,32 @@ new = {}
 for f in sys.argv[1:]:
     for i, t in json.load(open(f, encoding='utf-8')).items():
         q = bank.get(i)
-        if not q or q['subject'] != 'ukr':
-            bad.append((i, 'unknown id')); continue
+        mine = None
+        if isinstance(t, dict):
+            t, mine = t['t'], str(t['a']).strip()
+        if not q or (q['subject'] != 'ukr' and mine is None):
+            bad.append((i, 'unknown id or no independent answer')); continue
+        if mine is not None:
+            if q['type'] == 'single':
+                key = L[q['answer']]
+            elif q['type'] == 'numeric':
+                key = str(q['answer'])
+            else:
+                key = ''.join(L[x] if isinstance(x, int) else str(x) for x in q['answer'])
+            ok = (mine == key)
+            if q['type'] == 'numeric' and not ok:
+                try:
+                    ok = abs(float(mine.replace(',', '.')) - float(key.replace(',', '.'))) <= max(1e-9, abs(float(key.replace(',', '.'))) * 1e-9)
+                except ValueError:
+                    ok = False
+            if not ok:
+                bad.append((i, 'my answer %s != key %s' % (mine, key))); continue
         if i in ex:
             bad.append((i, 'already has analysis')); continue
         t = t.strip()
-        if len(t) < 40:
+        if len(t) < (15 if mine is not None else 40):
             bad.append((i, 'too short')); continue
-        if q['type'] == 'single':
+        if q['subject'] == 'ukr' and q['type'] == 'single':
             key = L[q['answer']]
             paras = t.split(chr(10))
             trail = [re.findall(r'\(([А-Д])\)\.?\s*$', x) for x in paras]
@@ -33,7 +52,7 @@ for f in sys.argv[1:]:
             wrong = [(x, pa[:20]) for x, pa in zip(trail, paras) if x and x != key and not pa.startswith(DIS)]
             if wrong:
                 bad.append((i, 'non-key letter closes a paragraph: %s' % wrong)); continue
-        if q['type'] == 'match':
+        if q['subject'] == 'ukr' and q['type'] == 'match':
             paras = t.split(chr(10))
             for r, x in enumerate(q['answer']):
                 want = L[x] if isinstance(x, int) else str(x)

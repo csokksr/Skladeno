@@ -1,5 +1,6 @@
-"""python -I tools/zno2_explain_batch.py SUBJECT TOPICS START COUNT  -> print official tasks without an analysis (readable, key marked)."""
-import os
+"""python -I tools/zno2_explain_batch.py SUBJECT TOPICS START COUNT  -> print official tasks without an analysis (readable, key marked).
+Env: NOKEY=1 hides the key (solve first, merge checks it); IMG=1 lists only tasks that have pictures (with file paths), default skips them."""
+import os, glob
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 import json, sys, re
 sys.stdout.reconfigure(encoding='utf-8')
@@ -29,10 +30,15 @@ order = {c: i for i, c in enumerate(cats)}
 todo.sort(key=lambda q: (order[q['topicId']], -q['year'], q['source'], q['number']))
 print('remaining in', cats, ':', len(todo))
 SKIPPED = []
+NOKEY = os.environ.get('NOKEY') == '1'
+ONLYIMG = os.environ.get('IMG') == '1'
+if subject == 'math':
+    todo = [q for q in todo if bool(q.get('images')) == ONLYIMG]
+    print('after picture filter:', len(todo))
 for q in todo[start:start + count]:
     a = q['answer']
     opts_all = q.get('options') or []
-    if q['type'] == 'single' and opts_all and all(not clean(o) for o in opts_all) or ('нижче тексти' in q['prompt'] and len(q['prompt']) < 400):
+    if subject != 'math' and q['type'] == 'single' and opts_all and all(not clean(o) for o in opts_all) or ('нижче тексти' in q['prompt'] and len(q['prompt']) < 400):
         SKIPPED.append(q['id'])
         continue
     print('=' * 3, q['id'], q['topicId'], q['source'], '№%s' % q['number'], q['type'])
@@ -47,17 +53,23 @@ for q in todo[start:start + count]:
             SEEN_PARAS.add(para)
         out.append(para)
     print(chr(10).join(out))
-    if imgs:
-        print('  [УВАГА: варіанти відповідей — зображення, їх не видно; пропусти]')
+    for im in q.get('images') or []:
+        fs = glob.glob(os.path.join(ROOT, 'sources', 'zno2', 'img', im.replace('zno2-', '', 1) + '.*'))
+        print('  [РИСУНОК: %s]' % (fs[0] if fs else im))
     opts = q.get('options') or []
     if q['type'] == 'match':
         left = q.get('left') or []
         print('ROWS:', ' | '.join('%d) %s' % (i + 1, clean(x)) for i, x in enumerate(left)))
         for i, o in enumerate(opts):
             print('  %s %s' % (L[i], clean(o)))
-        print('KEY:', ' '.join('%d-%s' % (i + 1, L[x] if isinstance(x, int) else x) for i, x in enumerate(a)))
+        if not NOKEY:
+            print('KEY:', ' '.join('%d-%s' % (i + 1, L[x] if isinstance(x, int) else x) for i, x in enumerate(a)))
+    elif q['type'] == 'numeric':
+        if not NOKEY:
+            print('KEY:', a)
     else:
         for i, o in enumerate(opts):
-            print('  %s%s %s' % (L[i], '*' if i == a else ' ', clean(o) or '[зображення]'))
-        print('KEY:', L[a])
+            print('  %s%s %s' % (L[i], '*' if (i == a and not NOKEY) else ' ', clean(o) or '[зображення]'))
+        if not NOKEY:
+            print('KEY:', L[a])
 print('SKIPPED (варіанти-зображення або немає тексту):', ' '.join(SKIPPED))
