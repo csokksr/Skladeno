@@ -22,16 +22,10 @@ RULES = [
     ('tree', 'sources/zno2/img', 'пише tools/zno2_bank.py'),
     ('glob', 'src/blobs/zno*.txt', 'пишуть tools/zno_images.py і tools/zno2_bank.py'),
     # Content modules written by tools/content_*.py (the hand-written ones are 10, 40, 52, 56, 57, 59, 61, 63, 64, 66).
-    ('glob', 'src/content/2[0-2]-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
+    ('glob', 'src/content/2[01]-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
     ('glob', 'src/content/3[01]-*.json', 'пише tools/content_eng*.py; правте генератор або додайте власний модуль'),
-    ('glob', 'src/content/50-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
-    ('glob', 'src/content/53-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
-    ('glob', 'src/content/54-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
     ('glob', 'src/content/55-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
-    ('glob', 'src/content/58-*.json', 'пише tools/content_geo_fix.py'),
     ('glob', 'src/content/60-*.json', 'пише tools/content_nmt2025.py'),
-    ('glob', 'src/content/62-*.json', 'пише tools/content_hist_enrich.py'),
-    ('glob', 'src/content/65-*.json', 'пише tools/content_math_variants.py'),
 ]
 
 
