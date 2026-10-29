@@ -168,6 +168,9 @@ def main():
         tasks = {t['number']: t for t in bank if t['test'] == test}
         if sheet in manual:
             cols = [{i + 1: (canon(v), v) for i, v in enumerate(manual[sheet])}]
+        elif not os.path.exists(os.path.join(KEYS, sheet)):  # sheets are not in git: report the gap instead of stopping
+            print('SHEET MISSING %s (%d tasks not checked)' % (sheet, len(tasks)))
+            continue
         else:
             cols = parse(os.path.join(KEYS, sheet))
         best = max(cols, key=lambda c: sum(1 for n, t in tasks.items() if n in c and c[n][0] == bank_key(t)))
