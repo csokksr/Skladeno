@@ -1,6 +1,14 @@
-"""Split the single-file build into editable sources: shell.html, app.js, data.json, blobs/."""
+"""Split the single-file build into editable sources: shell.html, app.js, data.json, blobs/.
+One-off migration helper: the project is now edited in src/ directly, and a split of the built page would flatten modules, theme and
+content into the sources. It refuses to write into a folder that already holds sources unless --force is given.
+Usage: python -I tools/split.py <file.html> <empty folder> [--force]"""
 import json, os, re, sys
-src, out = sys.argv[1], sys.argv[2]
+args = [a for a in sys.argv[1:] if a != '--force']
+if len(args) != 2:
+    sys.exit(__doc__)
+src, out = args
+if '--force' not in sys.argv and any(os.path.exists(os.path.join(out, f)) for f in ('app.js', 'data.json', 'shell.html')):
+    sys.exit('Refusing to overwrite %s: it already holds sources (pass --force to override).' % out)
 t = open(src, encoding='utf-8').read()
 OPEN = '<script id="data" type="application/json">'
 a = t.index(OPEN) + len(OPEN)

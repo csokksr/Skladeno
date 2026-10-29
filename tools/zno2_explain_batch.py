@@ -10,7 +10,7 @@ start, count = int(sys.argv[3]), int(sys.argv[4])
 b = json.load(open(os.path.join(ROOT, 'src', 'zno2-bank.json'), encoding='utf-8'))['questions']
 ex = json.load(open(os.path.join(ROOT, 'src', 'zno2-explanations.json'), encoding='utf-8'))
 extra = {}
-L = 'АБВГД'
+L = 'АБВГДЕЖЗ'  # up to eight options (English matching tasks)
 seen = set()
 SEEN_PARAS = set()
 

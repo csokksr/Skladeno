@@ -10,7 +10,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = os.path.join(ROOT, 'src', 'zno2-explanations.json')
 bank = {q['id']: q for q in json.load(open(os.path.join(ROOT, 'src', 'zno2-bank.json'), encoding='utf-8'))['questions']}
 ex = json.load(open(P, encoding='utf-8'))
-L = 'АБВГД'
+L = 'АБВГДЕЖЗ'  # up to eight options (English matching tasks)
 bad = []
 new = {}
 for f in sys.argv[1:]:
@@ -44,7 +44,7 @@ for f in sys.argv[1:]:
         if q['subject'] == 'ukr' and q['type'] == 'single':
             key = L[q['answer']]
             paras = t.split(chr(10))
-            trail = [re.findall(r'\(([А-Д])\)\.?\s*$', x) for x in paras]
+            trail = [re.findall(r'\(([А-ДЕЖЗ])\)\.?\s*$', x) for x in paras]
             trail = [x[0] if x else None for x in trail]
             if key not in trail:
                 bad.append((i, 'key letter %s is not closing any paragraph: %s' % (key, trail))); continue

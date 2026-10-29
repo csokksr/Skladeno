@@ -36,7 +36,10 @@ def main():
         if not os.path.exists(raw):
             req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
             with urllib.request.urlopen(req, timeout=60) as r:
-                open(raw, 'wb').write(r.read())
+                data = r.read()
+            with open(raw + '.part', 'wb') as fh:
+                fh.write(data)
+            os.replace(raw + '.part', raw)
             time.sleep(0.2)
         raw_total += os.path.getsize(raw)
         blob = os.path.join(BLOBS, 'zno-%s.txt' % k)

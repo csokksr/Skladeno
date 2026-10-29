@@ -186,7 +186,8 @@ def main():
         for n, off in star:
             print('   note: #%d official answer marked with * : %s' % (n, off))
     print('checked', total, 'tasks; mismatches', bad)
-    json.dump(report, open(os.path.join(KEYS, 'mismatches.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    out = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv[:-1] else os.path.join(KEYS, 'mismatches.json')  # --out <file>: leave the repository untouched
+    json.dump(report, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
 if __name__ == '__main__':
