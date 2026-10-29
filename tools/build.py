@@ -41,8 +41,9 @@ def load_data():
         # Text corrections everywhere a fact is quoted (facts, questions, explanations, cards): {"replace": [[old, new]]}.
         for old, new in mod.get('replace', []):
             text = json.dumps(data, ensure_ascii=False)
-            assert old in text, f'{path}: text not found: {old}'
-            data = json.loads(text.replace(json.dumps(old, ensure_ascii=False)[1:-1], json.dumps(new, ensure_ascii=False)[1:-1]))
+            old_j, new_j = json.dumps(old, ensure_ascii=False)[1:-1], json.dumps(new, ensure_ascii=False)[1:-1]
+            assert old_j in text, f'{path}: text not found: {old}'
+            data = json.loads(text.replace(old_j, new_j))
         # New history cards and cards withdrawn (with every list that mentions them): {"addFacts": {topic: [fact]}, "dropFacts": [id]}.
         for tid, new_facts in mod.get('addFacts', {}).items():
             next(t for t in data['topics'] if t['id'] == int(tid))['facts'].extend(new_facts)
@@ -114,6 +115,9 @@ def load_data():
                     keep.append(f)
             t['facts'] = [f for f in t['facts'] if f in keep]
         old |= set(same)
+        # Generated history drills (the «understand» extras and audit/portrait/chronology sets) are removed below, so every
+        # list that names them must be pruned together with the other generated history ids.
+        old |= {q['id'] for k in ('advanced', 'auditQuestions') for q in data.get(k, []) if q.get('subject') == 'hist'}
         valid = {f['id'] for t in data['topics'] for f in t['facts']}
         for q in bank['questions']:
             q['facts'] = [f for f in dict.fromkeys(same.get(f, f) for f in q['facts']) if f in valid]
@@ -134,6 +138,8 @@ def load_data():
         # No generated history tasks anywhere: the «understand» extras and audit/portrait drills go, and the 8 history
         # items of the diagnostic become official single-choice tasks spread over the course (ЗНО ≤ 2021, so they never
         # repeat a НМТ mock), text-only because the diagnostic shows no images.
+        for p in data.get('portraitAtlas', {}).get('items', []):
+            p.pop('questionId', None)  # the generated recognition task is gone; the card still shows the portrait
         data['advanced'] = [q for q in data.get('advanced', []) if q.get('subject') != 'hist']
         data['auditQuestions'] = [q for q in data.get('auditQuestions', []) if q.get('subject') != 'hist']
         pick = []
@@ -149,7 +155,7 @@ def load_data():
         for t in data.get('quality', {}).get('topics', []):
             if t['id'] in by_topic:
                 t['questions'] = by_topic[t['id']]
-    return official_subjects(data)
+    return refresh_quality(official_subjects(data))
 
 
 # Drills that belong to one lesson (syllabus gaps, tool pages, audits) stay; the generated per-topic banks go.
@@ -246,6 +252,17 @@ def official_subjects(data):
     return data
 
 
+def refresh_quality(data):
+    """The «what is checked» page quotes the bank size and the groups of similar wordings: take them from the final data."""
+    bank = data.get('quality', {}).get('bank')
+    if bank is None:
+        return data
+    bank['total'] = (len(data['questions']) + sum(len(t['questions']) for s in data['subjects'] for t in s['topics'])
+                     + sum(len(data.get(k, [])) for k in ('advanced', 'auditQuestions', 'visualBank', 'controlBank')))
+    bank['families'] = [f for f in bank.get('families', []) if f]
+    return data
+
+
 EXT = {'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'application/pdf': 'pdf'}
 
 
@@ -301,8 +318,8 @@ def build_offline():
 def build_web(offline_bytes):
     out = os.path.join(ROOT, 'dist', 'web')
     shutil.rmtree(out, ignore_errors=True)
-    os.makedirs(os.path.join(out, 'files'))
-    os.makedirs(os.path.join(out, 'offline'))
+    os.makedirs(os.path.join(out, 'files'), exist_ok=True)
+    os.makedirs(os.path.join(out, 'offline'), exist_ok=True)
     data = load_data()
     # An artifact version holds at most 511 files, so the ~1100 images of official history tasks travel as one JSON
     # pack per topic (files/zno-t<N>.json: key -> data URI); the page loads a pack when a task needs it.
@@ -329,16 +346,19 @@ def build_web(offline_bytes):
     open(os.path.join(out, 'index.html'), 'w', encoding='utf-8', newline='').write(web)
     # The offline single file, in verified parts the in-app downloader reassembles (served as .txt bytes).
     # Parts end on a UTF-8 character boundary and stay under 16 MB: the artifact host rejects larger or non-UTF-8 .txt files.
-    size, parts, i = 15 * 1024 * 1024, [], 0
+    size, chunks, i = 15 * 1024 * 1024, [], 0
     while i < len(offline_bytes):
         j = min(i + size, len(offline_bytes))
         while j < len(offline_bytes) and 0x80 <= offline_bytes[j] < 0xC0:
             j -= 1
-        chunk, i = offline_bytes[i:j], j
+        chunks.append(offline_bytes[i:j])
+        i = j
+    assert len(chunks) <= 12 and len(offline_bytes) <= 200 * 1024 * 1024, 'offline file outgrew the limits in offlineValidate (src/app.js)'
+    parts = []
+    for chunk in chunks:
         sha = hashlib.sha256(chunk).hexdigest()
         open(os.path.join(out, 'offline', sha + '.txt'), 'wb').write(chunk)
         parts.append({'path': f'offline/{sha}.txt', 'sha256': sha, 'bytes': len(chunk)})
-    assert len(parts) <= 12 and len(offline_bytes) <= 200 * 1024 * 1024, 'offline file outgrew the limits in offlineValidate (src/app.js)'
     manifest = {'schema': 1, 'filename': 'skladeno-nmt.html', 'bytes': len(offline_bytes),
                 'sha256': hashlib.sha256(offline_bytes).hexdigest(), 'parts': parts}
     json.dump(manifest, open(os.path.join(out, 'offline-manifest.json'), 'w'), indent=1)

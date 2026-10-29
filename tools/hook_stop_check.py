@@ -6,9 +6,13 @@ sys.stderr.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+# The hook itself has 180 s (.claude/settings.json); build + validate must fit into it together.
+LIMITS = {'build.py': 115, 'validate.py': 55}
+
+
 def run(script):
     r = subprocess.run([sys.executable, '-I', os.path.join('tools', script)], cwd=ROOT, capture_output=True,
-                       text=True, encoding='utf-8', errors='replace', timeout=170)
+                       text=True, encoding='utf-8', errors='replace', timeout=LIMITS[script])
     return r.returncode, (r.stdout + r.stderr).strip()
 
 
@@ -22,7 +26,7 @@ def main():
         try:
             code, out = run(script)
         except subprocess.TimeoutExpired:
-            print('%s не завершився за 170 с' % script, file=sys.stderr)
+            print('%s не завершився за %d с' % (script, LIMITS[script]), file=sys.stderr)
             return 2
         if code:
             print('%s завершився з кодом %d:\n%s' % (script, code, '\n'.join(out.splitlines()[-25:])), file=sys.stderr)
