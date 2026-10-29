@@ -12,7 +12,7 @@
 .nav a:hover{opacity:1;text-decoration:none;color:var(--ink)}
 .nav a.on{opacity:1}
 .nav a.on::before{content:'';position:absolute;left:9px;right:9px;bottom:0;height:2px;border-radius:2px 2px 0 0;background:var(--ink)}
-.nav a em{min-width:18px;padding:1px 6px;border-radius:var(--pill);background:var(--mark);color:#fff;font-size:.6875rem;font-weight:600;font-style:normal;line-height:1.45;text-align:center}
+.nav a em{min-width:18px;padding:1px 6px;border-radius:var(--pill);background:var(--mark);color:var(--on-mark);font-size:.6875rem;font-weight:600;font-style:normal;line-height:1.45;text-align:center}
 .nav a em:empty,.nav a em[data-zero]{display:none}
 .nav a[data-subject]::after{content:'';order:-1;width:6px;height:6px;border-radius:50%;background:var(--subject-dot,var(--line-2))}
 .nav a[data-subject="ukr"]{--subject-dot:var(--s-ukr)}
