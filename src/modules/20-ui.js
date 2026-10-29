@@ -5,7 +5,7 @@ SUBJECTS.forEach(s=>{s.color='var(--s-'+s.id+')'});
 /* Тема: «Авто» не чіпає атрибут, тож рішення переглядача артефакта зберігається. */
 const UI_THEME='skladeno-theme';
 function uiThemeGet(){try{return localStorage.getItem(UI_THEME)||'auto'}catch{return 'auto'}}
-function uiTheme(set){if(set){try{localStorage.setItem(UI_THEME,set)}catch{}}const t=set||uiThemeGet();if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);else if(set)document.documentElement.removeAttribute('data-theme');document.querySelectorAll('[data-theme-set]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)))}
+function uiTheme(set){if(set){try{localStorage.setItem(UI_THEME,set)}catch{}}const t=set||uiThemeGet();if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);else if(set)document.documentElement.removeAttribute('data-theme');{const m=document.querySelectorAll('meta[name="theme-color"]');if(m.length===2){const c=t==='dark'?['#000000','#000000']:t==='light'?['#ffffff','#ffffff']:['#ffffff','#000000'];m[0].setAttribute('content',c[0]);m[1].setAttribute('content',c[1])}}document.querySelectorAll('[data-theme-set]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)))}
 document.querySelectorAll('[data-theme-set]').forEach(b=>{b.onclick=()=>uiTheme(b.dataset.themeSet)});uiTheme();
 
 /* Службові банери перевірок прибрано з конспектів. */

@@ -7,7 +7,7 @@ webCap('downloads').then(d=>{webDownloads=d});
 
 /* confirm(): у переглядачі він завжди повертає false. Показуємо власний діалог і після згоди повторюємо ту саму дію. */
 let webAllow=null,webRetry=null;
-document.body.insertAdjacentHTML('beforeend','<dialog id="web-confirm" class="web-confirm" aria-labelledby="web-confirm-text"><p id="web-confirm-text"></p><div class="p-actions"><button class="primary" id="web-confirm-yes">Так, продовжити</button><button id="web-confirm-no">Скасувати</button></div></dialog>');
+document.body.insertAdjacentHTML('beforeend','<dialog id="web-confirm" class="web-confirm" aria-labelledby="web-confirm-text"><p id="web-confirm-text"></p><div class="p-actions"><button class="primary" id="web-confirm-yes">Так, продовжити</button><button id="web-confirm-no" autofocus>Скасувати</button></div></dialog>');
 window.confirm=function(message){if(webAllow===message){webAllow=null;return true}let trigger=window.event?.type==='click'?window.event.target?.closest?.('button,a,[onclick]'):null,retry=webRetry;webRetry=null;const dlg=$('#web-confirm');$('#web-confirm-text').textContent=message;
  $('#web-confirm-yes').onclick=()=>{dlg.close();webAllow=message;if(trigger&&trigger.isConnected)trigger.click();else if(retry)retry();webAllow=null};$('#web-confirm-no').onclick=()=>dlg.close();
  if(!trigger&&!retry)return false;dlg.showModal();return false};
