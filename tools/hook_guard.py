@@ -21,7 +21,7 @@ RULES = [
     ('tree', 'sources/zno2/html', 'завантажені сторінки zno.osvita.ua, не редагуються'),
     ('tree', 'sources/zno2/img', 'пише tools/zno2_bank.py'),
     ('glob', 'src/blobs/zno*.txt', 'пишуть tools/zno_images.py і tools/zno2_bank.py'),
-    # Content modules written by tools/content_*.py (the hand-written ones are 10, 40, 52, 56, 57, 59, 61, 63, 64, 66).
+    # Content modules written by tools/content_*.py (the hand-written ones are 10, 40, 51, 57, 59, 61, 63, 64, 66).
     ('glob', 'src/content/2[01]-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
     ('glob', 'src/content/3[01]-*.json', 'пише tools/content_eng*.py; правте генератор або додайте власний модуль'),
     ('glob', 'src/content/55-*.json', 'пише tools/content_*.py; правте генератор або додайте власний модуль'),
@@ -42,7 +42,10 @@ def main():
     if not path:
         return 0
     full = os.path.normcase(os.path.abspath(path))
-    rel = os.path.relpath(full, os.path.normcase(ROOT)).replace(os.sep, '/')
+    try:
+        rel = os.path.relpath(full, os.path.normcase(ROOT)).replace(os.sep, '/')
+    except ValueError:  # Windows: the file is on another drive, so it cannot be inside the project
+        rel = ''
     for kind, rel_rule, advice in RULES:
         target = norm(*rel_rule.split('/'))
         if kind == 'glob':

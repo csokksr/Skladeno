@@ -50,7 +50,7 @@ function webApply(text){const raw=JSON.parse(text),platform=raw.platform?JSON.pa
  try{const remote=await webDownload(),localAt=Number(localStorage.getItem(WEB_SYNC_AT)||0),hasLocal=!!localStorage.getItem(PKEY),localUnchanged=localStorage.getItem(WEB_SYNC_HASH)===webHash(webLocal());
   if(remote&&remote.savedAt>localAt&&remote.text!==webLocal()){if(!hasLocal||(localAt&&localUnchanged)){if(webApply(remote.text)){webLastSent=remote.text;webMarkSynced(webLocal());try{localStorage.setItem(WEB_SYNC_AT,String(remote.savedAt))}catch{}render();toast('Прогрес підтягнуто з іншого пристрою.')}}
    else{$('#web-confirm-text').textContent='У твоєму акаунті є прогрес з іншого пристрою, а в цьому браузері — свій. Замінити прогрес у цьому браузері збереженим в акаунті?';$('#web-confirm-yes').onclick=()=>{$('#web-confirm').close();if(webApply(remote.text)){webLastSent=remote.text;webMarkSynced(webLocal());try{localStorage.setItem(WEB_SYNC_AT,String(remote.savedAt))}catch{}render();toast('Прогрес замінено збереженим в акаунті.')}};$('#web-confirm-no').onclick=()=>{$('#web-confirm').close();webUpload()};$('#web-confirm').showModal()}}
-  else{webLastSent=remote&&remote.text===webLocal()?remote.text:'';webSetStatus('Синхронізовано з акаунтом');webSchedule()}}
+  else{webLastSent=remote&&remote.text===webLocal()?remote.text:'';if(webLastSent)webMarkSynced(webLastSent);webSetStatus('Синхронізовано з акаунтом');webSchedule()}}
  catch{webSetStatus('Збережено на цьому пристрої')}})();
 
 /* Налаштування: пояснюємо, де зберігається прогрес у веб-версії. */

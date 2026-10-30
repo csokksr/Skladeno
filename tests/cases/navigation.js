@@ -8,8 +8,9 @@ const html=$('#main').innerHTML;
 ok(html.includes('class="p-back" href="#result/'+id+'"'),'review of a finished mock links back to its result');
 route='practice';pRecordView=null;
 const ids=PQ.slice(0,5).map(q=>q.id);
-for(let i=0;i<120;i++)pStart(ids,'t','bulk-'+i);
+pStart(ids,'t','keep');for(let i=0;i<120;i++){pStart(ids,'t','bulk-'+i);if(i===70)pStart(ids,'t','keep')}
 const n=Object.keys(P.sessions).length;
-ok(n<=81&&P.sessions['bulk-119']&&P.current==='bulk-119','session list is capped ('+n+' kept, newest present)');
+ok(n<=80&&P.sessions['bulk-119']&&P.current==='bulk-119','session list is capped ('+n+' kept, newest present)');
+ok(!!P.sessions['keep'],'a session restarted recently survives the cap (least recently used goes first)');
 log('fails',fails);
 })();

@@ -19,5 +19,9 @@ try{normaliseImport(st);ok(false,'strict import should throw')}catch{ok(true,'st
 try{const s=normaliseImport(st,true);ok(Object.keys(s.answers).length===0,'lenient boot drops bad answer, no throw')}catch(e){ok(false,'lenient threw '+e.message)}
 // ids that are inherited object names
 for(const id of ['constructor','__proto__','toString']){try{const n=pNormal({schema:1,answers:{[id]:{value:0}},drafts:{[id]:1},pins:[id],notes:{[id]:'x'}});ok(Object.keys(n.answers).length===0&&n.pins.length===0,'pNormal ignores id '+id)}catch(e){ok(false,'pNormal threw on '+id+': '+e.message)}}
+// one unreadable mock must not wipe the rest of the progress
+{const a=PQ.find(q=>q.type==='single'&&!q.examOnly);
+ const raw={schema:1,answers:{[a.id]:{value:a.answer,attempts:1}},exam:{ids:[PQ[0].id],answers:{},deadline:1,stage:1,subject:'ukr',variant:1},records:[{id:'bad',ids:['nope'],answers:{}}]};
+ try{const n=pNormal(raw);ok(n.exam===null&&n.records.length===0&&n.answers[a.id],'unreadable exam and record are dropped, answers kept')}catch(e){ok(false,'pNormal threw on unreadable exam: '+e.message)}}
 log('fails',fails);
 })();
