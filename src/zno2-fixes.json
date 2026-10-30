@@ -13,5 +13,23 @@
    "⟦\\overrightarrow{BO}⟧ і ⟦\\overrightarrow{BD}⟧",
    "⟦\\overrightarrow{BC}⟧ і ⟦\\overrightarrow{BD}⟧"
   ]
+ },
+ "zm-34412": {
+  "prompt": "На рисунку зображено квадрат ⟦ABCD.⟧ На стороні ⟦BC⟧ вибрано точку ⟦K⟧ так, що ⟦KC=4⟧ см. Точка ⟦M⟧ – середина відрізка ⟦AK.⟧ Пряма, що проходить через точку ⟦M⟧ паралельно стороні ⟦BC⟧, перетинає сторони ⟦AB⟧ та ⟦CD⟧ в точках ⟦N⟧ і ⟦P⟧ відповідно, ⟦NM=6⟧ см. Узгодьте відрізок (1-3) та його довжину (А – Д)."
+ },
+ "zm-10632": {
+  "topicId": "math-calculus"
+ },
+ "zm-14331": {
+  "topicId": "math-trigonometry"
+ },
+ "zm-10613": {
+  "topicId": "math-vectors"
+ },
+ "zm-6283": {
+  "topicId": "math-solids"
+ },
+ "zm-5345": {
+  "topicId": "math-probability"
  }
 }

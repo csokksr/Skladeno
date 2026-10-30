@@ -98,7 +98,7 @@ python -I tools/build.py --web   # dist/web/: index.html + files/ (зображ�
 
 ## Сумісність
 
-Нижня межа браузерів: Chrome/Edge 98, Firefox 94, Safari 15.4 (використано `structuredClone`, `Object.hasOwn`, `Array.prototype.at`). У коді немає regexp з lookbehind, тож Safari 15.4–16.3 теж працює; `validate.py` не пропустить `eval`, `document.write`, `console.log`.
+Нижня межа браузерів: Chrome/Edge 98, Firefox 98, Safari 15.4 (використано `structuredClone`, `Object.hasOwn`, `Array.prototype.at`). У коді немає regexp з lookbehind, тож Safari 15.4–16.3 теж працює; `validate.py` не пропустить `eval`, `document.write`, `console.log`.
 
 ## Що перевірено й що ні
 
