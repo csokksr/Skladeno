@@ -69,6 +69,8 @@ small,.small{font-size:.8125rem}
 img{max-width:100%}
 ::selection{background:color-mix(in srgb,var(--pen) 25%,transparent);color:var(--ink)}
 :focus-visible{outline:3px solid color-mix(in srgb,var(--pen) 60%,transparent);outline-offset:2px;border-radius:6px}
+/* Headings and the main area receive focus only from script (after a page change); a ring there is noise, the screen reader still announces them. */
+[tabindex="-1"]:focus,[tabindex="-1"]:focus-visible{outline:none}
 button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
 button,a,summary{touch-action:manipulation}
 table{border-collapse:collapse;width:100%;font-size:.9375rem}
