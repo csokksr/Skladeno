@@ -1,0 +1,2 @@
+/* Рух: плавна зміна теми (решту руху робить src/modules/70-motion.js). За prefers-reduced-motion усе вимкнено правилом у 10-tokens.css. */
+html.theme-fade,html.theme-fade *,html.theme-fade *::before,html.theme-fade *::after{transition:background-color .35s var(--ease),color .35s var(--ease),border-color .35s var(--ease),fill .35s var(--ease),stroke .35s var(--ease)!important}

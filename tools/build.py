@@ -273,6 +273,9 @@ def app_js(extra_dirs):
     boot = 'save();render();'
     assert app.rstrip().endswith(boot)
     app = app.rstrip()[:-len(boot)]
+    # Vendored libraries (src/vendor/*.js, see its README) come first: modules may rely on their globals.
+    for path in sorted(glob.glob(f'{S}/vendor/*.js')):
+        app += '\n' + open(path, encoding='utf-8').read()
     for d in extra_dirs:
         for path in sorted(glob.glob(f'{S}/{d}/*.js')):
             app += '\n' + open(path, encoding='utf-8').read()

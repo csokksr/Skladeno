@@ -40,6 +40,7 @@ python -I tools/split.py <файл.html> src   # розібрати готови
 | `tools/zno_explain_merge.py <файл.json>` | додає розбори завдань історії до `src/history-explanations.json` |
 | `tools/content_math_variants.py` | генерує `src/content/65-math-variants.json`: різні числа у варіантах v2–v5 родин математики |
 | `tools/zno2_fetch.py`, `zno2_import.py`, `zno2_bank.py` (+ `zno2_eng.py`, `zno2_ukr.py`) | офіційні тести української, математики й англійської з zno.osvita.ua: завантаження сторінок у `sources/zno2/html` → `sources/zno2/bank.json` → `src/zno2-bank.json` + зображення `src/blobs/zno2-*.txt`; `build.py` підставляє їх замість згенерованого банку (залишаються лише вправи окремих уроків) |
+| `src/vendor/anime.umd.min.js`, `src/modules/70-motion.js`, `src/theme/90-motion.css` | рух на Anime.js v4.5.0 (MIT; вбудовується в сторінку, див. `src/vendor/README.md`): каскадна поява блоків при зміні сторінки, лічильники й смуги прогресу, «пульсація»/«струс» відповідей, відгук на натискання, меню, плавна зміна теми. Лише `opacity`/`transform`; за `prefers-reduced-motion` вимкнено; без Anime.js сторінка працює як раніше |
 | `src/modules/55-math.js`, `62-official.js` | формули LaTeX → MathML; пробні тести з реальних НМТ для всіх предметів |
 | `tools/hook_*.py` | хуки Claude Code: захист згенерованих файлів, перевірка JSON, збірка й валідація наприкінці ходу |
 

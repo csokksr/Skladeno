@@ -16,7 +16,7 @@
 .history-table table{min-width:480px;background:var(--sheet);border:0;border-radius:var(--r)}
 .history-table th{background:var(--sheet-2);color:var(--ink)}
 .history-table td:first-child{font-weight:600}
-.history-pitfalls{margin:26px 0;padding:20px 22px;border-radius:var(--r);background:var(--mark-soft);border-left:3px solid var(--mark)}
+.history-pitfalls{margin:26px 0;padding:20px 22px;border-radius:var(--r);background:var(--mark-soft)}
 .history-next,.history-checklist,.history-coverage-summary,.history-archive-lead{margin:26px 0;padding:22px;border:0;border-radius:var(--r-lg);background:var(--sheet)}
 .history-next p,.history-checklist>p,.history-archive-lead p,.history-coverage-summary>p{margin:10px 0 16px;color:var(--ink-2);font-size:.9375rem}
 .history-checklist article{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px 0;border-top:1px solid var(--line)}
