@@ -2,7 +2,7 @@
 function pMark(q,i){return q.type==='multi'?String(i+1):q.subject==='eng'?String.fromCharCode(65+i):'АБВГДЕЖ'[i]}
 // In the web build history task images live in per-topic packs (files/zno-t<N>.json), fetched on first use.
 const ZNO_IMG={},ZNO_REQ={};
-function znoPack(c){return ZNO_REQ[c]=ZNO_REQ[c]||fetch('files/zno-'+c+'.json').then(r=>r.json()).then(m=>{Object.assign(ZNO_IMG,m);document.querySelectorAll('img[data-zno]').forEach(i=>{if(ZNO_IMG[i.dataset.zno])i.src=ZNO_IMG[i.dataset.zno]})}).catch(()=>{delete ZNO_REQ[c]})}
+function znoPack(c){return ZNO_REQ[c]=ZNO_REQ[c]||fetch('files/zno-'+c+'.json').then(r=>{if(!r.ok)throw Error('pack');return r.json()}).then(m=>{Object.assign(ZNO_IMG,m);document.querySelectorAll('img[data-zno]').forEach(i=>{if(ZNO_IMG[i.dataset.zno])i.src=ZNO_IMG[i.dataset.zno]})}).catch(()=>{delete ZNO_REQ[c]})}
 function pImg(key,alt){let src=DB.assets[key];if(!src)return '';if(src.startsWith('@zno:')){if(!ZNO_IMG[key]){setTimeout(()=>znoPack(src.slice(5)));return `<img class="qimg" data-zno="${key}" alt="${esc(alt)}">`}src=ZNO_IMG[key]}return `<img class="qimg" src="${src}" alt="${esc(alt)}" loading="lazy">`}
 function pImgs(q){const inl=(q.passage||'')+(q.prompt||''),keys=(q.images||(q.image?[q.image]:[])).filter(k=>!inl.includes('⟦§m§'+k+'⟧'));return keys.map((k,i)=>pImg(k,keys.length>1?`Зображення ${i+1} до завдання`:'Зображення до завдання')).join('')}
 function pOptHTML(q,i){const k=q.optionImages?.[i];return (q.options[i]?esc(q.options[i]):'')+(k?pImg(k,`Варіант ${pMark(q,i)}`).replace('class="qimg"','class="p-opt-img"'):'')}

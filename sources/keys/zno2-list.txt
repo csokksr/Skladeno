@@ -47,7 +47,7 @@ math-nmt2026-v2.pdf https://osvita.ua/doc/files/news/977/97791/Mat_vidp_2.pdf
 eng-2016-osn.pdf https://osvita.ua/doc/files/news/513/51313/Angl_mova_vidpovidi_2016.pdf
 eng-2017-osn.pdf https://osvita.ua/doc/files/news/558/55820/engl_vidpov_2017.pdf
 eng-2017-dod.pdf https://osvita.ua/doc/files/news/558/55820/Angl_mova-dod_sesiya-ZNO_2017-Klyuchi__1.pdf
-eng-2018-osn.pdf http://testportal.gov.ua//wp-content/uploads/2018/06/Angl_mova-ZNO_2018-Klyuchi.pdf
+eng-2018-osn.pdf https://testportal.gov.ua/wp-content/uploads/2018/06/Angl_mova-ZNO_2018-Klyuchi.pdf
 eng-2018-dod.pdf https://osvita.ua/doc/files/news/609/60953/Angl_mova-dod_sesiya-ZNO_2018-Klyuchi_1.pdf
 eng-2019-osn.pdf https://osvita.ua/doc/files/news/646/64645/Angl_mova-ZNO_2019-Klyuchi.pdf
 eng-2019-dod.pdf https://osvita.ua/doc/files/news/646/64645/Angl_mova-dod_sesiya-ZNO_2019-Klyuchi_1.pdf

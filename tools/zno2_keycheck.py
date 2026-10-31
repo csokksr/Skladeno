@@ -133,6 +133,10 @@ def main():
         if not tasks:
             continue
         name, _, start = sheet.partition('@')
+        if not os.path.exists(os.path.join(KEYS, name)):  # sheets are not in git: report the gap instead of stopping
+            print('SHEET MISSING %s (%d tasks not checked)' % (name, len(tasks)))
+            unchecked += [q['id'] for q in tasks.values()]
+            continue
         cols = parse(sheet_text(os.path.join(KEYS, name), int(start or 1)), name.startswith('eng'))
         for k, v in manual.get(name, {}).items():  # read by eye: fills scans and corrects misprints in every column
             lab = (int(k.split('.')[0]), int(k.split('.')[1]) if '.' in k else 0)
@@ -155,7 +159,8 @@ def main():
             report.append({'test': test, 'number': n, 'part': p, 'id': q['id'], 'bank': shown(q), 'official': best[(n, p)][1]})
         unchecked += [tasks[k]['id'] for k in miss]
     print('checked', total, 'tasks; mismatches', bad, '; not found in sheets', len(unchecked))
-    json.dump(report, open(os.path.join(KEYS, 'mismatches.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    out = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv[:-1] else os.path.join(KEYS, 'mismatches.json')  # --out <file>: leave the repository untouched
+    json.dump(report, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
 if __name__ == '__main__':
