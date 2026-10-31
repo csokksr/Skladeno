@@ -10,7 +10,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 P = os.path.join(ROOT, 'src', 'zno2-explanations.json')
 bank = {q['id']: q for q in json.load(open(os.path.join(ROOT, 'src', 'zno2-bank.json'), encoding='utf-8'))['questions']}
 ex = json.load(open(P, encoding='utf-8'))
-L = 'АБВГД'
+L = 'АБВГДЕЖЗ'
 bad = []
 new = {}
 for f in sys.argv[1:]:
