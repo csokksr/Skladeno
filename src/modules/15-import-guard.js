@@ -1,5 +1,7 @@
 // Backups and cloud sync arrive from outside: keep only well-formed keys, ids and short plain titles.
 function guardText(v,n=200){return String(v??'').replace(/[<>\u0000-\u001f]/g,'').slice(0,n)}
+// Session keys are built from topic ids and, for history cards, from Ukrainian titles: allow letters, digits and plain punctuation, never markup, quotes or prototype names.
+function guardKey(key){return typeof key==='string'&&key.length>=1&&key.length<=160&&!/[<>"'&\\`\u0000-\u001f]/.test(key)&&!['__proto__','constructor','prototype'].includes(key)}
 function guardRun(e){
  if(!e||typeof e!=='object')return null;
  let started=Number.isFinite(e.started)?e.started:Date.now(),subject=SUB[e.subject]||e.subject==='all'?e.subject:null;
@@ -10,7 +12,7 @@ function guardRun(e){
  return e;
 }
 function guardPlatform(n){
- for(let key of Object.keys(n.sessions)){let s=n.sessions[key];if(!/^[\w.:-]{1,80}$/.test(key))delete n.sessions[key];else n.sessions[key]={ids:s.ids,title:guardText(s.title),index:s.index}}
+ for(let key of Object.keys(n.sessions)){let s=n.sessions[key];if(!guardKey(key))delete n.sessions[key];else n.sessions[key]={ids:s.ids,title:guardText(s.title),index:s.index}}
  if(!n.sessions[n.current])n.current=null;
  if(n.exam)n.exam=guardRun(n.exam);
  n.records=n.records.map(guardRun).filter(Boolean);

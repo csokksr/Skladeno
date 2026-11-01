@@ -154,7 +154,7 @@ def main():
                 if tip in ('1', '7') and blocks:
                     a = answers(blocks[0])
                     if tip == '1':
-                        ans = LETTERS.index(res) if res in LETTERS else int(res) - 1
+                        ans = LETTERS.index(res) if len(res) == 1 and res in LETTERS else int(res) - 1
                         item = dict(base, type='single', answer=ans)
                     else:
                         item = dict(base, type='multi', answer=sorted(int(x) - 1 for x in res.split(';')))

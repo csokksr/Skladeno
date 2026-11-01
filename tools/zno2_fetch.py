@@ -35,7 +35,10 @@ def pages():
         path = os.path.join(HTML, name)
         if os.path.exists(path):
             continue
-        open(path, 'wb').write(get(url))
+        data = get(url)  # download first: a failed request must not leave an empty file that later runs skip
+        with open(path + '.part', 'wb') as fh:
+            fh.write(data)
+        os.replace(path + '.part', path)
         print(name, os.path.getsize(path))
         time.sleep(0.4)
     print(len(jobs), 'pages')

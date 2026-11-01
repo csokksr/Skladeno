@@ -49,7 +49,7 @@ function parse(src){
   if(IGNORE.has(n)){if(n==='mathop'||n==='mathord'){return isCh(peek(),'{')?group():null}return null}
   if(FUNC.has(n))return '<mi mathvariant="normal">'+n+'</mi>'+'<mo>&#x2061;</mo>';
   if(n==='\\')return null;
-  if(n in SYM){const v=SYM[n];if(!v)return null;if(n==='int'||n==='sum'||n==='prod')return '<mo largeop="true">'+v+'</mo>';if(['alpha','beta','gamma','delta','Delta','varphi','phi','pi','rho','theta','lambda','mu','sigma','omega'].includes(n))return '<mi>'+v+'</mi>';if(n==='circ'||n==='infty')return '<mo>'+v+'</mo>';if(n===','||n===';'||n===' '||n==='colon'&&false)return '<mspace width="0.25em"></mspace>';return '<mo>'+ESC(v)+'</mo>'}
+  if(Object.hasOwn(SYM,n)){const v=SYM[n];if(!v)return null;if(n==='int'||n==='sum'||n==='prod')return '<mo largeop="true">'+v+'</mo>';if(['alpha','beta','gamma','delta','Delta','varphi','phi','pi','rho','theta','lambda','mu','sigma','omega'].includes(n))return '<mi>'+v+'</mi>';if(n==='circ'||n==='infty')return '<mo>'+v+'</mo>';if(n===','||n===';'||n===' '||n==='colon'&&false)return '<mspace width="0.25em"></mspace>';return '<mo>'+ESC(v)+'</mo>'}
   unknown.push(n);return '<mi>'+ESC(n)+'</mi>'}
  let nodes;try{nodes=seq(()=>false)}catch(e){return {err:e.message}}
  return {html:'<math>'+row(nodes)+'</math>',unknown}}
@@ -61,5 +61,6 @@ function walk(root){const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT
   const frag=document.createDocumentFragment();while(span.firstChild)frag.appendChild(span.firstChild);n.parentNode.replaceChild(frag,n)}}
 return {parse,render,walk,cache}})();
 (function(){let busy=false;const run=()=>{if(busy)return;busy=true;try{MJ.walk(document.body)}finally{busy=false}};
- const obs=new MutationObserver(ms=>{if(ms.some(m=>[...m.addedNodes].some(n=>n.nodeType===1||n.nodeType===3)))run()});
+ // Only the added subtrees are scanned: a full-page walk after every mutation (each timer tick, each redraw) is wasted work.
+ const obs=new MutationObserver(ms=>{if(busy)return;busy=true;try{for(const m of ms)for(const n of m.addedNodes){if(n.nodeType===1)MJ.walk(n);else if(n.nodeType===3&&n.parentNode&&n.nodeValue.includes('⟦'))MJ.walk(n.parentNode)}}finally{busy=false}});
  obs.observe(document.body,{childList:true,subtree:true});run()})();

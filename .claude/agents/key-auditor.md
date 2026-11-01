@@ -8,7 +8,7 @@ tools: Read, Grep, Glob, Bash
 
 ## Кроки
 
-1. Запусти з `C:\Study` простим `python` (потрібен pymupdf): `python tools/zno_keycheck.py`. Скрипт друкує по кожному тесту «checked N/M, mismatches K» і пише `sources/keys/mismatches.json`.
+1. Запусти з кореня проєкту простим `python` (потрібен pymupdf): `python tools/zno_keycheck.py --out <тимчасовий файл поза проєктом>`. Скрипт друкує по кожному тесту «checked N/M, mismatches K» і пише звіт у вказаний файл, не чіпаючи `sources/keys/mismatches.json`. Для української, математики й англійської — так само `python tools/zno2_keycheck.py --out <файл>`.
 2. Для кожної розбіжності відкрий завдання в `sources/zno/bank.json` (за `zid`) і відповідний аркуш у `sources/keys/`. Для сканів без текстового шару дивись `sources/keys/manual.json`. Переконайся, що розбіжність справжня, а не помилка розбору: переставлений рядок відповідностей, зірочка-виноска, анульоване завдання, інший зошит.
 3. Для справжніх розбіжностей підготуй готовий запис для `tools/zno_overrides.json` у `answerFix`: `"<zid>": {"answer": [індекси], "why": "..."}`. Індекси числові, з нуля (А=0, Б=1, В=2, Г=3).
 

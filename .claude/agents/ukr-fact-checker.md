@@ -6,7 +6,7 @@ tools: Read, Grep, Glob, Bash
 
 Ти перевіряєш зміст сайту-тренажера «Складено» за авторитетними джерелами. Нічого не редагуй.
 
-## Джерела (у `C:\Study`)
+## Джерела (у корені проєкту)
 
 - Правопис: `research/pravopys/pravopys.pdf`.
 - Наголоси: `dist/web/files/officialDocs.1.data.pdf`.

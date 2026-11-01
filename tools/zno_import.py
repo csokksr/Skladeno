@@ -32,7 +32,7 @@ TOPIC = {
     'ukrayina_v_umovah_destalinizaciyi': 28, 'ukrayina_v_period_zagostrennya_krizi_radyanskoyi_sistemi': 29,
     'vidnovlennya_nezalezhnosti_ukrayini': 30, 'stanovlennya_ukrayini_yak_nezalezhnoyi_derzhavi': 31,
     'tvorennya_novoyi_ukrayini': 32,
-    # Culture IX – first half XVI ст. spans programme topics 3–5; resolved per task in tools/zno_topics.json.
+    # Culture IX – first half XVI ст. spans programme topics 3–5; resolved per task in tools/zno_overrides.json.
     'ukrayinska_kultura_ix_pershoyi_polovyny_xvi_st': None,
 }
 VISUAL = {'arkhitektura_fortyfikacijnykh_sporud_v_ukrayini', 'arkhitektura_kultovykh_sporud_v_ukrayini',
@@ -136,6 +136,8 @@ def main():
                                 answer=[LETTERS.index(pairs[str(k)]) for k in range(1, len(left) + 1)])
                 else:
                     raise ValueError('tip ' + tip)
+                if zid in FIX and tip != '5':  # answerFix in tools/zno_overrides.json corrects the key of any task type
+                    item.update(answer=FIX[zid]['answer'], keyFixed=FIX[zid]['why'])
             except Exception as e:  # noqa: BLE001 - report and keep going
                 problems.append((src, num, zid, repr(e)))
                 continue

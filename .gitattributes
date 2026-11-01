@@ -1,0 +1,7 @@
+# Same line endings on Windows and Linux: the build and the source hashes must not depend on autocrlf.
+* text=auto eol=lf
+*.txt -text
+*.pdf binary
+*.webp binary
+*.png binary
+*.jpg binary

@@ -168,6 +168,9 @@ def main():
         tasks = {t['number']: t for t in bank if t['test'] == test}
         if sheet in manual:
             cols = [{i + 1: (canon(v), v) for i, v in enumerate(manual[sheet])}]
+        elif not os.path.exists(os.path.join(KEYS, sheet)):  # sheets are not in git: report the gap instead of stopping
+            print('SHEET MISSING %s (%d tasks not checked)' % (sheet, len(tasks)))
+            continue
         else:
             cols = parse(os.path.join(KEYS, sheet))
         best = max(cols, key=lambda c: sum(1 for n, t in tasks.items() if n in c and c[n][0] == bank_key(t)))
@@ -186,7 +189,8 @@ def main():
         for n, off in star:
             print('   note: #%d official answer marked with * : %s' % (n, off))
     print('checked', total, 'tasks; mismatches', bad)
-    json.dump(report, open(os.path.join(KEYS, 'mismatches.json'), 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    out = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv[:-1] else os.path.join(KEYS, 'mismatches.json')  # --out <file>: leave the repository untouched
+    json.dump(report, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
 
 
 if __name__ == '__main__':
