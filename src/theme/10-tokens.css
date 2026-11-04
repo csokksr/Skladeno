@@ -23,7 +23,7 @@
   --ease:cubic-bezier(.25,.1,.25,1);
   /* Сумісність зі старими назвами змінних у розмітці. */
   --bg:var(--paper);--green:var(--ok);--mint:var(--ok-soft);--purple:var(--pen-soft);--orange:var(--warn-soft);
-  --p-paper:var(--sheet);--p-coral:var(--mark);--p-cobalt:var(--pen);--p-serif:var(--f-display);--font-ui:var(--f-body);
+  --p-paper:var(--sheet);
   --grid:transparent;--margin-line:transparent;
   color-scheme:light;
 }

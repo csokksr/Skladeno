@@ -17,3 +17,20 @@ __pycache__/
 *.pem
 *.key
 secrets.*
+# особисте сховище Obsidian лежить поруч із проєктом, у репозиторій воно не йде
+.obsidian/
+Areas/
+Archive/
+Claude/
+Clients/
+Daily Notes/
+Excalidraw/
+Inbox/
+MAN/
+Meetings/
+Projects/
+Resources/
+Skladeno/
+Templates/
+Home.md
+~/
