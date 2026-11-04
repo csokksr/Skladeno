@@ -74,24 +74,24 @@ const uiCrumbsBase=siteCrumbs;siteCrumbs=function(){return (location.hash.slice(
 const uiRenderBase=render;render=function(){if((location.hash.slice(1)||'hub')==='strategy'){route='strategy';uiStrategyPage();syncSiteNavigation();document.title='Стратегія НМТ · Складено';return}uiRenderBase();const m=$('#main'),head=m&&m.querySelector(':scope>.p-page-head');if(head)for(const el of [...m.children]){if(el===head)break;if(el.classList.contains('p-alert'))head.after(el)}const w=$('#wrongcount');if(w)w.toggleAttribute('data-zero',w.textContent==='0')};
 
 /* Матеріали: каталог інструментів замість переліку службових розділів. */
-function uiCard(kicker,title,text,action){return `<article class="p-feature"><h3>${title}</h3><p>${text}</p>${action}</article>`}
+function uiCard(title,text,action){return `<article class="p-feature"><h3>${title}</h3><p>${text}</p>${action}</article>`}
 const uiLibraryBase=pLibrary;pLibrary=function(){uiLibraryBase();const head=[...$('#main').querySelectorAll('.p-section-head')].find(h=>h.textContent.includes('Першоджерела')),sources=head?.nextElementSibling?.outerHTML||'';
  $('#main').innerHTML=pHeading('Матеріали','Довідники й тренажери','Картки, формули, дати, програми й офіційні демоваріанти для повторення теорії та самоперевірки.')
  +`<section class="p-section"><div class="p-section-head"><h2>Швидке повторення</h2></div><div class="p-bottom-grid" style="margin:0">`
- +uiCard('Усі предмети','Картки-довідки','Наголоси, правила, англійські сполуки, формули й історичні поняття. Спершу пригадай, потім відкрий відповідь.','<a class="p-link" href="#reference">Відкрити картки ›</a>')
- +uiCard('Математика','Формули','Алгебра, функції, ймовірність, планіметрія й стереометрія — той самий довідник, що й під час практики.','<button onclick="pFormulaDialog()">Відкрити формули</button>')
- +uiCard('Історія','Хронологія','Ключові дати всього курсу з поясненнями та вправами на точну дату.','<a class="p-link" href="#chronology">До хронології ›</a>')
- +uiCard('Історія','Діячі й пам’ятки','Портрети діячів, пам’ятки архітектури й мистецтва та історичні карти із завданнями.','<div class="p-actions" style="margin-top:6px"><a href="#portraits">Портрети</a><a href="#gallery">Пам’ятки</a><a href="#map">Карти</a></div>')
+ +uiCard('Картки-довідки','Наголоси, правила, англійські сполуки, формули й історичні поняття. Спершу пригадай, потім відкрий відповідь.','<a class="p-link" href="#reference">Відкрити картки ›</a>')
+ +uiCard('Формули','Алгебра, функції, ймовірність, планіметрія й стереометрія — той самий довідник, що й під час практики.','<button onclick="pFormulaDialog()">Відкрити формули</button>')
+ +uiCard('Хронологія','Ключові дати всього курсу з поясненнями та вправами на точну дату.','<a class="p-link" href="#chronology">До хронології ›</a>')
+ +uiCard('Діячі й пам’ятки','Портрети діячів, пам’ятки архітектури й мистецтва та історичні карти із завданнями.','<div class="p-actions" style="margin-top:6px"><a href="#portraits">Портрети</a><a href="#gallery">Пам’ятки</a><a href="#map">Карти</a></div>')
  +`</div></section><section class="p-section"><div class="p-section-head"><h2>Перевірка та програма</h2></div><div class="p-bottom-grid" style="margin:0">`
- +uiCard('УЦОЯО','Офіційні тести','Демоваріанти НМТ-2026 і справжні тести НМТ-2025 з усіх чотирьох предметів: таймер, окремий бланк і ключ після завершення.','<a class="p-link" href="#official">Пройти офіційний тест ›</a>')
- +uiCard('Програма НМТ','Програма по пунктах','Кожен розділ офіційної програми з конспектом і завданнями до нього.','<div class="p-actions" style="margin-top:6px">'+SUBJECTS.map(s=>`<a href="#syllabus/${s.id}">${s.short}</a>`).join('')+'</div>')
- +uiCard('Рівень 3','Складна практика','Завдання з кількома кроками для тих, хто вже впевнено розв’язує базові.','<a class="p-link" href="#advanced">Спробувати ›</a>')
- +uiCard('На іспиті','Стратегія НМТ','Розподіл часу, два проходи та робота з частковими балами.','<a class="p-link" href="#strategy">Прочитати ›</a>')
+ +uiCard('Офіційні тести','Демоваріанти НМТ-2026 і справжні тести НМТ-2025 з усіх чотирьох предметів: таймер, окремий бланк і ключ після завершення.','<a class="p-link" href="#official">Пройти офіційний тест ›</a>')
+ +uiCard('Програма по пунктах','Кожен розділ офіційної програми з конспектом і завданнями до нього.','<div class="p-actions" style="margin-top:6px">'+SUBJECTS.map(s=>`<a href="#syllabus/${s.id}">${s.short}</a>`).join('')+'</div>')
+ +uiCard('Складна практика','Завдання з кількома кроками для тих, хто вже впевнено розв’язує базові.','<a class="p-link" href="#advanced">Спробувати ›</a>')
+ +uiCard('Стратегія НМТ','Розподіл часу, два проходи та робота з частковими балами.','<a class="p-link" href="#strategy">Прочитати ›</a>')
  +`</div></section>${typeof mathDeepLessonsHTML==='function'?mathDeepLessonsHTML():''}`
  +`<section class="p-section"><div class="p-section-head"><h2>Інструменти</h2></div><div class="p-bottom-grid" style="margin:0">`
- +uiCard('Пошук','Знайти будь-що','Конспекти, правила, діячі, дати й завдання в одному пошуку.','<a class="p-link" href="#find">Шукати ›</a>')
- +uiCard('Без інтернету','Автономна версія','Один HTML-файл з усіма матеріалами для навчання офлайн.','<a class="p-link" href="#offline">Завантажити ›</a>')
- +uiCard('Прогрес','Резервна копія','Збережи прогрес у файл або код, щоб перенести його в інший браузер.','<a class="p-link" href="#preferences">Налаштування ›</a>')
+ +uiCard('Знайти будь-що','Конспекти, правила, діячі, дати й завдання в одному пошуку.','<a class="p-link" href="#find">Шукати ›</a>')
+ +uiCard('Автономна версія','Один HTML-файл з усіма матеріалами для навчання офлайн.','<a class="p-link" href="#offline">Завантажити ›</a>')
+ +uiCard('Резервна копія','Збережи прогрес у файл або код, щоб перенести його в інший браузер.','<a class="p-link" href="#preferences">Налаштування ›</a>')
  +`</div></section>${sources?`<section class="p-section"><div class="p-section-head"><h2>Першоджерела</h2><a href="#sources">Джерела з історії ›</a></div>${sources}</section>`:''}`+pFoot()};
 
 /* Службові примітки попередньої версії (звірки, межі перевірки, калібрування) прибираємо з навчальних сторінок. */

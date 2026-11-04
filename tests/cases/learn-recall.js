@@ -11,5 +11,9 @@ ok(P.answers[a].due-Date.now()<=86400000&&P.answers[b].due-Date.now()<=86400000,
 ok(P.answers[c].due-Date.now()>3000000&&P.answers[c].due-Date.now()<=3600000,'"partly" never pushes an earlier due date later');
 set();learnRecallRate(id,0);
 ok(P.answers[a].due<=Date.now(),'"nothing" makes answered tasks due now');
+// Looking at a wrong answer must not create a coach item (the confident-wrong note reads, never writes).
+pStart([a],'t','learn-view');P.answers[a]={value:0,score:0,max:1,first:0,attempts:1,at:Date.now(),due:Date.now()+600000};P.coach.items={};
+try{pPractice();pPractice()}catch(e){ok(false,'pPractice threw '+e.message)}
+ok(Object.keys(P.coach.items).length===0,'viewing a wrong answer adds no coach item');
 log('fails',fails);
 })();

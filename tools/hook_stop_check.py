@@ -28,8 +28,11 @@ def main():
         except subprocess.TimeoutExpired:
             print('%s не завершився за %d с' % (script, LIMITS[script]), file=sys.stderr)
             return 2
+        except FileNotFoundError:  # node is needed only for the tests
+            print('%s пропущено: програму не знайдено в PATH' % script, file=sys.stderr)
+            continue
         if code:
-            print('%s завершився з кодом %d:\n%s' % (script, code, '\n'.join(out.splitlines()[-25:])), file=sys.stderr)
+            print('%s завершився з кодом %d:\n%s' % (script, code, '\n'.join(l[:300] for l in out.splitlines()[-25:])), file=sys.stderr)
             return 2
     return 0
 
