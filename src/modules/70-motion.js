@@ -1,26 +1,13 @@
-/* Рух (Anime.js, src/vendor): вхід сторінок, лічильники, смуги прогресу, відповіді на тестах, натискання, меню.
+/* Рух (Anime.js, src/vendor): лічильники, смуги прогресу, відповіді на тестах, натискання, меню.
    Чому так: рух має пояснювати, що змінилося (нова сторінка, правильно чи ні, скільки накопичено), а не прикрашати.
-   Тому: лише opacity/transform; вхід — тільки при зміні сторінки чи вмісту, а не при кожному перемальовуванні;
-   перша порція блоків з'являється каскадом, решта — коли до неї докрутять; за `prefers-reduced-motion` нічого не рухається.
+   Тому: лише opacity/transform; блоки сторінок не з'являються каскадом (це шаблонний ефект): рух лише відповідає на дію
+   або показує накопичене; за `prefers-reduced-motion` нічого не рухається.
    Якщо Anime.js не завантажився або щось пішло не так, сторінка лишається повністю видимою. */
 (()=>{const A=window.anime;if(!A||!A.animate)return;
 const {animate,stagger,spring,utils}=A,main=document.querySelector('#main');if(!main)return;
 const RM=matchMedia('(prefers-reduced-motion: reduce)'),calm=()=>RM.matches;
 const clear=els=>els.forEach(e=>{e.style.opacity='';e.style.transform='';e.style.willChange=''});
 const hide=els=>els.forEach(e=>{e.style.opacity='0';e.style.willChange='opacity,transform'});
-/* Спостерігач за блоками нижче першого екрана: вони з'являються, коли до них докрутили. */
-let io=null;const dropIO=()=>{if(io){io.disconnect();io=null}};
-const reveal=e=>{animate(e,{opacity:[0,1],translateY:[18,0],duration:460,ease:'outQuart',onComplete:()=>clear([e])})};
-/* Які елементи показувати каскадом: діти #main, а для списків і сіток — їхні елементи. */
-const LISTS='.p-subject-list,.p-topic-list,.p-stat-grid,.p-resource-grid,.p-mock-grid,.p-bottom-grid,.st-tasks,.st-fc-grid,.p-status-strip,.p-subject-grid';
-const targets=()=>{const out=[];for(const c of main.children){if(c.matches(LISTS)&&c.children.length)out.push(...[...c.children].slice(0,18));else out.push(c)}return out};
-const enter=(light)=>{dropIO();const all=targets(),vh=innerHeight,now=[],later=[];
-all.forEach(e=>(e.getBoundingClientRect().top<vh*.92?now:later).push(e));
-const first=now.slice(0,light?6:14),rest=now.slice(first.length);hide([...first,...later]);
-setTimeout(()=>clear(first),3500);
-animate(first,{opacity:[0,1],translateY:[light?8:16,0],duration:light?240:480,delay:stagger(light?25:45),ease:'outQuart',onComplete:()=>clear(first)});
-if(later.length&&'IntersectionObserver'in window){io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){io.unobserve(x.target);reveal(x.target)}}),{rootMargin:'0px 0px -6% 0px'});later.forEach(e=>io.observe(e))}else clear(later);
-return rest};
 /* Лічильники й смуги: числа «наростають», смуги виїжджають зліва. Лише при вході на сторінку. */
 const counters=()=>{main.querySelectorAll('.p-status-strip strong,.p-stat-grid strong,.st-fc-grid strong,.p-result-score strong,.stat .value').forEach(el=>{
 const m=/^(\D*)(\d+)(.*)$/.exec(el.textContent.trim());if(!m||el.children.length)return;const to=+m[2];if(to<2)return;
@@ -41,7 +28,7 @@ if(fb.length){hide([...fb]);animate([...fb],{opacity:[0,1],translateY:[10,0],dur
 const sig=()=>(main.textContent||'').slice(0,90);let lastHash=null,lastSig='',lastOpts=[];
 const onChange=()=>{const prevOpts=lastOpts,hashBefore=lastHash,sigBefore=lastSig,h=location.hash,s=sig();lastHash=h;lastSig=s;lastOpts=optStates();
 if(calm()||!main.children.length)return;
-try{if(h!==hashBefore){enter(false);counters();bars()}else if(s!==sigBefore)enter(true);else answers(prevOpts)}catch(e){clear([...main.querySelectorAll('*')])}};
+try{if(h!==hashBefore){counters();bars()}else if(s===sigBefore)answers(prevOpts)}catch(e){clear([...main.querySelectorAll('*')])}};
 new MutationObserver(onChange).observe(main,{childList:true});
 /* Натискання: короткий «відгук», що повертається пружиною. */
 const PRESS='button:not(:disabled),.primary,.p-option:not(:disabled),a.p-subject-row,.p-topic-row,.p-resource-grid a,.st-today-card a';
