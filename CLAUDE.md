@@ -15,7 +15,7 @@ python tools/zno2_keycheck.py     # ключі української, мате�
 
 - Скрипти, що імпортують pymupdf чи Pillow (`zno_keycheck.py`, `zno2_keycheck.py`, `zno_images.py`), запускай простим `python`, решту — `python -I`.
 - Сервери перегляду: `.claude/launch.json` (`skladeno` на 8765, `skladeno-web` на 8766). Не запускай їх через Bash.
-- Хуки в `.claude/settings.json` блокують правку згенерованих файлів, перевіряють JSON і на Stop запускають build + validate + `node tests/run.js`. Якщо хук відмовив, правь джерело, а не обходь хук.
+- Хуки в `.claude/settings.json` блокують правку згенерованих файлів, перевіряють JSON і синтаксис JS (`node --check`) і на Stop запускають build + validate + `node tests/run.js`. Якщо хук відмовив, правь джерело, а не обходь хук.
 
 ## Правила
 
