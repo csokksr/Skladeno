@@ -58,7 +58,7 @@
   .p-subject-row{grid-template-columns:44px minmax(0,1fr) 14px;gap:14px;padding:18px}
   .p-subject-row .p-row-meta{grid-column:2;grid-row:2;text-align:left;display:flex;gap:6px;align-items:baseline}
   .p-subject-row .p-arrow{grid-column:3;grid-row:1/span 2}
-  .p-subject-mark{width:44px;height:44px;border-radius:12px;font-size:1.125rem}
+  .p-subject-mark{width:44px;height:44px;border-radius:var(--r);font-size:1.125rem}
   .p-subject-list>div.p-subject-row{grid-template-columns:44px minmax(0,1fr) auto}
   .p-subject-list>div.p-subject-row>a{grid-column:2/-1}
   .p-topic-list>.p-topic-row:has(.p-number){grid-template-columns:24px minmax(0,1fr) 56px 12px;gap:10px}

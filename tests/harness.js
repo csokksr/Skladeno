@@ -20,7 +20,7 @@ class MO{constructor(f){}observe(){}}
 const NodeFilter={SHOW_TEXT:4,FILTER_ACCEPT:1,FILTER_REJECT:2};
 const ctx={MutationObserver:MO,NodeFilter,document,localStorage:{getItem:k=>store.has(k)?store.get(k):null,setItem:(k,v)=>store.set(k,String(v)),removeItem:k=>store.delete(k)},
  location:{hash:process.env.HASH||'',protocol:'file:',href:'file:///x'},addEventListener(){},matchMedia:()=>({matches:false,addEventListener(){}}),
- setInterval:(f,t)=>{intervals.push(f);return intervals.length},setTimeout:()=>0,clearTimeout(){},scrollTo(){},confirm:()=>true,console,structuredClone,URL,Blob,TextDecoder,atob:s=>Buffer.from(s,'base64').toString('binary'),navigator:{},history:{},toastLog:[]};
+ setInterval:(f,t)=>{intervals.push(f);return intervals.length},setTimeout:()=>0,clearTimeout(){},scrollTo(){},requestAnimationFrame:()=>0,cancelAnimationFrame(){},confirm:()=>true,console,structuredClone,URL,Blob,TextDecoder,atob:s=>Buffer.from(s,'base64').toString('binary'),navigator:{},history:{},toastLog:[]};
 ctx.window=ctx;ctx.globalThis=ctx;
 ctx.__intervals=intervals;ctx.__store=store;
 vm.createContext(ctx);
