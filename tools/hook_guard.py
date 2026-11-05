@@ -11,6 +11,7 @@ RULES = [
     ('tree', 'dist', 'згенеровано збіркою (tools/build.py): правте src/ і перезбирайте'),
     ('file', 'skladeno-nmt-latest.html', 'застаріла копія сайту, не редагується'),
     ('file', 'src/history-bank.json', 'пише tools/zno_bank.py; виправляйте tools/zno_overrides.json і перезапускайте zno_import.py, zno_topics.py, zno_bank.py'),
+    ('file', 'src/history-explanations.json', 'правки лише через tools/zno_explain_merge.py <файл.json>: він перезаписує розбір за id і перебудовує src/history-bank.json, з якого сайт їх читає'),
     ('file', 'sources/zno/bank.json', 'пише tools/zno_import.py (виправлення ключів і тем у tools/zno_overrides.json)'),
     ('tree', 'sources/zno/html', 'завантажені сторінки zno.osvita.ua, не редагуються'),
     ('tree', 'sources/zno/img', 'пише tools/zno_images.py'),
