@@ -15,7 +15,7 @@ const o={v:0},fmt=v=>m[1]+Math.round(v)+m[3];el.textContent=fmt(0);
 animate(o,{v:to,duration:Math.min(1100,500+to*3),ease:'outExpo',onUpdate:()=>{el.textContent=fmt(o.v)},onComplete:()=>{el.textContent=fmt(to)}})})};
 const bars=()=>{main.querySelectorAll('.bar i,.st-scale i').forEach(i=>{if(!parseFloat(i.style.width))return;i.style.transformOrigin='0 50%';i.style.transform='scaleX(0)';
 animate(i,{scaleX:[0,1],duration:900,delay:200,ease:'outQuart',onComplete:()=>{i.style.transform='';i.style.transformOrigin=''}})})};
-/* Відповіді: правильна — коротка «пульсація», хибна — «струс»; пояснення виїжджає. Лише для щойно показаних станів. */
+/* Відповіді: правильна коротко «пульсує», хибна «струшується», пояснення виїжджає. Лише для щойно показаних станів. */
 const optStates=()=>[...main.querySelectorAll('.p-option')].map(o=>o.classList.contains('is-correct')?'c':o.classList.contains('is-wrong')?'w':o.classList.contains('is-selected')?'s':'');
 const answers=(prev)=>{const cur=optStates();if(prev.length!==cur.length)return;const opts=main.querySelectorAll('.p-option');
 cur.forEach((s,i)=>{if(s===prev[i])return;const el=opts[i];
