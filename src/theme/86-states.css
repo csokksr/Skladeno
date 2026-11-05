@@ -1,0 +1,26 @@
+/* Списки, результати пошуку, активні фільтри й стани. Структуру списків будує src/modules/76-semantics.js, пошук і фільтри 78-find.js. */
+:where(ul.sem-list,ol.sem-list){margin:0;padding:0;list-style:none}
+.sem-list>li{display:grid;min-width:0}
+.sem-list>li>*{min-width:0}
+.find-chips{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px}
+.find-chips>span{font-size:.875rem;color:var(--muted)}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:4px 12px;border:1px solid var(--line-2);border-radius:var(--r);color:var(--ink);font-size:.875rem;text-decoration:none}
+.chip:hover{border-color:var(--ink);text-decoration:none}
+.chip-reset{border-color:transparent;color:var(--link)}
+.find-table{width:100%;border-collapse:collapse;font-size:.9375rem}
+.find-table caption{text-align:left}
+.find-table th{padding:8px 12px 8px 0;border-bottom:1px solid var(--line-2);font-weight:600;text-align:left;color:var(--muted);font-size:.8125rem}
+.find-table td{padding:12px 12px 12px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.find-table td:nth-child(3){overflow-wrap:anywhere}
+.find-table td:nth-child(1),.find-table td:nth-child(2),.find-table td:nth-child(4){white-space:nowrap}
+.find-table td strong{display:block}
+.find-table td span{color:var(--ink-2)}
+@media (max-width:760px){
+  .find-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .find-table,.find-table tbody,.find-table tr,.find-table td{display:block}
+  .find-table tr{padding:12px 0;border-bottom:1px solid var(--line)}
+  .find-table td{padding:2px 0;border:0;white-space:normal!important}
+  .find-table td[data-label]:not([data-label="Знайдено"]):not([data-label="Дія"])::before{content:attr(data-label) ": ";color:var(--muted)}
+  .find-table td[data-label="Дія"]{padding-top:8px}
+}
+.p-status{margin:0 0 12px;font-size:.9375rem;color:var(--ink-2)}

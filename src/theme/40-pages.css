@@ -40,9 +40,9 @@ a.p-subject-row:hover{color:var(--ink);text-decoration:none;background:var(--she
 .p-row-meta strong{font:600 1.0625rem var(--f-display);letter-spacing:-.02em;white-space:nowrap}
 .p-row-meta span{font-size:.75rem;color:var(--muted)}
 .p-arrow{color:var(--muted);font-size:1.25rem;justify-self:end}
-.p-subject-list>div.p-subject-row{grid-template-columns:52px minmax(0,1fr) auto auto}
-.p-subject-list>div.p-subject-row>strong{font:600 1.0625rem var(--f-display);white-space:nowrap}
-.p-subject-list>div.p-subject-row>a{font-size:.875rem}
+.p-subject-list>li>div.p-subject-row{grid-template-columns:52px minmax(0,1fr) auto auto}
+.p-subject-list>li>div.p-subject-row>strong{font:600 1.0625rem var(--f-display);white-space:nowrap}
+.p-subject-list>li>div.p-subject-row>a{font-size:.875rem}
 .p-topic-list{display:grid;border-top:1px solid var(--line)}
 .p-topic-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 4px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;}
 a.p-topic-row:hover{color:var(--ink);text-decoration:none}
@@ -52,7 +52,7 @@ a.p-topic-row:hover h3{color:var(--link)}
 .p-topic-row p{margin-top:2px;font-size:.8125rem;color:var(--muted)}
 .p-topic-row>span{max-width:40%;font-size:.8125rem;color:var(--muted);text-align:right}
 .p-topic-row>strong{font:600 .9375rem var(--f-body);white-space:nowrap}
-.p-topic-list>.p-topic-row:has(.p-number){display:grid;grid-template-columns:34px minmax(0,1fr) 104px 14px;gap:16px}
+.p-topic-list>li>.p-topic-row:has(.p-number){display:grid;grid-template-columns:34px minmax(0,1fr) 104px 14px;gap:16px}
 .p-topic-progress{display:grid;gap:6px;text-align:right;font:500 .75rem var(--f-body);color:var(--muted);font-variant-numeric:tabular-nums}
 .p-topic-progress .bar{height:3px}
 .p-subject-toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;margin:24px 0 32px;padding:20px 24px;border:0;border-radius:var(--r-lg);background:var(--sheet);font-size:.875rem;color:var(--muted)}
