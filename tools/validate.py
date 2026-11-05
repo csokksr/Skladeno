@@ -1,5 +1,5 @@
 """Structural checks for every question in the built data (ids, keys, options, explanations)."""
-import json, os, re, sys, collections
+import glob, json, os, re, sys, collections
 sys.stdout.reconfigure(encoding='utf-8')
 _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 t = open(sys.argv[1] if len(sys.argv) > 1 else os.path.join(_root, 'dist', 'skladeno-nmt.html'), encoding='utf-8').read()
@@ -79,6 +79,37 @@ for s in d['subjects']:
     for i, st in enumerate(s.get('mockSets') or []):
         bad = [y for y in st if y not in _ids]
         if bad: problems['dangling task ids in mockSets'].extend(bad)
+# Colour tokens: text, controls and field borders must stay readable in the light and the dark theme.
+_css = open(os.path.join(_root, 'src', 'theme', '10-tokens.css'), encoding='utf-8').read()
+_sets = [dict(re.findall(r'(--[\w-]+):(#[0-9a-fA-F]{6})\b', b)) for b in re.findall(r'--paper:#[0-9a-fA-F]{6}.*?color-scheme:(?:light|dark)', _css, re.S)]
+def _lum(h):
+    c = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    c = [x / 12.92 if x <= .03928 else ((x + .055) / 1.055) ** 2.4 for x in c]
+    return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]
+def _ratio(a, b):
+    x, y = sorted((_lum(a), _lum(b)), reverse=True)
+    return (x + .05) / (y + .05)
+if len(_sets) != 3 or _sets[1] != _sets[2]:
+    problems['colour tokens: expected light, dark (media) and dark (data-theme) sets, the two dark sets equal'].append(len(_sets))
+else:
+    for name, tokens in (('light', _sets[0]), ('dark', _sets[1])):
+        pairs = [('--ink', '--paper', 4.5), ('--ink-2', '--paper', 4.5), ('--muted', '--paper', 4.5), ('--muted', '--sheet', 4.5), ('--link', '--paper', 4.5),
+                 ('--pen-ink', '--pen', 4.5), ('--pen-ink', '--pen-hover', 4.5), ('--on-mark', '--mark', 4.5), ('--on-ok', '--ok', 4.5),
+                 ('--mark', '--paper', 4.5), ('--ok', '--paper', 4.5), ('--warn', '--paper', 4.5), ('--line-2', '--paper', 3.0)]
+        pairs += [('--on-subject', k, 3.0) for k in tokens if k.startswith('--s-')]  # 22 px, weight 600 in .p-subject-mark: large text
+        for fg, bg, need in pairs:
+            if fg not in tokens or bg not in tokens: problems['colour tokens: missing ' + fg + ' or ' + bg].append(name)
+            elif _ratio(tokens[fg], tokens[bg]) < need: problems['low contrast'].append('%s %s on %s %.2f<%s' % (name, fg, bg, _ratio(tokens[fg], tokens[bg]), need))
+# Every script module is described in the README, and every library link is a plain https URL listed once.
+_readme = open(os.path.join(_root, 'README.md'), encoding='utf-8').read()
+for f in sorted(glob.glob(os.path.join(_root, 'src', 'modules', '*.js'))):
+    if os.path.basename(f) not in _readme: problems['module missing from README'].append(os.path.basename(f))
+for s in d['subjects']:
+    urls = [x.get('url', '') for x in s.get('sources') or []]
+    for u in urls:
+        if not u.startswith('https://'): problems['source link is not https'].append(u[:60])
+    for u in set(urls):
+        if urls.count(u) > 1: problems['source link listed twice'].append(u[:60])
 # Secrets and risky sinks in the code we write (the data blobs are base64 and would give false hits).
 import glob, os
 _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

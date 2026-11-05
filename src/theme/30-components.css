@@ -105,3 +105,5 @@ a.primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;
 .p-targets input:focus,.p-targets select:focus{outline:none}
 .p-targets select{cursor:pointer}
 .p-targets option{font-size:1rem}
+/* Сенсорні екрани: цілі натискання не менші за 44 px. */
+@media (pointer:coarse){button,.p-actions>a,.p-btn,a.primary{min-height:44px}}

@@ -3,7 +3,7 @@
   python -I tools/build.py        -> dist/skladeno-nmt.html (one self-contained offline file)
   python -I tools/build.py --web  -> dist/web/ (claude.ai artifact: index.html + files/ + offline parts)
 """
-import base64, glob, hashlib, json, os, re, shutil, sys
+import base64, glob, hashlib, json, os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 S = os.path.join(ROOT, 'src')
 WEB = '--web' in sys.argv
@@ -351,6 +351,15 @@ def fill(x, files_dir=None):
     return x
 
 
+def build_id():
+    """Short commit of the build, with '+змінено' when src/ or tools/ differ from it; shown on the settings page."""
+    try:
+        git = lambda *a: subprocess.run(['git', *a], cwd=ROOT, capture_output=True, text=True, timeout=10).stdout.strip()
+        return (git('rev-parse', '--short=7', 'HEAD') or 'dev') + ('+змінено' if git('status', '--porcelain', '--', 'src', 'tools') else '')
+    except (OSError, subprocess.SubprocessError):
+        return 'dev'
+
+
 def app_js(extra_dirs, offline_mb=100):
     app = open(f'{S}/app.js', encoding='utf-8').read()
     # Feature modules load after the base app and wrap its functions, like the layers inside app.js.
@@ -358,6 +367,7 @@ def app_js(extra_dirs, offline_mb=100):
     boot = 'save();render();'
     assert app.rstrip().endswith(boot)
     app = app.rstrip()[:-len(boot)]
+    app += '\nconst BUILD_ID=%s;' % json.dumps(build_id())
     # Vendored libraries (src/vendor/*.js, see its README) come first: modules may rely on their globals.
     for path in sorted(glob.glob(f'{S}/vendor/*.js')):
         app += '\n' + open(path, encoding='utf-8').read()

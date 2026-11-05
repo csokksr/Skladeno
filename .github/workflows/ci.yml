@@ -1,0 +1,27 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Збірка
+        run: python -I tools/build.py
+      - name: Перевірка завдань і кольорів
+        run: python -I tools/validate.py
+      - name: Регресійні тести
+        run: node tests/run.js
+      - name: Збірка відтворювана
+        run: |
+          before=$(sha256sum dist/skladeno-nmt.html)
+          python -I tools/build.py
+          test "$before" = "$(sha256sum dist/skladeno-nmt.html)"
