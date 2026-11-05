@@ -1,5 +1,6 @@
 // Runs the built page's script in Node against a stub DOM, then evaluates a test case in the same global scope.
 // Usage: node tests/harness.js <case.js>   (env: SKLADENO_HTML = built page, LS = JSON file preloaded into localStorage, HASH = start route)
+if(process.env.TZ)process.env.TZ=process.env.TZ; // Node on Windows reads TZ only when it is assigned from script
 const vm=require('vm'),fs=require('fs'),path=require('path');
 const html=fs.readFileSync(process.env.SKLADENO_HTML||path.join(__dirname,'..','dist','skladeno-nmt.html'),'utf8');
 const open='<script id="data" type="application/json">',a=html.indexOf(open)+open.length,b=html.indexOf('</script>',a);

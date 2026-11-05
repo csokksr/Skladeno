@@ -72,7 +72,8 @@ function stBuildToday(){let aa=pAnswers(),now=Date.now(),mins=P.plan.minutes,pha
   for(let {sid}of order.slice(0,n)){let per=left/n;for(let t of ranks.filter(t=>t.subject===sid)){let qs=t.questions.map(id=>PM[id]).filter(q=>q&&!q.challenge&&!q.examOnly&&!review.includes(q.id)&&(!aa[q.id]||aa[q.id].score<aa[q.id].max)).sort((a,b)=>(a.level||1)-(b.level||1));if(!qs.length)continue;let ids=[],m=0;for(let q of qs){if(m+stCost(q)>per&&ids.length)break;ids.push(q.id);m+=stCost(q)}learn.push({sid,topicId:t.id,title:t.title,route:stTopicRoute(t),ids});break}}}
  return {day:pDay(),phase:phase.id,review,learn,mock}}
 function stToday(force=false){let t=P.study.today;if(!force&&t&&t.day===pDay())return t;P.study.today=stBuildToday();pSave();return P.study.today}
-function stDayStart(){return new Date(pDay()+'T00:00:00').getTime()}
+// Kyiv midnight: pDay() is the Kyiv date, so the day must start there whatever the browser's time zone is.
+function stDayStart(){const n=new Date(),k=new Date(n.toLocaleString('en-US',{timeZone:'Europe/Kyiv'}));return n.getTime()-((k.getHours()*60+k.getMinutes())*60+k.getSeconds())*1000-n.getMilliseconds()}
 function stDone(ids){let aa=pAnswers(),start=stDayStart();return ids.filter(id=>aa[id]&&aa[id].at>=start).length}
 function stRun(kind,i=0){let t=stToday(),ids=(kind==='review'?t.review:t.learn[i]?.ids||[]).filter(id=>PM[id]),aa=pAnswers(),start=stDayStart();if(!ids.length){toast('Тут усе виконано.');return}for(let id of ids)if(aa[id]&&aa[id].at<start)coachPrepareRecall(id);save();pSave();pStart(ids,kind==='review'?'Повторення на сьогодні':'Нова тема: '+t.learn[i].title,'today-'+kind+'-'+i)}
 function stMockRun(){let m=stToday().mock;if(!m)return;if(m.sid==='diagnostic')coachStart('');else pLaunchMock(m.sid,m.variant)}
