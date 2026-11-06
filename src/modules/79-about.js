@@ -1,0 +1,13 @@
+// «Про сайт»: що це, що перевірено, де зберігаються дані, гарячі клавіші. Адреса #about; посилання в підвалі.
+function aboutPage(){const build=typeof BUILD_ID==='string'?BUILD_ID:'';
+$('#main').innerHTML=pHeading('Довідка','Про сайт і приватність','Що це за сайт, що в ньому перевірено, де лежать твої дані й які клавіші працюють.')+`<article class="strategy">
+<section><h2>Що це за сайт</h2><p>Складено допомагає готуватися до НМТ з української мови, математики, історії України й англійської. Завдання взято з офіційних тестів ЗНО та НМТ. Пояснення до них написано для цього сайту. Сайт не пов’язаний з УЦОЯО й не є офіційним ресурсом.</p></section>
+<section><h2>Що перевірено, а що ні</h2><p>Ключі відповідей звірено з аркушами УЦОЯО лише для частини завдань. Для решти ключ узято з опублікованих джерел, і він може містити помилку. Якщо відповідь здається неправильною, звір її з офіційним аркушем: перелік джерел є на сторінці <a href="#sources">«Програма й джерела»</a>.</p></section>
+<section><h2>Де зберігаються дані</h2><ul><li>Відповіді, нотатки й план лежать у сховищі цього браузера на цьому пристрої. На сервери проєкту нічого не надсилається.</li><li>Акаунтів, реклами, аналітики й cookie на сайті немає.</li><li>У веб-версії в Claude прогрес додатково зберігається в приватному сховищі твого акаунта, щоб синхронізуватися між пристроями.</li><li>Очищення даних браузера стирає прогрес. Резервну копію можна зробити й відновити на сторінці <a href="#preferences">«Налаштування»</a>.</li></ul></section>
+<section><h2>Гарячі клавіші</h2><p>Працюють на сторінці завдання, коли курсор не в полі введення.</p><dl class="about-keys"><dt>1–8</dt><dd>обрати варіант відповіді</dd><dt>Enter</dt><dd>перевірити відповідь</dd><dt>← і →</dt><dd>попереднє й наступне завдання</dd><dt>Tab і Shift+Tab</dt><dd>рухатися між кнопками й посиланнями</dd></dl></section>
+${build?`<section><h2>Збірка</h2><p>Збірка ${esc(build)}. Її номер корисно назвати, коли повідомляєш про помилку.</p></section>`:''}
+</article>${pFoot()}`}
+const aboutCrumbsBase=siteCrumbs;siteCrumbs=function(){return (location.hash.slice(1)||'hub')==='about'?[{label:'Головна',to:'hub'},{label:'Про сайт',to:'about'}]:aboutCrumbsBase()};
+// An address that leads nowhere opens the home page and says so instead of changing silently.
+const aboutRenderBase=render;render=function(){const hash=location.hash.slice(1);if(hash==='about'){route='about';aboutPage();syncSiteNavigation();document.title='Про сайт · Складено';return}
+aboutRenderBase();if(hash&&!['hub','home'].includes(hash.split('/')[0])&&['#home','#hub'].includes(location.hash))toast('Такої сторінки немає. Відкрито головну.')};

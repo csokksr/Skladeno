@@ -9,5 +9,7 @@ function semPrimary(main){[...main.querySelectorAll('.primary:not([aria-pressed]
 const next=[...main.querySelectorAll('button')].find(b=>/^Далі/.test(b.textContent.trim())&&!b.disabled);if(next&&!main.querySelector('.primary')&&main.querySelector('.p-feedback'))next.classList.add('primary')}
 function semStates(main){main.querySelectorAll('.p-option').forEach(o=>o.setAttribute('aria-pressed',String(o.classList.contains('is-selected'))));main.querySelectorAll('.tabs button,.p-tabs button').forEach(b=>b.setAttribute('aria-pressed',String(b.classList.contains('on')||b.classList.contains('is-active'))));
 main.querySelectorAll('.qnav button').forEach(b=>{if(b.classList.contains('current'))b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')})}
-function semApply(main){main.querySelectorAll(SEM_UL).forEach(c=>semList(c,'ul'));main.querySelectorAll(SEM_OL).forEach(c=>semList(c,'ol'));semPrimary(main);semStates(main)}
+// A link that opens a new tab says so to screen readers.
+function semExternal(main){main.querySelectorAll('a[target=_blank]:not([data-ext])').forEach(a=>{a.dataset.ext='1';a.insertAdjacentHTML('beforeend','<span class="sr-only"> (відкриється в новій вкладці)</span>')})}
+function semApply(main){main.querySelectorAll(SEM_UL).forEach(c=>semList(c,'ul'));main.querySelectorAll(SEM_OL).forEach(c=>semList(c,'ol'));semPrimary(main);semStates(main);semExternal(main)}
 (()=>{const main=document.querySelector('#main');if(!main)return;new MutationObserver(()=>semApply(main)).observe(main,{childList:true,subtree:true});semApply(main)})();

@@ -24,3 +24,11 @@
   .find-table td[data-label="Дія"]{padding-top:8px}
 }
 .p-status{margin:0 0 12px;font-size:.9375rem;color:var(--ink-2)}
+.about-keys{display:grid;grid-template-columns:max-content 1fr;gap:8px 20px;margin:12px 0 0}
+.about-keys dt{font-weight:600;color:var(--ink)}
+.about-keys dd{margin:0;color:var(--ink-2)}
+@media (forced-colors:active){
+  button,.p-option,.chip,.tabs button,.p-tabs button{border:1px solid ButtonText}
+  [aria-pressed=true],.p-option.is-selected,.is-active,.on{outline:2px solid Highlight;outline-offset:-2px}
+  .p-subject-mark,.brand-mark{forced-color-adjust:none}
+}

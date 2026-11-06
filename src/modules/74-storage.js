@@ -10,3 +10,5 @@ function storePersist(){navigator.storage.persist().then(ok=>{toast(ok?'Брау
 const storeSettingsBase=pSettings;pSettings=async function(){storeSettingsBase();const head=$('#main .p-page-head');if(!head)return;
 const persisted=navigator.storage?.persisted?await navigator.storage.persisted():null,build=typeof BUILD_ID==='string'?BUILD_ID:'';
 head.insertAdjacentHTML('afterend',`<section class="p-alert"><div><h2>Сховище браузера</h2><p>${persisted===null?'Цей браузер не повідомляє, чи збереже він дані.':persisted?'Браузер не видалятиме дані сам.':'Браузер може видалити дані, якщо бракуватиме місця або сайт довго не відкривати.'} Надійніше все одно мати резервну копію.</p>${persisted===false&&navigator.storage.persist?'<button onclick="storePersist()">Просити браузер зберігати дані</button>':''}${build?`<p class="p-caption">Збірка ${esc(build)}</p>`:''}</div></section>`)};
+// Closing the tab during a timed test keeps the clock running, so ask first.
+addEventListener('beforeunload',e=>{if(P.exam&&P.exam.deadline>Date.now()){e.preventDefault();e.returnValue=''}});

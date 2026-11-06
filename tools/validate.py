@@ -110,6 +110,21 @@ for s in d['subjects']:
         if not u.startswith('https://'): problems['source link is not https'].append(u[:60])
     for u in set(urls):
         if urls.count(u) > 1: problems['source link listed twice'].append(u[:60])
+# Page shell and templates: one description, a favicon, images with alt text, no positive tabindex, new-tab links with noopener.
+_shell = open(os.path.join(_root, 'src', 'shell.html'), encoding='utf-8').read()
+if _shell.count('<meta name="description"') != 1: problems['shell.html needs exactly one meta description'].append(_shell.count('<meta name="description"'))
+if '<link rel="icon"' not in _shell: problems['shell.html has no favicon'].append(1)
+for f in [os.path.join(_root, 'src', 'app.js')] + glob.glob(os.path.join(_root, 'src', 'modules', '*.js')) + glob.glob(os.path.join(_root, 'src', 'web', '*.js')):
+    _src, _rel = open(f, encoding='utf-8').read(), os.path.relpath(f, _root)
+    for m in re.finditer(r'<img(?![^>]*\balt=)[^>]*>', _src): problems['img without alt in ' + _rel].append(m.group(0)[:50])
+    for m in re.finditer(r'tabindex="[1-9]', _src): problems['positive tabindex in ' + _rel].append(m.group(0))
+    for m in re.finditer(r'<a [^>]*target="_blank"[^>]*>', _src):
+        if 'noopener' not in m.group(0): problems['target=_blank without rel=noopener in ' + _rel].append(m.group(0)[:60])
+# Weight budget of the page code (the data is not counted): raise it on purpose, not by drift.
+if '<style>' in t and '<script>' in t:
+    _css_bytes, _js_bytes = len(re.search(r'<style>(.*?)</style>', t, re.S).group(1).encode()), len(t[t.rindex('<script>'):].encode())
+    if _css_bytes > 110_000: problems['css over budget (110000 bytes)'].append(_css_bytes)
+    if _js_bytes > 650_000: problems['js over budget (650000 bytes)'].append(_js_bytes)
 # Secrets and risky sinks in the code we write (the data blobs are base64 and would give false hits).
 import glob, os
 _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
