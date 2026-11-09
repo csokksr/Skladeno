@@ -1,0 +1,55 @@
+// Тести в одному місці: що триває зараз (пробник, офіційний демоваріант, контрольний зріз), останні тренування,
+// швидкий старт нового тесту й конструктор власного. Смуга «Іде тест» над сторінкою нагадує про таймер на будь-якій сторінці.
+const TESTS_RUN_ROUTE={exam:'simulate',official:'official-run',control:'checkpoint'};
+function testsRuns(){const out=[],now=Date.now(),e=P.exam,o=P.official.current,c=P.coach.control;
+if(e&&!e.finished&&e.deadline>now)out.push({kind:'exam',title:e.title,left:e.deadline-now,done:e.ids.filter(id=>pValid(PM[id],e.answers[id])).length,total:e.ids.length,note:e.stage==='break'?'перерва':''});
+if(o&&!o.finished&&o.deadline>now&&OFFICIAL_PAPERS[o.subject])out.push({kind:'official',title:'Офіційний демоваріант · '+offName(o.subject),left:o.deadline-now,done:Object.keys(o.answers).length,total:OFFICIAL_PAPERS[o.subject].questions.length,note:''});
+if(c&&!c.finished&&c.deadline>now)out.push({kind:'control',title:'Контрольний зріз',left:c.deadline-now,done:Object.keys(c.answers).length,total:c.ids.length,note:''});
+return out}
+// Sessions are kept in the order they were opened: the newest is the last key.
+function testsSessions(){const aa=pAnswers();return Object.keys(P.sessions).reverse().map(key=>{const s=P.sessions[key];return {key,title:s.title,total:s.ids.length,done:s.ids.filter(id=>aa[id]).length,current:key===P.current}})}
+function testsLeft(ms){const m=Math.ceil(ms/60000);return m>=60?Math.floor(m/60)+' год '+String(m%60).padStart(2,'0')+' хв':m+' хв'}
+function testsSwitch(key){const s=P.sessions[key];if(!s)return;delete P.sessions[key];P.sessions[key]=s;P.current=key;pSave();go('practice')}
+function testsDrop(key){delete P.sessions[key];if(P.current===key)P.current=Object.keys(P.sessions).pop()||null;pSave();testsPage()}
+// A second timed test on top of a running one is allowed, but only after a warning: both clocks keep running.
+function testsGuard(kind,run){const others=testsRuns().filter(r=>r.kind!==kind);if(others.length&&!confirm('Зараз іде тест із таймером: '+others.map(r=>r.title).join(', ')+'. Обидва таймери йдуть одночасно. Почати ще один?'))return;return run()}
+const testsLaunchBase=pLaunchMock;pLaunchMock=function(s,v){return testsGuard('exam',()=>testsLaunchBase(s,v))};
+const testsOffBase=offStart;offStart=function(s,f){return testsGuard('official',()=>testsOffBase(s,f))};
+const testsCoachBase=coachStart;coachStart=function(s){return testsGuard('control',()=>testsCoachBase(s))};
+// Custom test: subject, topics, how many, which tasks.
+function testsTopicList(sid){const by={};for(const q of PQ)if(q.subject===sid&&!q.examOnly)(by[q.topicId]=by[q.topicId]||[]).push(q.id);
+return Object.entries(by).map(([id,ids])=>({id,ids,title:PT[id]?.title||T[Number(id.slice(5))-1]?.title||id})).sort((a,b)=>a.title.localeCompare(b.title,'uk'))}
+function testsPool(sid,topics,pool){const aa=pAnswers(),now=Date.now(),keep=new Set(topics);
+return testsTopicList(sid).filter(t=>keep.has(t.id)).flatMap(t=>t.ids).filter(id=>pool==='new'?!aa[id]:pool==='wrong'?aa[id]&&aa[id].score<aa[id].max:pool==='due'?aa[id]&&aa[id].due<=now:true)}
+function testsStartCustom(sid,topics,pool,count){const ids=pSeedShuffle(testsPool(sid,topics,pool),Date.now()).slice(0,count);if(!ids.length){toast('За цими умовами завдань немає. Обери інші теми чи набір.');return false}
+pStart(ids,SUB[sid].name+' · власний тест, '+stPlural(ids.length,'завдання','завдання','завдань'),'custom-'+Date.now());return true}
+function testsForm(){const sid=$('#tb-subject').value;return {sid,topics:[...document.querySelectorAll('#tb-topics input:checked')].map(i=>i.value),pool:$('#tb-pool').value,count:Number($('#tb-count').value)}}
+function testsInfo(){const f=testsForm(),n=testsPool(f.sid,f.topics,f.pool).length;$('#tb-info').textContent=n?`Доступно ${stPlural(n,'завдання','завдання','завдань')}${n>f.count?', у тест потраплять '+f.count:''}.`:'За цими умовами завдань немає.'}
+function testsTopics(){const sid=$('#tb-subject').value;$('#tb-topics').innerHTML=testsTopicList(sid).map(t=>`<label><input type="checkbox" value="${esc(t.id)}" checked> ${esc(t.title)} <span class="muted small">(${t.ids.length})</span></label>`).join('');testsInfo()}
+function testsBuild(){const f=testsForm();if(!f.topics.length){toast('Познач хоча б одну тему.');return}testsStartCustom(f.sid,f.topics,f.pool,f.count)}
+function testsRecent(){const rows=[];for(const r of P.records)rows.push({at:r.finished,title:r.title,score:r.score+' / '+r.max,href:'result/'+r.id});
+P.official.records.forEach((r,i)=>{if(!OFFICIAL_PAPERS[r.subject])return;const s=offScore(r);rows.push({at:r.finished,title:'Офіційний демоваріант · '+offName(r.subject),score:s.score+' / '+s.max,href:'official-result/'+i})});
+return rows.sort((a,b)=>b.at-a.at).slice(0,5)}
+function testsPage(){const runs=testsRuns(),sessions=testsSessions().filter(s=>s.done<s.total||s.current).slice(0,12),recent=testsRecent(),aa=pAnswers(),now=Date.now(),due=PQ.filter(q=>aa[q.id]&&aa[q.id].due<=now).length,wrong=PQ.filter(q=>aa[q.id]&&aa[q.id].score<aa[q.id].max).length;
+const row=(href,attrs,title,note,side)=>`<li><a class="p-topic-row" href="#${href}" ${attrs}><div><h3>${esc(title)}</h3><p>${note}</p></div>${side}<span class="p-arrow">›</span></a></li>`;
+$('#main').innerHTML=pHeading('Центр тестів','Мої тести','Що триває зараз, незавершені тренування й швидкий старт нового тесту.')
++(runs.length?`<section class="p-section"><h2>Іде зараз</h2><ul class="p-topic-list sem-list">${runs.map(r=>row(TESTS_RUN_ROUTE[r.kind],'',r.title,`${r.note?'Перерва, ':''}залишилось ${testsLeft(r.left)} · відповіді: ${r.done} із ${r.total}`,'<strong>Продовжити</strong>')).join('')}</ul></section>`:'')
++`<section class="p-section"><h2>Тренування</h2>${sessions.length?`<ul class="p-topic-list sem-list">${sessions.map(s=>`<li class="tests-row"><a class="p-topic-row" href="#practice" data-key="${esc(s.key)}" onclick="testsSwitch(this.dataset.key);return false"><div><h3>${esc(s.title)}</h3><p>${s.current?'Поточне · ':''}опрацьовано ${s.done} із ${s.total}</p></div><span class="p-arrow">›</span></a><button class="textbtn" data-key="${esc(s.key)}" onclick="testsDrop(this.dataset.key)" aria-label="Прибрати зі списку: ${esc(s.title)}">×</button></li>`).join('')}</ul>`:'<p class="p-empty">Незавершених тренувань немає. Почни нове нижче.</p>'}</section>`
++`<section class="p-section"><h2>Почати новий тест</h2><ul class="p-bottom-grid sem-list">`
++`<li><article class="p-feature"><h3>Змішана практика</h3><p>20 завдань з усіх тем предмета.</p><div class="p-actions">${SUBJECTS.map(s=>`<button onclick="pStartMixed('${s.id}')">${esc(s.name)}</button>`).join('')}</div></article></li>`
++`<li><article class="p-feature"><h3>Повторення</h3><p>Завдання, які час повторити, і ті, де були помилки.</p><div class="p-actions"><button ${due?'':'disabled'} onclick="pReview('due')">Час повторити (${due})</button><button ${wrong?'':'disabled'} onclick="pReview('wrong')">З помилками (${wrong})</button></div></article></li>`
++`<li><article class="p-feature"><h3>Тест на час</h3><p>Пробний тест, офіційний демоваріант або контрольний зріз.</p><div class="p-actions"><a href="#mocks">Пробні НМТ</a><a href="#official">Офіційні тести</a><a href="#coach">Контрольний зріз</a><a href="#hub">Спринт на головній</a></div></article></li></ul></section>`
++`<section class="p-section"><h2>Власний тест</h2><form class="tests-builder" onsubmit="event.preventDefault();testsBuild()" oninput="testsInfo()"><div class="p-form-grid"><label>Предмет<select id="tb-subject" onchange="testsTopics()">${SUBJECTS.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join('')}</select></label><label>Кількість завдань<select id="tb-count">${[10,20,30,50].map(n=>`<option value="${n}" ${n===20?'selected':''}>${n}</option>`).join('')}</select></label><label>Які завдання<select id="tb-pool"><option value="all">Усі</option><option value="new">Нові</option><option value="wrong">З помилками</option><option value="due">Час повторити</option></select></label></div><fieldset class="p-fieldset"><legend>Теми</legend><div id="tb-topics" class="tests-topics"></div></fieldset><p class="p-status" id="tb-info" role="status"></p><div class="p-actions"><button class="primary" type="submit">Почати тест</button></div></form></section>`
++(recent.length?`<section class="p-section"><h2>Останні результати</h2><ul class="p-topic-list sem-list">${recent.map(r=>row(r.href,'',r.title,new Date(r.at).toLocaleString('uk-UA'),`<strong>${r.score}</strong>`)).join('')}</ul></section>`:'')
++pFoot();testsTopics()}
+// The strip above the page: running timed tests and a way back, on every page except the test itself.
+const testsBanner=document.createElement('div');testsBanner.id='test-banner';testsBanner.className='test-banner';testsBanner.setAttribute('role','status');testsBanner.hidden=true;document.querySelector('.gnav').after(testsBanner);
+function testsPaint(){const runs=testsRuns(),base=location.hash.slice(1).split('/')[0],here={simulate:'exam','official-run':'official',checkpoint:'control'}[base],shown=base==='tests'?[]:runs.filter(r=>r.kind!==here),badge=$('#testcount');
+if(badge){badge.textContent=String(runs.length);badge.toggleAttribute('data-zero',!runs.length)}
+testsBanner.hidden=!shown.length;testsBanner.innerHTML=shown.length?`<div class="test-banner-in"><span>Іде тест: ${esc(shown[0].title)}. Залишилось ${testsLeft(shown[0].left)}.${shown.length>1?' Ще з таймером: '+(shown.length-1)+'.':''}</span><a class="p-btn" href="#${TESTS_RUN_ROUTE[shown[0].kind]}">Продовжити</a><a href="#tests">Усі тести</a></div>`:''}
+setInterval(testsPaint,15000);
+const testsCrumbsBase=siteCrumbs;siteCrumbs=function(){return location.hash.slice(1).split('/')[0]==='tests'?[{label:'Головна',to:'hub'},{label:'Тести',to:'tests'}]:testsCrumbsBase()};
+const testsRenderBase=render;render=function(){if(location.hash.slice(1).split('/')[0]==='tests'){route='tests';testsPage();syncSiteNavigation();document.title='Тести · Складено';testsPaint();return}testsRenderBase();testsPaint()};
+// In a practice session: jump to another recent test without going through the menus.
+const testsPracticeBase=pPractice;pPractice=function(){testsPracticeBase();const cx=pContext(),aside=$('.p-exam-nav');if(!cx||cx.exam||cx.record||!aside)return;const list=testsSessions().filter(s=>s.done<s.total||s.current).slice(0,8);
+aside.insertAdjacentHTML('beforeend',`<label class="tests-switch">Перейти до іншого тесту<select onchange="if(this.value==='#tests')go('tests');else testsSwitch(this.value)">${list.map(s=>`<option value="${esc(s.key)}" ${s.current?'selected':''}>${esc(s.title)} (${s.done}/${s.total})</option>`).join('')}<option value="#tests">Усі тести…</option></select></label>`)};
