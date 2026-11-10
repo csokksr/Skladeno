@@ -125,6 +125,17 @@ if '<style>' in t and '<script>' in t:
     _css_bytes, _js_bytes = len(re.search(r'<style>(.*?)</style>', t, re.S).group(1).encode()), len(t[t.rindex('<script>'):].encode())
     if _css_bytes > 110_000: problems['css over budget (110000 bytes)'].append(_css_bytes)
     if _js_bytes > 650_000: problems['js over budget (650000 bytes)'].append(_js_bytes)
+# Media inside the page: only JPEG, PNG, GIF, WebP images and PDF, and every data URI declares what its bytes really are.
+# A viewer that checks media types (the artifact host does before public sharing) refuses SVG data URIs and mislabelled files.
+import base64
+_magic = [(bytes([255, 216, 255]), 'image/jpeg'), (bytes([137, 80, 78, 71]), 'image/png'), (b'GIF8', 'image/gif'), (b'%PDF', 'application/pdf')]
+def _sniff(b):
+    if b[:4] == b'RIFF' and b[8:12] == b'WEBP': return 'image/webp'
+    return next((m for s, m in _magic if b.startswith(s)), None)
+for _m in re.finditer(r'data:([a-zA-Z0-9.+/-]+)(?:;base64)?,([A-Za-z0-9+/]{0,16})', t):
+    _decl = _m.group(1).lower()
+    if _decl not in ('image/jpeg', 'image/png', 'image/gif', 'image/webp', 'application/pdf'): problems['data URI of a type the artifact host refuses'].append(_decl)
+    elif _sniff(base64.b64decode(_m.group(2))) != _decl: problems['data URI declares a type the bytes do not have'].append(_decl)
 # Secrets and risky sinks in the code we write (the data blobs are base64 and would give false hits).
 import glob, os
 _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

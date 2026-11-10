@@ -334,6 +334,19 @@ def refresh_quality(data):
 EXT = {'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'application/pdf': 'pdf'}
 
 
+def sniff(head):
+    """Media type of a file from its first bytes, or None."""
+    if head[:3] == bytes([255, 216, 255]):
+        return 'image/jpeg'
+    if head[:4] == bytes([137, 80, 78, 71]):
+        return 'image/png'
+    if head[:4] == b'RIFF' and head[8:12] == b'WEBP':
+        return 'image/webp'
+    if head[:4] == b'%PDF':
+        return 'application/pdf'
+    return None
+
+
 def fill(x, files_dir=None):
     """Inline every blob, or (web) write it next to the page and point to it."""
     if isinstance(x, dict):
@@ -342,9 +355,13 @@ def fill(x, files_dir=None):
         return [fill(v, files_dir) for v in x]
     if isinstance(x, str) and x.startswith('@@blob:'):
         uri = open(f'{S}/blobs/{x[7:]}.txt', encoding='ascii').read()
+        mime, payload = uri[5:uri.index(';')], uri[uri.index(',') + 1:]
+        # The type is read from the bytes: some sources declare JPEG for a PNG file, and a viewer that checks types rejects that.
+        real = sniff(base64.b64decode(payload[:16]))
+        if real and real != mime:
+            mime, uri = real, 'data:%s;base64,%s' % (real, payload)
         if files_dir is None:
             return uri
-        mime = uri[5:uri.index(';')]
         name = f'{x[7:]}.{EXT[mime]}'
         open(os.path.join(files_dir, name), 'wb').write(base64.b64decode(uri[uri.index(',') + 1:]))
         return 'files/' + name
