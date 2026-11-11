@@ -10,7 +10,9 @@ function guardRun(e){
  if(!subject)return null;
  e.id=/^exam-\d{1,16}$/.test(e.id)?e.id:'exam-'+started;e.subject=subject;if('full' in e)e.full=subject==='all';if('flags' in e){const g=guardFlags(e.flags,e.ids);if(g.flags)e.flags=g.flags;else delete e.flags}
  for(const k of ['started','finished','deadline'])if(k in e&&e[k]!==null)e[k]=Number.isFinite(e[k])?e[k]:k==='started'?started:null;
- e.variant=Math.max(1,Math.min(99,Math.trunc(Number(e.variant)||1)));e.title=(subject==='all'?'Повна симуляція':SUB[subject].name)+' · варіант '+e.variant;
+ e.variant=Math.max(1,Math.min(99,Math.trunc(Number(e.variant)||1)));if('short' in e){if(e.short===true&&subject!=='all')e.short=true;else delete e.short}
+ e.title=(subject==='all'?'Повна симуляція':SUB[subject].name)+(e.short===true?' · швидка перевірка':' · варіант '+e.variant);
+ if('times' in e){const t={};if(e.times&&typeof e.times==='object'&&Array.isArray(e.ids))for(const id of e.ids){const v=e.times[id];if(Number.isFinite(v)&&v>0)t[id]=Math.min(v,3600000)}if(Object.keys(t).length)e.times=t;else delete e.times}
  return e;
 }
 function guardPlatform(n){
@@ -20,5 +22,7 @@ function guardPlatform(n){
  n.records=n.records.map(guardRun).filter(Boolean);
  return n;
 }
-const guardNormalBase=pNormal;pNormal=function(raw){return guardPlatform(guardNormalBase(raw))};
+// Journal of attempts at one task: at most 10 entries {at, s}, score within the task's maximum.
+function guardHist(h,max){return Array.isArray(h)?h.filter(x=>x&&Number.isFinite(x.at)&&Number.isFinite(x.s)&&x.s>=0&&x.s<=max).slice(-10).map(x=>({at:x.at,s:x.s})):[]}
+const guardNormalBase=pNormal;pNormal=function(raw){const n=guardPlatform(guardNormalBase(raw));for(const [id,a] of Object.entries(n.answers)){const h=guardHist(raw.answers?.[id]?.hist,a.max);if(h.length)a.hist=h}return n};
 try{P=guardPlatform(P)}catch{}

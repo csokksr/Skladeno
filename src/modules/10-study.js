@@ -62,7 +62,7 @@ function stTopicRoute(t){return t.subject==='hist'?'topic/'+t.id.slice(5):'lesso
 function stLastStudy(sid){let aa=pAnswers(),last=0;for(let q of PQ)if(q.subject===sid&&aa[q.id]?.at>last)last=aa[q.id].at;return last}
 function stVariants(sid){let n={ukr:DB.ukrainianFiveOptionSets.length,eng:PSUB.eng.mockSets?.length||3,math:8,hist:stHistTests.length||8};return sid==='all'?Math.min(...Object.values(n)):n[sid]||3}
 function stVariantList(sid){return Array.from({length:stVariants(sid)},(_,i)=>i+1)}
-function stNextVariant(sid){let used=v=>(P.records||[]).filter(r=>r.subject===sid&&r.variant===v).length;return stVariantList(sid).sort((a,b)=>used(a)-used(b)||a-b)[0]}
+function stNextVariant(sid){let used=v=>(P.records||[]).filter(r=>r.subject===sid&&!r.short&&r.variant===v).length;return stVariantList(sid).sort((a,b)=>used(a)-used(b)||a-b)[0]}
 function stMockToday(phase){if(!P.coach?.results?.length&&!SUBJECTS.some(s=>stMocks(s.id).length))return {sid:'diagnostic',variant:1};let bySub={},last=0;for(let s of SUBJECTS){bySub[s.id]=stMocks(s.id)[0]?.at||0;last=Math.max(last,bySub[s.id])}if(Date.now()-last<phase.mockEvery*DAY)return null;
  let full=Math.max(0,...(P.records||[]).filter(r=>r.finished&&r.subject==='all').map(r=>r.finished));if(['sprint','final'].includes(phase.id)&&Date.now()-full>=7*DAY)return {sid:'all',variant:stNextVariant('all')};let sid=SUBJECTS.map(s=>s.id).sort((a,b)=>bySub[a]-bySub[b])[0];return {sid,variant:stNextVariant(sid)}}
 function stBuildToday(){let aa=pAnswers(),now=Date.now(),mins=P.plan.minutes,phase=stPhase(),review=[],used=0,end=stDueAt(1);
@@ -77,7 +77,7 @@ function stDayStart(){const n=new Date(),k=new Date(n.toLocaleString('en-US',{ti
 function stDone(ids){let aa=pAnswers(),start=stDayStart();return ids.filter(id=>aa[id]&&aa[id].at>=start).length}
 function stRun(kind,i=0){let t=stToday(),ids=(kind==='review'?t.review:t.learn[i]?.ids||[]).filter(id=>PM[id]),aa=pAnswers(),start=stDayStart();if(!ids.length){toast('Тут усе виконано.');return}for(let id of ids)if(aa[id]&&aa[id].at<start)coachPrepareRecall(id);save();pSave();pStart(ids,kind==='review'?'Повторення на сьогодні':'Нова тема: '+t.learn[i].title,'today-'+kind+'-'+i)}
 function stMockRun(){let m=stToday().mock;if(!m)return;if(m.sid==='diagnostic')coachStart('');else pLaunchMock(m.sid,m.variant)}
-function stMockDone(m){if(!m)return false;let start=stDayStart();if(m.sid==='diagnostic')return (P.coach?.results||[]).some(r=>r.finished>=start);return (P.records||[]).some(r=>r.finished>=start&&r.subject===m.sid)}
+function stMockDone(m){if(!m)return false;let start=stDayStart();if(m.sid==='diagnostic')return (P.coach?.results||[]).some(r=>r.finished>=start);return (P.records||[]).some(r=>r.finished>=start&&!r.short&&r.subject===m.sid)}
 
 /* Сторінки. */
 function stBar(done,total){return `<div class="st-progress" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct(done,total)}%"></i></div>`}

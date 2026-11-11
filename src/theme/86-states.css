@@ -58,3 +58,22 @@ html[data-focus="on"] .gnav,html[data-focus="on"] .workspace>.top,html[data-focu
 @media (max-width:760px){
   .p-question-actions{position:sticky;bottom:0;z-index:5;margin-left:-4px;margin-right:-4px;padding:10px 4px calc(10px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--line)}
 }
+/* Підсумки тестів (83-test-insights.js): графік, бланк, історія спроб, шаблони */
+.ins-trends{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.ins-trend{margin:12px 0}
+.ins-trend figcaption{font-size:.875rem;color:var(--muted);margin-bottom:4px}
+.ins-trend svg{width:100%;max-width:360px;height:auto;overflow:visible}
+.ins-trend polyline{stroke:var(--link);stroke-width:2}
+.ins-trend circle{fill:var(--link)}
+.ins-trend .ins-grid{stroke:var(--line-2);stroke-width:1}
+.ins-trend text{fill:var(--muted);font-size:10px}
+.ins-sheet{display:grid;gap:6px;max-height:60vh;overflow:auto;margin-top:12px}
+.ins-sheet-row{display:grid;grid-template-columns:36px 1fr;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid var(--line)}
+.ins-sheet-row>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.ins-bubble{min-width:44px;min-height:44px;border-radius:50%;padding:0}
+.ins-bubble[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.ins-hist{margin:12px 0;font-size:.9375rem}
+.ins-hist summary{cursor:pointer;min-height:36px}
+.ins-hist ul{margin:6px 0 0;padding-left:20px}
+.ins-behind ul{margin:6px 0;padding-left:20px}
+.tests-tpl{display:grid;gap:12px}

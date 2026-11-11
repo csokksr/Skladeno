@@ -12,7 +12,7 @@ function navFlagToggle(){const c=pContext(),q=pQ();if(!c||!q||c.record)return;co
 let navFilter='all';
 function navFilterSet(v){navFilter=v;const q=$('.qnav');if(q)q.dataset.filter=v;document.querySelectorAll('.nav-filter button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===v)))}
 // Темп в пробнику: скільки завдань блоку мало бути заповнено за часом, що минув, і скільки заповнено.
-function pacePlan(e,ids){const len=(e.full?120:60)*60000,start=e.deadline-len,frac=Math.min(1,Math.max(0,(Date.now()-start)/len)),expected=Math.floor(ids.length*frac),done=ids.filter(id=>pValid(PM[id],e.answers[id])).length;return {expected,done,diff:done-expected}}
+function pacePlan(e,ids){const len=(e.short?15:e.full?120:60)*60000,start=e.deadline-len,frac=Math.min(1,Math.max(0,(Date.now()-start)/len)),expected=Math.floor(ids.length*frac),done=ids.filter(id=>pValid(PM[id],e.answers[id])).length;return {expected,done,diff:done-expected}}
 function paceText(p){return p.diff>=0?`Темп у нормі: за часом мало бути ${p.expected}, заповнено ${p.done}.`:`Відстаєш на ${stPlural(-p.diff,'завдання','завдання','завдань')}: за часом мало бути ${p.expected}, заповнено ${p.done}.`}
 setInterval(()=>{const el=$('#nav-pace'),e=P.exam;if(!el||!e||e.finished||e.stage==='break')return;const c=pContext();if(c?.exam)el.textContent=paceText(pacePlan(e,c.ids))},20000);
 // Пряме посилання: #practice/<id> відкриває завдання в найновішому тренуванні, де воно є, або в новому.
