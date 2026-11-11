@@ -9,10 +9,11 @@ const {animate,stagger,spring,utils}=A,main=document.querySelector('#main');if(!
 const RM=matchMedia('(prefers-reduced-motion: reduce)'),calm=()=>{const p=document.documentElement.dataset.motion;return p==='off'||(p!=='on'&&RM.matches)};
 const clear=els=>els.forEach(e=>{e.style.opacity='';e.style.transform='';e.style.willChange=''});
 const hide=els=>els.forEach(e=>{e.style.opacity='0';e.style.willChange='opacity,transform'});
-/* Лічильники й смуги: числа «наростають», смуги виїжджають зліва. Лише при вході на сторінку. */
-const counters=()=>{main.querySelectorAll('.p-status-strip strong,.p-stat-grid strong,.st-fc-grid strong,.p-result-score strong,.stat .value').forEach(el=>{
+/* Лічильники й смуги: числа «наростають» лише один раз за завантаження сайту (коли вперше з'являються на екрані), смуги виїжджають зліва при вході на сторінку. */
+let counted=false;
+const counters=()=>{if(counted)return;main.querySelectorAll('.p-status-strip strong,.p-stat-grid strong,.st-fc-grid strong,.p-result-score strong,.stat .value').forEach(el=>{
 const m=/^(\D*)(\d+)(.*)$/.exec(el.textContent.trim());if(!m||el.children.length)return;const to=+m[2];if(to<2)return;
-const o={v:0},fmt=v=>m[1]+Math.round(v)+m[3];el.textContent=fmt(0);
+counted=true;const o={v:0},fmt=v=>m[1]+Math.round(v)+m[3];el.textContent=fmt(0);
 animate(o,{v:to,duration:Math.min(1100,500+to*3),ease:'outExpo',onUpdate:()=>{el.textContent=fmt(o.v)},onComplete:()=>{el.textContent=fmt(to)}})})};
 const bars=()=>{main.querySelectorAll('.bar i,.st-scale i').forEach(i=>{if(!parseFloat(i.style.width))return;i.style.transformOrigin='0 50%';i.style.transform='scaleX(0)';
 animate(i,{scaleX:[0,1],duration:900,delay:200,ease:'outQuart',onComplete:()=>{i.style.transform='';i.style.transformOrigin=''}})})};
