@@ -7,7 +7,7 @@ webCap('downloads').then(d=>{webDownloads=d});
 
 /* Файли: лише через підтвердження переглядача. */
 async function webSave(filename,data){if(!webDownloads){toast('Збереження файлів тут недоступне. Скористайся текстовим кодом копії.');return false}try{await webDownloads.save({filename,data});return true}catch(e){if(e?.code!=='declined')toast(e?.code==='rate_limited'?'Зачекай кілька секунд і спробуй ще раз.':'Файл не збережено.');return false}}
-download=function(name,text){webSave(name,text)};
+download=function(name,text){return webSave(name,text)};
 pBackup=function(){webSave('skladeno-progress-'+pDay()+'.json',JSON.stringify(pBackupData())).then(ok=>{if(ok)toast('Резервну копію збережено.')})};
 offlineSave=function(){if(!offlineURL)return;fetch(offlineURL).then(r=>r.blob()).then(b=>webSave('skladeno-nmt.html',b)).then(ok=>{if(ok)offlineStatus('Файл збережено. Відкривай його в браузері; прогрес перенеси окремою копією JSON.')})};
 
