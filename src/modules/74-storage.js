@@ -1,6 +1,9 @@
 // Progress lives only in this browser: remind about a backup, say whether the browser may evict the storage, show the build.
 const STORE_BACKUP_KEY='skladeno-backup-at',STORE_NUDGE_DAYS=14,STORE_NUDGE_MIN=30;
-const storeBackupDataBase=pBackupData;pBackupData=function(){try{localStorage.setItem(STORE_BACKUP_KEY,String(Date.now()))}catch{}return storeBackupDataBase()};
+// Checksum of the data in a backup file (CRC-32 of the JSON): a damaged or cut file is refused before it replaces progress.
+function backupSum(o){let c,crc=-1;const s=JSON.stringify({platform:o.platform,history:o.history});for(let i=0;i<s.length;i++){c=(crc^s.charCodeAt(i))&255;for(let k=0;k<8;k++)c=c&1?(c>>>1)^0xEDB88320:c>>>1;crc=(crc>>>8)^c}return ((crc^-1)>>>0).toString(16).padStart(8,'0')}
+const storeBackupDataBase=pBackupData;pBackupData=function(){try{localStorage.setItem(STORE_BACKUP_KEY,String(Date.now()))}catch{}const o=storeBackupDataBase();o.check=backupSum(o);return o};
+const storeRestoreBase=pRestore;pRestore=function(raw){if(raw&&raw.check!==undefined&&raw.check!==backupSum(raw))throw Error('Файл копії пошкоджено: контрольна сума не збігається. Відновлення скасовано, поточний прогрес не змінено.');return storeRestoreBase(raw)};
 function storeBackupAge(){let at=0;try{at=Number(localStorage.getItem(STORE_BACKUP_KEY))||0}catch{}return at?Math.floor((Date.now()-at)/864e5):null}
 // With account sync (web version) the progress is also stored remotely, so no nudge.
 function storeNeedsBackup(){const age=storeBackupAge(),synced=typeof webUid!=='undefined'&&!!webUid;return !synced&&Object.keys(pAnswers()).length>=STORE_NUDGE_MIN&&(age===null||age>=STORE_NUDGE_DAYS)}

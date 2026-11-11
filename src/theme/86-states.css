@@ -43,3 +43,18 @@
 .tests-topics label{display:flex;align-items:center;gap:8px;min-height:36px}
 .tests-switch{display:grid;gap:6px;margin-top:14px;font-size:.8125rem;color:var(--muted)}
 .p-topic-row .bar{max-width:320px;margin-top:8px}
+/* Інструменти тесту (81-test-tools.js): фільтр навігатора, позначки, фокус-режим, статуси */
+.nav-filter{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.nav-filter button{min-height:36px;padding:4px 12px;font-size:.8125rem}
+.qnav button[data-flag="1"]{box-shadow:inset 0 0 0 2px var(--warn);position:relative}
+.qnav button[data-flag="1"]::after{content:"⚑";position:absolute;top:1px;right:3px;font-size:.625rem;line-height:1;color:var(--warn)}
+.qnav[data-filter="open"] button[data-answered="1"]:not(.current),.qnav[data-filter="open"] li:has(>button[data-answered="1"]:not(.current)){display:none}
+.qnav[data-filter="flag"] button:not([data-flag="1"]):not(.current),.qnav[data-filter="flag"] li:has(>button:not([data-flag="1"]):not(.current)){display:none}
+.focus-exit{display:none;position:fixed;top:10px;right:10px;z-index:60}
+html[data-focus="on"] .focus-exit{display:inline-flex}
+html[data-focus="on"] .gnav,html[data-focus="on"] .workspace>.top,html[data-focus="on"] .sitefoot,html[data-focus="on"] #test-banner{display:none}
+.qimg[data-zno]:not([src]){display:block;min-height:140px;background:var(--sheet);border-radius:var(--r-lg)}
+/* Телефон: «Назад», «Перевірити» і «Далі» лишаються біля нижнього краю екрана */
+@media (max-width:760px){
+  .p-question-actions{position:sticky;bottom:0;z-index:5;margin-left:-4px;margin-right:-4px;padding:10px 4px calc(10px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--line)}
+}
