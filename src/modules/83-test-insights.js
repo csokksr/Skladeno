@@ -56,13 +56,13 @@ const a=!c.exam&&!c.record&&pAnswers()[q.id],qa=$('.p-question-actions');
 if(a&&qa&&(a.attempts>1||a.hist?.length>1)){const h=a.hist||[];qa.insertAdjacentHTML('beforebegin',`<details class="ins-hist"><summary>Історія спроб (${a.attempts})</summary><ul>${h.map(x=>`<li>${new Date(x.at).toLocaleString('uk-UA')} — ${x.s} із ${a.max}</li>`).join('')}</ul>${a.attempts>h.length?`<p class="p-caption">У журналі останні ${h.length} із ${a.attempts} спроб.</p>`:''}</details>`)}};
 // Відставання від графіка: за етапом підготовки (STUDY_PHASES) і за днями без занять.
 function insActivity(n){let k=0;for(let i=0;i<n;i++){const d=new Date(Date.parse(pDay()+'T12:00:00Z')-i*INS_DAY).toISOString().slice(0,10);if((P.logs[d]||0)+(S.days?.[d]||0))k++}return k}
-function insBehind(){const days=stDaysLeft();if(!days||(!Object.keys(pAnswers()).length&&!P.records.length))return '';const ph=stPhase(days),notes=[],
-last=Math.max(0,...P.records.filter(r=>r.finished&&!r.short).map(r=>r.finished),...(P.official?.records||[]).filter(r=>r.finished).map(r=>r.finished)),since=last?Math.floor((Date.now()-last)/INS_DAY):null;
+function insBehind(){const days=stDaysLeft();if(!days||(typeof extVacOn==='function'&&extVacOn())||(!Object.keys(pAnswers()).length&&!P.records.length))return '';const ph=stPhase(days),notes=[],
+last=Math.max(0,...P.records.filter(r=>r.finished&&!r.short).map(r=>r.finished),...(P.official?.records||[]).filter(r=>r.finished).map(r=>r.finished)),since=last?Math.max(0,Math.floor((Date.now()-last)/INS_DAY)-(typeof extVacDaysSince==='function'?extVacDaysSince(last):0)):null;
 if(since===null)notes.push(`Пробників ще не було, а на етапі «${ph.name}» їх рекомендовано кожні ${ph.mockEvery} днів.`);else if(since>ph.mockEvery)notes.push(`Останній пробник був ${stPlural(since,'день','дні','днів')} тому, а на етапі «${ph.name}» їх рекомендовано кожні ${ph.mockEvery} днів.`);
-const act=insActivity(7);if(act<=3)notes.push(`Заняття були лише в ${act} із останніх 7 днів.`);
+const act=insActivity(7)+(typeof extVacDaysSince==='function'?Math.min(7,extVacDaysSince(Date.now()-6*INS_DAY)):0);if(act<=3)notes.push(`Заняття були лише в ${act} із останніх 7 днів.`);
 if(!notes.length)return '';
 return `<section class="p-alert ins-behind"><div><h2>Ти відстаєш від графіка</h2><ul>${notes.map(n=>`<li>${n}</li>`).join('')}</ul><p>Як наздогнати: пройди швидку перевірку на ${INS_SHORT_MIN} хвилин і повертайся до занять щодня хоча б на ${P.plan.minutes} хвилин, як у плані.</p></div><a class="p-btn primary" href="#mocks">До швидкої перевірки</a></section>`}
-const insTestsBase=testsPage;testsPage=function(){insTestsBase();$('#main .p-page-head')?.insertAdjacentHTML('afterend',insBehind())};
+const insTestsBase=testsPage;testsPage=function(){insTestsBase();$('#main .p-page-head')?.insertAdjacentHTML('afterend',(typeof extVacNotice==='function'?extVacNotice():'')+insBehind())};
 const insPlanBase=pPlan;pPlan=function(){insPlanBase();$('#main .p-page-head')?.insertAdjacentHTML('afterend',insBehind())};
 // Базові pNormal і normaliseImport працювали вже під час завантаження, тож журнал спроб, збережений раніше, читаємо ще раз.
 function insReloadHist(){for(const [key,store] of [[PKEY,P],[KEY,S]])try{const raw=JSON.parse(restoreRead(key)||'null');for(const [id,a] of Object.entries(store.answers)){const h=guardHist(raw?.answers?.[id]?.hist,a.max);if(h.length)a.hist=h}}catch{}}
