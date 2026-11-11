@@ -81,3 +81,9 @@ html[data-focus="on"] .gnav,html[data-focus="on"] .workspace>.top,html[data-focu
 .ext-check{list-style:none;margin:8px 0;padding:0;display:grid;gap:4px}
 .ext-check label{display:flex;align-items:flex-start;gap:10px;min-height:36px;padding:4px 0}
 .ext-check input{margin-top:4px}
+/* Дані й зручність (85-data-tools.js): секундомір, збільшення зображень */
+.dt-sw{align-self:center;min-width:3.5em;font-variant-numeric:tabular-nums;font-size:.9375rem;color:var(--muted)}
+#main img.qimg[role=button]{cursor:zoom-in}
+.dt-zoom{max-height:70vh;overflow:auto;margin:12px 0}
+.dt-zoom img{display:block;width:100%;height:auto}
+.dt-zoom.real img{width:auto;max-width:none}
