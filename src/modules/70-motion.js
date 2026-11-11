@@ -1,4 +1,4 @@
-/* Рух (Anime.js, src/vendor): лічильники, смуги прогресу, відповіді на тестах, натискання, меню.
+/* Рух (Anime.js, src/vendor): лічильники, смуги прогресу, відповіді на тестах, перехід між завданнями, вікна, натискання, меню.
    Чому так: рух має пояснювати, що змінилося (нова сторінка, правильно чи ні, скільки накопичено), а не прикрашати.
    Тому: лише opacity/transform; блоки сторінок не з'являються каскадом (це шаблонний ефект): рух лише відповідає на дію
    або показує накопичене; за `prefers-reduced-motion` нічого не рухається.
@@ -25,11 +25,22 @@ if(!prev.some(s=>s==='c'||s==='w')&&cur.some(s=>s==='c'||s==='w')){const fb=main
 if(fb.length){hide([...fb]);animate([...fb],{opacity:[0,1],translateY:[10,0],duration:320,delay:stagger(60,{start:120}),ease:'outQuart',onComplete:()=>clear([...fb])});setTimeout(()=>clear([...fb]),2500)}}};
 /* Спостерігач за #main: сторінки перемальовуються і через render(), і напряму (pPractice тощо), тому дивимось на сам DOM.
    Колбек виконується до першого кадру, тож «прихований» стан не мигає. */
-const sig=()=>(main.textContent||'').slice(0,90);let lastHash=null,lastSig='',lastOpts=[];
-const onChange=()=>{const prevOpts=lastOpts,hashBefore=lastHash,sigBefore=lastSig,h=location.hash,s=sig();lastHash=h;lastSig=s;lastOpts=optStates();
+/* Перехід між завданнями: нове виїжджає з боку, куди ти йдеш (вперед справа, назад зліва). Номер береться з підпису «N із M». */
+const qNum=()=>{const m=/(\d+) із (\d+)/.exec(main.querySelector('.p-question .p-kicker')?.textContent||'');return m?+m[1]:0};
+const dir=(prev,next)=>!prev||!next||prev===next?0:next>prev?1:-1;
+const slide=d=>{const el=main.querySelector('.p-question');if(!el||!d)return;animate(el,{opacity:[.35,1],translateX:[d*28,0],duration:260,ease:'outQuart',onComplete:()=>clear([el])})};
+const sig=()=>(main.textContent||'').slice(0,90);let lastHash=null,lastSig='',lastOpts=[],lastQ=0;
+const onChange=()=>{const prevOpts=lastOpts,prevQ=lastQ,hashBefore=lastHash,sigBefore=lastSig,h=location.hash,s=sig();lastHash=h;lastSig=s;lastOpts=optStates();lastQ=qNum();
 if(calm()||!main.children.length)return;
-try{if(h!==hashBefore){counters();bars()}else if(s===sigBefore)answers(prevOpts)}catch(e){clear([...main.querySelectorAll('*')])}};
+try{if(h!==hashBefore){counters();bars()}else if(dir(prevQ,lastQ))slide(dir(prevQ,lastQ));else if(s===sigBefore)answers(prevOpts)}catch(e){clear([...main.querySelectorAll('*')])}};
 new MutationObserver(onChange).observe(main,{childList:true});
+/* Діалоги (#modal): відкриваються з легким наближенням. */
+const modal=document.querySelector('#modal');
+if(modal)new MutationObserver(()=>{if(calm()||!modal.open)return;animate(modal,{opacity:[0,1],scale:[.97,1],duration:220,ease:'outQuart',onComplete:()=>{modal.style.transform='';modal.style.opacity=''}})}).observe(modal,{attributes:true,attributeFilter:['open']});
+/* Для інших модулів: з'явитися зверху й зникнути вбік (опісля викликається done). Без Anime.js чи за prefers-reduced-motion done викликається одразу. */
+window.skMotion={dir,
+reveal:el=>{if(calm()||!el)return;animate(el,{opacity:[0,1],translateY:[-10,0],duration:260,ease:'outQuart',onComplete:()=>clear([el])})},
+leave:(el,done)=>{if(calm()||!el){done();return}animate(el,{opacity:0,translateX:24,duration:180,ease:'inQuad',onComplete:done})}};
 /* Натискання: короткий «відгук», що повертається пружиною. */
 const PRESS='button:not(:disabled),.primary,.p-option:not(:disabled),a.p-subject-row,.p-topic-row,.p-resource-grid a,.st-today-card a';
 let pressed=null;
