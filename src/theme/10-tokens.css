@@ -84,4 +84,5 @@ th{font:600 .8125rem/1.4 var(--f-body);color:var(--muted)}
 .is-urgent{color:var(--mark)!important}
 .desktop{display:initial}
 .syllabus{white-space:pre-wrap;font-size:.875rem;line-height:1.7;max-height:500px;overflow:auto}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){:root:not([data-motion="on"]) *,:root:not([data-motion="on"]) *::before,:root:not([data-motion="on"]) *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+:root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}

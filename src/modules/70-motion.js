@@ -1,11 +1,12 @@
 /* Рух (Anime.js, src/vendor): лічильники, смуги прогресу, відповіді на тестах, перехід між завданнями, вікна, натискання, меню.
    Чому так: рух має пояснювати, що змінилося (нова сторінка, правильно чи ні, скільки накопичено), а не прикрашати.
    Тому: лише opacity/transform; блоки сторінок не з'являються каскадом (це шаблонний ефект): рух лише відповідає на дію
-   або показує накопичене; за `prefers-reduced-motion` нічого не рухається.
+   або показує накопичене; за `prefers-reduced-motion` у режимі «Авто» нічого не рухається (див. налаштування «Анімації»).
    Якщо Anime.js не завантажився або щось пішло не так, сторінка лишається повністю видимою. */
 (()=>{const A=window.anime;if(!A||!A.animate)return;
 const {animate,stagger,spring,utils}=A,main=document.querySelector('#main');if(!main)return;
-const RM=matchMedia('(prefers-reduced-motion: reduce)'),calm=()=>RM.matches;
+// Налаштування «Анімації» (71-motion-setting.js): data-motion=on рухає попри систему, off вимикає, auto слухає систему.
+const RM=matchMedia('(prefers-reduced-motion: reduce)'),calm=()=>{const p=document.documentElement.dataset.motion;return p==='off'||(p!=='on'&&RM.matches)};
 const clear=els=>els.forEach(e=>{e.style.opacity='';e.style.transform='';e.style.willChange=''});
 const hide=els=>els.forEach(e=>{e.style.opacity='0';e.style.willChange='opacity,transform'});
 /* Лічильники й смуги: числа «наростають», смуги виїжджають зліва. Лише при вході на сторінку. */
