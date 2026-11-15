@@ -87,3 +87,19 @@ html[data-focus="on"] .gnav,html[data-focus="on"] .workspace>.top,html[data-focu
 .dt-zoom{max-height:70vh;overflow:auto;margin:12px 0}
 .dt-zoom img{display:block;width:100%;height:auto}
 .dt-zoom.real img{width:auto;max-width:none}
+/* Зручність (87-comfort.js): помилки в полях, міжряддя, «Нагору», підказка клавіш, висока контрастність */
+html[data-lh="2"]{--user-lh:2}html[data-lh="2.3"]{--user-lh:2.3}
+html[data-lh] :where(p,li,dd,dt,label,td,th,summary,textarea,.p-option){line-height:var(--user-lh)}
+.p-error{margin:6px 0 0;color:var(--mark,#b3261e);font-size:.875rem}
+[aria-invalid="true"]{outline:2px solid var(--mark,#b3261e);outline-offset:1px}
+.to-top{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;width:48px;height:48px;border-radius:50%;padding:0}
+@media (max-width:760px){.to-top{bottom:calc(74px + env(safe-area-inset-bottom,0px))}}
+.kbd-hint{margin:8px 0}
+@media (hover:none){.kbd-hint{display:none}}
+.p-footer{display:flex;flex-wrap:wrap;gap:8px 20px}
+.p-next-topic{margin:20px 0}
+@media (prefers-contrast:more){
+  :root:root:root{--muted:var(--ink-2);--line:var(--ink-2);--line-2:var(--ink)}
+  button,select,input,textarea{border-width:2px}
+  a{text-decoration:underline}
+}
