@@ -103,3 +103,18 @@ html[data-lh] :where(p,li,dd,dt,label,td,th,summary,textarea,.p-option){line-hei
   button,select,input,textarea{border-width:2px}
   a{text-decoration:underline}
 }
+/* Клавіші, експорт, помодоро (89-shortcuts.js, 91-export.js, 92-session-tools.js) */
+.pal-list{list-style:none;margin:10px 0;padding:0;max-height:50vh;overflow:auto}
+.pal-list li[role=option]{padding:10px 12px;border-radius:var(--r);cursor:pointer;min-height:48px;display:flex;align-items:center}
+.pal-list li.is-active{background:var(--sheet);outline:2px solid var(--ink);outline-offset:-2px}
+#pal-q{width:100%;box-sizing:border-box}
+#progress-report{width:100%;box-sizing:border-box;font:inherit;font-size:.9375rem}
+@media print{
+  .gnav,.sitefoot,.to-top,#test-banner,#net-banner,#pomo-banner,#focus-exit,.no-print,.p-footer,dialog,.skip-link,.p-skip{display:none!important}
+  body,html{background:#fff!important;color:#000!important}
+  /* Друк завжди зі світлою палітрою, навіть коли сайт у темній темі. */
+  :root:root:root{--paper:#fff;--sheet:#fff;--sheet-2:#eee;--sheet-3:#ddd;--field:#fff;--ink:#000;--ink-2:#222;--muted:#444;--line:#999;--line-2:#666;--pen:#0071e3;--pen-soft:#e8f2fd;--link:#0066cc;--mark:#d70015;--mark-soft:#fdecee;--ok:#1d7d37;--ok-soft:#e8f5eb;--warn:#a85200;--warn-soft:#fff3e2;--glass:#fff;--shadow:none;--shadow-lift:none;color-scheme:light}
+  a{text-decoration:none;color:inherit}
+  .workspace>.top{display:none!important}
+  .p-section,.panel,.p-rule-block{break-inside:avoid}
+}
