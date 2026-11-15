@@ -7,13 +7,18 @@ const EXT_CHECK=[['c1','Вимоги на сайті УЦОЯО перевіре
 // Дата справжня, а не лише схожа на дату.
 const extDateOk=s=>typeof s==='string'&&EXT_DAYRE.test(s)&&Number.isFinite(Date.parse(s+'T12:00:00Z'))&&new Date(s+'T12:00:00Z').toISOString().slice(0,10)===s;
 const extSpanOk=v=>!!v&&extDateOk(v.from)&&extDateOk(v.until)&&v.until>=v.from&&Date.parse(v.until+'T12:00:00Z')-Date.parse(v.from+'T12:00:00Z')<=60*EXT_DAY;
-function extFresh(){return {check:{},goal:{daily:10,weekly:2},vac:null,vacs:[],hours:{}}}
+const EXT_CARDS_MAX=300;
+function extFresh(){return {check:{},goal:{daily:10,weekly:2},vac:null,vacs:[],hours:{},cards:[]}}
 function extNormal(r){const n=extFresh();if(!r||typeof r!=='object')return n;
  for(const [id] of EXT_CHECK)if(r.check?.[id]===true)n.check[id]=true;
  if([0,5,10,20,30].includes(r.goal?.daily))n.goal.daily=r.goal.daily;if([0,1,2,3,5].includes(r.goal?.weekly))n.goal.weekly=r.goal.weekly;
  if(extSpanOk(r.vac))n.vac={from:r.vac.from,until:r.vac.until,t:Number.isFinite(r.vac.t)&&r.vac.t>0?r.vac.t:Date.parse(r.vac.from+'T00:00:00Z')};
  if(Array.isArray(r.vacs))n.vacs=r.vacs.filter(extSpanOk).slice(-24).map(v=>({from:v.from,until:v.until}));
  if(r.hours&&typeof r.hours==='object')for(let h=0;h<24;h++){const x=r.hours[h];if(Array.isArray(x)&&Number.isSafeInteger(x[0])&&Number.isSafeInteger(x[1])&&x[0]>0&&x[0]<=1e6&&x[1]>=0&&x[1]<=x[0])n.hours[h]=[x[0],x[1]]}
+ // Власні картки (94-own-cards.js): до 300, id c+латиниця/цифри, текст без керівних символів, коробка 0–4, дата наступного повторення.
+ if(Array.isArray(r.cards)){const seen=new Set(),txt=(s,n)=>s.replace(/[\u0000-\u0008\u000b-\u001f]/g,'').trim().slice(0,n);
+  for(const c of r.cards){if(n.cards.length>=EXT_CARDS_MAX)break;if(!c||typeof c.f!=='string'||typeof c.b!=='string'||typeof c.id!=='string'||!/^c[0-9a-z]{3,12}$/.test(c.id)||seen.has(c.id))continue;
+   const f=txt(c.f,300),b=txt(c.b,600);if(!f||!b)continue;seen.add(c.id);n.cards.push({id:c.id,f,b,l:c.l==='en'?'en':'uk',x:Number.isInteger(c.x)&&c.x>=0&&c.x<=4?c.x:0,d:extDateOk(c.d)?c.d:pDay()})}}
  return n}
 const extFreshBase=pFresh;pFresh=function(){return {...extFreshBase(),ext:extFresh()}};
 const extNormBase=pNormal;pNormal=function(raw){const n=extNormBase(raw);n.ext=extNormal(raw.ext);return n};
