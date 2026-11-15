@@ -1,0 +1,27 @@
+name: Реліз
+# Запускається, коли в репозиторії з'являється тег виду v1.2.3: збирає сайт, перевіряє його й додає файл збірки та його хеш до релізу.
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: python -I tools/build.py
+      - run: python -I tools/validate.py
+      - run: node tests/run.js
+      - name: Хеш збірки
+        run: cd dist && sha256sum skladeno-nmt.html > skladeno-nmt.html.sha256
+      - name: Реліз
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/skladeno-nmt.html dist/skladeno-nmt.html.sha256 --title "$GITHUB_REF_NAME" --generate-notes

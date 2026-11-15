@@ -1,0 +1,12 @@
+title = "Складено: правила gitleaks"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Вбудовані зображення й завантажені джерела не містять секретів"
+paths = [
+  '''src/blobs/.*''',
+  '''sources/.*''',
+  '''dist/.*''',
+]

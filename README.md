@@ -19,6 +19,10 @@
 | `src/zno2-explanations.json` | розбори офіційних завдань української, математики й англійської `{"zm-<zid>": текст}`, формули в `⟦LaTeX⟧`; `build.py` підставляє їх після `official_subjects`. Покриття: усі 3477 завдань української, математики й англійської (розбори історії — 2925 із 2925 в `history-explanations.json`); `validate.py` друкує лічильники завдань без розбору (зараз 0) |
 | `sources/` | завантажені джерела: `zno/` (сторінки й зображення zno.osvita.ua, `bank.json`), `keys/` (офіційні аркуші відповідей УЦОЯО, `manual.json`, `mismatches.json`), `program/hist.md` (програма історії) |
 | `.claude/` | налаштування Claude Code: хуки, скіли `source-check` і `publish-web`, субагенти `ukr-fact-checker` і `key-auditor`; правила роботи — у `CLAUDE.md` |
+| `tests/cases/*.js`, `tests/harness.js` | регресійні тести сторінки на стенді з підмінним DOM (Node) |
+| `tests/py/test_tools.py` | тести скриптів Python з `tools/` (стандартна бібліотека, `unittest`) |
+| `.github/` | CI й додаткові workflow (`ci.yml`, `codeql.yml`, `gitleaks.yml`, `links.yml`, `release.yml`), Dependabot, шаблони запиту на злиття й issue |
+| `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md` | правила внесення змін, порядок повідомлення про вразливість, журнал змін (генерується) |
 | `dist/skladeno-nmt.html` | готовий сайт |
 
 ## Команди
@@ -27,13 +31,26 @@
 python -I tools/build.py      # зібрати dist/skladeno-nmt.html
 python -I tools/validate.py   # перевірити всі завдання, посилання й тексти (код 0 лише при «OK»)
 node tests/run.js             # регресійні тести сторінки (Node 18+; потрібна свіжа збірка)
+python -I tools/check_schema.py                # формат модулів src/content/*.json (tools/content.schema.json)
+python -I tools/check_text.py                  # механічні помилки в тексті інтерфейсу (гомогліфи, апострофи, пробіли)
+node tools/changelog.js [--check]              # CHANGELOG.md з історії змін на сторінці «Про сайт»
+python -m unittest discover -s tests/py -v     # тести скриптів Python
+node tools/coverage.js [--list] [--min N]      # частка іменованих функцій сторінки, яких торкаються тести
+python -I tools/check_links.py [--strict]      # чи відкриваються зовнішні посилання (потрібна мережа)
 ```
+
+Правила внесення змін: [CONTRIBUTING.md](CONTRIBUTING.md); про вразливості: [SECURITY.md](SECURITY.md); історія змін: [CHANGELOG.md](CHANGELOG.md). CI (`.github/workflows/`) запускає збірку, перевірки й тести на Linux і Windows (порівняння хешу збірки між системами інформаційне), а ще CodeQL, пошук секретів (gitleaks, не блокує), щотижневу перевірку посилань і реліз за тегом `v*`. Назва перевірки в захисті гілки тепер `check (ubuntu-latest)` і `check (windows-latest)`.
 
 ## Інструменти
 
 | Скрипт | Призначення |
 |---|---|
 | `tools/validate.py` | перевіряє всі завдання, посилання на завдання в усіх списках (практика, хронологія, карти програми…), залишки розмітки й змішані літери двох алфавітів; друкує покриття розборів. Завершується `OK` і кодом 0, інакше `PROBLEMS FOUND` і код 1 |
+| `tools/check_schema.py`, `tools/content.schema.json` | перевіряє модулі `src/content/*.json` за схемою (власний валідатор підмножини JSON Schema: типи, обов'язкові поля, переліки, межі); код 1 при помилках |
+| `tools/check_text.py` | механічні помилки в рядках інтерфейсу (`src/app.js`, `src/modules`, `src/web`, `src/shell.html`): змішані літери, ы/э/ъ/ё, ASCII-апостроф у слові, пробіл перед розділовим знаком, подвоєні пробіли й слова. Це не орфографічний словник; виняток для рядка: позначка `check_text:ok` |
+| `tools/check_links.py` | HEAD-запити (за потреби GET одного байта) до зовнішніх https-адрес із `src/`: ok, blocked (401/403/429) і broken (404, 410, 5xx, збій); `--strict` дає код 1 лише за broken; щотижня в `.github/workflows/links.yml` |
+| `tools/coverage.js` | зводить V8-покриття всіх тестів і друкує частку іменованих функцій сторінки, викликаних тестами (`--list` показує не викликані, `--min N` задає поріг; у CI 45, зараз близько 52%). Рахуються лише іменовані функції коду сторінки, код тестів і анонімні стрілки ні |
+| `tools/changelog.js` | генерує `CHANGELOG.md` з `ABOUT_CHANGES`; `--check` перевіряє, що файл актуальний |
 | `tools/zno_keycheck.py` | звіряє ключі історії з офіційними аркушами УЦОЯО (`sources/keys`); потрібен pymupdf, запускати простим `python` |
 | `tools/zno2_keycheck.py` | звіряє ключі української, математики й англійської (`src/zno2-bank.json`) з аркушами УЦОЯО в `sources/keys/zno2` (список — `sources/keys/zno2-list.txt`); скани й аркуші без текстового шару прочитані вручну в `sources/keys/zno2/manual.json`; розбіжності пише в `sources/keys/zno2/mismatches.json`; потрібен pymupdf, запускати простим `python` |
 | `tools/zno2_explain_batch.py`, `zno2_explain_merge.py` | розбори до офіційних завдань: `batch` друкує завдання без розбору (предмет, теми, зсув, кількість), `merge` перевіряє файл `{id: текст}` (ключова буква замикає абзац, у «відповідностях» рядок закінчується «— Х.») і зливає його в `src/zno2-explanations.json`; запускати `python -I` |

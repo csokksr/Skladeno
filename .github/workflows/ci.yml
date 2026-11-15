@@ -5,7 +5,14 @@ on:
   pull_request:
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -18,10 +25,44 @@ jobs:
         run: python -I tools/build.py
       - name: Перевірка завдань і кольорів
         run: python -I tools/validate.py
+      - name: Формат модулів src/content
+        run: python -I tools/check_schema.py
+      - name: Текст інтерфейсу
+        run: python -I tools/check_text.py
+      - name: Журнал змін актуальний
+        run: node tools/changelog.js --check
       - name: Регресійні тести
         run: node tests/run.js
+      - name: Покриття іменованих функцій тестами
+        run: node tools/coverage.js --min 45
+      - name: Тести скриптів Python
+        run: python -m unittest discover -s tests/py -v
       - name: Збірка відтворювана
         run: |
           before=$(sha256sum dist/skladeno-nmt.html)
           python -I tools/build.py
           test "$before" = "$(sha256sum dist/skladeno-nmt.html)"
+      - name: Хеш збірки
+        run: sha256sum dist/skladeno-nmt.html | cut -d' ' -f1 > build-hash.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-hash-${{ matrix.os }}
+          path: build-hash.txt
+          overwrite: true
+  same-hash:
+    name: Збірка однакова на Linux і Windows
+    needs: check
+    runs-on: ubuntu-latest
+    # Інформаційна перевірка: розбіжність показує, що збірка залежить від системи, але не блокує зміни.
+    continue-on-error: true
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: hashes
+      - name: Порівняння
+        run: |
+          a=$(cat hashes/build-hash-ubuntu-latest/build-hash.txt)
+          b=$(cat hashes/build-hash-windows-latest/build-hash.txt)
+          echo "linux:   $a"
+          echo "windows: $b"
+          test "$a" = "$b"
