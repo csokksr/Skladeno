@@ -1,0 +1,20 @@
+{
+  "name": "skladeno-dev-tools",
+  "private": true,
+  "description": "Інструменти розробки (лінтер, перевірка типів, тести в браузері). Сам сайт залежностей не має.",
+  "scripts": {
+    "lint": "node tools/lint.js",
+    "typecheck": "tsc -p jsconfig.json",
+    "e2e": "playwright test",
+    "lhci": "lhci autorun"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
+    "@eslint/js": "10.0.1",
+    "@lhci/cli": "0.16.1",
+    "@playwright/test": "1.65.1",
+    "eslint": "10.15.0",
+    "globals": "17.14.0",
+    "typescript": "7.0.2"
+  }
+}

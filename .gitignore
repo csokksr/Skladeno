@@ -34,3 +34,7 @@ Skladeno/
 Templates/
 Home.md
 ~/
+node_modules/
+test-results/
+playwright-report/
+.lighthouseci/

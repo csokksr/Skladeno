@@ -143,3 +143,8 @@ html[data-cvd="on"] .qnav button.miss::before{content:"✗";position:absolute;le
 html[data-cvd="on"] .km-cell[data-level="1"]{background-image:repeating-linear-gradient(45deg,transparent 0 5px,rgba(128,128,128,.35) 5px 7px)}
 html[data-cvd="on"] .km-cell[data-level="2"]{background-image:repeating-linear-gradient(0deg,transparent 0 5px,rgba(128,128,128,.3) 5px 7px)}
 html[data-cvd="on"] .km-cell[data-level="3"]{background-image:radial-gradient(rgba(128,128,128,.4) 1.2px,transparent 1.5px);background-size:8px 8px}
+/* Контраст за axe-core (tests/e2e/a11y.spec.js): посилання в картці «Сьогодні» на інвертованому тлі, кнопки теми, посилання всередині тексту */
+.st-today-card a:not(.primary){color:var(--paper);text-decoration:underline}
+.theme-switch button{color:var(--ink-2)}
+main :is(p,li,dd,dt) a:not([class]){text-decoration:underline}
+.p-feedback .p-caption{color:var(--ink-2)}

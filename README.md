@@ -20,7 +20,7 @@
 | `sources/` | завантажені джерела: `zno/` (сторінки й зображення zno.osvita.ua, `bank.json`), `keys/` (офіційні аркуші відповідей УЦОЯО, `manual.json`, `mismatches.json`), `program/hist.md` (програма історії) |
 | `.claude/` | налаштування Claude Code: хуки, скіли `source-check` і `publish-web`, субагенти `ukr-fact-checker` і `key-auditor`; правила роботи — у `CLAUDE.md` |
 | `tests/cases/*.js`, `tests/harness.js` | регресійні тести сторінки на стенді з підмінним DOM (Node) |
-| `tests/py/test_tools.py` | тести скриптів Python з `tools/` (стандартна бібліотека, `unittest`) |
+| `tests/py/test_tools.py` | тести скриптів з `tools/` (Python: стандартна бібліотека, `unittest`; ще лінтер і типи, якщо виконано `npm ci`) |
 | `.github/` | CI й додаткові workflow (`ci.yml`, `codeql.yml`, `gitleaks.yml`, `links.yml`, `release.yml`), Dependabot, шаблони запиту на злиття й issue |
 | `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md` | правила внесення змін, порядок повідомлення про вразливість, журнал змін (генерується) |
 | `dist/skladeno-nmt.html` | готовий сайт |
@@ -37,6 +37,11 @@ node tools/changelog.js [--check]              # CHANGELOG.md з історії 
 python -m unittest discover -s tests/py -v     # тести скриптів Python
 node tools/coverage.js [--list] [--min N]      # частка іменованих функцій сторінки, яких торкаються тести
 python -I tools/check_links.py [--strict]      # чи відкриваються зовнішні посилання (потрібна мережа)
+npm ci                                         # інструменти розробки (лінтер, типи, браузерні тести; самому сайту вони не потрібні)
+node tools/lint.js                             # ESLint із глобальними іменами з усіх модулів
+node tools/typecheck.js                        # tsc --checkJs, без відомого шуму
+npx playwright install chromium && npx playwright test   # тести в Chromium і перевірка доступності (axe)
+npx lhci autorun                               # Lighthouse (потрібна збірка python -I tools/build.py --web)
 ```
 
 Правила внесення змін: [CONTRIBUTING.md](CONTRIBUTING.md); про вразливості: [SECURITY.md](SECURITY.md); історія змін: [CHANGELOG.md](CHANGELOG.md). CI (`.github/workflows/`) запускає збірку, перевірки й тести на Linux і Windows (порівняння хешу збірки між системами інформаційне), а ще пошук секретів (gitleaks, не блокує), щотижневу перевірку посилань і реліз за тегом `v*`. Назва перевірки в захисті гілки тепер `check (ubuntu-latest)` і `check (windows-latest)`.
@@ -50,6 +55,10 @@ python -I tools/check_links.py [--strict]      # чи відкриваються
 | `tools/check_text.py` | механічні помилки в рядках інтерфейсу (`src/app.js`, `src/modules`, `src/web`, `src/shell.html`): змішані літери, ы/э/ъ/ё, ASCII-апостроф у слові, пробіл перед розділовим знаком, подвоєні пробіли й слова. Це не орфографічний словник; виняток для рядка: позначка `check_text:ok` |
 | `tools/check_links.py` | HEAD-запити (за потреби GET одного байта) до зовнішніх https-адрес із `src/`: ok, blocked (401/403/429) і broken (404, 410, 5xx, збій); `--strict` дає код 1 лише за broken; щотижня в `.github/workflows/links.yml` |
 | `tools/coverage.js` | зводить V8-покриття всіх тестів і друкує частку іменованих функцій сторінки, викликаних тестами (`--list` показує не викликані, `--min N` задає поріг; у CI 45, зараз близько 52%). Рахуються лише іменовані функції коду сторінки, код тестів і анонімні стрілки ні |
+| `tools/lint.js`, `tools/typecheck.js`, `jsconfig.json`, `src/globals.d.ts` | ESLint: імена верхнього рівня збираються з усіх файлів (espree + eslint-scope), тож `no-undef` ловить описки, а не кожне міжмодульне посилання; tsc `checkJs` показує лише помилки, не пов'язані з відомим шумом обгорток і `Element`/`HTMLElement` |
+| `playwright.config.js`, `tests/e2e/*.spec.js` | тести в справжньому Chromium (комп'ютер і телефон): кожна сторінка без помилок консолі, практика, клавіші, шифрування копії, графік, пробник із бланком; `a11y.spec.js` проганяє axe-core на всіх сторінках у світлій і темній темах і на станах (відповідь, діалоги), падає на серйозних і критичних порушеннях |
+| `lighthouserc.json` | Lighthouse CI на веб-збірці (`dist/web`): доступність ≥ 0,95 і кращі практики ≥ 0,9 блокують, швидкодія й SEO лише попереджають. Остання локальна міра: доступність 1, кращі практики 0,96, SEO 1, швидкодія 0,28 (перше відображення 11,8 с при штучному повільному 4G: `index.html` важить 13 МБ). На Windows запускай з `CHROME_PATH`, що вказує на `chrome-headless-shell.exe` з Playwright |
+| `package.json`, `package-lock.json` | залежності лише для розробки; сайт їх не має |
 | `tools/changelog.js` | генерує `CHANGELOG.md` з `ABOUT_CHANGES`; `--check` перевіряє, що файл актуальний |
 | `tools/zno_keycheck.py` | звіряє ключі історії з офіційними аркушами УЦОЯО (`sources/keys`); потрібен pymupdf, запускати простим `python` |
 | `tools/zno2_keycheck.py` | звіряє ключі української, математики й англійської (`src/zno2-bank.json`) з аркушами УЦОЯО в `sources/keys/zno2` (список — `sources/keys/zno2-list.txt`); скани й аркуші без текстового шару прочитані вручну в `sources/keys/zno2/manual.json`; розбіжності пише в `sources/keys/zno2/mismatches.json`; потрібен pymupdf, запускати простим `python` |
