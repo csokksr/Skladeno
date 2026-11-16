@@ -1,0 +1,33 @@
+// Test centre: running timed tests, recent sessions and switching, the warning for a second timed test, the custom test.
+;(function(){
+const log=(...a)=>console.log(...a);let fails=0;const ok=(c,m)=>{log(c?'PASS':'FAIL',m);if(!c)fails++};
+const asked=[];confirm=m=>{asked.push(m);return true};
+P.sessions={};P.current=null;P.exam=null;P.official.current=null;P.coach.control=null;
+const [a,b,c]=['ukr','math','eng'].map(s=>PQ.filter(q=>q.subject===s&&!q.examOnly).slice(0,5).map(q=>q.id));
+pStart(a,'Перший','k-a');pStart(b,'Другий','k-b');pStart(c,'Третій','k-c');
+P.answers[a[0]]={value:0,score:1,max:1,first:1,attempts:1,at:Date.now(),due:Date.now()};
+let s=testsSessions();
+ok(s.map(x=>x.key).join()==='k-c,k-b,k-a'&&s[0].current,'sessions are listed newest first, the newest is current');
+ok(s[2].done===1&&s[2].total===5,'a session shows how many of its tasks are answered');
+testsSwitch('k-a');s=testsSessions();ok(s[0].key==='k-a'&&P.current==='k-a','switching makes the session current and newest');
+testsDrop('k-a');ok(!P.sessions['k-a']&&P.current==='k-c','dropping the current session falls back to the newest left');
+ok(testsRuns().length===0,'no timed test is running');
+pLaunchMock('ukr',1);
+const r=testsRuns();ok(r.length===1&&r[0].kind==='exam'&&r[0].left>0&&r[0].total>0,'a started mock is listed with time left');
+asked.length=0;offStart('math');
+ok(asked.length===1&&asked[0].includes(r[0].title),'a second timed test warns about the first one');
+ok(testsRuns().map(x=>x.kind).sort().join()==='exam,official','both timed tests are listed');
+asked.length=0;pLaunchMock('ukr',2);
+ok(asked.some(m=>m.includes('Замінити')),'replacing the same kind still asks the old question');
+P.exam=null;P.official.current=null;
+const topics=testsTopicList('ukr');ok(topics.length>5&&topics.every(t=>t.ids.length),'the topic list has tasks for every topic');
+const one=[topics[0].id];
+ok(testsPool('ukr',one,'all').length===topics[0].ids.length,'the pool for one topic has all its tasks');
+ok(testsPool('ukr',one,'wrong').length===0&&testsPool('ukr',one,'new').length===topics[0].ids.length,'new tasks are all of them, with mistakes none');
+P.answers[topics[0].ids[0]]={value:0,score:0,max:1,first:0,attempts:1,at:Date.now(),due:Date.now()-1000};
+ok(testsPool('ukr',one,'wrong').length===1&&testsPool('ukr',one,'due').length===1&&testsPool('ukr',one,'new').length===topics[0].ids.length-1,'the pool follows answers: mistake, due, new');
+ok(testsStartCustom('ukr',one,'all',3)&&P.sessions[P.current].ids.length===3&&P.sessions[P.current].title.includes('власний'),'a custom test starts a session of the asked size');
+ok(testsStartCustom('ukr',[],'all',3)===false,'no topics means no test');
+location.hash='#tests';render();ok(/Мої тести/.test($('#main').innerHTML)&&/Власний тест/.test($('#main').innerHTML),'the page draws');
+log('fails',fails);
+})();

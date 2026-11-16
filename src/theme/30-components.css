@@ -55,11 +55,11 @@ input[type=checkbox],input[type=radio]{accent-color:var(--pen)}
 .p-feature{padding:28px;border:0;border-radius:var(--r-lg);background:var(--sheet)}
 /* Довідки на головній і в «Матеріалах»: рядки зі стрічкою-розділювачем замість сітки однакових плиток. */
 .p-bottom-grid,.p-resource-grid{display:block;gap:0;border-top:1px solid var(--line)}
-.p-bottom-grid>.p-feature,.p-resource-grid>.p-feature{display:grid;gap:4px 40px;padding:20px 0;border-bottom:1px solid var(--line);border-radius:0;background:none}
-.p-bottom-grid>.p-feature :is(h2,h3),.p-resource-grid>.p-feature :is(h2,h3){margin:0;font-size:1.1875rem;letter-spacing:-.015em}
-.p-bottom-grid>.p-feature>p,.p-resource-grid>.p-feature>p{margin:0;max-width:62ch}
-@media (min-width:760px){.p-bottom-grid>.p-feature,.p-resource-grid>.p-feature{grid-template-columns:minmax(0,2fr) minmax(0,3fr);align-items:baseline}.p-bottom-grid>.p-feature>:is(h2,h3),.p-resource-grid>.p-feature>:is(h2,h3){grid-column:1;grid-row:1/span 3}.p-bottom-grid>.p-feature>:not(h2):not(h3),.p-resource-grid>.p-feature>:not(h2):not(h3){grid-column:2}}
-.p-bottom-grid>.p-feature>a,.p-bottom-grid>.p-feature>button,.p-resource-grid>.p-feature>a,.p-resource-grid>.p-feature>button{justify-self:start;margin-top:6px}
+.p-bottom-grid>li>.p-feature,.p-resource-grid>li>.p-feature{display:grid;gap:4px 40px;padding:20px 0;border-bottom:1px solid var(--line);border-radius:0;background:none}
+.p-bottom-grid>li>.p-feature :is(h2,h3),.p-resource-grid>li>.p-feature :is(h2,h3){margin:0;font-size:1.1875rem;letter-spacing:-.015em}
+.p-bottom-grid>li>.p-feature>p,.p-resource-grid>li>.p-feature>p{margin:0;max-width:62ch}
+@media (min-width:760px){.p-bottom-grid>li>.p-feature,.p-resource-grid>li>.p-feature{grid-template-columns:minmax(0,2fr) minmax(0,3fr);align-items:baseline}.p-bottom-grid>li>.p-feature>:is(h2,h3),.p-resource-grid>li>.p-feature>:is(h2,h3){grid-column:1;grid-row:1/span 3}.p-bottom-grid>li>.p-feature>:not(h2):not(h3),.p-resource-grid>li>.p-feature>:not(h2):not(h3){grid-column:2}}
+.p-bottom-grid>li>.p-feature>a,.p-bottom-grid>li>.p-feature>button,.p-resource-grid>li>.p-feature>a,.p-resource-grid>li>.p-feature>button{justify-self:start;margin-top:6px}
 .p-meta{margin:10px 0 0;color:var(--muted);font:500 .9375rem/1.4 var(--f-body);letter-spacing:-.01em}
 .p-feature h2{margin-bottom:10px}
 .p-feature>p:not(.p-kicker){color:var(--ink-2);font-size:.9375rem;margin-bottom:12px}

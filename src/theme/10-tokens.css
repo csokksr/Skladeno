@@ -8,7 +8,7 @@
   --paper:#ffffff;--sheet:#f5f5f7;--sheet-2:#e8e8ed;--sheet-3:#d9d9de;--field:#ffffff;
   --ink:#1d1d1f;--ink-2:#424245;--muted:#6e6e73;
   --line:#d2d2d7;--line-2:#8e8e93;
-  --pen:#0071e3;--pen-hover:#0077ed;--pen-ink:#ffffff;--pen-soft:#e8f2fd;--link:#0066cc;
+  --pen:#0071e3;--pen-hover:#0062c4;--pen-ink:#ffffff;--pen-soft:#e8f2fd;--link:#0066cc;
   --mark:#d70015;--mark-soft:#fdecee;--on-mark:#ffffff;
   --ok:#1d7d37;--ok-soft:#e8f5eb;--on-ok:#ffffff;
   --warn:#a85200;--warn-soft:#fff3e2;
@@ -68,7 +68,7 @@ a:hover{text-decoration:underline;text-underline-offset:3px}
 small,.small{font-size:.8125rem}
 img{max-width:100%}
 ::selection{background:color-mix(in srgb,var(--pen) 25%,transparent);color:var(--ink)}
-:focus-visible{outline:3px solid color-mix(in srgb,var(--pen) 60%,transparent);outline-offset:2px;border-radius:6px}
+:focus-visible{outline:3px solid var(--pen);outline-offset:2px;border-radius:6px}
 /* Headings and the main area receive focus only from script (after a page change); a ring there is noise, the screen reader still announces them. */
 [tabindex="-1"]:focus,[tabindex="-1"]:focus-visible{outline:none}
 button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
@@ -84,4 +84,5 @@ th{font:600 .8125rem/1.4 var(--f-body);color:var(--muted)}
 .is-urgent{color:var(--mark)!important}
 .desktop{display:initial}
 .syllabus{white-space:pre-wrap;font-size:.875rem;line-height:1.7;max-height:500px;overflow:auto}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){:root:not([data-motion="on"]) *,:root:not([data-motion="on"]) *::before,:root:not([data-motion="on"]) *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+:root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}

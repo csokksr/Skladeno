@@ -2,7 +2,12 @@
 function pMark(q,i){return q.type==='multi'?String(i+1):q.subject==='eng'?String.fromCharCode(65+i):'АБВГДЕЖ'[i]}
 // In the web build history task images live in per-topic packs (files/zno-t<N>.json), fetched on first use.
 const ZNO_IMG={},ZNO_REQ={};
-function znoPack(c){return ZNO_REQ[c]=ZNO_REQ[c]||fetch('files/zno-'+c+'.json').then(r=>{if(!r.ok)throw Error('pack');return r.json()}).then(m=>{Object.assign(ZNO_IMG,m);document.querySelectorAll('img[data-zno]').forEach(i=>{if(ZNO_IMG[i.dataset.zno])i.src=ZNO_IMG[i.dataset.zno]})}).catch(()=>{delete ZNO_REQ[c]})}
+// Status line above the task while its pictures load, and a retry when they do not.
+function znoStatus(state,c){const host=$('.p-question')||$('#main');let el=$('#zno-status');if(!state){el?.remove();return}
+if(!el){host.insertAdjacentHTML('afterbegin','<p class="p-status" id="zno-status" role="status"></p>');el=$('#zno-status')}
+el.innerHTML=state==='loading'?'Завантажую зображення завдання…':`Не вдалося завантажити зображення. <button class="textbtn" onclick="znoRetry('${esc(c)}')">Повторити</button>`}
+function znoRetry(c){znoPack(c)}
+function znoPack(c){znoStatus('loading',c);return ZNO_REQ[c]=ZNO_REQ[c]||fetch('files/zno-'+c+'.json').then(r=>{if(!r.ok)throw Error('pack');return r.json()}).then(m=>{Object.assign(ZNO_IMG,m);document.querySelectorAll('img[data-zno]').forEach(i=>{if(ZNO_IMG[i.dataset.zno])i.src=ZNO_IMG[i.dataset.zno]});if(!document.querySelectorAll('img[data-zno]:not([src])').length)znoStatus('')}).catch(()=>{delete ZNO_REQ[c];znoStatus('error',c)})}
 function pImg(key,alt){let src=DB.assets[key];if(!src)return '';if(src.startsWith('@zno:')){if(!ZNO_IMG[key]){setTimeout(()=>znoPack(src.slice(5)));return `<img class="qimg" data-zno="${key}" alt="${esc(alt)}">`}src=ZNO_IMG[key]}return `<img class="qimg" src="${src}" alt="${esc(alt)}" loading="lazy">`}
 function pImgs(q){const inl=(q.passage||'')+(q.prompt||''),keys=(q.images||(q.image?[q.image]:[])).filter(k=>!inl.includes('⟦§m§'+k+'⟧'));return keys.map((k,i)=>pImg(k,keys.length>1?`Зображення ${i+1} до завдання`:'Зображення до завдання')).join('')}
 function pOptHTML(q,i){const k=q.optionImages?.[i];return (q.options[i]?esc(q.options[i]):'')+(k?pImg(k,`Варіант ${pMark(q,i)}`).replace('class="qimg"','class="p-opt-img"'):'')}

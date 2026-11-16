@@ -1,23 +1,13 @@
-/* Веб-версія (артефакт claude.ai): діалоги на сторінці замість confirm(), збереження файлів через downloads,
+/* Веб-версія (артефакт claude.ai): збереження файлів через downloads,
    PDF за справжніми посиланнями, синхронізація прогресу між пристроями через приватне сховище db. */
 document.documentElement.lang='uk';
 const webCap=name=>window.claude?.use?window.claude.use(name).catch(()=>null):Promise.resolve(null);
 let webDownloads=null,webDb=null,webUid=null;
 webCap('downloads').then(d=>{webDownloads=d});
 
-/* confirm(): у переглядачі він завжди повертає false. Показуємо власний діалог і після згоди повторюємо ту саму дію. */
-let webAllow=null,webRetry=null;
-document.body.insertAdjacentHTML('beforeend','<dialog id="web-confirm" class="web-confirm" aria-labelledby="web-confirm-text"><p id="web-confirm-text"></p><div class="p-actions"><button class="primary" id="web-confirm-yes">Так, продовжити</button><button id="web-confirm-no" autofocus>Скасувати</button></div></dialog>');
-window.confirm=function(message){if(webAllow===message){webAllow=null;return true}let trigger=window.event?.type==='click'?window.event.target?.closest?.('button,a,[onclick]'):null,retry=webRetry;webRetry=null;const dlg=$('#web-confirm');$('#web-confirm-text').textContent=message;
- $('#web-confirm-yes').onclick=()=>{dlg.close();webAllow=message;if(trigger&&trigger.isConnected)trigger.click();else if(retry)retry();webAllow=null};$('#web-confirm-no').onclick=()=>dlg.close();
- if(!trigger&&!retry)return false;dlg.showModal();return false};
-// Файлові поля скидають value до виклику confirm(), тож повтор отримує той самий файл.
-function webWrapFile(sel){const el=$(sel);if(!el||!el.onchange)return;const base=el.onchange;el.onchange=e=>{const file=e.target.files?.[0];e.target.value='';if(!file)return;const fake={target:{files:[file],value:''}};const run=()=>{webRetry=run;return base(fake)};run()}}
-webWrapFile('#import-file');webWrapFile('#p-import-file');
-
 /* Файли: лише через підтвердження переглядача. */
 async function webSave(filename,data){if(!webDownloads){toast('Збереження файлів тут недоступне. Скористайся текстовим кодом копії.');return false}try{await webDownloads.save({filename,data});return true}catch(e){if(e?.code!=='declined')toast(e?.code==='rate_limited'?'Зачекай кілька секунд і спробуй ще раз.':'Файл не збережено.');return false}}
-download=function(name,text){webSave(name,text)};
+download=function(name,text){return webSave(name,text)};
 pBackup=function(){webSave('skladeno-progress-'+pDay()+'.json',JSON.stringify(pBackupData())).then(ok=>{if(ok)toast('Резервну копію збережено.')})};
 offlineSave=function(){if(!offlineURL)return;fetch(offlineURL).then(r=>r.blob()).then(b=>webSave('skladeno-nmt.html',b)).then(ok=>{if(ok)offlineStatus('Файл збережено. Відкривай його в браузері; прогрес перенеси окремою копією JSON.')})};
 

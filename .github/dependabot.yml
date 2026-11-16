@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Дії GitHub (checkout, setup-python, setup-node тощо)
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 3
+  # Залежності лише для tools/ (pymupdf, pillow); сам сайт залежностей не має
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3

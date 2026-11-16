@@ -3,7 +3,7 @@
   python -I tools/build.py        -> dist/skladeno-nmt.html (one self-contained offline file)
   python -I tools/build.py --web  -> dist/web/ (claude.ai artifact: index.html + files/ + offline parts)
 """
-import base64, glob, hashlib, json, os, re, shutil, sys
+import base64, glob, hashlib, json, os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 S = os.path.join(ROOT, 'src')
 WEB = '--web' in sys.argv
@@ -334,6 +334,19 @@ def refresh_quality(data):
 EXT = {'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'application/pdf': 'pdf'}
 
 
+def sniff(head):
+    """Media type of a file from its first bytes, or None."""
+    if head[:3] == bytes([255, 216, 255]):
+        return 'image/jpeg'
+    if head[:4] == bytes([137, 80, 78, 71]):
+        return 'image/png'
+    if head[:4] == b'RIFF' and head[8:12] == b'WEBP':
+        return 'image/webp'
+    if head[:4] == b'%PDF':
+        return 'application/pdf'
+    return None
+
+
 def fill(x, files_dir=None):
     """Inline every blob, or (web) write it next to the page and point to it."""
     if isinstance(x, dict):
@@ -342,13 +355,26 @@ def fill(x, files_dir=None):
         return [fill(v, files_dir) for v in x]
     if isinstance(x, str) and x.startswith('@@blob:'):
         uri = open(f'{S}/blobs/{x[7:]}.txt', encoding='ascii').read()
+        mime, payload = uri[5:uri.index(';')], uri[uri.index(',') + 1:]
+        # The type is read from the bytes: some sources declare JPEG for a PNG file, and a viewer that checks types rejects that.
+        real = sniff(base64.b64decode(payload[:16]))
+        if real and real != mime:
+            mime, uri = real, 'data:%s;base64,%s' % (real, payload)
         if files_dir is None:
             return uri
-        mime = uri[5:uri.index(';')]
         name = f'{x[7:]}.{EXT[mime]}'
         open(os.path.join(files_dir, name), 'wb').write(base64.b64decode(uri[uri.index(',') + 1:]))
         return 'files/' + name
     return x
+
+
+def build_id():
+    """Short commit of the build, with '+змінено' when src/ or tools/ differ from it; shown on the settings page."""
+    try:
+        git = lambda *a: subprocess.run(['git', *a], cwd=ROOT, capture_output=True, text=True, timeout=10).stdout.strip()
+        return (git('rev-parse', '--short=7', 'HEAD') or 'dev') + ('+змінено' if git('status', '--porcelain', '--', 'src', 'tools') else '')
+    except (OSError, subprocess.SubprocessError):
+        return 'dev'
 
 
 def app_js(extra_dirs, offline_mb=100):
@@ -358,6 +384,7 @@ def app_js(extra_dirs, offline_mb=100):
     boot = 'save();render();'
     assert app.rstrip().endswith(boot)
     app = app.rstrip()[:-len(boot)]
+    app += '\nconst BUILD_ID=%s;' % json.dumps(build_id())
     # Vendored libraries (src/vendor/*.js, see its README) come first: modules may rely on their globals.
     for path in sorted(glob.glob(f'{S}/vendor/*.js')):
         app += '\n' + open(path, encoding='utf-8').read()

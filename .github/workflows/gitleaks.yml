@@ -1,0 +1,21 @@
+name: Пошук секретів
+# Інформаційна перевірка (gitleaks): у проєкті секретів немає, але нова знахідка важлива. Не блокує зміни, бо правила gitleaks можуть спрацьовувати
+# на вбудовані зображення; помилкові спрацювання виключаються в .gitleaks.toml.
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+  pull-requests: read
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

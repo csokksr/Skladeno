@@ -1,0 +1,266 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Модуль src/content/*.json",
+  "description": "Формат описано в README, розділ «Формат src/content/*.json». Перевіряє tools/check_schema.py (власний валідатор підмножини JSON Schema: type, properties, required, additionalProperties, items, enum, minLength, minimum, maximum, minItems, maxItems, $defs, $ref; будь-яке інше ключове слово валідатор відхиляє, а не ігнорує).",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "_about": {
+      "type": "string",
+      "description": "Коментар для людей, збірка його не читає."
+    },
+    "note": {
+      "type": "string",
+      "description": "Коментар для людей, збірка його не читає."
+    },
+    "merge": {
+      "type": "object",
+      "description": "Замінити ключ у даних цілком: {ключ: значення}."
+    },
+    "extend": {
+      "type": "object",
+      "description": "Дописати до списку верхнього рівня: {ключ: [елементи]}.",
+      "additionalProperties": {
+        "type": "array"
+      }
+    },
+    "topicQuestions": {
+      "type": "array",
+      "description": "Завдання з полем topicId, що додаються до теми предмета.",
+      "items": {
+        "$ref": "#/$defs/question"
+      }
+    },
+    "topicNotes": {
+      "type": "object",
+      "description": "{topicId: [{title, text, example}]}.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/note"
+        }
+      }
+    },
+    "mockSets": {
+      "type": "object",
+      "description": "{предмет: [[id, ...], ...]}: фіксовані варіанти.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "explanations": {
+      "type": "object",
+      "description": "{id: текст}: заміна пояснення завдання.",
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "patch": {
+      "type": "object",
+      "description": "{id: {поле: значення}}: точкове виправлення завдання.",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "factPatch": {
+      "type": "object",
+      "description": "{factId: {поле: значення}}: виправлення факту з історії.",
+      "additionalProperties": {
+        "type": "object"
+      }
+    },
+    "replace": {
+      "type": "array",
+      "description": "[[старий, новий]]: заміна тексту факту всюди, де його цитують.",
+      "items": {
+        "type": "array",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "drop": {
+      "type": "array",
+      "description": "[id]: вилучити завдання разом з усіма списками, що на нього посилаються.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "addFacts": {
+      "type": "object",
+      "description": "{topicId: [факт]}: нові картки теорії історії.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/fact"
+        }
+      }
+    },
+    "dropFacts": {
+      "type": "array",
+      "description": "[id]: вилучити картки разом з усіма списками, що на них посилаються.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "question": {
+      "type": "object",
+      "required": [
+        "id",
+        "subject",
+        "topicId",
+        "type",
+        "prompt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "enum": [
+            "ukr",
+            "math",
+            "hist",
+            "eng"
+          ]
+        },
+        "topicId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "single",
+            "multi",
+            "match",
+            "order",
+            "numeric"
+          ]
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "explanation": {
+          "type": "string"
+        },
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "passage": {
+          "type": "string"
+        },
+        "groupId": {
+          "type": "string"
+        },
+        "format": {
+          "type": "string"
+        },
+        "answer": {
+          "type": [
+            "integer",
+            "array",
+            "string",
+            "number"
+          ]
+        },
+        "image": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "note": {
+      "type": "object",
+      "required": [
+        "title",
+        "text"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "example": {
+          "type": "string"
+        }
+      }
+    },
+    "fact": {
+      "type": "object",
+      "required": [
+        "id",
+        "topic",
+        "kind",
+        "label",
+        "text"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "topic": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "D",
+            "P",
+            "T",
+            "C",
+            "G",
+            "L"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

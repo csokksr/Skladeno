@@ -1,0 +1,16 @@
+name: Перевірка посилань на джерела
+# Щотижня й за потреби вручну: потрібна мережа, тому не входить у звичайний CI. Код 1 лише за поламаними посиланнями (404, 410, 5xx, збій з'єднання);
+# сайти, що не пускають автоматичні запити (401, 403, 429), лише показуються в журналі.
+on:
+  schedule:
+    - cron: '17 5 * * 1'
+  workflow_dispatch:
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -I tools/check_links.py --strict

@@ -1,0 +1,12 @@
+/* Малі екрани й сенсорні пристрої: цілі натискання не менші за 48x48 px. Посилання всередині абзаців виключені: це текст.
+   !important потрібен, бо компактні правила окремих блоків (дії в картках пробників, навігатор завдань) мають вищу специфічність. */
+@media (pointer:coarse),(max-width:760px){
+  button,.tabs button,.p-tabs button,.p-mock-card button,.p-mock-variants button,.p-actions>a,.p-btn,a.primary,summary,select,textarea,input:not([type=checkbox]):not([type=radio]){min-height:48px!important}
+  .gnav-toggle{min-width:48px!important;min-height:48px!important}
+  .chip{min-height:48px!important}
+  .brand,.nav a,.history-outline a,a.small,.p-alert a,.p-study-tip a,.st-today-card a,.p-status-strip a,.p-section>a,.p-breadcrumb a,.p-back,.p-footer a,.sitefoot-row a,.p-link,.p-section-head>a,.p-history-tools a,.history-external a,.p-tabs>a,li>a:only-child,td>a:only-child{display:inline-flex;align-items:center;min-height:48px!important}
+  details>summary{display:flex;align-items:center}
+  input[type=checkbox],input[type=radio]{width:24px;height:24px}
+  label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;align-items:center;gap:10px;min-height:48px!important}
+  .qnav button{min-width:48px!important;min-height:48px!important}
+}
