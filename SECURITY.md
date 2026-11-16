@@ -28,4 +28,6 @@
 
 ## Автоматичні перевірки
 
-CI запускає CodeQL (JavaScript і Python) і gitleaks (пошук секретів), а `validate.py` відхиляє `eval`, `document.write`, `console.log` і ключі у власному коді. Залежності лише для `tools/` оновлює Dependabot.
+CI запускає gitleaks (пошук секретів, не блокує зміни), а `validate.py` відхиляє `eval`, `document.write`, `console.log` і ключі у власному коді. Залежності лише для `tools/` оновлює Dependabot.
+
+CodeQL у проєкті не ввімкнено: у приватному репозиторії він потребує GitHub Advanced Security («Code scanning is not enabled for this repository»). Якщо репозиторій стане публічним або цю функцію ввімкнуть, workflow можна повернути зі стандартного шаблону GitHub.

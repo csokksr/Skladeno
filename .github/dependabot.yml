@@ -1,6 +1,6 @@
 version: 2
 updates:
-  # Дії GitHub (checkout, setup-python, setup-node, CodeQL тощо)
+  # Дії GitHub (checkout, setup-python, setup-node тощо)
   - package-ecosystem: github-actions
     directory: /
     schedule:

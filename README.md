@@ -39,7 +39,7 @@ node tools/coverage.js [--list] [--min N]      # частка іменовани
 python -I tools/check_links.py [--strict]      # чи відкриваються зовнішні посилання (потрібна мережа)
 ```
 
-Правила внесення змін: [CONTRIBUTING.md](CONTRIBUTING.md); про вразливості: [SECURITY.md](SECURITY.md); історія змін: [CHANGELOG.md](CHANGELOG.md). CI (`.github/workflows/`) запускає збірку, перевірки й тести на Linux і Windows (порівняння хешу збірки між системами інформаційне), а ще CodeQL, пошук секретів (gitleaks, не блокує), щотижневу перевірку посилань і реліз за тегом `v*`. Назва перевірки в захисті гілки тепер `check (ubuntu-latest)` і `check (windows-latest)`.
+Правила внесення змін: [CONTRIBUTING.md](CONTRIBUTING.md); про вразливості: [SECURITY.md](SECURITY.md); історія змін: [CHANGELOG.md](CHANGELOG.md). CI (`.github/workflows/`) запускає збірку, перевірки й тести на Linux і Windows (порівняння хешу збірки між системами інформаційне), а ще пошук секретів (gitleaks, не блокує), щотижневу перевірку посилань і реліз за тегом `v*`. Назва перевірки в захисті гілки тепер `check (ubuntu-latest)` і `check (windows-latest)`.
 
 ## Інструменти
 
