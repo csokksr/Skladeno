@@ -1,154 +1,953 @@
 /* План до дати НМТ: шкала 100–200, прогноз бала, повторення з урахуванням дати іспиту та завдання на день. */
-const NMT=DB.nmtScale,STUDY_EXAM='2027-05-20',DAY=86400000;
-const STUDY_PHASES=[
- {id:'final',until:7,name:'Останній тиждень',review:0.75,mockEvery:3,text:'Нових тем не береш. Повторюєш помилки та довідки, проходиш одну-дві повні симуляції, вчасно лягаєш спати.'},
- {id:'sprint',until:30,name:'Фініш',review:0.5,mockEvery:4,text:'Пробник кожні 3–4 дні та повна симуляція щотижня. Решта часу йде на помилки з пробників і найслабші теми.'},
- {id:'consolidate',until:120,name:'Закріплення',review:0.4,mockEvery:7,text:'Пробник щотижня. Нові теми чергуються з повторенням, першими йдуть предмети з найбільшим відставанням від цілі.'},
- {id:'foundation',until:Infinity,name:'Фундамент',review:0.3,mockEvery:14,text:'Проходиш теми програми по черзі: конспект, завдання, повторення за графіком. Пробник раз на два тижні показує зміну результату.'}];
-function stClamp(v,a,b){return Math.min(b,Math.max(a,v))}
-function stPlural(n,one,few,many){let a=n%10,b=n%100;return n+' '+(a===1&&b!==11?one:a>=2&&a<=4&&(b<12||b>14)?few:many)}
-function stFresh(){return {examDate:'',targets:{ukr:nmtSnap('ukr',170),math:nmtSnap('math',160),hist:nmtSnap('hist',170),eng:nmtSnap('eng',170)},srs:{},today:null,coef:{k1:0.3,k2:0.5,k3:0.2,k4:0.5,k4max:0.5},recall:false,speed:{}}}
-const stFreshBase=pFresh;pFresh=function(){return {...stFreshBase(),study:stFresh()}};
+const NMT = DB.nmtScale,
+  STUDY_EXAM = '2027-05-20',
+  DAY = 86400000;
+const STUDY_PHASES = [
+  {
+    id: 'final',
+    until: 7,
+    name: 'Останній тиждень',
+    review: 0.75,
+    mockEvery: 3,
+    text: 'Нових тем не береш. Повторюєш помилки та довідки, проходиш одну-дві повні симуляції, вчасно лягаєш спати.',
+  },
+  {
+    id: 'sprint',
+    until: 30,
+    name: 'Фініш',
+    review: 0.5,
+    mockEvery: 4,
+    text: 'Пробник кожні 3–4 дні та повна симуляція щотижня. Решта часу йде на помилки з пробників і найслабші теми.',
+  },
+  {
+    id: 'consolidate',
+    until: 120,
+    name: 'Закріплення',
+    review: 0.4,
+    mockEvery: 7,
+    text: 'Пробник щотижня. Нові теми чергуються з повторенням, першими йдуть предмети з найбільшим відставанням від цілі.',
+  },
+  {
+    id: 'foundation',
+    until: Infinity,
+    name: 'Фундамент',
+    review: 0.3,
+    mockEvery: 14,
+    text: 'Проходиш теми програми по черзі: конспект, завдання, повторення за графіком. Пробник раз на два тижні показує зміну результату.',
+  },
+];
+function stClamp(v, a, b) {
+  return Math.min(b, Math.max(a, v));
+}
+function stPlural(n, one, few, many) {
+  let a = n % 10,
+    b = n % 100;
+  return (
+    n + ' ' + (a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many)
+  );
+}
+function stFresh() {
+  return {
+    examDate: '',
+    targets: {
+      ukr: nmtSnap('ukr', 170),
+      math: nmtSnap('math', 160),
+      hist: nmtSnap('hist', 170),
+      eng: nmtSnap('eng', 170),
+    },
+    srs: {},
+    today: null,
+    coef: { k1: 0.3, k2: 0.5, k3: 0.2, k4: 0.5, k4max: 0.5 },
+    recall: false,
+    speed: {},
+  };
+}
+const stFreshBase = pFresh;
+pFresh = function () {
+  return { ...stFreshBase(), study: stFresh() };
+};
 // Subject topics live in PT; history topics («hist-N») only in the quality map.
-function stTopic(id){return PT[id]||DB.quality.topics.find(t=>t.id===id)}
-function stNormal(raw){let n=stFresh(),day=/^\d{4}-\d{2}-\d{2}$/;if(!raw||typeof raw!=='object'||Array.isArray(raw))return n;if(day.test(raw.examDate||''))n.examDate=raw.examDate;for(let s of SUBJECTS){let v=Number(raw.targets?.[s.id]);if(Number.isFinite(v)&&v>=100&&v<=200)n.targets[s.id]=nmtSnap(s.id,Math.round(v))}for(let k of Object.keys(n.coef)){let v=Number(raw.coef?.[k]);if(Number.isFinite(v)&&v>=0&&v<=1)n.coef[k]=v}n.recall=raw.recall===true;n.setupDone=raw.setupDone===true;for(let s of SUBJECTS){let v=raw.speed?.[s.id];if(Array.isArray(v))n.speed[s.id]=v.filter(x=>Number.isFinite(x)&&x>0&&x<=900).slice(-200)}
- for(let [id,x]of Object.entries(raw.srs||{}))if(PM[id]&&x&&typeof x==='object')n.srs[id]={e:stClamp(Number(x.e)||2.5,1.3,3),i:stClamp(Math.round(Number(x.i)||0),0,365),n:stClamp(Math.trunc(Number(x.n)||0),0,99),l:stClamp(Math.trunc(Number(x.l)||0),0,999),d:day.test(x.d||'')?x.d:''};
- let t=raw.today;if(t&&day.test(t.day||'')&&Array.isArray(t.review)&&Array.isArray(t.learn))n.today={day:t.day,phase:STUDY_PHASES.some(p=>p.id===t.phase)?t.phase:'',review:t.review.filter(id=>PM[id]),learn:t.learn.filter(x=>x&&SUB[x.sid]&&stTopic(x.topicId)&&Array.isArray(x.ids)).map(x=>({sid:x.sid,topicId:x.topicId,title:stTopic(x.topicId).title,route:stTopicRoute(stTopic(x.topicId)),ids:x.ids.filter(id=>PM[id])})),mock:t.mock&&(SUB[t.mock.sid]||['all','diagnostic'].includes(t.mock.sid))?{sid:t.mock.sid,variant:Math.max(1,Math.trunc(Number(t.mock.variant)||1))}:null};return n}
-const stNormalBase=pNormal;pNormal=function(raw){let n=stNormalBase(raw);n.study=stNormal(raw.study);return n};
+function stTopic(id) {
+  return PT[id] || DB.quality.topics.find(t => t.id === id);
+}
+function stNormal(raw) {
+  let n = stFresh(),
+    day = /^\d{4}-\d{2}-\d{2}$/;
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return n;
+  if (day.test(raw.examDate || '')) n.examDate = raw.examDate;
+  for (let s of SUBJECTS) {
+    let v = Number(raw.targets?.[s.id]);
+    if (Number.isFinite(v) && v >= 100 && v <= 200) n.targets[s.id] = nmtSnap(s.id, Math.round(v));
+  }
+  for (let k of Object.keys(n.coef)) {
+    let v = Number(raw.coef?.[k]);
+    if (Number.isFinite(v) && v >= 0 && v <= 1) n.coef[k] = v;
+  }
+  n.recall = raw.recall === true;
+  n.setupDone = raw.setupDone === true;
+  for (let s of SUBJECTS) {
+    let v = raw.speed?.[s.id];
+    if (Array.isArray(v))
+      n.speed[s.id] = v.filter(x => Number.isFinite(x) && x > 0 && x <= 900).slice(-200);
+  }
+  for (let [id, x] of Object.entries(raw.srs || {}))
+    if (PM[id] && x && typeof x === 'object')
+      n.srs[id] = {
+        e: stClamp(Number(x.e) || 2.5, 1.3, 3),
+        i: stClamp(Math.round(Number(x.i) || 0), 0, 365),
+        n: stClamp(Math.trunc(Number(x.n) || 0), 0, 99),
+        l: stClamp(Math.trunc(Number(x.l) || 0), 0, 999),
+        d: day.test(x.d || '') ? x.d : '',
+      };
+  let t = raw.today;
+  if (t && day.test(t.day || '') && Array.isArray(t.review) && Array.isArray(t.learn))
+    n.today = {
+      day: t.day,
+      phase: STUDY_PHASES.some(p => p.id === t.phase) ? t.phase : '',
+      review: t.review.filter(id => PM[id]),
+      learn: t.learn
+        .filter(x => x && SUB[x.sid] && stTopic(x.topicId) && Array.isArray(x.ids))
+        .map(x => ({
+          sid: x.sid,
+          topicId: x.topicId,
+          title: stTopic(x.topicId).title,
+          route: stTopicRoute(stTopic(x.topicId)),
+          ids: x.ids.filter(id => PM[id]),
+        })),
+      mock:
+        t.mock && (SUB[t.mock.sid] || ['all', 'diagnostic'].includes(t.mock.sid))
+          ? { sid: t.mock.sid, variant: Math.max(1, Math.trunc(Number(t.mock.variant) || 1)) }
+          : null,
+    };
+  return n;
+}
+const stNormalBase = pNormal;
+pNormal = function (raw) {
+  let n = stNormalBase(raw);
+  n.study = stNormal(raw.study);
+  return n;
+};
 // Earlier layers have already loaded the stores; load the added state before the first render.
-try{let original=JSON.parse(localStorage.getItem(PKEY)||'null');P.study=stNormal(original?.study)}catch{P.study=stFresh()}
+try {
+  let original = JSON.parse(localStorage.getItem(PKEY) || 'null');
+  P.study = stNormal(original?.study);
+} catch {
+  P.study = stFresh();
+}
 
 /* Шкала 100–200: 0 означає «поріг не подолано». */
-function nmtScale(sid,raw){let s=NMT?.subjects?.[sid];if(!s||!Number.isFinite(raw))return null;raw=Math.round(raw);return raw<s.threshold?0:s.table[String(Math.min(raw,s.max))]}
+function nmtScale(sid, raw) {
+  let s = NMT?.subjects?.[sid];
+  if (!s || !Number.isFinite(raw)) return null;
+  raw = Math.round(raw);
+  return raw < s.threshold ? 0 : s.table[String(Math.min(raw, s.max))];
+}
 // The 100–200 scale has only the values of the official conversion table (Додаток 5 до Порядку прийому): e.g. 191 and 200 exist for English, 195 does not.
-function nmtValues(sid){const s=NMT?.subjects?.[sid];return s?[...new Set(Object.values(s.table))].sort((a,b)=>a-b):[]}
-function nmtSnap(sid,v){const a=nmtValues(sid);if(!a.length||!Number.isFinite(v))return v;let best=a[0];for(const x of a){const d=Math.abs(x-v),b=Math.abs(best-v);if(d<b||(d===b&&x>best))best=x}return best}
-function nmtText(sid,raw){let v=nmtScale(sid,raw);return v===null?'—':v?String(v):'нижче порогу'}
-function stRawFor(sid,target){let s=NMT.subjects[sid];for(let r=s.threshold;r<=s.max;r++)if(s.table[r]>=target)return r;return s.max}
-function stExamDate(){return P.study.examDate||STUDY_EXAM}
-function stDaysLeft(){return Math.max(0,Math.round((new Date(stExamDate()+'T12:00:00')-new Date(pDay()+'T12:00:00'))/DAY))}
-function stPhase(days=stDaysLeft()){return STUDY_PHASES.find(p=>days<=p.until)}
-function stDateLabel(iso){return new Date(iso+'T12:00:00').toLocaleDateString('uk-UA',{day:'numeric',month:'long',year:'numeric'})}
+function nmtValues(sid) {
+  const s = NMT?.subjects?.[sid];
+  return s ? [...new Set(Object.values(s.table))].sort((a, b) => a - b) : [];
+}
+function nmtSnap(sid, v) {
+  const a = nmtValues(sid);
+  if (!a.length || !Number.isFinite(v)) return v;
+  let best = a[0];
+  for (const x of a) {
+    const d = Math.abs(x - v),
+      b = Math.abs(best - v);
+    if (d < b || (d === b && x > best)) best = x;
+  }
+  return best;
+}
+function nmtText(sid, raw) {
+  let v = nmtScale(sid, raw);
+  return v === null ? '—' : v ? String(v) : 'нижче порогу';
+}
+function stRawFor(sid, target) {
+  let s = NMT.subjects[sid];
+  for (let r = s.threshold; r <= s.max; r++) if (s.table[r] >= target) return r;
+  return s.max;
+}
+function stExamDate() {
+  return P.study.examDate || STUDY_EXAM;
+}
+function stDaysLeft() {
+  return Math.max(
+    0,
+    Math.round((new Date(stExamDate() + 'T12:00:00') - new Date(pDay() + 'T12:00:00')) / DAY)
+  );
+}
+function stPhase(days = stDaysLeft()) {
+  return STUDY_PHASES.find(p => days <= p.until);
+}
+function stDateLabel(iso) {
+  return new Date(iso + 'T12:00:00').toLocaleDateString('uk-UA', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
 
 /* Прогноз: зважені останні пробники (поточні тестові бали) і точність перших спроб за темами. */
-function stMocks(sid){let out=[];for(let r of P.records||[]){if(!r.finished)continue;let ids=r.ids.filter(id=>PM[id]?.subject===sid);if(ids.length<EXAMINFO[sid].count)continue;out.push({raw:ids.reduce((n,id)=>n+pGrade(PM[id],r.answers[id]),0),max:ids.reduce((n,id)=>n+pMax(PM[id]),0),at:r.finished,full:r.ids.length>EXAMINFO[sid].count})}
- for(let r of P.official?.records||[])if(offSub(r.subject)===sid&&r.finished&&!r.familiar){let s=offScore(r);out.push({raw:s.score,max:s.max,at:r.finished,full:false})}return out.sort((a,b)=>b.at-a.at)}
+function stMocks(sid) {
+  let out = [];
+  for (let r of P.records || []) {
+    if (!r.finished) continue;
+    let ids = r.ids.filter(id => PM[id]?.subject === sid);
+    if (ids.length < EXAMINFO[sid].count) continue;
+    out.push({
+      raw: ids.reduce((n, id) => n + pGrade(PM[id], r.answers[id]), 0),
+      max: ids.reduce((n, id) => n + pMax(PM[id]), 0),
+      at: r.finished,
+      full: r.ids.length > EXAMINFO[sid].count,
+    });
+  }
+  for (let r of P.official?.records || [])
+    if (offSub(r.subject) === sid && r.finished && !r.familiar) {
+      let s = offScore(r);
+      out.push({ raw: s.score, max: s.max, at: r.finished, full: false });
+    }
+  return out.sort((a, b) => b.at - a.at);
+}
 // Точність за темою за першими спробами: (правильні + 0,9) / (спроби + 3).
-function stTopicStats(sid){
- let aa=pAnswers();
- return DB.quality.topics.filter(t=>t.subject===sid).map(t=>{let a=0,m=0,n=0;
-  for(let id of t.questions){let q=PM[id],x=aa[id];if(!q||!x||q.challenge)continue;a+=Math.min(x.first??x.score,x.max);m+=x.max;n++}
-  return {t,m,n,acc:(a+0.9)/(m+3)}})}
+function stTopicStats(sid) {
+  let aa = pAnswers();
+  return DB.quality.topics
+    .filter(t => t.subject === sid)
+    .map(t => {
+      let a = 0,
+        m = 0,
+        n = 0;
+      for (let id of t.questions) {
+        let q = PM[id],
+          x = aa[id];
+        if (!q || !x || q.challenge) continue;
+        a += Math.min(x.first ?? x.score, x.max);
+        m += x.max;
+        n++;
+      }
+      return { t, m, n, acc: (a + 0.9) / (m + 3) };
+    });
+}
 // Вага теми: частка в офіційних тестах НМТ (DB.topicWeights, build.py). Без таблиці всі теми рівні.
-function stWeights(sid){return DB.topicWeights?.w?.[sid]||null}
-function stPractice(sid){
- let rows=stTopicStats(sid),w=stWeights(sid),sum=0,wsum=0,answered=0,points=0,untouched=0;
- for(let r of rows){let k=w?(w[r.t.id]??1/rows.length):1;sum+=k*r.acc;wsum+=k;answered+=r.n;points+=r.m;if(!r.m)untouched++}
- return {p:rows.length&&wsum?sum/wsum:0.3,answered,points,untouched,topics:rows.length,weighted:!!w}}
-function stForecast(sid){let info=NMT.subjects[sid],pr=stPractice(sid),mocks=stMocks(sid).slice(0,3),p=pr.p,w=[3,2,1];if(mocks.length){let m=mocks.reduce((s,x,i)=>s+w[i]*x.raw/x.max,0)/mocks.reduce((s,_,i)=>s+w[i],0);p=pr.answered>=30?0.7*m+0.3*pr.p:m}
- let sd=Math.sqrt(p*(1-p)/(pr.points+mocks.length*info.max+4))+0.12*pr.untouched/Math.max(1,pr.topics),raw=Math.round(p*info.max),lo=Math.round(stClamp(p-1.3*sd,0,1)*info.max),hi=Math.round(stClamp(p+1.3*sd,0,1)*info.max);
- return {raw,lo,hi,max:info.max,scale:nmtScale(sid,raw),scaleLo:nmtScale(sid,lo),scaleHi:nmtScale(sid,hi),basis:mocks.length?'mocks':'practice',answered:pr.answered,mocks:mocks.length,untouched:pr.untouched,topics:pr.topics,enough:pr.answered>=40||mocks.length>0}}
+function stWeights(sid) {
+  return DB.topicWeights?.w?.[sid] || null;
+}
+function stPractice(sid) {
+  let rows = stTopicStats(sid),
+    w = stWeights(sid),
+    sum = 0,
+    wsum = 0,
+    answered = 0,
+    points = 0,
+    untouched = 0;
+  for (let r of rows) {
+    let k = w ? (w[r.t.id] ?? 1 / rows.length) : 1;
+    sum += k * r.acc;
+    wsum += k;
+    answered += r.n;
+    points += r.m;
+    if (!r.m) untouched++;
+  }
+  return {
+    p: rows.length && wsum ? sum / wsum : 0.3,
+    answered,
+    points,
+    untouched,
+    topics: rows.length,
+    weighted: !!w,
+  };
+}
+function stForecast(sid) {
+  let info = NMT.subjects[sid],
+    pr = stPractice(sid),
+    mocks = stMocks(sid).slice(0, 3),
+    p = pr.p,
+    w = [3, 2, 1];
+  if (mocks.length) {
+    let m =
+      mocks.reduce((s, x, i) => s + (w[i] * x.raw) / x.max, 0) /
+      mocks.reduce((s, _, i) => s + w[i], 0);
+    p = pr.answered >= 30 ? 0.7 * m + 0.3 * pr.p : m;
+  }
+  let sd =
+      Math.sqrt((p * (1 - p)) / (pr.points + mocks.length * info.max + 4)) +
+      (0.12 * pr.untouched) / Math.max(1, pr.topics),
+    raw = Math.round(p * info.max),
+    lo = Math.round(stClamp(p - 1.3 * sd, 0, 1) * info.max),
+    hi = Math.round(stClamp(p + 1.3 * sd, 0, 1) * info.max);
+  return {
+    raw,
+    lo,
+    hi,
+    max: info.max,
+    scale: nmtScale(sid, raw),
+    scaleLo: nmtScale(sid, lo),
+    scaleHi: nmtScale(sid, hi),
+    basis: mocks.length ? 'mocks' : 'practice',
+    answered: pr.answered,
+    mocks: mocks.length,
+    untouched: pr.untouched,
+    topics: pr.topics,
+    enough: pr.answered >= 40 || mocks.length > 0,
+  };
+}
 // Ціна тестового бала: найкращий приріст за шкалою на +1…+3 тестові бали від raw, у шкальних балах на тестовий бал.
 // Біля порогу +1 дає стрибок із «нижче порогу» (0) до першого рядка таблиці, тож ціна там висока.
-function stPrice(sid,raw){let s=NMT.subjects[sid],now=nmtScale(sid,raw)||0,best=0;for(let k=1;k<=3&&raw+k<=s.max;k++)best=Math.max(best,((nmtScale(sid,raw+k)||0)-now)/k);return best}
+function stPrice(sid, raw) {
+  let s = NMT.subjects[sid],
+    now = nmtScale(sid, raw) || 0,
+    best = 0;
+  for (let k = 1; k <= 3 && raw + k <= s.max; k++)
+    best = Math.max(best, ((nmtScale(sid, raw + k) || 0) - now) / k);
+  return best;
+}
 // Найвигідніші теми: цінність = ціна бала × (вага теми × макс. тестових балів × слабкість теми), де слабкість = 1 − точність.
-function stBest(n=3){
- let rows=[];
- for(let s of SUBJECTS){let f=stForecast(s.id),w=stWeights(s.id);if(!f.enough||!w)continue;let price=stPrice(s.id,f.raw);if(!price)continue;
-  for(let r of stTopicStats(s.id)){let gain=price*(w[r.t.id]??0)*f.max*(1-r.acc);if(gain>=0.5)rows.push({sid:s.id,subject:s.name,id:r.t.id,title:r.t.title,gain:Math.round(gain),weight:w[r.t.id],acc:r.acc,price})}}
- return rows.sort((a,b)=>b.gain-a.gain).slice(0,n)}
-function stBestHTML(){
- let rows=stBest();if(!rows.length)return '';
- return `<section class="p-section st-best"><div class="p-section-head"><div><h2>Де найдешевше взяти бали</h2><p class="p-caption">За вагою теми в тестах НМТ ${DB.topicWeights.years[0]}–${DB.topicWeights.years[1]}, твоєю слабкістю в ній і ціною тестового бала за шкалою.</p></div></div><div class="p-topic-list">${rows.map(r=>`<a class="p-topic-row" href="#${r.id.startsWith('hist-')?'topic/'+r.id.slice(5):'lesson/'+r.id}"><h3>${esc(r.title)}<small> · ${esc(r.subject)}</small></h3><span>до +${r.gain} за шкалою ›</span></a>`).join('')}</div></section>`}
+function stBest(n = 3) {
+  let rows = [];
+  for (let s of SUBJECTS) {
+    let f = stForecast(s.id),
+      w = stWeights(s.id);
+    if (!f.enough || !w) continue;
+    let price = stPrice(s.id, f.raw);
+    if (!price) continue;
+    for (let r of stTopicStats(s.id)) {
+      let gain = price * (w[r.t.id] ?? 0) * f.max * (1 - r.acc);
+      if (gain >= 0.5)
+        rows.push({
+          sid: s.id,
+          subject: s.name,
+          id: r.t.id,
+          title: r.t.title,
+          gain: Math.round(gain),
+          weight: w[r.t.id],
+          acc: r.acc,
+          price,
+        });
+    }
+  }
+  return rows.sort((a, b) => b.gain - a.gain).slice(0, n);
+}
+function stBestHTML() {
+  let rows = stBest();
+  if (!rows.length) return '';
+  return `<section class="p-section st-best"><div class="p-section-head"><div><h2>Де найдешевше взяти бали</h2><p class="p-caption">За вагою теми в тестах НМТ ${DB.topicWeights.years[0]}–${DB.topicWeights.years[1]}, твоєю слабкістю в ній і ціною тестового бала за шкалою.</p></div></div><div class="p-topic-list">${rows.map(r => `<a class="p-topic-row" href="#${r.id.startsWith('hist-') ? 'topic/' + r.id.slice(5) : 'lesson/' + r.id}"><h3>${esc(r.title)}<small> · ${esc(r.subject)}</small></h3><span>до +${r.gain} за шкалою ›</span></a>`).join('')}</div></section>`;
+}
 // Формула Порядку прийому 2026: (К1·П1+К2·П2+К3·П3+К4·П4)/(К1+К2+К3+(К4max+К4)/2), не більше 200.
-function stCompetition(vals){let c=P.study.coef,den=c.k1+c.k2+c.k3+(c.k4max+c.k4)/2;if(!den||vals.some(v=>!v))return null;return Math.min(200,(c.k1*vals[0]+c.k2*vals[1]+c.k3*vals[2]+c.k4*vals[3])/den)}
+function stCompetition(vals) {
+  let c = P.study.coef,
+    den = c.k1 + c.k2 + c.k3 + (c.k4max + c.k4) / 2;
+  if (!den || vals.some(v => !v)) return null;
+  return Math.min(200, (c.k1 * vals[0] + c.k2 * vals[1] + c.k3 * vals[2] + c.k4 * vals[3]) / den);
+}
 
 /* Повторення: SM-2 з упевненістю з маршруту; інтервал не виходить за тиждень до НМТ. */
-function stDueAt(days){let d=new Date();d.setHours(4,0,0,0);return d.getTime()+days*DAY}
-function stGrade(q,a){let c=P.coach?.items?.[q.id]?.confidence||0;if(a.score>=a.max)return c===1?3:c===3?5:4;return a.score>0?2:1}
-function stCap(){let days=stDaysLeft();return days>21?days-7:Math.max(1,Math.floor(days/2))}
-function stSchedule(q,a,first=false){let today=pDay(),x=P.study.srs[q.id];if(!x){// Раніше розв’язані завдання стартують з колишньої серії маршруту.
- let streak=first?0:Math.max(0,(P.coach?.items?.[q.id]?.streak||0)-(a.score>=a.max?1:0));x={e:2.5,i:[0,1,3,7,14,30][Math.min(5,streak)],n:streak,l:0,d:''}}let g=stGrade(q,a);
- if(g<3){x.n=0;x.l++;x.i=0;x.e=Math.max(1.3,x.e-0.2);a.due=Date.now()+(g===2?3600000:600000)}
- else if(x.d===today&&x.n>0)a.due=stDueAt(1);// Повтор того самого дня не подовжує інтервал.
- else{x.n++;x.e=stClamp(x.e+0.1-(5-g)*(0.08+(5-g)*0.02),1.3,3);let i=x.n===1?1:x.n===2?(g===3?2:3):Math.round(Math.max(1,x.i)*x.e*(g===3?0.7:1));if(i>3){let h=[...q.id].reduce((s,c)=>(s*31+c.charCodeAt(0))>>>0,7);i=Math.round(i*(0.92+(h%17)/100))}x.i=stClamp(i,1,Math.min(180,stCap()));a.due=stDueAt(x.i)}
- x.d=today;P.study.srs[q.id]=x}
-function stClampDue(){let limit=stDueAt(stCap()),aa=pAnswers();for(let [id,a]of Object.entries(aa))if(PM[id]&&a.due>limit)a.due=limit;save();pSave()}
+function stDueAt(days) {
+  let d = new Date();
+  d.setHours(4, 0, 0, 0);
+  return d.getTime() + days * DAY;
+}
+function stGrade(q, a) {
+  let c = P.coach?.items?.[q.id]?.confidence || 0;
+  if (a.score >= a.max) return c === 1 ? 3 : c === 3 ? 5 : 4;
+  return a.score > 0 ? 2 : 1;
+}
+function stCap() {
+  let days = stDaysLeft();
+  return days > 21 ? days - 7 : Math.max(1, Math.floor(days / 2));
+}
+function stSchedule(q, a, first = false) {
+  let today = pDay(),
+    x = P.study.srs[q.id];
+  if (!x) {
+    // Раніше розв’язані завдання стартують з колишньої серії маршруту.
+    let streak = first
+      ? 0
+      : Math.max(0, (P.coach?.items?.[q.id]?.streak || 0) - (a.score >= a.max ? 1 : 0));
+    x = { e: 2.5, i: [0, 1, 3, 7, 14, 30][Math.min(5, streak)], n: streak, l: 0, d: '' };
+  }
+  let g = stGrade(q, a);
+  if (g < 3) {
+    x.n = 0;
+    x.l++;
+    x.i = 0;
+    x.e = Math.max(1.3, x.e - 0.2);
+    a.due = Date.now() + (g === 2 ? 3600000 : 600000);
+  } else if (x.d === today && x.n > 0)
+    a.due = stDueAt(1); // Повтор того самого дня не подовжує інтервал.
+  else {
+    x.n++;
+    x.e = stClamp(x.e + 0.1 - (5 - g) * (0.08 + (5 - g) * 0.02), 1.3, 3);
+    let i =
+      x.n === 1
+        ? 1
+        : x.n === 2
+          ? g === 3
+            ? 2
+            : 3
+          : Math.round(Math.max(1, x.i) * x.e * (g === 3 ? 0.7 : 1));
+    if (i > 3) {
+      let h = [...q.id].reduce((s, c) => (s * 31 + c.charCodeAt(0)) >>> 0, 7);
+      i = Math.round(i * (0.92 + (h % 17) / 100));
+    }
+    x.i = stClamp(i, 1, Math.min(180, stCap()));
+    a.due = stDueAt(x.i);
+  }
+  x.d = today;
+  P.study.srs[q.id] = x;
+}
+function stClampDue() {
+  let limit = stDueAt(stCap()),
+    aa = pAnswers();
+  for (let [id, a] of Object.entries(aa)) if (PM[id] && a.due > limit) a.due = limit;
+  save();
+  pSave();
+}
 // Практика історії зі сторінки теми йде через старий рушій; розклад має бути той самий.
-const stLegacyCheck=check;check=function(){let q=current(),before=q&&!isMock()?S.answers[q.id]?.attempts||0:-1;stLegacyCheck();let a=q&&S.answers[q.id];if(before<0||!a||(a.attempts||0)<=before||!PM[q.id])return;stSchedule(PM[q.id],a,before===0);save();pSave()};
-const stCheckBase=pCheck;pCheck=function(){let q=pQ(),cx=pContext();if(!q||!cx||cx.exam||cx.record||pLocked(q))return stCheckBase();let before=pAnswerRecord(q.id)?.attempts||0;stCheckBase();let a=pAnswerRecord(q.id);if(!a||(a.attempts||0)<=before)return;stSchedule(q,a,before===0);if(QM[q.id])save();pSave();pPractice()};
+const stLegacyCheck = check;
+check = function () {
+  let q = current(),
+    before = q && !isMock() ? S.answers[q.id]?.attempts || 0 : -1;
+  stLegacyCheck();
+  let a = q && S.answers[q.id];
+  if (before < 0 || !a || (a.attempts || 0) <= before || !PM[q.id]) return;
+  stSchedule(PM[q.id], a, before === 0);
+  save();
+  pSave();
+};
+const stCheckBase = pCheck;
+pCheck = function () {
+  let q = pQ(),
+    cx = pContext();
+  if (!q || !cx || cx.exam || cx.record || pLocked(q)) return stCheckBase();
+  let before = pAnswerRecord(q.id)?.attempts || 0;
+  stCheckBase();
+  let a = pAnswerRecord(q.id);
+  if (!a || (a.attempts || 0) <= before) return;
+  stSchedule(q, a, before === 0);
+  if (QM[q.id]) save();
+  pSave();
+  pPractice();
+};
 
 /* Завдання на день: повторення за строком, нова тема предмета з найбільшим відставанням, пробник за графіком етапу. */
-function stCost(q){return q.subject==='math'?(q.type==='numeric'?4:q.type==='match'?3:2.5):q.type==='single'?(String(q.passage||'').length>300?2:1):2}
-function stMinutes(ids){return Math.max(1,Math.round(ids.reduce((s,id)=>s+stCost(PM[id]),0)))}
-function stTopicRoute(t){return t.subject==='hist'?'topic/'+t.id.slice(5):'lesson/'+t.id}
-function stLastStudy(sid){let aa=pAnswers(),last=0;for(let q of PQ)if(q.subject===sid&&aa[q.id]?.at>last)last=aa[q.id].at;return last}
-function stVariants(sid){let n={ukr:DB.ukrainianFiveOptionSets.length,eng:PSUB.eng.mockSets?.length||3,math:8,hist:stHistTests.length||8};return sid==='all'?Math.min(...Object.values(n)):n[sid]||3}
-function stVariantList(sid){return Array.from({length:stVariants(sid)},(_,i)=>i+1)}
-function stNextVariant(sid){let used=v=>(P.records||[]).filter(r=>r.subject===sid&&!r.short&&r.variant===v).length;return stVariantList(sid).sort((a,b)=>used(a)-used(b)||a-b)[0]}
-function stMockToday(phase){if(!P.coach?.results?.length&&!SUBJECTS.some(s=>stMocks(s.id).length))return {sid:'diagnostic',variant:1};let bySub={},last=0;for(let s of SUBJECTS){bySub[s.id]=stMocks(s.id)[0]?.at||0;last=Math.max(last,bySub[s.id])}if(Date.now()-last<phase.mockEvery*DAY)return null;
- let full=Math.max(0,...(P.records||[]).filter(r=>r.finished&&r.subject==='all').map(r=>r.finished));if(['sprint','final'].includes(phase.id)&&Date.now()-full>=7*DAY)return {sid:'all',variant:stNextVariant('all')};let sid=SUBJECTS.map(s=>s.id).sort((a,b)=>bySub[a]-bySub[b])[0];return {sid,variant:stNextVariant(sid)}}
-function stBuildToday(){let aa=pAnswers(),now=Date.now(),mins=P.plan.minutes,phase=stPhase(),review=[],used=0,end=stDueAt(1);
- for(let q of PQ.filter(q=>aa[q.id]&&aa[q.id].due<end&&!q.examOnly).sort((a,b)=>aa[a.id].due-aa[b.id].due)){let c=stCost(q);if(used+c>mins*phase.review&&review.length)break;review.push(q.id);used+=c}
- let mock=stMockToday(phase),left=mins-used-(mock&&mock.sid!=='diagnostic'?60:mock?20:0),learn=[];
- if(phase.id!=='final'&&left>=8){let ranks=coachTopicRanks(),order=SUBJECTS.map(s=>{let f=stForecast(s.id),since=(now-stLastStudy(s.id))/DAY;return {sid:s.id,score:Math.max(0,P.study.targets[s.id]-(f.scale||100))+6*Math.min(5,since)+(f.answered<20?25:0)}}).sort((a,b)=>b.score-a.score),n=left>=40?2:1;
-  for(let {sid}of order.slice(0,n)){let per=left/n;for(let t of ranks.filter(t=>t.subject===sid)){let qs=t.questions.map(id=>PM[id]).filter(q=>q&&!q.challenge&&!q.examOnly&&!review.includes(q.id)&&(!aa[q.id]||aa[q.id].score<aa[q.id].max)).sort((a,b)=>(a.level||1)-(b.level||1));if(!qs.length)continue;let ids=[],m=0;for(let q of qs){if(m+stCost(q)>per&&ids.length)break;ids.push(q.id);m+=stCost(q)}learn.push({sid,topicId:t.id,title:t.title,route:stTopicRoute(t),ids});break}}}
- return {day:pDay(),phase:phase.id,review,learn,mock}}
-function stToday(force=false){let t=P.study.today;if(!force&&t&&t.day===pDay())return t;P.study.today=stBuildToday();pSave();return P.study.today}
+function stCost(q) {
+  return q.subject === 'math'
+    ? q.type === 'numeric'
+      ? 4
+      : q.type === 'match'
+        ? 3
+        : 2.5
+    : q.type === 'single'
+      ? String(q.passage || '').length > 300
+        ? 2
+        : 1
+      : 2;
+}
+function stMinutes(ids) {
+  return Math.max(1, Math.round(ids.reduce((s, id) => s + stCost(PM[id]), 0)));
+}
+function stTopicRoute(t) {
+  return t.subject === 'hist' ? 'topic/' + t.id.slice(5) : 'lesson/' + t.id;
+}
+function stLastStudy(sid) {
+  let aa = pAnswers(),
+    last = 0;
+  for (let q of PQ) if (q.subject === sid && aa[q.id]?.at > last) last = aa[q.id].at;
+  return last;
+}
+function stVariants(sid) {
+  let n = {
+    ukr: DB.ukrainianFiveOptionSets.length,
+    eng: PSUB.eng.mockSets?.length || 3,
+    math: 8,
+    hist: stHistTests.length || 8,
+  };
+  return sid === 'all' ? Math.min(...Object.values(n)) : n[sid] || 3;
+}
+function stVariantList(sid) {
+  return Array.from({ length: stVariants(sid) }, (_, i) => i + 1);
+}
+function stNextVariant(sid) {
+  let used = v =>
+    (P.records || []).filter(r => r.subject === sid && !r.short && r.variant === v).length;
+  return stVariantList(sid).sort((a, b) => used(a) - used(b) || a - b)[0];
+}
+function stMockToday(phase) {
+  if (!P.coach?.results?.length && !SUBJECTS.some(s => stMocks(s.id).length))
+    return { sid: 'diagnostic', variant: 1 };
+  let bySub = {},
+    last = 0;
+  for (let s of SUBJECTS) {
+    bySub[s.id] = stMocks(s.id)[0]?.at || 0;
+    last = Math.max(last, bySub[s.id]);
+  }
+  if (Date.now() - last < phase.mockEvery * DAY) return null;
+  let full = Math.max(
+    0,
+    ...(P.records || []).filter(r => r.finished && r.subject === 'all').map(r => r.finished)
+  );
+  if (['sprint', 'final'].includes(phase.id) && Date.now() - full >= 7 * DAY)
+    return { sid: 'all', variant: stNextVariant('all') };
+  let sid = SUBJECTS.map(s => s.id).sort((a, b) => bySub[a] - bySub[b])[0];
+  return { sid, variant: stNextVariant(sid) };
+}
+function stBuildToday() {
+  let aa = pAnswers(),
+    now = Date.now(),
+    mins = P.plan.minutes,
+    phase = stPhase(),
+    review = [],
+    used = 0,
+    end = stDueAt(1);
+  for (let q of PQ.filter(q => aa[q.id] && aa[q.id].due < end && !q.examOnly).sort(
+    (a, b) => aa[a.id].due - aa[b.id].due
+  )) {
+    let c = stCost(q);
+    if (used + c > mins * phase.review && review.length) break;
+    review.push(q.id);
+    used += c;
+  }
+  let mock = stMockToday(phase),
+    left = mins - used - (mock && mock.sid !== 'diagnostic' ? 60 : mock ? 20 : 0),
+    learn = [];
+  if (phase.id !== 'final' && left >= 8) {
+    let ranks = coachTopicRanks(),
+      order = SUBJECTS.map(s => {
+        let f = stForecast(s.id),
+          since = (now - stLastStudy(s.id)) / DAY;
+        return {
+          sid: s.id,
+          score:
+            Math.max(0, P.study.targets[s.id] - (f.scale || 100)) +
+            6 * Math.min(5, since) +
+            (f.answered < 20 ? 25 : 0),
+        };
+      }).sort((a, b) => b.score - a.score),
+      n = left >= 40 ? 2 : 1;
+    for (let { sid } of order.slice(0, n)) {
+      let per = left / n;
+      for (let t of ranks.filter(t => t.subject === sid)) {
+        let qs = t.questions
+          .map(id => PM[id])
+          .filter(
+            q =>
+              q &&
+              !q.challenge &&
+              !q.examOnly &&
+              !review.includes(q.id) &&
+              (!aa[q.id] || aa[q.id].score < aa[q.id].max)
+          )
+          .sort((a, b) => (a.level || 1) - (b.level || 1));
+        if (!qs.length) continue;
+        let ids = [],
+          m = 0;
+        for (let q of qs) {
+          if (m + stCost(q) > per && ids.length) break;
+          ids.push(q.id);
+          m += stCost(q);
+        }
+        learn.push({ sid, topicId: t.id, title: t.title, route: stTopicRoute(t), ids });
+        break;
+      }
+    }
+  }
+  return { day: pDay(), phase: phase.id, review, learn, mock };
+}
+function stToday(force = false) {
+  let t = P.study.today;
+  if (!force && t && t.day === pDay()) return t;
+  P.study.today = stBuildToday();
+  pSave();
+  return P.study.today;
+}
 // Kyiv midnight: pDay() is the Kyiv date, so the day must start there whatever the browser's time zone is.
-function stDayStart(){const n=new Date(),k=new Date(n.toLocaleString('en-US',{timeZone:'Europe/Kyiv'}));return n.getTime()-((k.getHours()*60+k.getMinutes())*60+k.getSeconds())*1000-n.getMilliseconds()}
-function stDone(ids){let aa=pAnswers(),start=stDayStart();return ids.filter(id=>aa[id]&&aa[id].at>=start).length}
-function stRun(kind,i=0){let t=stToday(),ids=(kind==='review'?t.review:t.learn[i]?.ids||[]).filter(id=>PM[id]),aa=pAnswers(),start=stDayStart();if(!ids.length){toast('Тут усе виконано.');return}for(let id of ids)if(aa[id]&&aa[id].at<start)coachPrepareRecall(id);save();pSave();pStart(ids,kind==='review'?'Повторення на сьогодні':'Нова тема: '+t.learn[i].title,'today-'+kind+'-'+i)}
-function stMockRun(){let m=stToday().mock;if(!m)return;if(m.sid==='diagnostic')coachStart('');else pLaunchMock(m.sid,m.variant)}
-function stMockDone(m){if(!m)return false;let start=stDayStart();if(m.sid==='diagnostic')return (P.coach?.results||[]).some(r=>r.finished>=start);return (P.records||[]).some(r=>r.finished>=start&&!r.short&&r.subject===m.sid)}
+function stDayStart() {
+  const n = new Date(),
+    k = new Date(n.toLocaleString('en-US', { timeZone: 'Europe/Kyiv' }));
+  return (
+    n.getTime() -
+    ((k.getHours() * 60 + k.getMinutes()) * 60 + k.getSeconds()) * 1000 -
+    n.getMilliseconds()
+  );
+}
+function stDone(ids) {
+  let aa = pAnswers(),
+    start = stDayStart();
+  return ids.filter(id => aa[id] && aa[id].at >= start).length;
+}
+function stRun(kind, i = 0) {
+  let t = stToday(),
+    ids = (kind === 'review' ? t.review : t.learn[i]?.ids || []).filter(id => PM[id]),
+    aa = pAnswers(),
+    start = stDayStart();
+  if (!ids.length) {
+    toast('Тут усе виконано.');
+    return;
+  }
+  for (let id of ids) if (aa[id] && aa[id].at < start) coachPrepareRecall(id);
+  save();
+  pSave();
+  pStart(
+    ids,
+    kind === 'review' ? 'Повторення на сьогодні' : 'Нова тема: ' + t.learn[i].title,
+    'today-' + kind + '-' + i
+  );
+}
+function stMockRun() {
+  let m = stToday().mock;
+  if (!m) return;
+  if (m.sid === 'diagnostic') coachStart('');
+  else pLaunchMock(m.sid, m.variant);
+}
+function stMockDone(m) {
+  if (!m) return false;
+  let start = stDayStart();
+  if (m.sid === 'diagnostic') return (P.coach?.results || []).some(r => r.finished >= start);
+  return (P.records || []).some(r => r.finished >= start && !r.short && r.subject === m.sid);
+}
 
 /* Сторінки. */
-function stBar(done,total){return `<div class="st-progress" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct(done,total)}%"></i></div>`}
-function stTodayPage(){let t=stToday(),days=stDaysLeft(),phase=stPhase(days),m=t.mock,mockName=!m?'':m.sid==='diagnostic'?'Діагностика з 4 предметів':m.sid==='all'?'Повна симуляція НМТ · варіант '+m.variant:SUB[m.sid].name+' · пробник, варіант '+m.variant,rd=stDone(t.review),cards=[];
- cards.push(`<article class="st-task"><p class="p-kicker">Повторення за графіком</p><h2>${t.review.length?stPlural(t.review.length,'завдання','завдання','завдань'):'Сьогодні нічого не прострочено'}</h2><p>${t.review.length?`Близько ${stMinutes(t.review)} хв. Завдання, які настав час пригадати, щоб вони не забулися до НМТ.`:'Повторення з’являться після перших відповідей: інтервали ростуть від 1 дня до кількох тижнів.'}</p>${t.review.length?stBar(rd,t.review.length)+`<div class="p-actions"><button class="${rd<t.review.length?'primary':''}" onclick="stRun('review')">${rd?rd<t.review.length?'Продовжити':'Повторити ще раз':'Почати повторення'} ›</button></div>`:''}</article>`);
- t.learn.forEach((l,i)=>{let d=stDone(l.ids);cards.push(`<article class="st-task" style="--subject:${SUB[l.sid].color}"><p class="p-kicker">Нова тема · ${SUB[l.sid].name}</p><h2>${esc(l.title)}</h2><p>Спочатку конспект, потім ${stPlural(l.ids.length,'завдання','завдання','завдань')} (≈${stMinutes(l.ids)} хв). Пояснення відкриються після перевірки.</p>${stBar(d,l.ids.length)}<div class="p-actions"><a href="#${esc(l.route)}">Прочитати конспект ›</a><button class="${d<l.ids.length?'primary':''}" onclick="stRun('learn',${i})">${d?'Продовжити':'До завдань'} ›</button></div></article>`)});
- if(m){let done=stMockDone(m);cards.push(`<article class="st-task st-mock"><p class="p-kicker">${m.sid==='diagnostic'?'Стартова точка':'Перевірка у форматі НМТ'}</p><h2>${mockName}</h2><p>${m.sid==='diagnostic'?'32 короткі завдання, по 8 з предмета. Покаже, з чого почати, і дасть перші дані для прогнозу.':m.sid==='all'?'Два блоки по 120 хв із перервою, як на справжньому НМТ.':'60 хв з таймером. Після завершення побачиш бал за шкалою 100–200 і теми з втраченими балами.'}</p><div class="p-actions">${done?'<span class="p-caption">Виконано сьогодні ✓</span>':`<button class="primary" onclick="stMockRun()">Почати ›</button>`}</div></article>`)}
- if(phase.id==='final')cards.push(`<article class="st-task"><p class="p-kicker">Останній тиждень</p><h2>Довідки замість нових тем</h2><p>Переглянь картки наголосів, формули й дати. Нові теми зараз забирають сили, а дають мало.</p><div class="p-actions"><a href="#reference">Картки-довідки ›</a><button onclick="pFormulaDialog()">Формули з математики</button></div></article>`);
- $('#main').innerHTML=pHeading('Сьогодні · '+new Date().toLocaleDateString('uk-UA',{weekday:'long',day:'numeric',month:'long'}),days?'До НМТ '+stPlural(days,'день','дні','днів'):(pDay()>stExamDate()?'НМТ уже минуло':'День НМТ'),`Етап «${phase.name}». ${phase.text}`)+`<div class="st-tasks">${cards.join('')}</div><div class="p-actions p-section"><a href="#plan">Дата НМТ, цілі та час на день ›</a><button onclick="stToday(true);stTodayPage()">Перебудувати план на сьогодні</button></div>${stForecastHTML(true)}${pFoot()}`}
-function stForecastHTML(compact=false){let fc=SUBJECTS.map(s=>({s,f:stForecast(s.id),t:P.study.targets[s.id]})),comp=fc.every(x=>x.f.enough)?stCompetition(fc.map(x=>x.f.scale||0)):null,goal=stCompetition(fc.map(x=>x.t)),pos=v=>stClamp((v-100),0,100);
- return `<section class="p-section st-forecast"><div class="p-section-head"><div><h2>${compact?'Де ти зараз':'Де ти зараз і скільки до цілі'}</h2><p class="p-caption">Прогноз за шкалою 100–200</p></div><a href="#plan">Змінити цілі ›</a></div><div class="st-fc-grid">${fc.map(({s,f,t})=>`<article style="--subject:${s.color}"><h3>${s.name}</h3><strong>${!f.enough?'—':f.scale===0?'&lt;100':f.scale}</strong><span>${f.enough?`ймовірно ${f.scaleLo||'&lt;100'}–${f.scaleHi||'&lt;100'}`:'мало даних: розв’яжи більше завдань'}</span><div class="st-scale" aria-hidden="true"><i style="width:${f.enough?pos(f.scale||100):0}%"></i><b style="left:${pos(t)}%"></b></div><p>Ціль ${t}: потрібно ${stRawFor(s.id,t)} з ${f.max} тестових балів${f.enough?`, зараз ≈${f.raw}`:''}.</p>${compact?'':`<small>${f.basis==='mocks'?`За ${f.mocks} останніми пробниками та практикою.`:`За першими спробами (${stPlural(f.answered,'завдання','завдання','завдань')}). Неопрацьованих тем: ${f.untouched} з ${f.topics}.`}</small>`}</article>`).join('')}</div>${comp&&!compact?`<p class="st-comp">Орієнтовний конкурсний бал зараз: <strong>${comp.toFixed(1)}</strong> · за твоїми цілями: <strong>${goal.toFixed(1)}</strong>. Коефіцієнти спеціальності задаються в розділі «Мій план».</p>`:''}<p class="p-caption">${compact?`Прогноз орієнтовний: таблиці НМТ-${NMT.year}.`:`Переведення — за таблицями НМТ-${NMT.year} (${esc(NMT.source)}). Таблиці на 2027 рік МОН затвердить окремо, тому прогноз орієнтовний. Перша спроба важить більше за виправлену: на іспиті другої спроби немає.`}</p></section>`}
+function stBar(done, total) {
+  return `<div class="st-progress" role="progressbar" aria-valuemin="0" aria-valuemax="${total}" aria-valuenow="${done}"><i style="width:${pct(done, total)}%"></i></div>`;
+}
+function stTodayPage() {
+  let t = stToday(),
+    days = stDaysLeft(),
+    phase = stPhase(days),
+    m = t.mock,
+    mockName = !m
+      ? ''
+      : m.sid === 'diagnostic'
+        ? 'Діагностика з 4 предметів'
+        : m.sid === 'all'
+          ? 'Повна симуляція НМТ · варіант ' + m.variant
+          : SUB[m.sid].name + ' · пробник, варіант ' + m.variant,
+    rd = stDone(t.review),
+    cards = [];
+  cards.push(
+    `<article class="st-task"><p class="p-kicker">Повторення за графіком</p><h2>${t.review.length ? stPlural(t.review.length, 'завдання', 'завдання', 'завдань') : 'Сьогодні нічого не прострочено'}</h2><p>${t.review.length ? `Близько ${stMinutes(t.review)} хв. Завдання, які настав час пригадати, щоб вони не забулися до НМТ.` : 'Повторення з’являться після перших відповідей: інтервали ростуть від 1 дня до кількох тижнів.'}</p>${t.review.length ? stBar(rd, t.review.length) + `<div class="p-actions"><button class="${rd < t.review.length ? 'primary' : ''}" onclick="stRun('review')">${rd ? (rd < t.review.length ? 'Продовжити' : 'Повторити ще раз') : 'Почати повторення'} ›</button></div>` : ''}</article>`
+  );
+  t.learn.forEach((l, i) => {
+    let d = stDone(l.ids);
+    cards.push(
+      `<article class="st-task" style="--subject:${SUB[l.sid].color}"><p class="p-kicker">Нова тема · ${SUB[l.sid].name}</p><h2>${esc(l.title)}</h2><p>Спочатку конспект, потім ${stPlural(l.ids.length, 'завдання', 'завдання', 'завдань')} (≈${stMinutes(l.ids)} хв). Пояснення відкриються після перевірки.</p>${stBar(d, l.ids.length)}<div class="p-actions"><a href="#${esc(l.route)}">Прочитати конспект ›</a><button class="${d < l.ids.length ? 'primary' : ''}" onclick="stRun('learn',${i})">${d ? 'Продовжити' : 'До завдань'} ›</button></div></article>`
+    );
+  });
+  if (m) {
+    let done = stMockDone(m);
+    cards.push(
+      `<article class="st-task st-mock"><p class="p-kicker">${m.sid === 'diagnostic' ? 'Стартова точка' : 'Перевірка у форматі НМТ'}</p><h2>${mockName}</h2><p>${m.sid === 'diagnostic' ? '32 короткі завдання, по 8 з предмета. Покаже, з чого почати, і дасть перші дані для прогнозу.' : m.sid === 'all' ? 'Два блоки по 120 хв із перервою, як на справжньому НМТ.' : '60 хв з таймером. Після завершення побачиш бал за шкалою 100–200 і теми з втраченими балами.'}</p><div class="p-actions">${done ? '<span class="p-caption">Виконано сьогодні ✓</span>' : `<button class="primary" onclick="stMockRun()">Почати ›</button>`}</div></article>`
+    );
+  }
+  if (phase.id === 'final')
+    cards.push(
+      `<article class="st-task"><p class="p-kicker">Останній тиждень</p><h2>Довідки замість нових тем</h2><p>Переглянь картки наголосів, формули й дати. Нові теми зараз забирають сили, а дають мало.</p><div class="p-actions"><a href="#reference">Картки-довідки ›</a><button onclick="pFormulaDialog()">Формули з математики</button></div></article>`
+    );
+  $('#main').innerHTML =
+    pHeading(
+      'Сьогодні · ' +
+        new Date().toLocaleDateString('uk-UA', { weekday: 'long', day: 'numeric', month: 'long' }),
+      days
+        ? 'До НМТ ' + stPlural(days, 'день', 'дні', 'днів')
+        : pDay() > stExamDate()
+          ? 'НМТ уже минуло'
+          : 'День НМТ',
+      `Етап «${phase.name}». ${phase.text}`
+    ) +
+    `<div class="st-tasks">${cards.join('')}</div><div class="p-actions p-section"><a href="#plan">Дата НМТ, цілі та час на день ›</a><button onclick="stToday(true);stTodayPage()">Перебудувати план на сьогодні</button></div>${stForecastHTML(true)}${pFoot()}`;
+}
+function stForecastHTML(compact = false) {
+  let fc = SUBJECTS.map(s => ({ s, f: stForecast(s.id), t: P.study.targets[s.id] })),
+    comp = fc.every(x => x.f.enough) ? stCompetition(fc.map(x => x.f.scale || 0)) : null,
+    goal = stCompetition(fc.map(x => x.t)),
+    pos = v => stClamp(v - 100, 0, 100);
+  return `<section class="p-section st-forecast"><div class="p-section-head"><div><h2>${compact ? 'Де ти зараз' : 'Де ти зараз і скільки до цілі'}</h2><p class="p-caption">Прогноз за шкалою 100–200</p></div><a href="#plan">Змінити цілі ›</a></div><div class="st-fc-grid">${fc.map(({ s, f, t }) => `<article style="--subject:${s.color}"><h3>${s.name}</h3><strong>${!f.enough ? '—' : f.scale === 0 ? '&lt;100' : f.scale}</strong><span>${f.enough ? `ймовірно ${f.scaleLo || '&lt;100'}–${f.scaleHi || '&lt;100'}` : 'мало даних: розв’яжи більше завдань'}</span><div class="st-scale" aria-hidden="true"><i style="width:${f.enough ? pos(f.scale || 100) : 0}%"></i><b style="left:${pos(t)}%"></b></div><p>Ціль ${t}: потрібно ${stRawFor(s.id, t)} з ${f.max} тестових балів${f.enough ? `, зараз ≈${f.raw}` : ''}.</p>${compact ? '' : `<small>${f.basis === 'mocks' ? `За ${f.mocks} останніми пробниками та практикою.` : `За першими спробами (${stPlural(f.answered, 'завдання', 'завдання', 'завдань')}). Неопрацьованих тем: ${f.untouched} з ${f.topics}.`}</small>`}</article>`).join('')}</div>${comp && !compact ? `<p class="st-comp">Орієнтовний конкурсний бал зараз: <strong>${comp.toFixed(1)}</strong> · за твоїми цілями: <strong>${goal.toFixed(1)}</strong>. Коефіцієнти спеціальності задаються в розділі «Мій план».</p>` : ''}<p class="p-caption">${compact ? `Прогноз орієнтовний: таблиці НМТ-${NMT.year}.` : `Переведення — за таблицями НМТ-${NMT.year} (${esc(NMT.source)}). Таблиці на 2027 рік МОН затвердить окремо, тому прогноз орієнтовний. Перша спроба важить більше за виправлену: на іспиті другої спроби немає.`}</p></section>`;
+}
 
-function stCompHTML(){let goal=stCompetition(SUBJECTS.map(s=>P.study.targets[s.id])),fc=SUBJECTS.map(s=>stForecast(s.id)),now=fc.every(f=>f.enough)?stCompetition(fc.map(f=>f.scale||0)):null;return `<p class="st-comp">За твоїми цілями: <strong>${goal?goal.toFixed(1):'—'}</strong>${now?` · за поточним прогнозом: <strong>${now.toFixed(1)}</strong>`:' · прогноз з’явиться, коли буде досить даних з усіх предметів'}</p>`}
+function stCompHTML() {
+  let goal = stCompetition(SUBJECTS.map(s => P.study.targets[s.id])),
+    fc = SUBJECTS.map(s => stForecast(s.id)),
+    now = fc.every(f => f.enough) ? stCompetition(fc.map(f => f.scale || 0)) : null;
+  return `<p class="st-comp">За твоїми цілями: <strong>${goal ? goal.toFixed(1) : '—'}</strong>${now ? ` · за поточним прогнозом: <strong>${now.toFixed(1)}</strong>` : ' · прогноз з’явиться, коли буде досить даних з усіх предметів'}</p>`;
+}
 // A real calendar date in the future (the plan counts days to it).
-function stFutureDate(v){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(v);if(!m)return false;const y=+m[1],mo=+m[2],d=+m[3],dt=new Date(y,mo-1,d);return dt.getFullYear()===y&&dt.getMonth()===mo-1&&dt.getDate()===d&&v>pDay()}
-function stSet(field,value){if(field==='examDate'){if(!stFutureDate(value)){toast('Дата НМТ має бути справжньою датою в майбутньому.');return}P.study.examDate=value;P.study.today=null;stClampDue()}else if(field==='minutes'){let v=Number(value);if(![20,30,45,60,90].includes(v))return;P.plan.minutes=v;P.study.today=null}else if(field.startsWith('target-')){let sid=field.slice(7),v=Number(value);if(!SUB[sid])return;if(!nmtValues(sid).includes(v)){toast('У таблиці НМТ для предмета «'+SUB[sid].name+'» немає балу '+String(value).slice(0,6)+'.');return}P.study.targets[sid]=v;P.study.today=null}else if(field.startsWith('coef-')){let k=field.slice(5),v=Number(String(value).replace(',','.'));if(!(k in P.study.coef)||!(v>=0&&v<=1))return;P.study.coef[k]=v}pSave();pPlan()}
-pPlan=function(){let days=stDaysLeft(),phase=stPhase(days),aa=pAnswers(),start=new Date(pDay()+'T12:00:00'),exam=new Date(stExamDate()+'T12:00:00'),phases=[...STUDY_PHASES].reverse().map(p=>{let from=p.id==='foundation'?null:new Date(exam.getTime()-p.until*DAY);return {...p,from}}),activity=[];
- for(let i=27;i>=0;i--){let d=new Date(start.getTime()-i*DAY).toLocaleDateString('en-CA'),n=(P.logs[d]||0)+(S.days?.[d]||0);activity.push(`<i class="st-a${n?n<10?1:n<30?2:3:0}" title="${d}: ${n} відповідей"></i>`)}
- let week=Array.from({length:7},(_,i)=>{let d=new Date(start.getTime()+i*DAY),from=new Date(d);from.setHours(0,0,0,0);let to=from.getTime()+DAY,n=Object.entries(aa).filter(([id,a])=>PM[id]&&(i===0?a.due<to:a.due>=from.getTime()&&a.due<to)).length;return `<li><span>${d.toLocaleDateString('uk-UA',{weekday:'short',day:'numeric',month:'short'})}</span><strong>${n}</strong><em>на повторення</em></li>`}).join('');
- $('#main').innerHTML=pHeading('Розклад підготовки','Мій план до НМТ','План перебудовується щодня: що повторити, яку тему взяти, коли писати пробник. Тут задаєш дату, цілі й час.')+`<section class="p-form st-plan-form"><fieldset class="p-fieldset"><legend>Іспит і час</legend><div class="p-form-grid"><label>Дата НМТ<input type="date" value="${stExamDate()}" min="${pDay()}" onchange="stSet('examDate',this.value)"></label><label>Час на навчання щодня<select onchange="stSet('minutes',this.value)">${[20,30,45,60,90].map(v=>`<option value="${v}" ${P.plan.minutes===v?'selected':''}>${v} хв</option>`).join('')}</select></label></div></fieldset><fieldset class="p-fieldset"><legend>Цілі за шкалою 100–200</legend><div class="p-form-grid p-targets">${SUBJECTS.map(s=>`<label style="--subject:${s.color}"><span>${s.name}</span><select aria-label="Ціль: ${s.short}" onchange="stSet('target-${s.id}',this.value)">${nmtValues(s.id).map(v=>`<option value="${v}" ${P.study.targets[s.id]===v?'selected':''}>${v}</option>`).join('')}</select></label>`).join('')}</div></fieldset></section><p class="p-caption">${P.study.examDate?'':'Дата за замовчуванням орієнтовна: календар НМТ-2027 ще не затверджено (у 2026 році основна сесія тривала з 20 травня до 25 червня). Зміни її, щойно отримаєш запрошення. '}До НМТ ${days} дн. Інтервали повторення обмежено так, щоб кожне вивчене завдання повернулося до тебе перед іспитом.</p>
- <section class="p-section"><div class="p-section-head"><h2>Етапи підготовки</h2><a class="primary" href="#today">План на сьогодні ›</a></div><ol class="st-phases">${phases.map(p=>`<li class="${p.id===phase.id?'is-current':''}"><p class="p-kicker">${p.from?'з '+p.from.toLocaleDateString('uk-UA',{day:'numeric',month:'long'}):'зараз — до '+new Date(exam.getTime()-120*DAY).toLocaleDateString('uk-UA',{day:'numeric',month:'long'})}</p><h3>${p.name}</h3><p>${p.text}</p><small>Повторення ≈${Math.round(p.review*100)}% часу · пробник кожні ${p.mockEvery} дн.</small></li>`).join('')}</ol></section>
+function stFutureDate(v) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v);
+  if (!m) return false;
+  const y = +m[1],
+    mo = +m[2],
+    d = +m[3],
+    dt = new Date(y, mo - 1, d);
+  return dt.getFullYear() === y && dt.getMonth() === mo - 1 && dt.getDate() === d && v > pDay();
+}
+function stSet(field, value) {
+  if (field === 'examDate') {
+    if (!stFutureDate(value)) {
+      toast('Дата НМТ має бути справжньою датою в майбутньому.');
+      return;
+    }
+    P.study.examDate = value;
+    P.study.today = null;
+    stClampDue();
+  } else if (field === 'minutes') {
+    let v = Number(value);
+    if (![20, 30, 45, 60, 90].includes(v)) return;
+    P.plan.minutes = v;
+    P.study.today = null;
+  } else if (field.startsWith('target-')) {
+    let sid = field.slice(7),
+      v = Number(value);
+    if (!SUB[sid]) return;
+    if (!nmtValues(sid).includes(v)) {
+      toast(
+        'У таблиці НМТ для предмета «' +
+          SUB[sid].name +
+          '» немає балу ' +
+          String(value).slice(0, 6) +
+          '.'
+      );
+      return;
+    }
+    P.study.targets[sid] = v;
+    P.study.today = null;
+  } else if (field.startsWith('coef-')) {
+    let k = field.slice(5),
+      v = Number(String(value).replace(',', '.'));
+    if (!(k in P.study.coef) || !(v >= 0 && v <= 1)) return;
+    P.study.coef[k] = v;
+  }
+  pSave();
+  pPlan();
+}
+pPlan = function () {
+  let days = stDaysLeft(),
+    phase = stPhase(days),
+    aa = pAnswers(),
+    start = new Date(pDay() + 'T12:00:00'),
+    exam = new Date(stExamDate() + 'T12:00:00'),
+    phases = [...STUDY_PHASES].reverse().map(p => {
+      let from = p.id === 'foundation' ? null : new Date(exam.getTime() - p.until * DAY);
+      return { ...p, from };
+    }),
+    activity = [];
+  for (let i = 27; i >= 0; i--) {
+    let d = new Date(start.getTime() - i * DAY).toLocaleDateString('en-CA'),
+      n = (P.logs[d] || 0) + (S.days?.[d] || 0);
+    activity.push(
+      `<i class="st-a${n ? (n < 10 ? 1 : n < 30 ? 2 : 3) : 0}" title="${d}: ${n} відповідей"></i>`
+    );
+  }
+  let week = Array.from({ length: 7 }, (_, i) => {
+    let d = new Date(start.getTime() + i * DAY),
+      from = new Date(d);
+    from.setHours(0, 0, 0, 0);
+    let to = from.getTime() + DAY,
+      n = Object.entries(aa).filter(
+        ([id, a]) => PM[id] && (i === 0 ? a.due < to : a.due >= from.getTime() && a.due < to)
+      ).length;
+    return `<li><span>${d.toLocaleDateString('uk-UA', { weekday: 'short', day: 'numeric', month: 'short' })}</span><strong>${n}</strong><em>на повторення</em></li>`;
+  }).join('');
+  $('#main').innerHTML =
+    pHeading(
+      'Розклад підготовки',
+      'Мій план до НМТ',
+      'План перебудовується щодня: що повторити, яку тему взяти, коли писати пробник. Тут задаєш дату, цілі й час.'
+    ) +
+    `<section class="p-form st-plan-form"><fieldset class="p-fieldset"><legend>Іспит і час</legend><div class="p-form-grid"><label>Дата НМТ<input type="date" value="${stExamDate()}" min="${pDay()}" onchange="stSet('examDate',this.value)"></label><label>Час на навчання щодня<select onchange="stSet('minutes',this.value)">${[20, 30, 45, 60, 90].map(v => `<option value="${v}" ${P.plan.minutes === v ? 'selected' : ''}>${v} хв</option>`).join('')}</select></label></div></fieldset><fieldset class="p-fieldset"><legend>Цілі за шкалою 100–200</legend><div class="p-form-grid p-targets">${SUBJECTS.map(
+      s =>
+        `<label style="--subject:${s.color}"><span>${s.name}</span><select aria-label="Ціль: ${s.short}" onchange="stSet('target-${s.id}',this.value)">${nmtValues(
+          s.id
+        )
+          .map(
+            v =>
+              `<option value="${v}" ${P.study.targets[s.id] === v ? 'selected' : ''}>${v}</option>`
+          )
+          .join('')}</select></label>`
+    ).join(
+      ''
+    )}</div></fieldset></section><p class="p-caption">${P.study.examDate ? '' : 'Дата за замовчуванням орієнтовна: календар НМТ-2027 ще не затверджено (у 2026 році основна сесія тривала з 20 травня до 25 червня). Зміни її, щойно отримаєш запрошення. '}До НМТ ${days} дн. Інтервали повторення обмежено так, щоб кожне вивчене завдання повернулося до тебе перед іспитом.</p>
+ <section class="p-section"><div class="p-section-head"><h2>Етапи підготовки</h2><a class="primary" href="#today">План на сьогодні ›</a></div><ol class="st-phases">${phases.map(p => `<li class="${p.id === phase.id ? 'is-current' : ''}"><p class="p-kicker">${p.from ? 'з ' + p.from.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' }) : 'зараз — до ' + new Date(exam.getTime() - 120 * DAY).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}</p><h3>${p.name}</h3><p>${p.text}</p><small>Повторення ≈${Math.round(p.review * 100)}% часу · пробник кожні ${p.mockEvery} дн.</small></li>`).join('')}</ol></section>
  <section class="p-section"><h2>Повторення на тиждень уперед</h2><ul class="st-week">${week}</ul></section>
  <section class="p-section"><h2>Активність за 4 тижні</h2><div class="st-activity">${activity.join('')}</div><p class="p-caption">Регулярність важить більше, ніж тривалі заняття раз на тиждень.</p></section>
  ${stForecastHTML()}${stBestHTML()}
- <section class="p-section"><h2>Конкурсний бал</h2><p>Формула Порядку прийому 2026: (К1·П1 + К2·П2 + К3·П3 + К4·П4) / (К1 + К2 + К3 + (К4max + К4)/2). П1 — українська, П2 — математика, П3 — історія, П4 — англійська. Коефіцієнти своєї спеціальності бери з Порядку прийому 2027 або на сайті університету. Регіональний, галузевий і сільський коефіцієнти тут не враховано.</p>${stCompHTML()}<div class="st-settings">${[['k1','К1 · українська'],['k2','К2 · математика'],['k3','К3 · історія'],['k4','К4 · англійська'],['k4max','К4max · найбільший К4 спеціальності']].map(([k,l])=>`<label>${l}<input type="number" min="0" max="1" step="0.05" value="${P.study.coef[k]}" onchange="stSet('coef-${k}',this.value)"></label>`).join('')}</div></section>${pFoot()}`};
+ <section class="p-section"><h2>Конкурсний бал</h2><p>Формула Порядку прийому 2026: (К1·П1 + К2·П2 + К3·П3 + К4·П4) / (К1 + К2 + К3 + (К4max + К4)/2). П1 — українська, П2 — математика, П3 — історія, П4 — англійська. Коефіцієнти своєї спеціальності бери з Порядку прийому 2027 або на сайті університету. Регіональний, галузевий і сільський коефіцієнти тут не враховано.</p>${stCompHTML()}<div class="st-settings">${[
+   ['k1', 'К1 · українська'],
+   ['k2', 'К2 · математика'],
+   ['k3', 'К3 · історія'],
+   ['k4', 'К4 · англійська'],
+   ['k4max', 'К4max · найбільший К4 спеціальності'],
+ ]
+   .map(
+     ([k, l]) =>
+       `<label>${l}<input type="number" min="0" max="1" step="0.05" value="${P.study.coef[k]}" onchange="stSet('coef-${k}',this.value)"></label>`
+   )
+   .join('')}</div></section>${pFoot()}`;
+};
 
 /* Вбудовування в наявні сторінки. */
-const stHubBase=pHub;pHub=function(){stHubBase();let t=stToday(),days=stDaysLeft(),parts=[t.review.length?t.review.length+' на повторення':'',...t.learn.map(l=>SUB[l.sid].short+': '+l.title),t.mock?(t.mock.sid==='diagnostic'?'діагностика':t.mock.sid==='all'?'повна симуляція':'пробник з '+SUB[t.mock.sid].short.toLowerCase()):''].filter(Boolean);$('#main').insertAdjacentHTML('afterbegin',`<section class="st-today-card"><div><p class="p-kicker">Сьогодні · до НМТ ${days} дн. · етап «${stPhase(days).name}»</p><h2>${parts.length?esc(parts.join(' · ')):'План на сьогодні виконано'}</h2></div><a class="primary" href="#today">Почати заняття ›</a></section>`);$('.p-status-strip')?.insertAdjacentHTML('afterend',stForecastHTML(true))};
-const stAnalyticsBase=pAnalytics;pAnalytics=function(){stAnalyticsBase();$('#main .p-page-head')?.insertAdjacentHTML('afterend',stForecastHTML())};
-const stResultBase=pResult;pResult=function(id){stResultBase(id);let r=P.records.find(x=>x.id===id);if(!r)return;let rows=SUBJECTS.map(s=>{let ids=r.ids.filter(x=>PM[x]?.subject===s.id);if(ids.length<EXAMINFO[s.id].count)return '';let raw=ids.reduce((n,x)=>n+pGrade(PM[x],r.answers[x]),0),v=nmtScale(s.id,raw),goal=P.study.targets[s.id];return `<article class="${!v?'is-fail':v>=goal?'is-goal':''}" style="--subject:${s.color}"><p>${s.name}</p><strong>${v||'—'}</strong><span>${!v?'нижче порогу':v>=goal?'ціль '+goal+' досягнуто':'ціль '+goal+': ще '+stPlural(stRawFor(s.id,goal)-raw,'тестовий бал','тестові бали','тестових балів')}</span><small>${raw} з ${NMT.subjects[s.id].max} тестових балів</small></article>`}).filter(Boolean);if(rows.length)$('#main .p-result-score')?.insertAdjacentHTML('beforebegin',`<div class="st-result">${rows.join('')}</div>`),$('#main .p-result-score')?.insertAdjacentHTML('afterend',`<p class="p-caption">Бали 100–200 — за таблицями НМТ-${NMT.year}. Поріг «склав / не склав»: ${SUBJECTS.map(s=>s.short.toLowerCase()+' '+NMT.subjects[s.id].threshold).join(', ')} тестових балів.</p>`)};
-const stOffResultBase=offResult;offResult=function(index){stOffResultBase(index);let r=P.official.records[Number(index)];if(!r||P.official.current?.subject===r.subject)return;let s=offScore(r);$('#main .p-page-head')?.insertAdjacentHTML('beforeend',`<p class="p-lead">За таблицею НМТ-${NMT.year}: <strong>${nmtText(offSub(r.subject),s.score)}</strong> за шкалою 100–200.</p>`)};
-const stCrumbsBase=siteCrumbs;siteCrumbs=function(){return (location.hash.slice(1)||'hub')==='today'?[{label:'Головна',to:'hub'},{label:'Сьогодні',to:'today'}]:stCrumbsBase()};
-const stRenderBase=render;render=function(){if((location.hash.slice(1)||'hub').split('/')[0]==='today'){route='today';stTodayPage();syncSiteNavigation();document.title='Сьогодні · Складено';return}stRenderBase()};
+const stHubBase = pHub;
+pHub = function () {
+  stHubBase();
+  let t = stToday(),
+    days = stDaysLeft(),
+    parts = [
+      t.review.length ? t.review.length + ' на повторення' : '',
+      ...t.learn.map(l => SUB[l.sid].short + ': ' + l.title),
+      t.mock
+        ? t.mock.sid === 'diagnostic'
+          ? 'діагностика'
+          : t.mock.sid === 'all'
+            ? 'повна симуляція'
+            : 'пробник з ' + SUB[t.mock.sid].short.toLowerCase()
+        : '',
+    ].filter(Boolean);
+  $('#main').insertAdjacentHTML(
+    'afterbegin',
+    `<section class="st-today-card"><div><p class="p-kicker">Сьогодні · до НМТ ${days} дн. · етап «${stPhase(days).name}»</p><h2>${parts.length ? esc(parts.join(' · ')) : 'План на сьогодні виконано'}</h2></div><a class="primary" href="#today">Почати заняття ›</a></section>`
+  );
+  $('.p-status-strip')?.insertAdjacentHTML('afterend', stForecastHTML(true));
+};
+const stAnalyticsBase = pAnalytics;
+pAnalytics = function () {
+  stAnalyticsBase();
+  $('#main .p-page-head')?.insertAdjacentHTML('afterend', stForecastHTML());
+};
+const stResultBase = pResult;
+pResult = function (id) {
+  stResultBase(id);
+  let r = P.records.find(x => x.id === id);
+  if (!r) return;
+  let rows = SUBJECTS.map(s => {
+    let ids = r.ids.filter(x => PM[x]?.subject === s.id);
+    if (ids.length < EXAMINFO[s.id].count) return '';
+    let raw = ids.reduce((n, x) => n + pGrade(PM[x], r.answers[x]), 0),
+      v = nmtScale(s.id, raw),
+      goal = P.study.targets[s.id];
+    return `<article class="${!v ? 'is-fail' : v >= goal ? 'is-goal' : ''}" style="--subject:${s.color}"><p>${s.name}</p><strong>${v || '—'}</strong><span>${!v ? 'нижче порогу' : v >= goal ? 'ціль ' + goal + ' досягнуто' : 'ціль ' + goal + ': ще ' + stPlural(stRawFor(s.id, goal) - raw, 'тестовий бал', 'тестові бали', 'тестових балів')}</span><small>${raw} з ${NMT.subjects[s.id].max} тестових балів</small></article>`;
+  }).filter(Boolean);
+  if (rows.length)
+    ($('#main .p-result-score')?.insertAdjacentHTML(
+      'beforebegin',
+      `<div class="st-result">${rows.join('')}</div>`
+    ),
+      $('#main .p-result-score')?.insertAdjacentHTML(
+        'afterend',
+        `<p class="p-caption">Бали 100–200 — за таблицями НМТ-${NMT.year}. Поріг «склав / не склав»: ${SUBJECTS.map(s => s.short.toLowerCase() + ' ' + NMT.subjects[s.id].threshold).join(', ')} тестових балів.</p>`
+      ));
+};
+const stOffResultBase = offResult;
+offResult = function (index) {
+  stOffResultBase(index);
+  let r = P.official.records[Number(index)];
+  if (!r || P.official.current?.subject === r.subject) return;
+  let s = offScore(r);
+  $('#main .p-page-head')?.insertAdjacentHTML(
+    'beforeend',
+    `<p class="p-lead">За таблицею НМТ-${NMT.year}: <strong>${nmtText(offSub(r.subject), s.score)}</strong> за шкалою 100–200.</p>`
+  );
+};
+const stCrumbsBase = siteCrumbs;
+siteCrumbs = function () {
+  return (location.hash.slice(1) || 'hub') === 'today'
+    ? [
+        { label: 'Головна', to: 'hub' },
+        { label: 'Сьогодні', to: 'today' },
+      ]
+    : stCrumbsBase();
+};
+const stRenderBase = render;
+render = function () {
+  if ((location.hash.slice(1) || 'hub').split('/')[0] === 'today') {
+    route = 'today';
+    stTodayPage();
+    syncSiteNavigation();
+    document.title = 'Сьогодні · Складено';
+    return;
+  }
+  stRenderBase();
+};
 
 /* Варіанти пробників з генерованих предметів: кожен наступний бере передусім завдання й «сімейства»
    (те саме завдання з іншими числами чи інша пара до того самого факту), яких ще не було в попередніх варіантах. */
-function stFamily(q){return q.baseId||q.id.replace(/-v\d+$/,'')}
-const stMockSetBase=pMockSet,stMockCache={};
+function stFamily(q) {
+  return q.baseId || q.id.replace(/-v\d+$/, '');
+}
+const stMockSetBase = pMockSet,
+  stMockCache = {};
 // History mocks are the real НМТ tests (2023 onwards, 30 tasks each) in their original order, newest first.
-const stHistTests=(()=>{const by={};for(const q of PQ)if(q.subject==='hist'&&q.year>=2023&&q.testName?.startsWith('НМТ'))(by[q.test]=by[q.test]||[]).push(q);return Object.values(by).filter(l=>l.length===30).map(l=>l.sort((a,b)=>a.number-b.number)).sort((a,b)=>b[0].year-a[0].year||a[0].test-b[0].test)})();
-pMockSet=function(subject,variant=1){if(subject==='hist'&&stHistTests[variant-1])return stHistTests[variant-1].map(q=>q.id);if(!['ukr','math','hist'].includes(subject))return stMockSetBase(subject,variant);const key=subject+'-'+variant;if(stMockCache[key])return [...stMockCache[key]];
- const used=new Set(),fams=new Set();for(let v=1;v<variant;v++)for(const id of pMockSet(subject,v)){used.add(id);fams.add(stFamily(PM[id]))}
- // Analytical history extras have easy, length-revealing distractors: they train reasoning but would inflate a mock score.
- const pool=PQ.filter(q=>q.subject===subject&&!q.challenge&&!(subject==='hist'&&/^(enrich|context)-/.test(q.id))),seed=202600+variant*101+subject.length*7;
- const one=(list,s)=>{const m=new Map();for(const q of pSeedShuffle(list,s))if(!m.has(stFamily(q)))m.set(stFamily(q),q);return [...m.values()]};
- const take=(filter,n,off)=>{const all=pool.filter(filter),tiers=[all.filter(q=>!used.has(q.id)&&!fams.has(stFamily(q))),all.filter(q=>!used.has(q.id)),all];let src=tiers.find(t=>t.length>=n);const uniq=one(src,seed+off);if(uniq.length>=n)src=uniq;const picked=pPickBalanced(src,n,seed+off);for(const q of picked){used.add(q.id);fams.add(stFamily(q))}return picked};
- let items=[];
- if(subject==='ukr')items=[...take(q=>q.type==='single'&&q.options.length===4,10,1),...DB.ukrainianFiveOptionSets[variant-1].map(id=>PM[id]),...take(q=>q.type==='match',5,2)];
- if(subject==='math')items=[...take(q=>q.type==='single',15,3),...take(q=>q.type==='match',3,4),...take(q=>q.type==='numeric',4,5)];
- if(subject==='hist')items=[...take(q=>q.type==='single',20,6),...take(q=>q.type==='match',4,7),...take(q=>q.type==='order',3,8),...take(q=>q.type==='multi',3,9)];
- stMockCache[key]=items.map(q=>q.id);return [...stMockCache[key]]};
+const stHistTests = (() => {
+  const by = {};
+  for (const q of PQ)
+    if (q.subject === 'hist' && q.year >= 2023 && q.testName?.startsWith('НМТ'))
+      (by[q.test] = by[q.test] || []).push(q);
+  return Object.values(by)
+    .filter(l => l.length === 30)
+    .map(l => l.sort((a, b) => a.number - b.number))
+    .sort((a, b) => b[0].year - a[0].year || a[0].test - b[0].test);
+})();
+pMockSet = function (subject, variant = 1) {
+  if (subject === 'hist' && stHistTests[variant - 1])
+    return stHistTests[variant - 1].map(q => q.id);
+  if (!['ukr', 'math', 'hist'].includes(subject)) return stMockSetBase(subject, variant);
+  const key = subject + '-' + variant;
+  if (stMockCache[key]) return [...stMockCache[key]];
+  const used = new Set(),
+    fams = new Set();
+  for (let v = 1; v < variant; v++)
+    for (const id of pMockSet(subject, v)) {
+      used.add(id);
+      fams.add(stFamily(PM[id]));
+    }
+  // Analytical history extras have easy, length-revealing distractors: they train reasoning but would inflate a mock score.
+  const pool = PQ.filter(
+      q =>
+        q.subject === subject &&
+        !q.challenge &&
+        !(subject === 'hist' && /^(enrich|context)-/.test(q.id))
+    ),
+    seed = 202600 + variant * 101 + subject.length * 7;
+  const one = (list, s) => {
+    const m = new Map();
+    for (const q of pSeedShuffle(list, s)) if (!m.has(stFamily(q))) m.set(stFamily(q), q);
+    return [...m.values()];
+  };
+  const take = (filter, n, off) => {
+    const all = pool.filter(filter),
+      tiers = [
+        all.filter(q => !used.has(q.id) && !fams.has(stFamily(q))),
+        all.filter(q => !used.has(q.id)),
+        all,
+      ];
+    let src = tiers.find(t => t.length >= n);
+    const uniq = one(src, seed + off);
+    if (uniq.length >= n) src = uniq;
+    const picked = pPickBalanced(src, n, seed + off);
+    for (const q of picked) {
+      used.add(q.id);
+      fams.add(stFamily(q));
+    }
+    return picked;
+  };
+  let items = [];
+  if (subject === 'ukr')
+    items = [
+      ...take(q => q.type === 'single' && q.options.length === 4, 10, 1),
+      ...DB.ukrainianFiveOptionSets[variant - 1].map(id => PM[id]),
+      ...take(q => q.type === 'match', 5, 2),
+    ];
+  if (subject === 'math')
+    items = [
+      ...take(q => q.type === 'single', 15, 3),
+      ...take(q => q.type === 'match', 3, 4),
+      ...take(q => q.type === 'numeric', 4, 5),
+    ];
+  if (subject === 'hist')
+    items = [
+      ...take(q => q.type === 'single', 20, 6),
+      ...take(q => q.type === 'match', 4, 7),
+      ...take(q => q.type === 'order', 3, 8),
+      ...take(q => q.type === 'multi', 3, 9),
+    ];
+  stMockCache[key] = items.map(q => q.id);
+  return [...stMockCache[key]];
+};

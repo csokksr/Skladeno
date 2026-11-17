@@ -2,6 +2,7 @@
 
   python -I tools/build.py        -> dist/skladeno-nmt.html (one self-contained offline file)
   python -I tools/build.py --lite -> dist/skladeno-nmt-lite.html (no embedded PDFs, links to the official sources)
+  python -I tools/build.py --no-minify -> the page code stays unminified (debugging)
   python -I tools/build.py --web  -> dist/web/ (claude.ai artifact: index.html + files/ + offline parts)
 """
 import base64, glob, hashlib, json, os, re, shutil, subprocess, sys
@@ -415,9 +416,10 @@ def app_js(extra_dirs, offline_mb=100):
     app = open(f'{S}/app.js', encoding='utf-8').read()
     # Feature modules load after the base app and wrap its functions, like the layers inside app.js.
     # They go before the final first render so the first screen already uses them.
+    tail = re.search(r'save\(\);\s*render\(\);\s*$', app)  # prettier puts the two calls on separate lines
+    assert tail
     boot = 'save();render();'
-    assert app.rstrip().endswith(boot)
-    app = app.rstrip()[:-len(boot)]
+    app = app[:tail.start()]
     app += '\nconst BUILD_ID=%s;' % json.dumps(build_id())
     # Vendored libraries (src/vendor/*.js, see its README) come first: modules may rely on their globals.
     for path in sorted(glob.glob(f'{S}/vendor/*.js')):
@@ -427,8 +429,18 @@ def app_js(extra_dirs, offline_mb=100):
             app += '\n' + open(path, encoding='utf-8').read()
     app += '\n' + boot + '\n'
     app = app.replace('@@OFFLINE_MB@@', str(offline_mb))  # size quoted by the «offline version» page
+    app = minify(app)
     assert '</script' not in app.lower()
     return app
+
+
+def minify(js):
+    """Whitespace and syntax minification with esbuild (tools/minify.js); the page runs unminified when esbuild is not installed."""
+    if '--no-minify' in sys.argv or not os.path.isdir(os.path.join(ROOT, 'node_modules', 'esbuild')):
+        return js
+    r = subprocess.run(['node', os.path.join(ROOT, 'tools', 'minify.js')], input=js.encode('utf-8'), capture_output=True, cwd=ROOT)
+    assert r.returncode == 0, r.stderr.decode('utf-8', 'replace')[:2000]
+    return r.stdout.decode('utf-8')
 
 
 # Text-heavy fields of questions and topic notes travel in per-subject packs (files/pack-<name>.json) in the web build:

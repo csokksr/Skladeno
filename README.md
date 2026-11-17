@@ -37,7 +37,8 @@ node tools/changelog.js [--check]              # CHANGELOG.md з історії 
 python -m unittest discover -s tests/py -v     # тести скриптів Python
 node tools/coverage.js [--list] [--min N]      # частка іменованих функцій сторінки, яких торкаються тести
 python -I tools/check_links.py [--strict]      # чи відкриваються зовнішні посилання (потрібна мережа)
-npm ci                                         # інструменти розробки (лінтер, типи, браузерні тести; самому сайту вони не потрібні)
+npm ci                                         # інструменти розробки (лінтер, типи, браузерні тести, prettier, esbuild; самому сайту вони не потрібні)
+npm run format                                 # prettier --check по src/app.js, src/modules, src/web (виправити: npm run format:write)
 node tools/lint.js                             # ESLint із глобальними іменами з усіх модулів
 node tools/typecheck.js                        # tsc --checkJs, без відомого шуму
 npx playwright install chromium && npx playwright test   # тести в Chromium і перевірка доступності (axe)
@@ -99,6 +100,8 @@ npx lhci autorun                               # Lighthouse (потрібна з
 | `tools/split.py` | одноразовий міграційний скрипт (HTML → `src/`); відмовляється писати в теку, де вже є джерела; не запускати для звичайної роботи |
 
 Виправлення ключів і тем завдань історії роби лише в `tools/zno_overrides.json` і перезапускай `zno_import.py`, `zno_topics.py`, `zno_bank.py`. Скрипти, що потребують Pillow чи pymupdf, запускай простим `python`, решту — `python -I`.
+
+Код сторінки під час збірки мініфікується esbuild (`tools/minify.js`: пробіли й синтаксис, імена лишаються, бо обробники `onclick` в розмітці викликають глобальні функції; без `node_modules/esbuild` або з `--no-minify` збірка йде без мініфікації). Джерела форматує prettier (`.prettierrc`, `npm run format`); у шаблонних рядках з розміткою ще лишаються довгі рядки, бо prettier їх не ділить.
 
 ## Сайт
 

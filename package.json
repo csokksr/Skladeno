@@ -6,7 +6,9 @@
     "lint": "node tools/lint.js",
     "typecheck": "tsc -p jsconfig.json",
     "e2e": "playwright test",
-    "lhci": "lhci autorun"
+    "lhci": "lhci autorun",
+    "format": "prettier --check \"src/app.js\" \"src/modules/*.js\" \"src/web/*.js\" tools/minify.js",
+    "format:write": "prettier --write \"src/app.js\" \"src/modules/*.js\" \"src/web/*.js\" tools/minify.js"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
