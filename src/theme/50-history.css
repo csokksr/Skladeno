@@ -72,7 +72,7 @@
 .pinned{background:var(--warn-soft)}
 /* Старий тренажер (резервний маршрут #quiz). */
 .q-layout{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:20px;align-items:start}
-.q-card h2{margin:14px 0 20px;font:600 1.3125rem/1.5 var(--f-body)}
+.q-card h2{margin:14px 0 20px;font:600 var(--fs-xl)/1.5 var(--f-body)}
 .choices{display:grid;gap:8px}
 .choice{display:flex;align-items:flex-start;gap:12px;width:100%;padding:12px 14px;text-align:left;justify-content:flex-start;font-weight:500}
 .choice b{display:grid;place-items:center;flex:0 0 28px;height:28px;border:0;border-radius:50%;background:var(--sheet-2);font:600 .8125rem var(--f-mono)}

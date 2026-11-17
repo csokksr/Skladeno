@@ -12,12 +12,12 @@
   .nav{display:none}
   .gnav.is-open{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}
   .gnav.is-open .nav{position:fixed;top:48px;left:0;right:0;bottom:0;z-index:20;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:12px max(40px,env(safe-area-inset-left,0px)) calc(32px + env(safe-area-inset-bottom,0px));overflow-y:auto;background:var(--paper);animation:gnav-in .35s var(--ease)}
-  .gnav.is-open .nav a{height:auto;padding:7px 0;opacity:1;font:600 1.75rem/1.25 var(--f-display);letter-spacing:-.025em;gap:12px}
+  .gnav.is-open .nav a{height:auto;padding:7px 0;opacity:1;font:600 var(--fs-2xl)/1.25 var(--f-display);letter-spacing:-.025em;gap:12px}
   .gnav.is-open .nav a.on::before{display:none}
   .gnav.is-open .nav a.on{color:var(--link)}
   .gnav.is-open .nav a[data-subject]::after{width:10px;height:10px}
   .gnav.is-open .nav a em{font-size:var(--fs-md);padding:2px 9px}
-  .gnav.is-open .p-nav-label{width:auto;height:auto;margin:24px 0 8px;background:transparent;font:400 .75rem/1.4 var(--f-body);color:var(--muted)}
+  .gnav.is-open .p-nav-label{width:auto;height:auto;margin:24px 0 8px;background:transparent;font:400 var(--fs-xs)/1.4 var(--f-body);color:var(--muted)}
   .gnav.is-open .nav-find span{position:static;width:auto;height:auto;overflow:visible;clip:auto}
   .gnav.is-open .nav-find svg{display:none}
 }
@@ -50,6 +50,7 @@
   .p-practice-top .p-caption{display:none}
   .p-practice-top .p-actions{gap:6px}
   .p-practice-top .p-more{flex-basis:100%}
+  .st-today-card h2{font-size:var(--fs-xl)}
   .p-practice-top .p-more-list{position:static;margin-top:6px;min-width:0;box-shadow:none}
   h1{font-size:var(--fs-3xl)}
   .p-hero h1{font-size:var(--fs-4xl)}
