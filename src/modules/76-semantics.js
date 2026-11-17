@@ -7,7 +7,7 @@ for(const k of [...c.children]){const li=document.createElement('li');li.appendC
 function semPrimary(main){[...main.querySelectorAll('.primary:not([aria-pressed])')].filter(e=>e.offsetParent!==null).slice(1).forEach(e=>e.classList.remove('primary'));
 // After an answer is checked "Check" is gone, so the next step becomes the one main action.
 const next=[...main.querySelectorAll('button')].find(b=>/^Далі/.test(b.textContent.trim())&&!b.disabled);if(next&&!main.querySelector('.primary')&&main.querySelector('.p-feedback'))next.classList.add('primary')}
-function semStates(main){main.querySelectorAll('.p-option:not([role=radio]):not([role=checkbox])').forEach(o=>o.setAttribute('aria-pressed',String(o.classList.contains('is-selected'))));main.querySelectorAll('.tabs button,.p-tabs button').forEach(b=>b.setAttribute('aria-pressed',String(b.classList.contains('on')||b.classList.contains('is-active'))));
+function semStates(main){main.querySelectorAll('.p-option:not([role=radio]):not([role=checkbox])').forEach(o=>o.setAttribute('aria-pressed',String(o.classList.contains('is-selected'))));main.querySelectorAll('.p-tabs button').forEach(b=>b.setAttribute('aria-pressed',String(b.classList.contains('is-active'))));
 main.querySelectorAll('.qnav button').forEach(b=>{if(b.classList.contains('current'))b.setAttribute('aria-current','true');else b.removeAttribute('aria-current')})}
 // A link that opens a new tab says so to screen readers.
 function semExternal(main){main.querySelectorAll('a[target=_blank]:not([data-ext])').forEach(a=>{a.dataset.ext='1';a.insertAdjacentHTML('beforeend','<span class="sr-only"> (відкриється в новій вкладці)</span>')})}

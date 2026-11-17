@@ -103,3 +103,13 @@ test('практика: після перемикача в «Ще» меню л�
   await expect(page.locator('#main .p-more')).toHaveAttribute('open','');
   await expect(page.getByRole('button',{name:'Самоперевірка перед відповіддю: увімкнено'})).toBeFocused();
 });
+
+test('тема історії: вкладки p-tabs, одна активна й aria-pressed збігається',async({page})=>{
+  await page.goto(`${PAGE}#topic/3`);
+  await expect(page.locator('#main h1')).toHaveCount(1);
+  await expect(page.getByRole('button',{name:'Почати тести'})).toBeVisible();
+  await page.getByRole('button',{name:'Хронологія'}).click();
+  const tabs=page.locator('#main .p-tabs button').first().locator('..').locator('button');
+  await expect(tabs.locator('xpath=self::*[contains(@class,"is-active")]')).toHaveCount(1);
+  await expect(page.getByRole('button',{name:'Хронологія'})).toHaveAttribute('aria-pressed','true');
+});

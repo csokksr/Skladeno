@@ -20,6 +20,8 @@
   --f-display:system-ui,-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI Variable Display','Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
   --f-mono:var(--f-body);
   --r:8px;--r-sm:6px;--r-lg:10px;--r-xl:14px;--pill:980px;
+  /* Шкала шрифту: усі розміри тексту беруться звідси (заголовки з clamp лишаються окремо). */
+  --fs-2xs:.625rem;--fs-xs:.75rem;--fs-sm:.8125rem;--fs-md:.875rem;--fs-base:.9375rem;--fs-body:1rem;--fs-lg:1.0625rem;--fs-xl:1.25rem;--fs-2xl:1.75rem;--fs-3xl:2rem;--fs-4xl:2.375rem;--fs-5xl:3rem;
   --ease:cubic-bezier(.25,.1,.25,1);
   /* Сумісність зі старими назвами змінних у розмітці. */
   --bg:var(--paper);--green:var(--ok);--mint:var(--ok-soft);--purple:var(--pen-soft);--orange:var(--warn-soft);
@@ -65,7 +67,7 @@ h2{font:600 clamp(1.375rem,1.15rem + .9vw,1.75rem)/1.2 var(--f-display);letter-s
 h3{font:600 1.1875rem/1.3 var(--f-display);letter-spacing:-.015em}
 a{color:var(--link);text-decoration:none}
 a:hover{text-decoration:underline;text-underline-offset:3px}
-small,.small{font-size:.8125rem}
+small,.small{font-size:var(--fs-sm)}
 img{max-width:100%}
 ::selection{background:color-mix(in srgb,var(--pen) 25%,transparent);color:var(--ink)}
 :focus-visible{outline:3px solid var(--pen);outline-offset:2px;border-radius:6px}
@@ -73,7 +75,7 @@ img{max-width:100%}
 [tabindex="-1"]:focus,[tabindex="-1"]:focus-visible{outline:none}
 button,input,select,textarea{font:inherit;color:inherit;letter-spacing:inherit}
 button,a,summary{touch-action:manipulation}
-table{border-collapse:collapse;width:100%;font-size:.9375rem}
+table{border-collapse:collapse;width:100%;font-size:var(--fs-base)}
 th,td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
 th{font:600 .8125rem/1.4 var(--f-body);color:var(--muted)}
 .tablewrap{overflow-x:auto}
@@ -83,6 +85,6 @@ th{font:600 .8125rem/1.4 var(--f-body);color:var(--muted)}
 .success,.read{color:var(--ok)}
 .is-urgent{color:var(--mark)!important}
 .desktop{display:initial}
-.syllabus{white-space:pre-wrap;font-size:.875rem;line-height:1.7;max-height:500px;overflow:auto}
+.syllabus{white-space:pre-wrap;font-size:var(--fs-md);line-height:1.7;max-height:500px;overflow:auto}
 @media (prefers-reduced-motion:reduce){:root:not([data-motion="on"]) *,:root:not([data-motion="on"]) *::before,:root:not([data-motion="on"]) *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 :root[data-motion="off"] *,:root[data-motion="off"] *::before,:root[data-motion="off"] *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
