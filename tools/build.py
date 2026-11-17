@@ -397,11 +397,63 @@ def app_js(extra_dirs, offline_mb=100):
     return app
 
 
-def page(data, modules, offline_mb=100):
+# Text-heavy fields of questions and topic notes travel in per-subject packs (files/pack-<name>.js) in the web build:
+# the core data stays small, packs load after the first screen (src/web/80-packs.js hydrates the stubs in place).
+HEAVY_Q = ('prompt', 'passage', 'explanation', 'options', 'left', 'right', 'rows')
+LIST_Q = ('options', 'left', 'right', 'rows')
+
+
+def split_packs(data):
+    packs = {}
+
+    def strip(q, pack, sid):
+        h = {k: q.pop(k) for k in HEAVY_Q if k in q}
+        if h:
+            pack['q'][q['id']] = h
+            # Progress is validated at startup (pValid reads options/left/right lengths), so list fields keep a length-only
+            # placeholder; the text fields have no placeholder and the page guards them (_h) until the pack arrives.
+            # pEngUnits reads English match lists at startup, before any pack: such questions would need real lists in the core.
+            assert not (sid == 'eng' and 'left' in h), 'English match questions are read at startup: keep them out of the pack'
+            for k in LIST_Q:
+                if k in h:
+                    q[k] = [None] * len(h[k])
+            guarded = sorted(k for k in h if k not in LIST_Q)
+            if guarded:
+                q['_h'] = guarded
+
+    packs['hist'] = {'q': {}, 't': {}}
+    for q in data['questions']:
+        strip(q, packs['hist'], 'hist')
+    for s in data['subjects']:
+        pack = packs[s['id']] = {'q': {}, 't': {}}
+        for t in s['topics']:
+            if 'notes' in t:
+                pack['t'][t['id']] = {'notes': t.pop('notes')}
+                t['_h'] = ['notes']
+            for q in t['questions']:
+                strip(q, pack, s['id'])
+    return packs
+
+
+def write_packs(packs, out_dir):
+    for name, pack in packs.items():
+        blob = json.dumps(pack, ensure_ascii=False, separators=(',', ':'))
+        path = os.path.join(out_dir, 'pack-%s.js' % name)
+        open(path, 'w', encoding='utf-8', newline='').write('SK_PACK(%s,JSON.parse(%s));' % (json.dumps(name), json.dumps(blob, ensure_ascii=False)))
+        assert os.path.getsize(path) < 15 * 1024 * 1024, path
+    return sorted(packs)
+
+
+def page(data, modules, offline_mb=100, data_file=None, packs=None):
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     shell = open(f'{S}/shell.html', encoding='utf-8').read()
     css = '\n'.join(open(p, encoding='utf-8').read() for p in sorted(glob.glob(f'{S}/theme/*.css')))
     assert '</style' not in css.lower()
+    if data_file:
+        # Web build: the 9 MB of data is a separate script, so the shell paints before the data arrives (first paint 12 s -> 1 s on slow 4G).
+        open(data_file, 'w', encoding='utf-8', newline='').write('window.SKLADENO_DATA=JSON.parse(' + json.dumps(blob.replace('<\/', '</'), ensure_ascii=False) + ');window.SKLADENO_PACKS=' + json.dumps(packs or []) + ';')
+        shell = shell.replace('<script id="data" type="application/json">@@DATA@@</script>', '<script src="files/data.js"></script>', 1)
+        assert '@@DATA@@' not in shell
     return shell.replace('@@CSS@@', css, 1).replace('@@DATA@@', blob, 1).replace('@@APP@@', app_js(modules, offline_mb), 1)
 
 
@@ -433,14 +485,17 @@ def build_web(offline_bytes):
         data['assets'][k] = '@zno:' + name
     for name, pack in packs.items():
         json.dump(pack, open(os.path.join(out, 'files', 'zno-%s.json' % name), 'w', encoding='ascii'), separators=(',', ':'))
-    html = page(fill(data, os.path.join(out, 'files')), ['modules', 'web'], round(len(offline_bytes) / 1e6))
+    data = fill(data, os.path.join(out, 'files'))
+    pack_names = write_packs(split_packs(data), os.path.join(out, 'files'))
+    html = page(data, ['modules', 'web'], round(len(offline_bytes) / 1e6), os.path.join(out, 'files', 'data.js'), pack_names)
+    assert os.path.getsize(os.path.join(out, 'files', 'data.js')) < 15 * 1024 * 1024, 'files/data.js is close to the 16 MB text-file limit of the artifact host'
     # The artifact viewer wraps the page in its own document: keep only title, style and body content.
     head, body = html.split('</head>', 1)
     style = head[head.index('<style>'):]
     body = body.strip()
     assert body.startswith('<body>') and body.endswith('</body></html>')
     body = body[len('<body>'):-len('</body></html>')]
-    meta = '<title>Складено</title><meta name="description" content="Підготовка до НМТ з української мови, математики, історії України й англійської: конспекти, практика, пробні тести, прогноз бала 100–200 і план до дати іспиту.">'
+    meta = '<meta charset="utf-8"><title>Складено</title><meta name="description" content="Підготовка до НМТ з української мови, математики, історії України й англійської: конспекти, практика, пробні тести, прогноз бала 100–200 і план до дати іспиту.">'
     web = meta + style + body
     open(os.path.join(out, 'index.html'), 'w', encoding='utf-8', newline='').write(web)
     # The offline single file, in verified parts the in-app downloader reassembles (served as .txt bytes).

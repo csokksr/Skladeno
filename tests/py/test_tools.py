@@ -418,5 +418,52 @@ class NodeTools(unittest.TestCase):
             self.assertEqual((s['total'], s['hit'], s['missed']), (3, 2, ['c']))  # a, b покриті в різних запусках, c ні; testHelper за межею коду; анонімна й чужий скрипт не рахуються
 
 
+@unittest.skipUnless(os.path.isdir(os.path.join(ROOT, 'node_modules', 'eslint')), 'потрібен npm ci (eslint)')
+class DevTools(unittest.TestCase):
+    """Лінтер і перевірка типів: чи справді вони ловлять помилки, а не мовчки пропускають усе."""
+
+    def lint(self, code, names=''):
+        r = node("const l=require('./tools/lint.js');l.lintSource(process.argv[1],JSON.parse(process.argv[2])).then(m=>console.log(JSON.stringify(m.map(x=>x.ruleId))))".replace('process.argv[1]', json.dumps(code)).replace('process.argv[2]', json.dumps(json.dumps(names.split() if names else []))))
+        self.assertEqual(r.returncode, 0, r.stderr)
+        return json.loads(r.stdout)
+
+    def test_lint_catches_typo_in_a_global_name(self):
+        self.assertEqual(self.lint('pSavee();', 'pSave'), ['no-undef'])
+        self.assertEqual(self.lint('pSave();', 'pSave'), [])
+
+    def test_lint_catches_const_assignment_and_duplicate_keys(self):
+        self.assertEqual(self.lint('const a=1;a=2;'), ['no-const-assign'])
+        self.assertEqual(self.lint('({a:1,a:2});'), ['no-dupe-keys'])
+
+    def test_lint_allows_the_wrapper_pattern(self):
+        self.assertEqual(self.lint('const xBase=f;f=function(){xBase()};', 'f'), [])
+
+    def test_lint_whole_project_is_clean(self):
+        r = subprocess.run(['node', 'tools/lint.js'], cwd=ROOT, capture_output=True, text=True, encoding='utf-8')
+        self.assertEqual(r.returncode, 0, r.stdout)
+
+    def test_typecheck_keeps_real_errors_and_drops_known_noise(self):
+        r = node("""const c=require('./tools/typecheck.js');
+          const out=['a.js(1,1): error TS2630: Cannot assign','a.js(2,1): error TS2339: Property x','a.js(3,1): error TS2304: Cannot find name y','a.js(4,1): error TS2554: Expected 1 arguments, but got 2.'].join('\\n');
+          console.log(JSON.stringify(c.filter(out)))""")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        kept = json.loads(r.stdout)
+        self.assertEqual([k.split(': ')[0] for k in kept], ['a.js(3,1)', 'a.js(4,1)'])
+
+    def test_typecheck_on_a_broken_project_fails_and_on_the_real_one_passes(self):
+        import tempfile
+        with tempfile.TemporaryDirectory() as d:
+            with open(os.path.join(d, 'jsconfig.json'), 'w') as f:
+                json.dump({'compilerOptions': {'allowJs': True, 'checkJs': True, 'noEmit': True, 'strict': False, 'lib': ['ES2022']}, 'include': ['a.js']}, f)
+            with open(os.path.join(d, 'a.js'), 'w') as f:
+                f.write('function one(a){return a}\none(1,2);\nmissing();\n')
+            bad = subprocess.run(['node', 'tools/typecheck.js', os.path.join(d, 'jsconfig.json')], cwd=ROOT, capture_output=True, text=True, encoding='utf-8')
+            self.assertEqual(bad.returncode, 1, bad.stdout + bad.stderr)
+            self.assertIn('TS2554', bad.stdout)
+            self.assertIn('TS2304', bad.stdout)
+        good = subprocess.run(['node', 'tools/typecheck.js'], cwd=ROOT, capture_output=True, text=True, encoding='utf-8')
+        self.assertEqual(good.returncode, 0, good.stdout)
+
+
 if __name__ == '__main__':
     unittest.main()

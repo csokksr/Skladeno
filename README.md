@@ -20,7 +20,7 @@
 | `sources/` | завантажені джерела: `zno/` (сторінки й зображення zno.osvita.ua, `bank.json`), `keys/` (офіційні аркуші відповідей УЦОЯО, `manual.json`, `mismatches.json`), `program/hist.md` (програма історії) |
 | `.claude/` | налаштування Claude Code: хуки, скіли `source-check` і `publish-web`, субагенти `ukr-fact-checker` і `key-auditor`; правила роботи — у `CLAUDE.md` |
 | `tests/cases/*.js`, `tests/harness.js` | регресійні тести сторінки на стенді з підмінним DOM (Node) |
-| `tests/py/test_tools.py` | тести скриптів Python з `tools/` (стандартна бібліотека, `unittest`) |
+| `tests/py/test_tools.py` | тести скриптів з `tools/` (Python: стандартна бібліотека, `unittest`; ще лінтер і типи, якщо виконано `npm ci`) |
 | `.github/` | CI й додаткові workflow (`ci.yml`, `codeql.yml`, `gitleaks.yml`, `links.yml`, `release.yml`), Dependabot, шаблони запиту на злиття й issue |
 | `CONTRIBUTING.md`, `SECURITY.md`, `CHANGELOG.md` | правила внесення змін, порядок повідомлення про вразливість, журнал змін (генерується) |
 | `dist/skladeno-nmt.html` | готовий сайт |
@@ -37,6 +37,11 @@ node tools/changelog.js [--check]              # CHANGELOG.md з історії 
 python -m unittest discover -s tests/py -v     # тести скриптів Python
 node tools/coverage.js [--list] [--min N]      # частка іменованих функцій сторінки, яких торкаються тести
 python -I tools/check_links.py [--strict]      # чи відкриваються зовнішні посилання (потрібна мережа)
+npm ci                                         # інструменти розробки (лінтер, типи, браузерні тести; самому сайту вони не потрібні)
+node tools/lint.js                             # ESLint із глобальними іменами з усіх модулів
+node tools/typecheck.js                        # tsc --checkJs, без відомого шуму
+npx playwright install chromium && npx playwright test   # тести в Chromium і перевірка доступності (axe)
+npx lhci autorun                               # Lighthouse (потрібна збірка python -I tools/build.py --web)
 ```
 
 Правила внесення змін: [CONTRIBUTING.md](CONTRIBUTING.md); про вразливості: [SECURITY.md](SECURITY.md); історія змін: [CHANGELOG.md](CHANGELOG.md). CI (`.github/workflows/`) запускає збірку, перевірки й тести на Linux і Windows (порівняння хешу збірки між системами інформаційне), а ще пошук секретів (gitleaks, не блокує), щотижневу перевірку посилань і реліз за тегом `v*`. Назва перевірки в захисті гілки тепер `check (ubuntu-latest)` і `check (windows-latest)`.
@@ -50,6 +55,10 @@ python -I tools/check_links.py [--strict]      # чи відкриваються
 | `tools/check_text.py` | механічні помилки в рядках інтерфейсу (`src/app.js`, `src/modules`, `src/web`, `src/shell.html`): змішані літери, ы/э/ъ/ё, ASCII-апостроф у слові, пробіл перед розділовим знаком, подвоєні пробіли й слова. Це не орфографічний словник; виняток для рядка: позначка `check_text:ok` |
 | `tools/check_links.py` | HEAD-запити (за потреби GET одного байта) до зовнішніх https-адрес із `src/`: ok, blocked (401/403/429) і broken (404, 410, 5xx, збій); `--strict` дає код 1 лише за broken; щотижня в `.github/workflows/links.yml` |
 | `tools/coverage.js` | зводить V8-покриття всіх тестів і друкує частку іменованих функцій сторінки, викликаних тестами (`--list` показує не викликані, `--min N` задає поріг; у CI 45, зараз близько 52%). Рахуються лише іменовані функції коду сторінки, код тестів і анонімні стрілки ні |
+| `tools/lint.js`, `tools/typecheck.js`, `jsconfig.json`, `src/globals.d.ts` | ESLint: імена верхнього рівня збираються з усіх файлів (espree + eslint-scope), тож `no-undef` ловить описки, а не кожне міжмодульне посилання; tsc `checkJs` показує лише помилки, не пов'язані з відомим шумом обгорток і `Element`/`HTMLElement` |
+| `playwright.config.js`, `tests/e2e/*.spec.js` | тести в справжньому Chromium (комп'ютер і телефон): кожна сторінка без помилок консолі, практика, клавіші, шифрування копії, графік, пробник із бланком; `a11y.spec.js` проганяє axe-core на всіх сторінках у світлій і темній темах і на станах (відповідь, діалоги), падає на серйозних і критичних порушеннях |
+| `lighthouserc.json` | Lighthouse CI на веб-збірці (`dist/web`): доступність ≥ 0,95 і кращі практики ≥ 0,9 блокують, швидкодія й SEO лише попереджають. Остання локальна міра: доступність 1, кращі практики 0,96, SEO 1, швидкодія 0,59 із gzip (перше відображення 1,9 с, найбільший елемент 13,5 с при штучному повільному 4G: дані лежать у `files/data.js`, ~2,2 МБ у gzip; без стиснення сервера швидкодія нижча). На Windows запускай з `CHROME_PATH`, що вказує на `chrome-headless-shell.exe` з Playwright |
+| `package.json`, `package-lock.json` | залежності лише для розробки; сайт їх не має |
 | `tools/changelog.js` | генерує `CHANGELOG.md` з `ABOUT_CHANGES`; `--check` перевіряє, що файл актуальний |
 | `tools/zno_keycheck.py` | звіряє ключі історії з офіційними аркушами УЦОЯО (`sources/keys`); потрібен pymupdf, запускати простим `python` |
 | `tools/zno2_keycheck.py` | звіряє ключі української, математики й англійської (`src/zno2-bank.json`) з аркушами УЦОЯО в `sources/keys/zno2` (список — `sources/keys/zno2-list.txt`); скани й аркуші без текстового шару прочитані вручну в `sources/keys/zno2/manual.json`; розбіжності пише в `sources/keys/zno2/mismatches.json`; потрібен pymupdf, запускати простим `python` |
@@ -81,6 +90,7 @@ python -I tools/check_links.py [--strict]      # чи відкриваються
 | `src/modules/93-profiles-home.js` | профілі на одному пристрої (до 4; активний у звичайних ключах, решта в `skladeno-profiles`, перемикання перезавантажує сторінку, вимкнені при синхронізації з акаунтом) і вибір блоків головної (`skladeno-hub-hidden`) |
 | `src/modules/94-own-cards.js` | сторінка `#cards`: власні картки в `P.ext.cards` (до 300, коробки Лейтнера 1–3–7–14 днів) і озвучування англійських слів через `speechSynthesis` |
 | `src/modules/95-graph-color.js` | сторінка `#graph`: графік функції з власним розбором виразу без `eval`, нулі й таблиця значень; режим для порушень кольоросприйняття (`skladeno-cvd`, палітра Окабе та Іто, значки й візерунки) |
+| `src/modules/96-practice-bar.js` | рядок дій практики: на видноті «Зберегти», позначка, бланк (пробник) і показ часу секундоміра, решта кнопок із модулів 20–95 у меню «Ще» (`details.p-more`); невидимий `h1` з назвою набору й номером завдання |
 | `src/theme/85-touch.css` | цілі натискання щонайменше 48x48 px на сенсорних і вузьких екранах |
 | `src/modules/55-math.js`, `62-official.js` | формули LaTeX → MathML; пробні тести з реальних НМТ для всіх предметів |
 | `tools/hook_*.py` | хуки Claude Code (`.claude/settings.json`, шляхи через `$CLAUDE_PROJECT_DIR`): захист згенерованих файлів, перевірка JSON, збірка й валідація наприкінці ходу |
@@ -93,10 +103,12 @@ python -I tools/check_links.py [--strict]      # чи відкриваються
 Сайт публікується як приватний артефакт Claude (скіл `publish-web`); ділитися — через меню Share на сторінці.
 
 ```bash
-python -I tools/build.py --web   # dist/web/: index.html + files/ (зображення, PDF) + offline/ (частини автономного файлу)
+python -I tools/build.py --web   # dist/web/: index.html (оболонка й код, 0,8 МБ) + files/ (data.js з даними, зображення, PDF) + offline/ (частини автономного файлу)
 ```
 
 Веб-збірка додає `src/web/*.js`: діалог підтвердження замість `confirm()`, збереження файлів через `downloads`, PDF за посиланнями, синхронізацію прогресу через приватне сховище `db` (стиснений знімок у `data/users/<id>/progress*`). Оновлюючи сайт, публікуй `dist/web/index.html` на ту саму адресу; змінені файли з `files/` і всі нові `offline/*.txt` разом із `offline-manifest.json` додавай у тій самій або наступній публікації (не більше 64 МБ за раз).
+
+**Пакети даних веб-збірки.** `files/data.js` містить ядро (структура, тези, заглушки завдань); тексти завдань (`prompt`, `passage`, `explanation`; списки `options`, `left`, `right`, `rows` у ядрі мають лише заглушки потрібної довжини, бо прогрес перевіряється на старті) і конспекти тем лежать у `files/pack-<предмет>.js` (`ukr`, `math`, `eng`, `hist`, по 1,4-3 МБ). `tools/build.py` ділить дані (`split_packs`), `src/web/80-packs.js` вантажить пакети у фоні відразу після старту й домальовує поля в тих самих об'єктах. Сторінки зі списком `PACK_LIGHT` (головна, предмети, прогрес, план тощо) не чекають пакетів; решта (конспект, практика, повтор, пошук) чекає, а поки пакета немає, читання відсутнього поля кидає помилку, тож у прогрес нічого не пишеться. Автономний файл не ділиться. Перевірка: `tests/e2e/web-packs.spec.js` (потрібна `python -I tools/build.py --web`), сторінки з `PACK_LIGHT` мають збігатися з автономним файлом.
 
 Після зміни `tools/content_eng.py` чи `tools/content_ukr.py` запусти їх, потім `build.py`.
 

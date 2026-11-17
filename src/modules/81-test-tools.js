@@ -22,8 +22,8 @@ function linkCopy(){const q=pQ();if(!q)return;const url=location.href.split('#')
 if(navigator.clipboard?.writeText)navigator.clipboard.writeText(url).then(done,fail);else fail()}
 // Фокус-режим: без меню, шляху й підвалу. Esc або кнопка «Вийти» повертають їх; поза сторінками тесту режим вимикається сам.
 const FOCUS_ROUTES=['practice','simulate','official-run','checkpoint'];
-function focusSet(on){document.documentElement.dataset.focus=on?'on':'';if(on)toast('Фокус-режим. Esc або кнопка «Вийти» повертають меню.')}
-document.body.insertAdjacentHTML('beforeend','<button type="button" id="focus-exit" class="focus-exit" onclick="focusSet(false)">Вийти з фокус-режиму</button>');
+function focusSet(on){document.documentElement.dataset.focus=on?'on':'';if(on)toast('Меню сховано. Esc або кнопка «Показати меню» повертають його.')}
+document.body.insertAdjacentHTML('beforeend','<button type="button" id="focus-exit" class="focus-exit" onclick="focusSet(false)">Показати меню</button>');
 addEventListener('keydown',e=>{if(e.key==='Escape'&&document.documentElement.dataset.focus==='on'&&!$('#modal').open)focusSet(false)});
 const toolsRenderBase=render;render=function(){const h=location.hash.slice(1),m=/^practice\/([^/]+)$/.exec(h);
 if(m){let id='';try{id=decodeURIComponent(m[1])}catch{}if(PM[id]){linkOpen(id);history.replaceState(null,'','#practice')}else{toast('Такого завдання немає.');history.replaceState(null,'','#hub')}}
@@ -33,8 +33,8 @@ const toolsPracticeBase=pPractice;pPractice=function(){toolsPracticeBase();const
 const flags=navHolder(c)?.flags||{},btns=[...qn.querySelectorAll('button')];let open=0,marked=0;
 btns.forEach((b,i)=>{const id=c.ids[i],answered=/\b(done|miss|draft)\b/.test(b.className);b.dataset.answered=answered?'1':'0';if(!answered)open++;if(flags[id]){b.dataset.flag='1';marked++;b.setAttribute('aria-label',(b.getAttribute('aria-label')||'')+' — позначено, щоб повернутися')}});
 const acts=$('.p-practice-top .p-actions');
-if(acts){const mine=[];if(!c.record)mine.push(`<button aria-pressed="${!!flags[q.id]}" onclick="navFlagToggle()">${flags[q.id]?'⚑ Позначено':'⚐ Повернутися'}</button>`);
-if(!c.exam&&!c.record)mine.push('<button onclick="linkCopy()">Посилання</button>');mine.push('<button onclick="focusSet(true)">Фокус</button>');acts.insertAdjacentHTML('beforeend',mine.join(''))}
+if(acts){const mine=[];if(!c.record)mine.push(`<button aria-pressed="${!!flags[q.id]}" onclick="navFlagToggle()">${flags[q.id]?'⚑ Позначено':'⚐ Позначити, щоб повернутися'}</button>`);
+if(!c.exam&&!c.record)mine.push('<button onclick="linkCopy()">Копіювати посилання</button>');mine.push('<button onclick="focusSet(true)">Без меню</button>');acts.insertAdjacentHTML('beforeend',mine.join(''))}
 const pace=c.exam&&P.exam.stage!=='break'?`<p class="p-caption" id="nav-pace">${paceText(pacePlan(P.exam,c.ids))}</p>`:'';
 qn.dataset.filter=navFilter;
 qn.insertAdjacentHTML('beforebegin',pace+`<div class="nav-filter" role="group" aria-label="Фільтр навігатора">${[['all','Усі'],['open',`Без відповіді (${open})`],['flag',`Позначені (${marked})`]].map(([v,l])=>`<button data-f="${v}" aria-pressed="${navFilter===v}" onclick="navFilterSet('${v}')">${l}</button>`).join('')}</div>`)};

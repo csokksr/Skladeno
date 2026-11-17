@@ -50,7 +50,7 @@ const ERR_KEY='skladeno-errors',ERR_MAX=10;
 function errList(){try{const a=JSON.parse(localStorage.getItem(ERR_KEY)||'[]');return Array.isArray(a)?a.filter(x=>x&&typeof x.m==='string'&&Number.isFinite(x.at)&&Math.abs(x.at)<8.64e15).slice(-ERR_MAX):[]}catch{return []}}
 // Текст помилки без адрес і шматків введених даних: посилання стають [url], уривок у повідомленні JSON.parse ховається.
 const errClean=s=>String(s).replace(/https?:\/\/\S+/g,'[url]').replace(/"[^"]*" is not valid JSON/g,'[json] is not valid JSON').replace(/\s+/g,' ').slice(0,160);
-function errLog(kind,e){try{const isErr=e&&typeof e==='object'&&'message' in e,msg=kind==='promise'&&!isErr?'Необроблена відмова (текст приховано)':errClean(isErr?e.message:e);if(!msg||/ResizeObserver loop/.test(msg))return;
+function errLog(kind,e){try{if(e&&e.packMiss)return;const isErr=e&&typeof e==='object'&&'message' in e,msg=kind==='promise'&&!isErr?'Необроблена відмова (текст приховано)':errClean(isErr?e.message:e);if(!msg||/ResizeObserver loop/.test(msg))return;
  const where=String(e&&e.stack||'').split('\n').find(l=>/:\d+:\d+/.test(l))||'',clean=where.replace(/[?#][^\s)]*?(?=:\d+:\d+\)?\s*$)/,''),loc=(clean.match(/([^/\\\s(]+:\d+):\d+\)?\s*$/)||[])[1]||'',list=errList(),k=['render','error','promise'].includes(kind)?kind:'error',s=loc.slice(0,60),last=list[list.length-1];
  if(last&&last.k===k&&last.m===msg&&last.s===s)last.at=Date.now();else list.push({at:Date.now(),k,m:msg,s,r:(location.hash.slice(1)||'hub').split('/')[0].slice(0,24)});
  localStorage.setItem(ERR_KEY,JSON.stringify(list.slice(-ERR_MAX)))}catch{}}

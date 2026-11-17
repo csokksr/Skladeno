@@ -1,14 +1,14 @@
 /* «Сьогодні», прогноз, план. */
 .st-today-card{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 0 24px;padding:32px clamp(24px,3vw,40px);border-radius:var(--r-xl);background:var(--ink);color:var(--paper)}
 .st-today-card .p-kicker{color:color-mix(in srgb,var(--paper) 62%,transparent)}
-.st-today-card h2{color:var(--paper);font-size:clamp(1.375rem,1.1rem + 1vw,1.875rem)}
+.st-today-card h2{color:var(--paper);font-size:var(--fs-2xl)}
 .st-today-card a.primary{flex-shrink:0;display:inline-flex;align-items:center;min-height:44px;padding:10px 18px;border-radius:var(--pill);background:var(--pen);color:var(--pen-ink);font-weight:500;text-decoration:none}
 .st-today-card a.primary:hover{background:var(--pen-hover);color:var(--pen-ink);text-decoration:none}
 .st-tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin:6px 0 10px}
 .st-task{--subject:var(--pen);display:flex;flex-direction:column;gap:8px;padding:28px;border:0;border-radius:var(--r-lg);background:var(--sheet)}
 .st-task .p-kicker{color:var(--subject);margin-bottom:2px}
-.st-task h2{font-size:1.375rem}
-.st-task p{color:var(--ink-2);font-size:.9375rem}
+.st-task h2{font-size:var(--fs-xl)}
+.st-task p{color:var(--ink-2);font-size:var(--fs-base)}
 .st-task .p-actions{margin-top:auto;padding-top:8px}
 .st-mock{--subject:var(--mark)}
 .st-progress{height:6px;border-radius:999px;background:var(--sheet-3);overflow:hidden}
@@ -18,32 +18,32 @@
 @media (max-width:1180px){.st-fc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:480px){.st-fc-grid{grid-template-columns:1fr}}
 .st-fc-grid article{--subject:var(--pen);padding:24px;border:0;border-radius:var(--r-lg);background:var(--sheet)}
-.st-fc-grid h3{display:flex;align-items:center;gap:8px;font-size:.9375rem}
+.st-fc-grid h3{display:flex;align-items:center;gap:8px;font-size:var(--fs-base)}
 .st-fc-grid h3::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--subject)}
-.st-fc-grid strong{display:block;margin:12px 0 2px;font:600 3rem/1 var(--f-display);letter-spacing:-.045em;font-variant-numeric:tabular-nums;color:var(--ink)}
-.st-fc-grid span{font-size:.8125rem;color:var(--muted)}
-.st-fc-grid p{margin-top:8px;font-size:.8125rem;color:var(--ink-2)}
-.st-fc-grid small{display:block;margin-top:6px;font-size:.75rem;color:var(--muted)}
+.st-fc-grid strong{display:block;margin:12px 0 2px;font:600 var(--fs-5xl)/1 var(--f-display);letter-spacing:-.045em;font-variant-numeric:tabular-nums;color:var(--ink)}
+.st-fc-grid span{font-size:var(--fs-sm);color:var(--muted)}
+.st-fc-grid p{margin-top:8px;font-size:var(--fs-sm);color:var(--ink-2)}
+.st-fc-grid small{display:block;margin-top:6px;font-size:var(--fs-xs);color:var(--muted)}
 .st-scale{position:relative;height:8px;margin:12px 0 4px;border-radius:999px;background:var(--sheet-3)}
 .st-scale i{display:block;height:100%;border-radius:inherit;background:var(--subject)}
 .st-scale b{position:absolute;top:-5px;width:3px;height:18px;border-radius:2px;background:var(--mark);transform:translateX(-1px)}
-.st-comp{margin:16px 0 4px;font-size:1rem}
+.st-comp{margin:16px 0 4px;font-size:var(--fs-body)}
 .st-comp strong{font:600 1.25rem var(--f-mono)}
 .st-scale-row{display:flex;flex-wrap:wrap;gap:8px 22px;margin:12px 0}
 .st-scale-row strong{font:600 1.375rem var(--f-mono);color:var(--pen)}
 .st-settings{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:12px 0}
-.st-settings label{display:flex;flex-direction:column;gap:6px;font-size:.8125rem;font-weight:600;color:var(--ink-2)}
+.st-settings label{display:flex;flex-direction:column;gap:6px;font-size:var(--fs-sm);font-weight:600;color:var(--ink-2)}
 .st-phases{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;padding:0;list-style:none}
 .st-phases li{padding:18px;border:0;border-radius:var(--r-lg);background:var(--sheet)}
 .st-phases li.is-current{box-shadow:inset 0 0 0 2px var(--pen);background:var(--sheet)}
 .st-phases h3{margin:2px 0 6px}
-.st-phases p{font-size:.875rem;color:var(--ink-2)}
-.st-phases small{display:block;margin-top:8px;font-size:.75rem;color:var(--muted)}
+.st-phases p{font-size:var(--fs-md);color:var(--ink-2)}
+.st-phases small{display:block;margin-top:8px;font-size:var(--fs-xs);color:var(--muted)}
 .st-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;padding:0;list-style:none}
 .st-week li{display:flex;flex-direction:column;padding:12px;border:0;border-radius:var(--r);background:var(--sheet)}
-.st-week span{font-size:.75rem;color:var(--muted)}
-.st-week strong{font:600 1.5rem/1.2 var(--f-mono)}
-.st-week em{font-style:normal;font-size:.75rem;color:var(--muted)}
+.st-week span{font-size:var(--fs-xs);color:var(--muted)}
+.st-week strong{font:600 var(--fs-2xl)/1.2 var(--f-mono)}
+.st-week em{font-style:normal;font-size:var(--fs-xs);color:var(--muted)}
 .st-activity{display:grid;grid-template-columns:repeat(14,minmax(0,1fr));gap:4px;max-width:440px}
 .st-activity i{aspect-ratio:1;border-radius:4px;background:var(--sheet-3)}
 .st-activity .st-a1{background:color-mix(in srgb,var(--pen) 30%,var(--sheet-3))}
@@ -51,17 +51,17 @@
 .st-activity .st-a3{background:var(--pen)}
 /* Карта знань і стратегія. */
 .km-grid{display:grid;gap:18px}
-.km-subject h3{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:.9375rem}
+.km-subject h3{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:var(--fs-base)}
 .km-subject h3::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--subject)}
 .km-cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
-.km-cell{display:flex;flex-direction:column;justify-content:space-between;gap:6px;min-height:74px;padding:10px 12px;border:0;border-radius:8px;background:var(--sheet);color:var(--ink);text-decoration:none;font-size:.8125rem;line-height:1.35}
+.km-cell{display:flex;flex-direction:column;justify-content:space-between;gap:6px;min-height:74px;padding:10px 12px;border:0;border-radius:8px;background:var(--sheet);color:var(--ink);text-decoration:none;font-size:var(--fs-sm);line-height:1.35}
 .km-cell:hover{box-shadow:inset 0 0 0 1px var(--muted);color:var(--ink)}
 .km-cell b{font:600 .75rem var(--f-mono);color:var(--muted)}
 .km-cell[data-level="0"]{background:var(--sheet)}
 .km-cell[data-level="1"]{background:var(--mark-soft);border-color:color-mix(in srgb,var(--mark) 30%,transparent)}
 .km-cell[data-level="2"]{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
 .km-cell[data-level="3"]{background:var(--ok-soft);border-color:color-mix(in srgb,var(--ok) 35%,transparent)}
-.km-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 0;font-size:.75rem;color:var(--muted)}
+.km-legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:10px 0 0;font-size:var(--fs-xs);color:var(--muted)}
 .km-legend span{display:inline-flex;align-items:center;gap:6px}
 .km-legend i{width:12px;height:12px;border-radius:3px;border:1px solid var(--line-2)}
 .speed-table td,.speed-table th{white-space:nowrap}
@@ -75,10 +75,10 @@
 .strategy table{margin-top:10px}
 .strategy td:not(:first-child),.strategy th:not(:first-child){font-family:var(--f-mono);text-align:right}
 .ui-sprint{position:sticky;top:58px;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:0 0 14px;padding:10px 16px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--sheet);box-shadow:var(--shadow)}
-.ui-sprint strong{font-family:var(--f-mono);font-size:1.25rem;color:var(--mark)}
-.ui-sprint span{color:var(--ink-2);font-size:.875rem}
+.ui-sprint strong{font-family:var(--f-mono);font-size:var(--fs-xl);color:var(--mark)}
+.ui-sprint span{color:var(--ink-2);font-size:var(--fs-md)}
 .ui-sprint-done{position:static;border-left-color:var(--ok)}
-.ui-sprint-done strong{font-family:var(--f-body);font-size:1.0625rem;color:var(--ink)}
+.ui-sprint-done strong{font-family:var(--f-body);font-size:var(--fs-lg);color:var(--ink)}
 .ui-sprint-done .p-actions{width:100%;margin:2px 0 0}
 .ui-reasons{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
 .ui-reasons article{display:flex;flex-direction:column;gap:8px;padding:16px;border:0;border-radius:var(--r-lg);background:var(--sheet)}
@@ -86,30 +86,30 @@
 .ui-reason-head span{font-family:var(--f-mono);color:var(--mark)}
 .ui-reason-bar{height:6px;border-radius:3px;background:var(--sheet-3);overflow:hidden}
 .ui-reason-bar i{display:block;height:100%;background:var(--mark)}
-.ui-reasons p{margin:0;color:var(--ink-2);font-size:.9375rem}
+.ui-reasons p{margin:0;color:var(--ink-2);font-size:var(--fs-base)}
 .ui-reasons .p-actions{margin-top:auto}
 .recall-type{display:grid;gap:8px;width:100%}
 .recall-type label{font-weight:650;color:var(--ink)}
 .recall-type>div{display:flex;gap:8px;flex-wrap:wrap}
-.recall-type input{flex:1 1 200px;min-height:44px;padding:8px 12px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--field);color:var(--ink);font:inherit;font-size:1.0625rem}
+.recall-type input{flex:1 1 200px;min-height:44px;padding:8px 12px;border:1px solid var(--line-2);border-radius:var(--r);background:var(--field);color:var(--ink);font:inherit;font-size:var(--fs-lg)}
 .recall-type input:focus{outline:2px solid var(--pen);outline-offset:1px;border-color:var(--pen)}
 .recall-type .p-caption{margin:0}
 /* Результат пробника: бал 100–200 — головне число, як ціна на сторінці продукту; тестові бали — під ним. */
 .st-result{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:8px 0 24px}
 .st-result article{--subject:var(--pen);padding:28px;border-radius:var(--r-xl);background:var(--sheet)}
-.st-result p{display:flex;align-items:center;gap:8px;font-size:1rem;font-weight:600}
+.st-result p{display:flex;align-items:center;gap:8px;font-size:var(--fs-body);font-weight:600}
 .st-result p::before{content:'';width:8px;height:8px;border-radius:50%;background:var(--subject)}
 .st-result strong{display:block;margin:16px 0 8px;font:600 clamp(3.75rem,2.75rem + 3vw,5.5rem)/.95 var(--f-display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
-.st-result span{display:block;font-size:.9375rem;color:var(--ink-2)}
-.st-result small{display:block;margin-top:2px;font-size:.8125rem;color:var(--muted)}
+.st-result span{display:block;font-size:var(--fs-base);color:var(--ink-2)}
+.st-result small{display:block;margin-top:2px;font-size:var(--fs-sm);color:var(--muted)}
 .st-result .is-goal span{color:var(--ok)}
 .st-result .is-fail strong,.st-result .is-fail span{color:var(--mark)}
 .st-result+.p-result-score{margin:0 0 6px}
-.st-result+.p-result-score>strong{display:inline;font-size:1.75rem;letter-spacing:-.03em}
-.st-result+.p-result-score>p{display:inline;margin-left:10px;font-size:.9375rem}
+.st-result+.p-result-score>strong{display:inline;font-size:var(--fs-2xl);letter-spacing:-.03em}
+.st-result+.p-result-score>p{display:inline;margin-left:10px;font-size:var(--fs-base)}
 /* Перше налаштування: велика плитка, поля на білому, як аркуш налаштувань Apple ID. */
 #main .ob-card{--field:var(--paper);--tile-in:var(--paper);padding:clamp(28px,4vw,44px);border-radius:var(--r-xl);background:var(--sheet)}
-.ob-card h2{font-size:clamp(1.75rem,1.4rem + 1.2vw,2.375rem)}
+.ob-card h2{font-size:var(--fs-3xl)}
 .ob-card>p{max-width:60ch;margin-top:8px;color:var(--muted)}
 .st-plan-form{margin:0 0 12px}
 .st-plan-form+.p-caption{max-width:90ch;margin-bottom:56px}

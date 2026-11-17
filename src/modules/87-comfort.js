@@ -57,3 +57,11 @@ const comfortPracticeBase=pPractice;pPractice=function(){comfortPracticeBase();c
  if(qa&&!c.record&&!c.exam)qa.insertAdjacentHTML('beforebegin',`<p class="p-caption kbd-hint">${esc(comfortKeys(q))}</p>`);
  const acts=$('.p-practice-top .p-actions');if(acts&&!c.exam&&!c.record)acts.insertAdjacentHTML('beforeend','<button onclick="comfortCopy()">Копіювати умову</button>')};
 comfortTopPaint();
+
+/* Прокручувані таблиці доступні з клавіатури (axe: scrollable-region-focusable): фокус і назва для тих, що справді не вміщуються. */
+function comfortScrollRegions(){document.querySelectorAll('#main .tablewrap').forEach(el=>{const need=el.scrollWidth>el.clientWidth+1;
+ if(need){if(!el.hasAttribute('tabindex'))el.setAttribute('tabindex','0');el.setAttribute('role','region');if(!el.hasAttribute('aria-label'))el.setAttribute('aria-label','Таблиця, її можна прокручувати')}
+ else if(el.dataset.comfortScroll){el.removeAttribute('tabindex');el.removeAttribute('role');el.removeAttribute('aria-label')}
+ el.dataset.comfortScroll=need?'1':''})}
+const comfortScrollRenderBase=render;render=function(){comfortScrollRenderBase();comfortScrollRegions()};
+{let t=null;addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(comfortScrollRegions,200)})}

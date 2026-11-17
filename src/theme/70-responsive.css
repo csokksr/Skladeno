@@ -12,12 +12,12 @@
   .nav{display:none}
   .gnav.is-open{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}
   .gnav.is-open .nav{position:fixed;top:48px;left:0;right:0;bottom:0;z-index:20;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding:12px max(40px,env(safe-area-inset-left,0px)) calc(32px + env(safe-area-inset-bottom,0px));overflow-y:auto;background:var(--paper);animation:gnav-in .35s var(--ease)}
-  .gnav.is-open .nav a{height:auto;padding:7px 0;opacity:1;font:600 1.75rem/1.25 var(--f-display);letter-spacing:-.025em;gap:12px}
+  .gnav.is-open .nav a{height:auto;padding:7px 0;opacity:1;font:600 var(--fs-2xl)/1.25 var(--f-display);letter-spacing:-.025em;gap:12px}
   .gnav.is-open .nav a.on::before{display:none}
   .gnav.is-open .nav a.on{color:var(--link)}
   .gnav.is-open .nav a[data-subject]::after{width:10px;height:10px}
-  .gnav.is-open .nav a em{font-size:.875rem;padding:2px 9px}
-  .gnav.is-open .p-nav-label{width:auto;height:auto;margin:24px 0 8px;background:transparent;font:400 .75rem/1.4 var(--f-body);color:var(--muted)}
+  .gnav.is-open .nav a em{font-size:var(--fs-md);padding:2px 9px}
+  .gnav.is-open .p-nav-label{width:auto;height:auto;margin:24px 0 8px;background:transparent;font:400 var(--fs-xs)/1.4 var(--f-body);color:var(--muted)}
   .gnav.is-open .nav-find span{position:static;width:auto;height:auto;overflow:visible;clip:auto}
   .gnav.is-open .nav-find svg{display:none}
 }
@@ -39,26 +39,29 @@
   .p-section{margin-bottom:44px}
 }
 @media (max-width:560px){
-  body{font-size:1rem}
+  body{font-size:var(--fs-body)}
   .gnav.is-open .nav{padding-left:24px;padding-right:24px}
   .p-breadcrumb{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
   .p-breadcrumb::-webkit-scrollbar{display:none}
   .p-breadcrumb a{flex-shrink:0;min-height:30px}
-  .p-breadcrumb a[aria-current=page]{font-size:1.0625rem}
+  .p-breadcrumb a[aria-current=page]{font-size:var(--fs-lg)}
   main{padding-top:20px}
   .p-practice-top{gap:8px;margin-bottom:14px}
   .p-practice-top .p-caption{display:none}
   .p-practice-top .p-actions{gap:6px}
-  h1{font-size:2rem}
-  .p-hero h1{font-size:2.375rem}
-  .p-session-time{font-size:3rem}
+  .p-practice-top .p-more{flex-basis:100%}
+  .st-today-card h2{font-size:var(--fs-xl)}
+  .p-practice-top .p-more-list{position:static;margin-top:6px;min-width:0;box-shadow:none}
+  h1{font-size:var(--fs-3xl)}
+  .p-hero h1{font-size:var(--fs-4xl)}
+  .p-session-time{font-size:var(--fs-5xl)}
   .p-session-card,.st-today-card,.p-full-exam{padding:24px;border-radius:var(--r-lg)}
-  .p-question h1,.p-question h2{font-size:1.1875rem;margin:18px 0 22px}
-  .p-option{padding:12px 14px;gap:12px;font-size:1rem}
+  .p-question h1,.p-question h2{font-size:var(--fs-xl);margin:18px 0 22px}
+  .p-option{padding:12px 14px;gap:12px;font-size:var(--fs-body)}
   .p-subject-row{grid-template-columns:44px minmax(0,1fr) 14px;gap:14px;padding:18px}
   .p-subject-row .p-row-meta{grid-column:2;grid-row:2;text-align:left;display:flex;gap:6px;align-items:baseline}
   .p-subject-row .p-arrow{grid-column:3;grid-row:1/span 2}
-  .p-subject-mark{width:44px;height:44px;border-radius:var(--r);font-size:1.125rem}
+  .p-subject-mark{width:44px;height:44px;border-radius:var(--r);font-size:var(--fs-xl)}
   .p-subject-list>li>div.p-subject-row{grid-template-columns:44px minmax(0,1fr) auto}
   .p-subject-list>li>div.p-subject-row>a{grid-column:2/-1}
   .p-topic-list>li>.p-topic-row:has(.p-number){grid-template-columns:24px minmax(0,1fr) 56px 12px;gap:10px}
@@ -71,11 +74,11 @@
   .ref-search{flex-direction:column}
   .fact img{max-width:110px;height:100px;margin-left:12px}
   .history-checklist article,.history-archive-lead{flex-direction:column;align-items:flex-start}
-  .p-tabs,.tabs{width:100%}
+  .p-tabs{width:100%}
   .sitefoot-row{flex-direction:column;align-items:flex-start}
   .ref-card{min-height:0}
   .ref-nav{display:grid;grid-template-columns:1fr 1fr;width:100%}
   .ref-nav .primary{order:-1;grid-column:1/-1}
-  .p-targets input,.p-targets select{font-size:2rem}
+  .p-targets input,.p-targets select{font-size:var(--fs-3xl)}
 }
 @media print{.gnav,.top,.sitefoot,.p-actions,.p-tabs,.p-exam-nav,.p-footer,.toast{display:none!important}main{padding:0}}
