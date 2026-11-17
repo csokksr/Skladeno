@@ -92,7 +92,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: python -I tools/build.py
+      - run: python -I tools/build.py --web
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npx playwright test

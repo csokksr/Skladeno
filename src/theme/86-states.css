@@ -172,3 +172,5 @@ main :is(p,li,dd,dt) a:not([class]){text-decoration:underline}
 .u-diagram{max-width:520px;width:100%;height:auto;font:14px sans-serif;overflow:visible}
 .u-trig{width:100%;max-width:420px;height:auto}
 .u-bg-sheet{background:var(--sheet)}.u-bg-mark-soft{background:var(--mark-soft)}.u-bg-warn-soft{background:var(--warn-soft)}.u-bg-ok-soft{background:var(--ok-soft)}
+/* Поки сторінка чекає дані, main вище за екран: підвал не видно, і поява змісту його не зсуває (CLS). */
+main:has(>.p-boot){min-height:100vh}
