@@ -217,11 +217,43 @@ def load_data():
         for t in data.get('quality', {}).get('topics', []):
             if t['id'] in by_topic:
                 t['questions'] = by_topic[t['id']]
-    return refresh_quality(official_subjects(data))
+    return topic_weights(refresh_quality(official_subjects(data)))
 
 
 # Drills that belong to one lesson (syllabus gaps, tool pages, audits) stay; the generated per-topic banks go.
 KEEP_DRILLS = re.compile(r'^(syllabus|audit|project|skill-gap)-|^(number-tools|powers-roots|real-fluency|ratios-models|algebra-tools|log-tools|trig-tools)-')
+
+
+WEIGHT_YEARS = (2022, 2026)
+
+
+def topic_weights(data):
+    """Share of each topic in the official НМТ tasks of WEIGHT_YEARS: the forecast weighs topics by it instead of equally.
+    Smoothed by half a task per topic, so a topic absent from the sample keeps a small weight; shares of a subject sum to 1."""
+    count = {}
+
+    def add(sid, tid, q):
+        if str(q.get('testName', '')).startswith('НМТ') and WEIGHT_YEARS[0] <= int(q.get('year') or 0) <= WEIGHT_YEARS[1]:
+            count.setdefault(sid, {})[tid] = count.get(sid, {}).get(tid, 0) + 1
+
+    for q in data['questions']:
+        add('hist', 'hist-%d' % q['topic'] if isinstance(q['topic'], int) else 'hist-%s' % q['topic'], q)
+    for s in data['subjects']:
+        for t in s['topics']:
+            for q in t['questions']:
+                add(s['id'], t['id'], q)
+    tids = {'hist': ['hist-%d' % t['id'] for t in data['topics']]}
+    tids.update({s['id']: [t['id'] for t in s['topics']] for s in data['subjects']})
+    weights, tasks = {}, {}
+    for sid, ids in tids.items():
+        n = sum(count.get(sid, {}).values())
+        if not n:
+            continue
+        tasks[sid] = n
+        total = n + 0.5 * len(ids)
+        weights[sid] = {i: round((count[sid].get(i, 0) + 0.5) / total, 4) for i in ids}
+    data['topicWeights'] = {'years': list(WEIGHT_YEARS), 'tasks': tasks, 'w': weights}
+    return data
 
 
 def official_subjects(data):

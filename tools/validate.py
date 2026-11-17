@@ -126,7 +126,8 @@ if '<style>' in t and '<script>' in t:
     if _css_bytes > 110_000: problems['css over budget (110000 bytes)'].append(_css_bytes)
     # 650000 -> 670000 (2026-11-15): modules 81-92 (test tools, rhythm, data tools, find, shortcuts, export) brought the code to about 659000 bytes on purpose.
     # 670000 -> 710000 (2026-11-15): profiles, own cards, speech, function graph and the colour mode (modules 93-95) took the code to about 692000 bytes on purpose.
-    if _js_bytes > 710_000: problems['js over budget (710000 bytes)'].append(_js_bytes)
+    # 710000 -> 730000 (2026-11-17): webMerge (98-merge.js), topic weights and «де найдешевше взяти бали» took the code to about 712000; the minified build (open task 90) will lift this.
+    if _js_bytes > 730_000: problems['js over budget (730000 bytes)'].append(_js_bytes)
 # Media inside the page: only JPEG, PNG, GIF, WebP images and PDF, and every data URI declares what its bytes really are.
 # A viewer that checks media types (the artifact host does before public sharing) refuses SVG data URIs and mislabelled files.
 import base64

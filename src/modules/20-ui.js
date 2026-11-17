@@ -19,7 +19,7 @@ pHub=function(){const t=stToday(),days=stDaysLeft(),phase=stPhase(days),aa=pAnsw
  $('#main').innerHTML=pHeading(days?'До НМТ '+stPlural(days,'день','дні','днів'):(pDay()>stExamDate()?'НМТ уже минуло':'День НМТ'),'Твоя підготовка до НМТ',`Етап «${phase.name}»`)
  +`<section class="st-today-card"><div><p class="p-kicker">Заняття на сьогодні · ≈${P.plan.minutes} хв</p><h2>${line.length?esc(line.join(' · ')):'План на сьогодні виконано'}</h2>${ids.length?`<p class="u-soft u-mt6 p-caption">${left?'Лишилося '+stPlural(left,'завдання','завдання','завдань'):'Завдання на сьогодні виконано'}</p>`:''}</div><a class="primary" href="#today">${left<ids.length?'Продовжити':'Почати'} ›</a></section>`
  +`<div class="p-status-strip"><span><strong>${done}</strong>завдань розв’язано</span><span><strong>${wrong}</strong>чекають виправлення</span><span><strong>${mocks}</strong>пробників пройдено</span><a href="#analytics">Детальний прогрес ›</a></div>`
- +stForecastHTML(true)
+ +stForecastHTML(true)+stBestHTML()
  +`<section class="p-section"><div class="p-section-head"><h2>Предмети</h2><a href="#plan">Цілі й дата НМТ ›</a></div><div class="p-subject-list">${pSubjectRows()}</div></section>`
  +`<section class="p-bottom-grid"><article class="p-feature"><h2>Пробні НМТ</h2><p>Предметні варіанти й повна симуляція з двома блоками та перервою. Бал одразу переводиться у шкалу 100–200.</p><a class="p-link" href="#mocks">Обрати пробник ›</a></article>`
  +`<article class="p-feature"><h2>Робота над помилками</h2><p>${wrong?stPlural(wrong,'завдання','завдання','завдань')+' розв’язано з помилкою. Повтори їх, поки свіже.':'Помилок поки немає. Вони з’являться тут після перших відповідей.'}</p>${wrong?'<button onclick="pReview(\'wrong\')">Повторити помилки ›</button>':''}</article>`

@@ -33,10 +33,33 @@ function stDateLabel(iso){return new Date(iso+'T12:00:00').toLocaleDateString('u
 /* Прогноз: зважені останні пробники (поточні тестові бали) і точність перших спроб за темами. */
 function stMocks(sid){let out=[];for(let r of P.records||[]){if(!r.finished)continue;let ids=r.ids.filter(id=>PM[id]?.subject===sid);if(ids.length<EXAMINFO[sid].count)continue;out.push({raw:ids.reduce((n,id)=>n+pGrade(PM[id],r.answers[id]),0),max:ids.reduce((n,id)=>n+pMax(PM[id]),0),at:r.finished,full:r.ids.length>EXAMINFO[sid].count})}
  for(let r of P.official?.records||[])if(offSub(r.subject)===sid&&r.finished&&!r.familiar){let s=offScore(r);out.push({raw:s.score,max:s.max,at:r.finished,full:false})}return out.sort((a,b)=>b.at-a.at)}
-function stPractice(sid){let aa=pAnswers(),topics=DB.quality.topics.filter(t=>t.subject===sid),sum=0,answered=0,points=0,untouched=0;for(let t of topics){let a=0,m=0;for(let id of t.questions){let q=PM[id],x=aa[id];if(!q||!x||q.challenge)continue;a+=Math.min(x.first??x.score,x.max);m+=x.max;answered++}points+=m;if(!m)untouched++;sum+=(a+0.9)/(m+3)}return {p:topics.length?sum/topics.length:0.3,answered,points,untouched,topics:topics.length}}
+// Точність за темою за першими спробами: (правильні + 0,9) / (спроби + 3).
+function stTopicStats(sid){
+ let aa=pAnswers();
+ return DB.quality.topics.filter(t=>t.subject===sid).map(t=>{let a=0,m=0,n=0;
+  for(let id of t.questions){let q=PM[id],x=aa[id];if(!q||!x||q.challenge)continue;a+=Math.min(x.first??x.score,x.max);m+=x.max;n++}
+  return {t,m,n,acc:(a+0.9)/(m+3)}})}
+// Вага теми: частка в офіційних тестах НМТ (DB.topicWeights, build.py). Без таблиці всі теми рівні.
+function stWeights(sid){return DB.topicWeights?.w?.[sid]||null}
+function stPractice(sid){
+ let rows=stTopicStats(sid),w=stWeights(sid),sum=0,wsum=0,answered=0,points=0,untouched=0;
+ for(let r of rows){let k=w?(w[r.t.id]??1/rows.length):1;sum+=k*r.acc;wsum+=k;answered+=r.n;points+=r.m;if(!r.m)untouched++}
+ return {p:rows.length&&wsum?sum/wsum:0.3,answered,points,untouched,topics:rows.length,weighted:!!w}}
 function stForecast(sid){let info=NMT.subjects[sid],pr=stPractice(sid),mocks=stMocks(sid).slice(0,3),p=pr.p,w=[3,2,1];if(mocks.length){let m=mocks.reduce((s,x,i)=>s+w[i]*x.raw/x.max,0)/mocks.reduce((s,_,i)=>s+w[i],0);p=pr.answered>=30?0.7*m+0.3*pr.p:m}
  let sd=Math.sqrt(p*(1-p)/(pr.points+mocks.length*info.max+4))+0.12*pr.untouched/Math.max(1,pr.topics),raw=Math.round(p*info.max),lo=Math.round(stClamp(p-1.3*sd,0,1)*info.max),hi=Math.round(stClamp(p+1.3*sd,0,1)*info.max);
  return {raw,lo,hi,max:info.max,scale:nmtScale(sid,raw),scaleLo:nmtScale(sid,lo),scaleHi:nmtScale(sid,hi),basis:mocks.length?'mocks':'practice',answered:pr.answered,mocks:mocks.length,untouched:pr.untouched,topics:pr.topics,enough:pr.answered>=40||mocks.length>0}}
+// Ціна тестового бала: найкращий приріст за шкалою на +1…+3 тестові бали від raw, у шкальних балах на тестовий бал.
+// Біля порогу +1 дає стрибок із «нижче порогу» (0) до першого рядка таблиці, тож ціна там висока.
+function stPrice(sid,raw){let s=NMT.subjects[sid],now=nmtScale(sid,raw)||0,best=0;for(let k=1;k<=3&&raw+k<=s.max;k++)best=Math.max(best,((nmtScale(sid,raw+k)||0)-now)/k);return best}
+// Найвигідніші теми: цінність = ціна бала × (вага теми × макс. тестових балів × слабкість теми), де слабкість = 1 − точність.
+function stBest(n=3){
+ let rows=[];
+ for(let s of SUBJECTS){let f=stForecast(s.id),w=stWeights(s.id);if(!f.enough||!w)continue;let price=stPrice(s.id,f.raw);if(!price)continue;
+  for(let r of stTopicStats(s.id)){let gain=price*(w[r.t.id]??0)*f.max*(1-r.acc);if(gain>=0.5)rows.push({sid:s.id,subject:s.name,id:r.t.id,title:r.t.title,gain:Math.round(gain),weight:w[r.t.id],acc:r.acc,price})}}
+ return rows.sort((a,b)=>b.gain-a.gain).slice(0,n)}
+function stBestHTML(){
+ let rows=stBest();if(!rows.length)return '';
+ return `<section class="p-section st-best"><div class="p-section-head"><div><h2>Де найдешевше взяти бали</h2><p class="p-caption">За вагою теми в тестах НМТ ${DB.topicWeights.years[0]}–${DB.topicWeights.years[1]}, твоєю слабкістю в ній і ціною тестового бала за шкалою.</p></div></div><div class="p-topic-list">${rows.map(r=>`<a class="p-topic-row" href="#${r.id.startsWith('hist-')?'topic/'+r.id.slice(5):'lesson/'+r.id}"><h3>${esc(r.title)}<small> · ${esc(r.subject)}</small></h3><span>до +${r.gain} за шкалою ›</span></a>`).join('')}</div></section>`}
 // Формула Порядку прийому 2026: (К1·П1+К2·П2+К3·П3+К4·П4)/(К1+К2+К3+(К4max+К4)/2), не більше 200.
 function stCompetition(vals){let c=P.study.coef,den=c.k1+c.k2+c.k3+(c.k4max+c.k4)/2;if(!den||vals.some(v=>!v))return null;return Math.min(200,(c.k1*vals[0]+c.k2*vals[1]+c.k3*vals[2]+c.k4*vals[3])/den)}
 
@@ -101,7 +124,7 @@ pPlan=function(){let days=stDaysLeft(),phase=stPhase(days),aa=pAnswers(),start=n
  <section class="p-section"><div class="p-section-head"><h2>Етапи підготовки</h2><a class="primary" href="#today">План на сьогодні ›</a></div><ol class="st-phases">${phases.map(p=>`<li class="${p.id===phase.id?'is-current':''}"><p class="p-kicker">${p.from?'з '+p.from.toLocaleDateString('uk-UA',{day:'numeric',month:'long'}):'зараз — до '+new Date(exam.getTime()-120*DAY).toLocaleDateString('uk-UA',{day:'numeric',month:'long'})}</p><h3>${p.name}</h3><p>${p.text}</p><small>Повторення ≈${Math.round(p.review*100)}% часу · пробник кожні ${p.mockEvery} дн.</small></li>`).join('')}</ol></section>
  <section class="p-section"><h2>Повторення на тиждень уперед</h2><ul class="st-week">${week}</ul></section>
  <section class="p-section"><h2>Активність за 4 тижні</h2><div class="st-activity">${activity.join('')}</div><p class="p-caption">Регулярність важить більше, ніж тривалі заняття раз на тиждень.</p></section>
- ${stForecastHTML()}
+ ${stForecastHTML()}${stBestHTML()}
  <section class="p-section"><h2>Конкурсний бал</h2><p>Формула Порядку прийому 2026: (К1·П1 + К2·П2 + К3·П3 + К4·П4) / (К1 + К2 + К3 + (К4max + К4)/2). П1 — українська, П2 — математика, П3 — історія, П4 — англійська. Коефіцієнти своєї спеціальності бери з Порядку прийому 2027 або на сайті університету. Регіональний, галузевий і сільський коефіцієнти тут не враховано.</p>${stCompHTML()}<div class="st-settings">${[['k1','К1 · українська'],['k2','К2 · математика'],['k3','К3 · історія'],['k4','К4 · англійська'],['k4max','К4max · найбільший К4 спеціальності']].map(([k,l])=>`<label>${l}<input type="number" min="0" max="1" step="0.05" value="${P.study.coef[k]}" onchange="stSet('coef-${k}',this.value)"></label>`).join('')}</div></section>${pFoot()}`};
 
 /* Вбудовування в наявні сторінки. */
