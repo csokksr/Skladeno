@@ -18,7 +18,7 @@ function restoreCommit(platform,history){if(importRecoveryStatus==='blocked'||lo
 restoreTryRecovery();
 
 'use strict';
-const DB=JSON.parse(document.querySelector('#data').textContent),T=DB.topics,Q=DB.questions,F=T.flatMap(t=>t.facts),QM=Obj0(Q.map(q=>[q.id,q])),FM=Obj0(F.map(f=>[f.id,f])),KEY='istoria200-complete-v4';
+function dataFailed(){const m=document.querySelector('#main');if(m)m.innerHTML='<section class="p-section"><h1>Дані не завантажилися</h1><p>Перевір з’єднання й онови сторінку. Прогрес у браузері не втрачено.</p></section>';throw new Error('data script missing')}const DB=window.SKLADENO_DATA||(document.querySelector('#data')?JSON.parse(document.querySelector('#data').textContent):dataFailed()),T=DB.topics,Q=DB.questions,F=T.flatMap(t=>t.facts),QM=Obj0(Q.map(q=>[q.id,q])),FM=Obj0(F.map(f=>[f.id,f])),KEY='istoria200-complete-v4';
 const fresh=()=>({schema:4,answers:{},drafts:{},cursors:{},pins:[],read:[],notes:{},lastTopic:1,session:null,mock:null,history:[],days:{}});let S=fresh(),storageOK=true;try{const x=JSON.parse(restoreRead(KEY)||'null');if(x?.schema===4)S=normaliseImport({app:'istoria200',state:x},true)}catch{S=fresh();storageOK=false;keepCorrupt(KEY)}
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])),letters=['А','Б','В','Г','Д','Е','Є'],names={D:'Дати',P:'Персоналії',T:'Поняття',C:'Культура',G:'Географія',L:'Зв’язки й пояснення',M:'Комбіновані',I:'Зображення'};
 let route='',tab='theory',search='',topicSearch='',kind='',galleryKind='C',onlyImages=false,shown=60,lastBase='';

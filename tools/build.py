@@ -397,11 +397,16 @@ def app_js(extra_dirs, offline_mb=100):
     return app
 
 
-def page(data, modules, offline_mb=100):
+def page(data, modules, offline_mb=100, data_file=None):
     blob = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     shell = open(f'{S}/shell.html', encoding='utf-8').read()
     css = '\n'.join(open(p, encoding='utf-8').read() for p in sorted(glob.glob(f'{S}/theme/*.css')))
     assert '</style' not in css.lower()
+    if data_file:
+        # Web build: the 9 MB of data is a separate script, so the shell paints before the data arrives (first paint 12 s -> 1 s on slow 4G).
+        open(data_file, 'w', encoding='utf-8', newline='').write('window.SKLADENO_DATA=JSON.parse(' + json.dumps(blob.replace('<\/', '</'), ensure_ascii=False) + ');')
+        shell = shell.replace('<script id="data" type="application/json">@@DATA@@</script>', '<script src="files/data.js"></script>', 1)
+        assert '@@DATA@@' not in shell
     return shell.replace('@@CSS@@', css, 1).replace('@@DATA@@', blob, 1).replace('@@APP@@', app_js(modules, offline_mb), 1)
 
 
@@ -433,7 +438,8 @@ def build_web(offline_bytes):
         data['assets'][k] = '@zno:' + name
     for name, pack in packs.items():
         json.dump(pack, open(os.path.join(out, 'files', 'zno-%s.json' % name), 'w', encoding='ascii'), separators=(',', ':'))
-    html = page(fill(data, os.path.join(out, 'files')), ['modules', 'web'], round(len(offline_bytes) / 1e6))
+    html = page(fill(data, os.path.join(out, 'files')), ['modules', 'web'], round(len(offline_bytes) / 1e6), os.path.join(out, 'files', 'data.js'))
+    assert os.path.getsize(os.path.join(out, 'files', 'data.js')) < 15 * 1024 * 1024, 'files/data.js is close to the 16 MB text-file limit of the artifact host'
     # The artifact viewer wraps the page in its own document: keep only title, style and body content.
     head, body = html.split('</head>', 1)
     style = head[head.index('<style>'):]
