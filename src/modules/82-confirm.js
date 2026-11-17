@@ -1,6 +1,6 @@
 /* Вікно підтвердження: власний діалог на сторінці замість confirm() в усіх версіях (у переглядачі артефакту confirm() завжди
    повертає false). Після згоди повторюється та сама дія: натискання кнопки або імпорт файлу; якщо дія питає кілька разів, згоди накопичуються, доки вона не завершиться. Тести Node лишають вбудований confirm
-   (window.nativeConfirm). Ідентифікатори web-confirm* використовує й веб-шар (синхронізація). */
+   (window.nativeConfirm). */
 if(!window.nativeConfirm){
 let confirmOk=new Set(),confirmRetry=null;
 document.body.insertAdjacentHTML('beforeend','<dialog id="web-confirm" class="web-confirm" aria-labelledby="web-confirm-text"><p id="web-confirm-text"></p><div class="p-actions"><button class="primary" id="web-confirm-yes">Так, продовжити</button><button id="web-confirm-no" autofocus>Скасувати</button></div></dialog>');
