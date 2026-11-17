@@ -1,4 +1,4 @@
-/* Веб-збірка: тексти завдань і конспектів лежать у files/pack-<предмет>.js. Ядро даних (data.js) містить лише заглушки
+/* Веб-збірка: тексти завдань і конспектів лежать у files/pack-<предмет>.json (fetch; хост артефактів не віддає .js як скрипти). Ядро даних (files/data.json) містить лише заглушки
    завдань без prompt, passage, explanation (поле _h називає відсутні поля) і тем без notes; options, left, right, rows мають
    лише заглушки потрібної довжини: прогрес перевіряється на старті, до гідратації, і йому потрібні тільки довжини.
    Пакет домальовує ці поля в тих самих об'єктах (PM, QM, PT і сирі завдання тем), тож решта коду бачить повні дані.
@@ -24,7 +24,8 @@ function SK_PACK(name,pack){
  step()}
 function packLoad(name){
  if(PACK_DONE.has(name))return Promise.resolve();
- return PACK_WAIT[name]||(PACK_WAIT[name]=new Promise((ok,fail)=>{PACK_RES[name]=()=>ok(undefined);const s=document.createElement('script');s.src='files/pack-'+name+'.js';s.onerror=()=>{delete PACK_WAIT[name];s.remove();fail(new Error('pack '+name))};document.head.appendChild(s)}))}
+ return PACK_WAIT[name]||(PACK_WAIT[name]=new Promise((ok,fail)=>{PACK_RES[name]=()=>ok(undefined);
+  fetch('files/pack-'+name+'.json').then(r=>{if(!r.ok)throw new Error('pack '+name);return r.json()}).then(p=>SK_PACK(name,p)).catch(e=>{delete PACK_WAIT[name];fail(e)})}))}
 function packAll(){return Promise.all(PACK_NAMES.map(packLoad))}
 function packFailed(){const m=$('#main');if(m)m.innerHTML='<section class="p-section"><h1>Матеріали не завантажилися</h1><p>Перевір з’єднання й онови сторінку. Прогрес у браузері не втрачено.</p><p><button onclick="location.reload()">Оновити сторінку</button></p></section>'}
 if(PACK_NAMES.length){
