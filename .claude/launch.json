@@ -28,6 +28,20 @@
         "dist/web"
       ],
       "port": 8766
+    },
+    {
+      "name": "skladeno-lite",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m",
+        "http.server",
+        "8795",
+        "--bind",
+        "127.0.0.1",
+        "--directory",
+        "dist"
+      ],
+      "port": 8795
     }
   ]
 }

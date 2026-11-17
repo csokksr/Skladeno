@@ -1,12 +1,14 @@
 """Assemble src/ into the site.
 
   python -I tools/build.py        -> dist/skladeno-nmt.html (one self-contained offline file)
+  python -I tools/build.py --lite -> dist/skladeno-nmt-lite.html (no embedded PDFs, links to the official sources)
   python -I tools/build.py --web  -> dist/web/ (claude.ai artifact: index.html + files/ + offline parts)
 """
 import base64, glob, hashlib, json, os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 S = os.path.join(ROOT, 'src')
 WEB = '--web' in sys.argv
+LITE = '--lite' in sys.argv
 
 
 # Official texts typed on the source site sometimes mix look-alike letters of the two alphabets in one word («нa», «Нow», «ХVІІ»).
@@ -401,6 +403,7 @@ def app_js(extra_dirs, offline_mb=100):
 # the core data stays small, packs load after the first screen (src/web/80-packs.js hydrates the stubs in place).
 HEAVY_Q = ('prompt', 'passage', 'explanation', 'options', 'left', 'right', 'rows')
 LIST_Q = ('options', 'left', 'right', 'rows')
+REF_KEYS = {'referenceCards': 'cards', 'historyGuides': 'guides'}
 
 
 def split_packs(data):
@@ -432,6 +435,11 @@ def split_packs(data):
                 t['_h'] = ['notes']
             for q in t['questions']:
                 strip(q, pack, s['id'])
+    # Reference cards and the long history guides are not needed by the hub or by practice: each has its own pack,
+    # and src/web/80-packs.js guards DB.referenceCards / DB.historyGuides until the pack arrives.
+    for key, name in REF_KEYS.items():
+        if key in data:
+            packs[name] = {'q': {}, 't': {}, 'd': {key: data.pop(key)}}
     return packs
 
 
@@ -474,6 +482,25 @@ def build_offline():
     open(out, 'w', encoding='utf-8', newline='').write(html)
     print(out, round(len(html.encode()) / 1e6, 1), 'MB')
     return html.encode()
+
+
+def lite(data):
+    """Light offline file: official PDFs are not embedded, the documents link to the official sources instead."""
+    for d in data['officialDocs']:
+        d['data'] = d['url']
+    for p in data['officialPapers']:
+        for kind, doc in p['documents'].items():
+            doc['data'] = '%s#page=%s' % (p['sourceUrl'], 1 if kind == 'questions' else p.get('keyPage', 1))
+    return data
+
+
+def build_lite():
+    out = os.path.join(ROOT, 'dist', 'skladeno-nmt-lite.html')
+    data = fill(lite(load_data()))
+    html = page(data, ['modules'], 1)
+    html = page(data, ['modules'], max(1, round(len(html.encode()) / 1e6)))  # the page quotes its own size
+    open(out, 'w', encoding='utf-8', newline='').write(html)
+    print(out, round(len(html.encode()) / 1e6, 1), 'MB (without embedded PDFs)')
 
 
 def build_web(offline_bytes):
@@ -532,5 +559,7 @@ def build_web(offline_bytes):
 
 
 offline = build_offline()
+if LITE:
+    build_lite()
 if WEB:
     build_web(offline)

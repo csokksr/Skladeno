@@ -7,9 +7,17 @@
 const PACK_NAMES=window.SKLADENO_PACKS||[],PACK_DONE=new Set(),PACK_WAIT={};
 const PACK_LIGHT=new Set(['hub','subject','mocks','analytics','plan','library','tests','rhythm','about','graph','strategy','topics','topic','cards','history-archive','advanced','quality','coach','audit','preferences']);
 let PACK_RAW=null,PACK_MISS=false;
-function packGuard(o){if(!o||!o._h)return;for(const k of o._h)Object.defineProperty(o,k,{configurable:true,enumerable:false,get(){PACK_MISS=true;const e=new Error('pack not loaded: '+k);e.packMiss=true;throw e},set(v){Object.defineProperty(this,k,{value:v,writable:true,enumerable:true,configurable:true})}})}
+const PACK_ASKED=new Set(),PACK_DATA={referenceCards:'cards',historyGuides:'guides'};
+// name: пакет, який зняв би помилку; без нього (поле тексту) невідомо який, тож чекаємо всі.
+function packMiss(k,name){PACK_MISS=true;PACK_ASKED.add(name||'*');const e=new Error('pack not loaded: '+k);e.packMiss=true;throw e}
+function packGuard(o){if(!o||!o._h)return;for(const k of o._h)Object.defineProperty(o,k,{configurable:true,enumerable:false,get(){return packMiss(k)},set(v){Object.defineProperty(this,k,{value:v,writable:true,enumerable:true,configurable:true})}})}
 function packRaw(){if(PACK_RAW)return PACK_RAW;PACK_RAW=Object.create(null);for(const s of PB)for(const t of s.topics)for(const q of t.questions)PACK_RAW[q.id]=q;return PACK_RAW}
 if(PACK_NAMES.length){const raw=packRaw();for(const id in raw)packGuard(raw[id]);for(const q of Q)packGuard(q);for(const q of PQ)packGuard(q);for(const id in PT)packGuard(PT[id])}
+// Довідкові картки (пакет cards) і розгорнуті пояснення історії (пакет guides): поки пакета немає, читання кидає помилку, як і в полів текстів.
+const PACK_GUIDES={},PACK_TOPIC=Object.create(null);
+for(const s of PB)for(const t of s.topics)PACK_TOPIC[t.id]=s.id;
+for(const k in PACK_DATA)if(PACK_NAMES.includes(PACK_DATA[k]))Object.defineProperty(DB,k,{configurable:true,enumerable:false,get(){return packMiss(k,PACK_DATA[k])}});
+if(PACK_NAMES.includes('guides'))HISTORY_GUIDES=new Proxy(PACK_GUIDES,{get(o,k){if(typeof k==='string'&&!PACK_DONE.has('guides'))packMiss('historyGuides','guides');return o[k]}});
 const PACK_RES={};
 // Домальовування порціями по 400 завдань між задачами браузера: довга задача блокує сторінку, а пакети важкі.
 function SK_PACK(name,pack){
@@ -20,6 +28,8 @@ function SK_PACK(name,pack){
    if(m){Object.assign(m,h);if(m.subject==='hist'){m.left=m.rows;m.right=m.options}}}
   if(i<ids.length){setTimeout(step,0);return}
   for(const id of Object.keys(pack.t))if(PT[id])Object.assign(PT[id],pack.t[id]);
+  for(const k of Object.keys(pack.d||{}))Object.defineProperty(DB,k,{value:pack.d[k],writable:true,enumerable:true,configurable:true});
+  if(pack.d?.historyGuides)for(const g of pack.d.historyGuides)PACK_GUIDES[g.topic]=g;
   PACK_DONE.add(name);if(PACK_RES[name])PACK_RES[name]()};
  step()}
 function packLoad(name){
@@ -28,13 +38,26 @@ function packLoad(name){
   fetch('files/pack-'+name+'.json').then(r=>{if(!r.ok)throw new Error('pack '+name);return r.json()}).then(p=>SK_PACK(name,p)).catch(e=>{delete PACK_WAIT[name];fail(e)})}))}
 function packAll(){return Promise.all(PACK_NAMES.map(packLoad))}
 function packFailed(){const m=$('#main');if(m)m.innerHTML='<section class="p-section"><h1>Матеріали не завантажилися</h1><p>Перевір з’єднання й онови сторінку. Прогрес у браузері не втрачено.</p><p><button onclick="location.reload()">Оновити сторінку</button></p></section>'}
+const PACK_ROUTE={reference:['cards']};
+// Пакети, які потрібні сторінці: практика й симуляція беруть предмети своїх завдань, конспект — предмет теми; для решти маршрутів — усі.
+function packNeeds(){
+ const p=(location.hash.slice(1)||'hub').split('/');let ids=null,sid=null;
+ if(['practice','simulate','result-review'].includes(p[0]))ids=pContext()?.ids;else if(p[0]==='lesson')sid=PACK_TOPIC[p[1]];
+ const need=PACK_ROUTE[p[0]]||[...new Set(sid?[sid]:(ids||[]).map(id=>PM[id]?.subject))];
+ return need.length&&need.every(n=>PACK_NAMES.includes(n))?need:PACK_NAMES}
 if(PACK_NAMES.length){
- const packRenderBase=render,allDone=()=>PACK_NAMES.every(n=>PACK_DONE.has(n)),wait=()=>{const m=$('#main');if(m)m.innerHTML='<p class="p-caption" role="status">Завантажую завдання…</p>';const at=location.hash;packAll().then(()=>{if(location.hash===at)render()},packFailed)};
+ const packRenderBase=render,done=n=>PACK_DONE.has(n),wait=names=>{const m=$('#main');if(m)m.innerHTML='<p class="p-caption" role="status">Завантажую завдання…</p>';const at=location.hash;Promise.all(names.map(packLoad)).then(()=>{if(location.hash===at)render()},packFailed)};
  render=function(){
-  if(allDone()){packRenderBase();return}
-  if(!PACK_LIGHT.has((location.hash.slice(1)||'hub').split('/')[0])){wait();return}
-  PACK_MISS=false;packRenderBase();
-  if(PACK_MISS)wait()};
- // Пакети вантажаться у фоні відразу після старту; перший екран їх не чекає.
- packAll().then(()=>{},()=>{});
+  if(PACK_NAMES.every(done)){packRenderBase();return}
+  const need=PACK_LIGHT.has((location.hash.slice(1)||'hub').split('/')[0])?[]:packNeeds();
+  if(need.some(n=>!done(n))){wait(need);return}
+  // Сторінка не потребує всіх пакетів: малюємо й чекаємо решту лише тоді, коли вона все ж прочитала відсутнє поле.
+  PACK_MISS=false;PACK_ASKED.clear();packRenderBase();
+  if(PACK_MISS)wait(PACK_ASKED.has('*')?PACK_NAMES:[...PACK_ASKED])};
+ // Спершу пакет поточної сторінки (на головній — останнього предмета), решта у фоні по одному: потрібний зараз пакет не ділить канал із рештою.
+ (async()=>{
+  const need=packNeeds(),first=need.length<PACK_NAMES.length?need:(PACK_NAMES.includes(P.lastSubject)?[P.lastSubject]:[]);
+  await Promise.all(first.map(packLoad)).catch(()=>{});
+  for(const n of PACK_NAMES)try{await packLoad(n)}catch{}
+ })();
 }

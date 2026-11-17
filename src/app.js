@@ -242,7 +242,7 @@ const navigationPractice=pPractice;pPractice=function(){navigationPractice();syn
 document.addEventListener('click',e=>{let a=e.target.closest?.('.nav a,.brand,.sitefoot a,.p-breadcrumb a,.p-mobile-brand');if(!a||e.button>0||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;let href=a.getAttribute('href');if(!href?.startsWith('#')||href==='#')return;e.preventDefault();go(href.slice(1));$('#main').focus({preventScroll:true})});
 document.addEventListener('keydown',e=>{if(e.key!==' ')return;let a=e.target.closest?.('.nav a,.p-breadcrumb a');if(!a)return;e.preventDefault();a.click()});
 
-const HISTORY_GUIDES=Object.fromEntries((DB.historyGuides||[]).map(g=>[g.topic,g]));
+let HISTORY_GUIDES=Object.fromEntries((DB.historyGuides||[]).map(g=>[g.topic,g]));
 let historyMode='guide',historyFind='',historyLastTopic=0,historyCatalogFind='',historyArchiveYear='all',historyArchiveQuery='';
 function historyNormalize(text){return String(text||'').toLowerCase().replace(/[’'`ʼ«»„“”]/g,'').replace(/заст(?:ій|ою|оєм)/g,'заст').replace(/реформ[а-яіїєґ]*/g,'реформ').replace(/косиг[а-яіїєґ]*/g,'косиг').replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim()}
 function historyMatches(text,query){let s=historyNormalize(text);return historyNormalize(query).split(' ').filter(Boolean).every(w=>s.includes(w))}
