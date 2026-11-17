@@ -85,3 +85,21 @@ test('телефон: кнопки «Назад», «Перевірити», «�
   expect(box.y+box.height).toBeLessThanOrEqual(vh+1);
   expect(box.y).toBeGreaterThan(vh*0.5);
 });
+
+test('практика: на видноті не більше трьох дій, решта в «Ще», один h1',async({page})=>{
+  await startPractice(page);
+  const bar='#main .p-practice-top .p-actions';
+  expect(await page.locator(bar+'>button').count()).toBeLessThanOrEqual(3);
+  await expect(page.locator('#main h1')).toHaveCount(1);
+  await page.locator(bar+' .p-more summary').click();
+  await expect(page.getByRole('button',{name:'Без меню'})).toBeVisible();
+  await expect(page.getByRole('button',{name:'Самоперевірка перед відповіддю: вимкнено'})).toBeVisible();
+});
+
+test('практика: після перемикача в «Ще» меню лишається відкритим і фокус на тій самій дії',async({page})=>{
+  await startPractice(page);
+  await page.locator('#main .p-more summary').click();
+  await page.getByRole('button',{name:/Самоперевірка перед відповіддю/}).click();
+  await expect(page.locator('#main .p-more')).toHaveAttribute('open','');
+  await expect(page.getByRole('button',{name:'Самоперевірка перед відповіддю: увімкнено'})).toBeFocused();
+});

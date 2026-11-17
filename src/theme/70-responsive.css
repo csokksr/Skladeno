@@ -49,6 +49,8 @@
   .p-practice-top{gap:8px;margin-bottom:14px}
   .p-practice-top .p-caption{display:none}
   .p-practice-top .p-actions{gap:6px}
+  .p-practice-top .p-more{flex-basis:100%}
+  .p-practice-top .p-more-list{position:static;margin-top:6px;min-width:0;box-shadow:none}
   h1{font-size:2rem}
   .p-hero h1{font-size:2.375rem}
   .p-session-time{font-size:3rem}
