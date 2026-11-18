@@ -1,6 +1,6 @@
 """Тести Python-скриптів tools/. Лише стандартна бібліотека. Запуск: python -m unittest discover -s tests/py -v
 build.py виконує збірку при імпорті, тому його чисті функції беруться з вихідного коду через ast без запуску решти."""
-import ast, http.server, importlib, json, os, subprocess, sys, threading, time, unittest
+import ast, http.server, importlib, importlib.util, json, os, subprocess, sys, threading, time, unittest
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 TOOLS = os.path.join(ROOT, 'tools')
@@ -463,6 +463,38 @@ class DevTools(unittest.TestCase):
             self.assertIn('TS2304', bad.stdout)
         good = subprocess.run(['node', 'tools/typecheck.js'], cwd=ROOT, capture_output=True, text=True, encoding='utf-8')
         self.assertEqual(good.returncode, 0, good.stdout)
+
+
+class Zno3Keycheck(unittest.TestCase):
+    """Звірка ключів біології й географії (tools/zno3_keycheck.py): формати відповідей в аркушах. Потрібен pymupdf, інакше пропускається."""
+
+    @classmethod
+    def setUpClass(cls):
+        try:
+            import pymupdf  # noqa: F401
+        except ImportError:
+            raise unittest.SkipTest('pymupdf не встановлено')
+        spec = importlib.util.spec_from_file_location('zno3_keycheck', os.path.join(TOOLS, 'zno3_keycheck.py'))
+        cls.m = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(cls.m)
+
+    def test_normalize_formats(self):
+        n = self.m.normalize
+        self.assertIn('1–Г 2–А 3–В 4–Б', n('1Г 2А 3В 4Б'))  # без тире
+        self.assertIn('1–Б 2–Г', n('1Б, 2Г, 3Д, 4А'))  # через коми
+        self.assertEqual(n('2, 3, 4').strip(), '234')  # множинний вибір цифрами
+        self.assertEqual(n('\n'.join(['5', 'Г', '6'])).split('\n')[1], 'Г')  # мітка завдання й відповідь не склеюються
+
+    def test_agrees_multi_digits_and_parts(self):
+        a = self.m.agrees
+        multi = {'type': 'multi', 'number': 25, 'answer': [1, 2, 3]}
+        self.assertTrue(a(multi, {(25, 0): ('234.0', '234')}))
+        self.assertFalse(a(multi, {(25, 0): ('235.0', '235')}))
+        part = {'type': 'numeric', 'number': 29, 'part': 2, 'answer': '1'}
+        self.assertTrue(a(part, {(29, 0): ('311.0', '311')}))
+        self.assertFalse(a(part, {(29, 0): ('321.0', '321')}))
+        self.assertIsNone(a({'type': 'single', 'number': 3, 'answer': 0}, {}))  # завдання немає в аркуші
+        self.assertTrue(a({'type': 'single', 'number': 1, 'answer': 2}, {(1, 0): ('2', 'В (вручну)')}))
 
 
 if __name__ == '__main__':

@@ -4,15 +4,16 @@ into sources/zno2/bank.json. Only tasks of full official tests are kept; the sit
 Kept task types: single choice (tip 1), match (4, and 13 with picture rows), one numeric answer (8) and the parts of
 numeric multi-answer tasks (11, split into separate numeric tasks). Open tasks with a written answer (12) and tasks that
 need audio are skipped. Formulas stay as LaTeX between ⟦ and ⟧ (rendered in the app).
-Run with `python -I tools/zno2_import.py`."""
+Run with `python -I tools/zno2_import.py`; the argument `zno3` reads sources/zno3 (biology, geography) instead."""
 import glob, html, json, os, re, sys
 from collections import Counter, defaultdict
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, 'sources', 'zno2', 'html')
-OUT = os.path.join(ROOT, 'sources', 'zno2', 'bank.json')
-SUBJ = {'ukrainian': 'ukr', 'mathematics': 'math', 'english': 'eng'}
+EXTRA = sys.argv[1:] == ['zno3']
+SRC = os.path.join(ROOT, 'sources', 'zno3' if EXTRA else 'zno2', 'html')
+OUT = os.path.join(ROOT, 'sources', 'zno3' if EXTRA else 'zno2', 'bank.json')
+SUBJ = {'biology': 'bio', 'geography': 'geo'} if EXTRA else {'ukrainian': 'ukr', 'mathematics': 'math', 'english': 'eng'}
 LETTERS = 'abcdefgh'
 MARKS = False  # Ukrainian pages: keep underline, bold and italic (tasks ask about underlined letters and highlighted words)
 SUP = str.maketrans('0123456789+-=()n', '⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾ⁿ')
@@ -118,7 +119,7 @@ def main():
         for i in re.findall(r'name="q\[id\]"[^>]*value="(\d+)"', open(p, encoding='utf-8').read()):
             topics_of[i].add(slug)
     files = []
-    for p in glob.glob(os.path.join(SRC, '[mue]*_*.html')):
+    for p in glob.glob(os.path.join(SRC, '[bg]*_*.html' if EXTRA else '[mue]*_*.html')):
         name = os.path.basename(p)[:-5]
         sub, tid = name.split('_')
         h = open(p, encoding='utf-8').read()
