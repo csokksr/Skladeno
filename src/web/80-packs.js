@@ -10,6 +10,7 @@ const PACK_NAMES = window.SKLADENO_PACKS || [],
 const PACK_LIGHT = new Set([
   'hub',
   'growth',
+  'report',
   'subject',
   'mocks',
   'analytics',

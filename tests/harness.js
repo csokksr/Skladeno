@@ -22,7 +22,7 @@ const NodeFilter={SHOW_TEXT:4,FILTER_ACCEPT:1,FILTER_REJECT:2};
 const ctx={MutationObserver:MO,NodeFilter,document,localStorage:{getItem:k=>store.has(k)?store.get(k):null,setItem:(k,v)=>store.set(k,String(v)),removeItem:k=>store.delete(k)},
  location:{hash:process.env.HASH||'',protocol:'file:',href:'file:///x',replace(u){this.hash=String(u)}},addEventListener(){},matchMedia:()=>({matches:false,addEventListener(){}}),
  setInterval:(f,t)=>{intervals.push(f);return intervals.length},setTimeout:()=>0,clearTimeout(){},scrollTo(){},requestAnimationFrame:()=>0,cancelAnimationFrame(){},confirm:()=>true,console,structuredClone,URL,Blob,TextDecoder,atob:s=>Buffer.from(s,'base64').toString('binary'),navigator:{},history:{replaceState(){}},toastLog:[]};
-ctx.crypto=require('crypto').webcrypto;ctx.TextEncoder=TextEncoder;ctx.TextDecoder=TextDecoder;ctx.btoa=btoa;ctx.atob=atob; // WebCrypto for the password-protected backup
+ctx.Response=Response;ctx.CompressionStream=CompressionStream;ctx.DecompressionStream=DecompressionStream;ctx.crypto=require('crypto').webcrypto;ctx.TextEncoder=TextEncoder;ctx.TextDecoder=TextDecoder;ctx.btoa=btoa;ctx.atob=atob; // WebCrypto for the password-protected backup
 ctx.nativeConfirm=true; // the custom confirm dialog (82-confirm.js) stays off: tests answer confirm() themselves
 ctx.window=ctx;ctx.globalThis=ctx;
 ctx.__intervals=intervals;ctx.__store=store;
