@@ -148,6 +148,8 @@ _sink = re.compile(r'(?<![\w$.])(?:eval\(|new Function\(|debugger\b|console\.(?:
 _files = [os.path.join(_root, f) for f in ('src/app.js', 'src/shell.html', 'README.md', 'CLAUDE.md')]
 _files += glob.glob(os.path.join(_root, 'src/content/*.json')) + glob.glob(os.path.join(_root, 'tools/*.json'))
 _files += glob.glob(os.path.join(_root, 'src/modules/*.js')) + glob.glob(os.path.join(_root, 'src/web/*.js')) + glob.glob(os.path.join(_root, 'tools/*.py')) + glob.glob(os.path.join(_root, '.claude/**/*.*'), recursive=True)
+# Сторонній скіл impeccable (встановлений плагіном) не наш код: його скрипти мають token= і console.log за призначенням.
+_files = [f for f in _files if os.path.relpath(f, _root).replace(os.sep, '/').startswith('.claude/skills/impeccable/') is False]
 for f in _files:
     t = open(f, encoding='utf-8').read()
     if f.endswith('validate.py'): continue
