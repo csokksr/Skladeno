@@ -76,6 +76,15 @@ function webMerge(local, remote) {
     }
     platform.growth = { ...obj(R.growth), ...obj(L.growth), blocks: merged.slice(-12) };
   }
+  // Тижневі знімки об'єднуються за днем, локальний має перевагу.
+  if (L.weekly || R.weekly)
+    platform.weekly = {
+      ...obj(R.weekly),
+      ...obj(L.weekly),
+      snaps: byKey(L.weekly?.snaps, R.weekly?.snaps, 'day')
+        .sort((a, b) => (a.day < b.day ? -1 : 1))
+        .slice(-8),
+    };
   if (L.study || R.study) platform.study = { ...obj(R.study), ...obj(L.study), srs };
   if (L.ext || R.ext)
     platform.ext = {

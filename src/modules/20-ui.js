@@ -102,6 +102,7 @@ pHub = function () {
     stForecastHTML(true) +
     stBestHTML() +
     growthHubHTML() +
+    weeklyHTML() +
     `<section class="p-section"><div class="p-section-head"><h2>Предмети</h2><a href="#plan">Цілі й дата НМТ ›</a></div><div class="p-subject-list">${pSubjectRows()}</div></section>` +
     `<section class="p-bottom-grid"><article class="p-feature"><h2>Пробні НМТ</h2><p>Предметні варіанти й повна симуляція з двома блоками та перервою. Бал одразу переводиться у шкалу 100–200.</p><a class="p-link" href="#mocks">Обрати пробник ›</a></article>` +
     `<article class="p-feature"><h2>Робота над помилками</h2><p>${wrong ? stPlural(wrong, 'завдання', 'завдання', 'завдань') + ' розв’язано з помилкою. Повтори їх, поки свіже.' : 'Помилок поки немає. Вони з’являться тут після перших відповідей.'}</p>${wrong ? '<button onclick="pReview(\'wrong\')">Повторити помилки ›</button>' : ''}</article>` +
@@ -205,6 +206,7 @@ pAnalytics = function () {
     `<div class="p-stat-grid"><article><span>Розв’язано завдань</span><strong>${done.length}<small> / ${PQ.length}</small></strong></article><article><span>Бали за першу спробу</span><strong>${pct(first, possible)}<small>%</small></strong></article><article><span>Правильно зараз</span><strong>${pct(right.length, done.length)}<small>%</small></strong></article><article><span>Чекають виправлення</span><strong>${bad.length}</strong></article></div>` +
     `<div class="u-pull p-actions"><button class="primary" ${bad.length ? '' : 'disabled'} onclick="pReview('wrong')">Повторити помилки (${bad.length})</button><button ${due ? '' : 'disabled'} onclick="pReview('due')">Повторення за графіком (${due})</button><button ${P.pins.length ? '' : 'disabled'} onclick="pReview('pins')">Збережені (${P.pins.length})</button><a href="#coach">Причини помилок і діагностика ›</a></div>` +
     stForecastHTML() +
+    weeklyHTML(true) +
     uiKnowledgeMap() +
     uiSpeed() +
     `<section class="p-section"><div class="p-section-head"><h2>Теми з найбільшою кількістю помилок</h2></div><div class="p-topic-list">${
