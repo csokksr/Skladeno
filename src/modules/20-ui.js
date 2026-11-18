@@ -150,7 +150,7 @@ function uiKnowledgeMap() {
 }
 
 /* Темп: медіана секунд на завдання в тренуваннях проти норми НМТ (60 хв на предмет). */
-const UI_NORM = { ukr: 120, math: 164, hist: 120, eng: 113 };
+const UI_NORM = { ukr: 120, math: 164, hist: 120, eng: 113, bio: 106, geo: 120 };
 function uiMedian(a) {
   if (!a?.length) return null;
   const s = [...a].sort((x, y) => x - y),

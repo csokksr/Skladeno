@@ -114,8 +114,9 @@ def parts(prompt_html):
 
 def main():
     topics_of = defaultdict(set)
-    for p in glob.glob(os.path.join(SRC, 'tag-mathematics-*.html')):
-        slug = os.path.basename(p)[len('tag-mathematics-'):-5]
+    for p in glob.glob(os.path.join(SRC, 'tag-biology-*.html' if EXTRA else 'tag-mathematics-*.html')) + (
+            glob.glob(os.path.join(SRC, 'tag-geography-*.html')) if EXTRA else []):
+        slug = re.sub(r'^tag-[a-z]+-', '', os.path.basename(p))[:-5]
         for i in re.findall(r'name="q\[id\]"[^>]*value="(\d+)"', open(p, encoding='utf-8').read()):
             topics_of[i].add(slug)
     files = []
@@ -181,6 +182,24 @@ def main():
                         seen.add(zid + '-%d' % (i + 1))
                         bank.append(dict(base, zid=int(zid) * 10 + i + 1, number=num, part=i + 1, type='numeric',
                                          prompt=(text(stem) + '\n' + text(ph)).strip(), images=imgs(qhtml), answer=v.strip()))
+                    seen.add(zid)
+                    continue
+                elif tip == '6' and EXTRA and len(blocks) >= 2:
+                    # biology: one stem and three sub-questions with three options each, answer «1;1;3»; each part becomes a single-choice task
+                    vals = res.split(';')
+                    if len(vals) != len(blocks):
+                        skipped['multi-single'] += 1
+                        continue
+                    for i, (b, v) in enumerate(zip(blocks, vals)):
+                        title = re.search(r'<div class="quest-title">(.*?)</div>', b, re.S)
+                        a = answers(b)
+                        if not title or not v.strip().isdigit() or not 1 <= int(v) <= len(a):
+                            skipped['multi-single'] += 1
+                            continue
+                        seen.add(zid + '-%d' % (i + 1))
+                        bank.append(dict(base, zid=int(zid) * 100 + i + 1, part=i + 1, type='single', answer=int(v) - 1,
+                                         prompt=(text(qhtml) + chr(10) + text(title.group(1))).strip(), images=imgs(qhtml),
+                                         options=[x[1] for x in a], optionImages=[x[2] for x in a]))
                     seen.add(zid)
                     continue
                 else:

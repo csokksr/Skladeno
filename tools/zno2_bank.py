@@ -64,12 +64,12 @@ def key(url):
     return re.sub(r'[^a-z0-9]+', '-', (parts[-2] + '-' + os.path.splitext(parts[-1])[0]).lower()).strip('-')
 
 
-def blob(url, stats):
-    k = 'zno2-' + key(url)
+def blob(url, stats, prefix='zno2-', raw_dir=None):
+    k = prefix + key(url)
     path = os.path.join(BLOBS, k + '.txt')
     if os.path.exists(path):
         return k
-    raw = os.path.join(RAW, key(url) + os.path.splitext(url)[1].lower())
+    raw = os.path.join(raw_dir or RAW, key(url) + os.path.splitext(url)[1].lower())
     if not os.path.exists(raw):
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         with urllib.request.urlopen(req, timeout=60) as r:

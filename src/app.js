@@ -1152,9 +1152,37 @@ const SUBJECTS = [
     color: '#3c6958',
     description: 'Читання, граматика й лексика у форматі тесту.',
   },
-];
+  {
+    id: 'bio',
+    name: 'Біологія',
+    short: 'Біологія',
+    mark: 'Бі',
+    color: '#4f7a2c',
+    description: 'Офіційні завдання ЗНО та НМТ за темами програми. Без конспекту й розборів.',
+  },
+  {
+    id: 'geo',
+    name: 'Географія',
+    short: 'Географія',
+    mark: 'Ге',
+    color: '#2f6d8a',
+    description: 'Офіційні завдання ЗНО та НМТ за темами програми. Без конспекту й розборів.',
+  },
+].filter(s => !['bio', 'geo'].includes(s.id) || PSUB[s.id]); // біологія й географія з’являються лише разом із даними
 const SUB = Obj0(SUBJECTS.map(s => [s.id, s])),
   PKEY = 'skladeno-prep-v1';
+// НМТ: три обов’язкові предмети й один на вибір. Четвертим можна обрати англійську, біологію чи географію;
+// прогноз, конкурсний бал, план і повна симуляція рахуються за цими чотирма, решта предметів доступні для практики й пробників.
+const CORE_SUBJECTS = ['ukr', 'math', 'hist'],
+  FOURTH_SUBJECTS = ['eng', 'bio', 'geo'].filter(id => SUB[id]);
+function subjFourth() {
+  return FOURTH_SUBJECTS.includes(P.study?.fourth) ? P.study.fourth : 'eng';
+}
+function subjActive() {
+  return [...CORE_SUBJECTS, subjFourth()].map(id => SUB[id]);
+}
+// Предмети з авторськими конспектами, вправами й картами програми; біологія й географія мають лише офіційні завдання.
+const AUTHORED_SUBJECTS = SUBJECTS.filter(s => ['ukr', 'math', 'hist', 'eng'].includes(s.id));
 function pFresh() {
   return {
     schema: 1,
@@ -1364,7 +1392,7 @@ function pHub() {
     last = SUB[PM[ss?.ids?.[ss.index]]?.subject || P.lastSubject],
     day = Object.values(P.logs).reduce((a, b) => a + b, 0);
   $('#main').innerHTML =
-    `<section class="p-hero"><div><h1>Готуйся до НМТ<br><em>у своєму темпі.</em></h1><p class="p-lead">Обери предмет і тему, прочитай конспект та виконай завдання. Після перевірки розбери помилки за поясненнями.</p><div class="p-actions"><button class="primary" onclick="${ss ? 'pResume()' : `go('subject/${last.id}')`}">${ss ? 'Продовжити заняття' : 'Почати з ' + { ukr: 'української', math: 'математики', hist: 'історії', eng: 'англійської' }[last.id]} <span>›</span></button><a href="#mocks">Обрати пробний тест ›</a></div></div><aside class="p-session-card"><p class="p-kicker">Наступне заняття</p><div class="p-session-time">${P.plan.minutes}<span>хв</span></div><h3>${last.name}</h3><p>${ss ? esc(ss.title) : 'Прочитай конспект теми й перейди до завдань із поясненнями.'}</p><div class="p-rule"></div><a href="#plan">Мій план до НМТ ›</a></aside></section><div class="p-status-strip"><span><strong>${done}</strong> завдань опрацьовано</span><span><strong>${due}</strong> чекають повторення</span><span><strong>${P.records.filter(r => r.finished).length}</strong> завершених пробників</span><a href="#analytics">Подивитися прогрес ›</a></div><section class="p-section"><div class="p-section-head"><div><h2>Предмети, до яких ти готуєшся</h2></div><span class="p-caption">Твій предмет на вибір: англійська</span></div><div class="p-subject-list">${pSubjectRows()}</div></section><section class="p-bottom-grid"><article class="p-feature"><h2>Потренуйся<br>з таймером.</h2><p>Предметні пробники та повна симуляція: два блоки по 120 хвилин, перерва й розбір після завершення.</p><a class="p-link" href="#mocks">Обрати пробний НМТ ›</a></article><article class="p-note"><h2>Виправ свої помилки</h2><p>Перший результат залишається в статистиці. Повторні спроби показують, що ти вже засвоїв.</p><button onclick="pReview('wrong')">Повторити завдання з помилками ›</button></article></section>${pFoot()}`;
+    `<section class="p-hero"><div><h1>Готуйся до НМТ<br><em>у своєму темпі.</em></h1><p class="p-lead">Обери предмет і тему, прочитай конспект та виконай завдання. Після перевірки розбери помилки за поясненнями.</p><div class="p-actions"><button class="primary" onclick="${ss ? 'pResume()' : `go('subject/${last.id}')`}">${ss ? 'Продовжити заняття' : 'Почати з ' + { ukr: 'української', math: 'математики', hist: 'історії', eng: 'англійської', bio: 'біології', geo: 'географії' }[last.id]} <span>›</span></button><a href="#mocks">Обрати пробний тест ›</a></div></div><aside class="p-session-card"><p class="p-kicker">Наступне заняття</p><div class="p-session-time">${P.plan.minutes}<span>хв</span></div><h3>${last.name}</h3><p>${ss ? esc(ss.title) : 'Прочитай конспект теми й перейди до завдань із поясненнями.'}</p><div class="p-rule"></div><a href="#plan">Мій план до НМТ ›</a></aside></section><div class="p-status-strip"><span><strong>${done}</strong> завдань опрацьовано</span><span><strong>${due}</strong> чекають повторення</span><span><strong>${P.records.filter(r => r.finished).length}</strong> завершених пробників</span><a href="#analytics">Подивитися прогрес ›</a></div><section class="p-section"><div class="p-section-head"><div><h2>Предмети, до яких ти готуєшся</h2></div><span class="p-caption">Твій предмет на вибір: ${SUB[subjFourth()].name.toLowerCase()}</span></div><div class="p-subject-list">${pSubjectRows()}</div></section><section class="p-bottom-grid"><article class="p-feature"><h2>Потренуйся<br>з таймером.</h2><p>Предметні пробники та повна симуляція: два блоки по 120 хвилин, перерва й розбір після завершення.</p><a class="p-link" href="#mocks">Обрати пробний НМТ ›</a></article><article class="p-note"><h2>Виправ свої помилки</h2><p>Перший результат залишається в статистиці. Повторні спроби показують, що ти вже засвоїв.</p><button onclick="pReview('wrong')">Повторити завдання з помилками ›</button></article></section>${pFoot()}`;
 }
 let pQuerySubject = '';
 function pSubject(id) {
@@ -1382,20 +1410,28 @@ function pSubject(id) {
   let st = pSubStats(id),
     bank = PSUB[id];
   $('#main').innerHTML =
-    pHeading('Предмет / ' + (id === 'eng' ? 'На вибір' : 'Обов’язковий'), s.name, s.description) +
+    pHeading(
+      'Предмет / ' + (CORE_SUBJECTS.includes(id) ? 'Обов’язковий' : 'На вибір'),
+      s.name,
+      s.description
+    ) +
     `<div class="p-subject-toolbar"><div><strong>${st.done} / ${st.total}</strong><span> опрацьовано · ${st.accuracy}% правильних серед виконаних</span></div><div class="p-actions"><button onclick="pReview('wrong','${id}')">Помилки</button><button class="primary" onclick="pStartMixed('${id}')">Змішана практика ›</button></div></div><div class="p-section-head"><h2>Теми для підготовки</h2><a href="#mocks/${id}">Пробні тести з предмета ›</a></div>${
       id === 'hist'
         ? `<div class="p-history-tools"><a href="#gallery">Пам’ятки та персоналії ›</a><a href="#map">Історичні карти ›</a><a href="#sources">Програма УЦОЯО ›</a></div><div class="p-topic-list">${T.map(t => pTopicRow('hist-' + t.id, t.title, t.questions, t.id)).join('')}</div>`
         : `<div class="p-search"><input id="p-topic-search" type="search" placeholder="Знайти тему…" aria-label="Пошук тем" value="${esc(pQuery)}"></div><div class="p-topic-list">${
             bank.topics
               .filter(t => (t.title + ' ' + t.summary).toLowerCase().includes(pQuery.toLowerCase()))
-              .map((t, i) =>
-                pTopicRow(
-                  t.id,
-                  t.title,
-                  t.questions.map(q => q.id),
-                  i + 1
-                )
+              .map(
+                (t, i, a) =>
+                  (t.group && t.group !== a[i - 1]?.group
+                    ? `<h3 class="p-group-title">${esc(bank.groups?.find(g => g.id === t.group)?.title || '')}</h3>`
+                    : '') +
+                  pTopicRow(
+                    t.id,
+                    t.title,
+                    t.questions.map(q => q.id),
+                    i + 1
+                  )
               )
               .join('') ||
             '<p class="empty">Тему не знайдено. Спробуй інше слово або очисть пошук.</p>'
@@ -1427,7 +1463,7 @@ function pLesson(id) {
   $('#main').innerHTML =
     `<a class="p-back" href="#subject/${subject}">← ${SUB[subject].name}</a>` +
     pHeading('Конспект і практика', esc(t.title), esc(t.summary)) +
-    `<div class="p-actions p-lesson-actions"><button class="primary" onclick="pStartTopic('${id}')">Виконати завдання теми ›</button><button onclick="pStartTopic('${id}','new')">Лише невиконані</button><button onclick="pStartTopic('${id}','wrong')">Помилки</button><button onclick="pToggleRead('${id}')">${P.read.includes(id) ? '✓ Конспект опрацьовано' : 'Позначити опрацьованим'}</button></div><div class="p-tabs"><button class="${pTab === 'theory' ? 'is-active' : ''}" onclick="pTab='theory';pLesson('${id}')">Конспект</button><button class="${pTab === 'notes' ? 'is-active' : ''}" onclick="pTab='notes';pLesson('${id}')">Мої нотатки</button><span>${stPlural(t.questions.length, 'завдання', 'завдання', 'завдань')} з поясненнями</span></div>${pTab === 'theory' ? `<div class="p-reading">${t.notes.map((n, i) => `<article class="p-rule-block"><h2>${esc(n.title)}</h2><p>${esc(n.text)}</p>${n.example ? `<div class="p-example"><span>Приклад</span><p>${esc(n.example)}</p></div>` : ''}</article>`).join('')}<aside class="p-study-tip"><strong>Перевір себе на завданнях теми</strong><p>Після кожної відповіді — пояснення.</p><button class="primary" onclick="pStartTopic('${id}')">Перейти до завдань ›</button></aside></div>` : `<div class="panel"><label for="p-notes">Власні приклади, складні місця й запитання</label><textarea id="p-notes" placeholder="Що я зрозумів? Де ще помиляюся?">${esc(P.notes[id] || '')}</textarea><p class="small muted">Нотатки зберігаються автоматично й входять до резервної копії.</p></div>`}${pFoot()}`;
+    `<div class="p-actions p-lesson-actions"><button class="primary" onclick="pStartTopic('${id}')">Виконати завдання теми ›</button><button onclick="pStartTopic('${id}','new')">Лише невиконані</button><button onclick="pStartTopic('${id}','wrong')">Помилки</button><button onclick="pToggleRead('${id}')">${P.read.includes(id) ? '✓ Конспект опрацьовано' : 'Позначити опрацьованим'}</button></div><div class="p-tabs"><button class="${pTab === 'theory' ? 'is-active' : ''}" onclick="pTab='theory';pLesson('${id}')">Конспект</button><button class="${pTab === 'notes' ? 'is-active' : ''}" onclick="pTab='notes';pLesson('${id}')">Мої нотатки</button><span>${stPlural(t.questions.length, 'завдання', 'завдання', 'завдань')}${t.notes.length ? ' з поясненнями' : ''}</span></div>${pTab === 'theory' ? `<div class="p-reading">${t.notes.length ? '' : '<aside class="p-alert"><div><strong>Конспекту до цієї теми немає</strong><p>Тут лише офіційні завдання ЗНО й НМТ, без написаних пояснень: після перевірки видно правильну відповідь. Теорію бери з підручника за темою програми.</p></div></aside>'}${t.notes.map((n, i) => `<article class="p-rule-block"><h2>${esc(n.title)}</h2><p>${esc(n.text)}</p>${n.example ? `<div class="p-example"><span>Приклад</span><p>${esc(n.example)}</p></div>` : ''}</article>`).join('')}<aside class="p-study-tip"><strong>Перевір себе на завданнях теми</strong><p>${t.notes.length ? 'Після кожної відповіді — пояснення.' : 'Після кожної відповіді видно правильну відповідь.'}</p><button class="primary" onclick="pStartTopic('${id}')">Перейти до завдань ›</button></aside></div>` : `<div class="panel"><label for="p-notes">Власні приклади, складні місця й запитання</label><textarea id="p-notes" placeholder="Що я зрозумів? Де ще помиляюся?">${esc(P.notes[id] || '')}</textarea><p class="small muted">Нотатки зберігаються автоматично й входять до резервної копії.</p></div>`}${pFoot()}`;
   if ($('#p-notes'))
     $('#p-notes').oninput = e => {
       P.notes[id] = e.target.value;
@@ -1815,6 +1851,17 @@ const EXAMINFO = {
     detail: '20 з вибором відповіді · 4 відповідності · 3 послідовності · 3 «три з семи»',
   },
   eng: { count: 32, max: 32, detail: '5 із вибором відповіді · 11 відповідностей · 16 пропусків' },
+  // Біологія й географія: справжні тести НМТ 2023–2026 з офіційного сайту; у біології завдання з трьома підпунктами розкладено на три.
+  bio: {
+    count: 34,
+    max: 46,
+    detail: '24 з вибором відповіді · 4 відповідності · 2 завдання з трьох питань (по одному балу)',
+  },
+  geo: {
+    count: 30,
+    max: 46,
+    detail: '20 з вибором відповіді · 4 короткі відповіді · 6 «три з семи»',
+  },
 };
 function pPick(pool, n, seed) {
   if (pool.length < n) throw Error('Недостатньо завдань для пробника: ' + n);
@@ -1896,7 +1943,7 @@ function pMocks(subject = '') {
       'Пробні НМТ',
       'Обери тест з одного предмета або повну симуляцію з чотирьох. Після завершення зможеш переглянути відповіді й пояснення.'
     ) +
-    `${e && !e.finished ? `<div class="p-alert"><div><strong>Є незавершений пробник</strong><p>${esc(e.title)}. Таймер продовжує відлік, навіть коли сторінку закрито.</p></div><button class="primary" onclick="go('simulate')">Повернутися ›</button></div>` : ''}<section class="p-full-exam"><div><h2>Повний тест<br>зі 114 завдань</h2><p>Українська + математика: 120 хв.<br>Перерва: 20 хв.<br>Історія + англійська: 120 хв.</p><p class="p-caption">Результати й пояснення з’являться після завершення. У межах одного блоку можна перемикатися між предметами.</p></div><div class="p-mock-variants">${stVariantList(
+    `${e && !e.finished ? `<div class="p-alert"><div><strong>Є незавершений пробник</strong><p>${esc(e.title)}. Таймер продовжує відлік, навіть коли сторінку закрито.</p></div><button class="primary" onclick="go('simulate')">Повернутися ›</button></div>` : ''}<section class="p-full-exam"><div><h2>Повний тест<br>зі ${subjActive().reduce((n, s) => n + EXAMINFO[s.id].count, 0)} завдань</h2><p>Українська + математика: 120 хв.<br>Перерва: 20 хв.<br>Історія + ${SUB[subjFourth()].name.toLowerCase()}: 120 хв.</p><p class="p-caption">Результати й пояснення з’являться після завершення. У межах одного блоку можна перемикатися між предметами.</p></div><div class="p-mock-variants">${stVariantList(
       'all'
     )
       .map(
@@ -1938,7 +1985,7 @@ function pLaunchMock(subject, variant) {
   )
     return;
   let full = subject === 'all',
-    sets = full ? SUBJECTS.map(s => pMockSet(s.id, variant)) : [pMockSet(subject, variant)],
+    sets = full ? subjActive().map(s => pMockSet(s.id, variant)) : [pMockSet(subject, variant)],
     ids = sets.flat(),
     split = full ? sets[0].length + sets[1].length : 0,
     blocks = full ? [ids.slice(0, split), ids.slice(split)] : [ids],
@@ -2008,7 +2055,7 @@ function pBreak() {
       'Перерва перед другим блоком',
       'До другого блоку є час відпочити. Відійди від екрана, випий води або трохи розімнися.'
     ) +
-    `<div class="p-break"><div class="p-session-time" id="p-timer">20:00</div><p>Наступний блок: історія України та англійська мова. На нього відведено 120 хвилин.</p><p class="p-caption">Другий блок почнеться автоматично після завершення перерви. До першого повернутися вже не можна.</p><button class="primary" onclick="pBeginBlock2(true)">Почати другий блок раніше ›</button></div>${pFoot()}`;
+    `<div class="p-break"><div class="p-session-time" id="p-timer">20:00</div><p>Наступний блок: історія України та ${SUB[subjFourth()].name.toLowerCase()}. На нього відведено 120 хвилин.</p><p class="p-caption">Другий блок почнеться автоматично після завершення перерви. До першого повернутися вже не можна.</p><button class="primary" onclick="pBeginBlock2(true)">Почати другий блок раніше ›</button></div>${pFoot()}`;
   pTimer();
 }
 function pBeginBlock2(early = false) {
@@ -2203,9 +2250,10 @@ function pCleanAttempt(raw, exam = false) {
     if (!Number.isFinite(r.deadline) || ![1, 2, 'break'].includes(r.stage))
       throw Error('Пошкоджений таймер пробника.');
     if (r.full) {
-      let n = s => pMockCount(s, r.variant, { ukr: 30, math: 22, hist: 30, eng: 32 }[s]),
+      let fourth = r.ids.map(id => PM[id].subject).find(s => FOURTH_SUBJECTS.includes(s)) || 'eng',
+        n = s => pMockCount(s, r.variant, EXAMINFO[s].count),
         b0 = [n('ukr') + n('math'), 52],
-        b1 = [n('hist') + n('eng'), 62];
+        b1 = [n('hist') + n(fourth), 30 + EXAMINFO[fourth].count];
       if (
         !Array.isArray(r.blocks) ||
         r.blocks.length !== 2 ||
@@ -2217,10 +2265,7 @@ function pCleanAttempt(raw, exam = false) {
     } else if (
       !SUB[r.subject] ||
       (!(r.short === true && r.ids.length === 15) &&
-        ![
-          pMockCount(r.subject, r.variant, 0),
-          { ukr: 30, math: 22, hist: 30, eng: 32 }[r.subject],
-        ].includes(r.ids.length))
+        ![pMockCount(r.subject, r.variant, 0), EXAMINFO[r.subject]?.count].includes(r.ids.length))
     )
       throw Error('Некоректний предметний пробник.');
     let current = r.full ? r.blocks[r.stage === 2 ? 1 : 0] : r.ids;
@@ -2288,11 +2333,11 @@ function pAnalytics() {
     }</section>${pFoot()}`;
 }
 const PWEEK = [
-  ['Понеділок', 'ukr', 'eng'],
+  ['Понеділок', 'ukr', 'fourth'],
   ['Вівторок', 'math', 'hist'],
-  ['Середа', 'eng', 'ukr'],
+  ['Середа', 'fourth', 'ukr'],
   ['Четвер', 'hist', 'math'],
-  ['П’ятниця', 'ukr', 'eng'],
+  ['П’ятниця', 'ukr', 'fourth'],
   ['Субота', 'math', 'hist'],
   ['Неділя', 'review', 'mock'],
 ];
@@ -2312,8 +2357,9 @@ function pPlan() {
           checked = !!P.plan.days[k],
           mins = Math.floor(P.plan.minutes / 2),
           labels = { review: 'Розбір помилок', mock: 'План на наступний тиждень' },
-          name = id => SUB[id]?.name || labels[id];
-        return `<article class="p-plan-day ${checked ? 'is-complete' : ''}"><div class="p-section-head"><p class="p-kicker">${day}</p><label class="p-check"><input type="checkbox" ${checked ? 'checked' : ''} onchange="pPlanCheck('${k}',this.checked)"> Виконано</label></div><h3>${name(a)}</h3><p>${mins} хв · ${a === 'review' ? 'виправ 5–10 помилок' : '1 правило + 8–12 завдань'}</p><h3>${name(b)}</h3><p>${P.plan.minutes - mins} хв · ${b === 'mock' ? 'переглянь результати й обери дві теми' : 'практика й короткий розбір'}</p><div class="p-actions"><a href="#${a === 'review' ? 'analytics' : 'subject/' + a}">Почати ›</a><a href="#${b === 'mock' ? 'analytics' : 'subject/' + b}">${b === 'mock' ? 'Переглянути прогрес' : SUB[b].short} ›</a></div></article>`;
+          res = id => (id === 'fourth' ? subjFourth() : id),
+          name = id => SUB[res(id)]?.name || labels[id];
+        return `<article class="p-plan-day ${checked ? 'is-complete' : ''}"><div class="p-section-head"><p class="p-kicker">${day}</p><label class="p-check"><input type="checkbox" ${checked ? 'checked' : ''} onchange="pPlanCheck('${k}',this.checked)"> Виконано</label></div><h3>${name(a)}</h3><p>${mins} хв · ${a === 'review' ? 'виправ 5–10 помилок' : '1 правило + 8–12 завдань'}</p><h3>${name(b)}</h3><p>${P.plan.minutes - mins} хв · ${b === 'mock' ? 'переглянь результати й обери дві теми' : 'практика й короткий розбір'}</p><div class="p-actions"><a href="#${a === 'review' ? 'analytics' : 'subject/' + res(a)}">Почати ›</a><a href="#${b === 'mock' ? 'analytics' : 'subject/' + res(b)}">${b === 'mock' ? 'Переглянути прогрес' : SUB[res(b)].short} ›</a></div></article>`;
       }
     ).join(
       ''
@@ -3024,7 +3070,7 @@ function advancedPage() {
       'Складна практика',
       'Аналіз умов, кілька кроків розв’язання та висновки з тексту. Ці вправи не використовуються для прогнозу бала НМТ.'
     ) +
-    `<div class="p-resource-grid">${SUBJECTS.map(s => {
+    `<div class="p-resource-grid">${AUTHORED_SUBJECTS.map(s => {
       let list = qs.filter(q => q.subject === s.id),
         a = pAnswers(),
         done = list.filter(q => a[q.id]);
@@ -3136,7 +3182,7 @@ function auditPage(subject = '') {
       'Поглиблені конспекти',
       'Тут зібрано конкретні прогалини коротких конспектів, пояснення та вправи для перевірки. Це завершений етап доповнення, а не висновок про повну безпомилковість курсу.'
     ) +
-    `<section class="p-section"><h2>Офіційні документи всередині файлу</h2><p>Сім оригінальних PDF від УЦОЯО, ЛРЦОЯО та МОН, зокрема правопис 2026 року й повний перелік наголосів. В автономному HTML вони вбудовані й доступні без інтернету; на сайті відкриваються окремими файлами. Відкрий у браузері або збережи окремо. Програми задають обсяг матеріалу; вони не замінюють підручник. Формат пробників поки відповідає НМТ-2026.</p><div class="p-resource-grid">${DB.officialDocs.map(d => `<article class="p-note"><h3>${esc(d.title)}</h3><p>${esc(d.note)}</p><div class="p-actions"><button onclick="auditPDF('${d.id}')">Відкрити PDF</button><button onclick="auditPDF('${d.id}',true)">Зберегти PDF</button></div><a class="p-caption" href="${esc(d.url)}" target="_blank" rel="noopener">Офіційне джерело ›</a></article>`).join('')}</div></section><div class="p-tabs">${[['', 'Усі предмети'], ...SUBJECTS.map(s => [s.id, s.short])].map(([id, label]) => `<a href="#audit${id ? '/' + id : ''}" class="${id === subject ? 'is-active' : ''}">${label}</a>`).join('')}</div><section class="p-section">${units
+    `<section class="p-section"><h2>Офіційні документи всередині файлу</h2><p>Сім оригінальних PDF від УЦОЯО, ЛРЦОЯО та МОН, зокрема правопис 2026 року й повний перелік наголосів. В автономному HTML вони вбудовані й доступні без інтернету; на сайті відкриваються окремими файлами. Відкрий у браузері або збережи окремо. Програми задають обсяг матеріалу; вони не замінюють підручник. Формат пробників поки відповідає НМТ-2026.</p><div class="p-resource-grid">${DB.officialDocs.map(d => `<article class="p-note"><h3>${esc(d.title)}</h3><p>${esc(d.note)}</p><div class="p-actions"><button onclick="auditPDF('${d.id}')">Відкрити PDF</button><button onclick="auditPDF('${d.id}',true)">Зберегти PDF</button></div><a class="p-caption" href="${esc(d.url)}" target="_blank" rel="noopener">Офіційне джерело ›</a></article>`).join('')}</div></section><div class="p-tabs">${[['', 'Усі предмети'], ...AUTHORED_SUBJECTS.map(s => [s.id, s.short])].map(([id, label]) => `<a href="#audit${id ? '/' + id : ''}" class="${id === subject ? 'is-active' : ''}">${label}</a>`).join('')}</div><section class="p-section">${units
       .map(u => {
         let done = u.questionIds.filter(id => answers[id]),
           ok = done.filter(id => answers[id].score === answers[id].max);
@@ -3206,8 +3252,8 @@ function qualityPage(sid = '') {
       'Карта навчальних умінь',
       'Карта показує зв’язок наших конспектів і вправ. Звірка кожної вимоги офіційної програми ще триває; кількість виконаних вправ не засвідчує повне покриття програми.'
     ) +
-    `<div class="p-tabs">${[['', 'Усі'], ...SUBJECTS.map(s => [s.id, s.short])].map(([id, label]) => `<a href="#quality${id ? '/' + id : ''}" class="${id === sid ? 'is-active' : ''}">${label}</a>`).join('')}</div><div class="p-stat-grid"><article><span>Умінь у карті</span><strong>${rows.length}</strong></article><article><span>Вправи виконано правильно</span><strong>${done}</strong></article><article><span>Без підібраної практики</span><strong>${rows.filter(x => !x.questionIds.length).length}</strong></article><article><span>Звірено з усіма вимогами УЦОЯО</span><strong>0</strong></article></div><section class="p-section"><h2>Що вже перевірено</h2><p>${DB.quality.bank.total} навчальних завдань: унікальні ідентифікатори, допустимі ключі, відсутність однакових варіантів усередині завдання та робочі посилання. ${DB.quality.bank.families.length} груп подібних формулювань позначено для подальшого урізноманітнення. Ці технічні перевірки не доводять предметної правильності ключів.</p><a href="#audit">Відкрити офіційні програми та вже доповнені блоки ›</a></section><section class="p-section">${DB.quality.topics
-      .filter(t => !sid || t.subject === sid)
+    `<div class="p-tabs">${[['', 'Усі'], ...AUTHORED_SUBJECTS.map(s => [s.id, s.short])].map(([id, label]) => `<a href="#quality${id ? '/' + id : ''}" class="${id === sid ? 'is-active' : ''}">${label}</a>`).join('')}</div><div class="p-stat-grid"><article><span>Умінь у карті</span><strong>${rows.length}</strong></article><article><span>Вправи виконано правильно</span><strong>${done}</strong></article><article><span>Без підібраної практики</span><strong>${rows.filter(x => !x.questionIds.length).length}</strong></article><article><span>Звірено з усіма вимогами УЦОЯО</span><strong>0</strong></article></div><section class="p-section"><h2>Що вже перевірено</h2><p>${DB.quality.bank.total} навчальних завдань: унікальні ідентифікатори, допустимі ключі, відсутність однакових варіантів усередині завдання та робочі посилання. ${DB.quality.bank.families.length} груп подібних формулювань позначено для подальшого урізноманітнення. Ці технічні перевірки не доводять предметної правильності ключів.</p><a href="#audit">Відкрити офіційні програми та вже доповнені блоки ›</a></section><section class="p-section">${DB.quality.topics
+      .filter(t => (sid ? t.subject === sid : AUTHORED_SUBJECTS.some(s => s.id === t.subject)))
       .map(
         t =>
           `<details class="p-rule-block"><summary>${esc(t.title)} · ${t.questions.length} вправ</summary>${rows
@@ -3476,7 +3522,10 @@ function coachScore(r) {
 }
 function coachStart(sid = '') {
   if (P.coach.control && !confirm('Замінити незавершений контрольний зріз?')) return;
-  let ids = DB.controlBank.filter(q => !sid || q.subject === sid).map(q => q.id);
+  let on = subjActive().map(s => s.id),
+    ids = DB.controlBank
+      .filter(q => (sid ? q.subject === sid : on.includes(q.subject)))
+      .map(q => q.id);
   if (![8, 32].includes(ids.length)) return;
   let used = P.coach.results.some(r => r.ids.some(id => ids.includes(id)));
   if (
@@ -3625,7 +3674,7 @@ function coachRouteIds(limit = 16) {
       ids.push(q.id);
     }
   }
-  for (let sid of SUBJECTS.map(s => s.id)) {
+  for (let sid of subjActive().map(s => s.id)) {
     let ts = rank.filter(t => t.subject === sid);
     for (let t of ts) {
       let qs = t.questions
@@ -3691,7 +3740,8 @@ function coachLaunch() {
   pStart(ids, 'Заняття за поточними прогалинами', 'coach-route');
 }
 function coachPage() {
-  let ranks = coachTopicRanks(),
+  let on = subjActive().map(s => s.id),
+    ranks = coachTopicRanks().filter(t => on.includes(t.subject) || t.answered),
     aa = pAnswers(),
     due = PQ.filter(q => aa[q.id]?.due <= Date.now()).length,
     confidentWrong = P.coach.events.filter(e => e.confidence === 3 && e.score < e.max).length,
@@ -3891,6 +3941,17 @@ pLibrary = function () {
 function syllabusPage(sid = 'math') {
   let map = DB.officialMaps[sid],
     aa = pAnswers();
+  if (!map) {
+    // Біологія й географія: карти блоків програми немає, лише розділи програми як теми й посилання на першоджерела.
+    $('#main').innerHTML =
+      pHeading(
+        SUB[sid].name + ': програма',
+        'Офіційна програма',
+        'Карти блоків для цього предмета немає: теми сайту — це розділи програми зі збірки тестів на zno.osvita.ua, лише з офіційними завданнями.'
+      ) +
+      `<nav class="p-tabs" aria-label="Предмет карти програми">${SUBJECTS.map(s => `<a href="#syllabus/${s.id}" class="${s.id === sid ? 'is-active' : ''}" ${s.id === sid ? 'aria-current="page"' : ''}>${s.short}</a>`).join('')}</nav><section class="p-section"><div class="p-topic-list">${(PSUB[sid].sources || []).map(x => `<a class="p-topic-row" href="${esc(x.url)}" target="_blank" rel="noopener"><h3>${esc(x.title)}</h3><span>›</span></a>`).join('')}</div><div class="p-actions p-section"><a class="primary" href="#subject/${sid}">Теми предмета ›</a></div></section>${pFoot()}`;
+    return;
+  }
   $('#main').innerHTML =
     pHeading(
       SUB[sid].name + ': звірка з першоджерелом',

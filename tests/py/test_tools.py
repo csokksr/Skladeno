@@ -496,6 +496,49 @@ class Zno3Keycheck(unittest.TestCase):
         self.assertIsNone(a({'type': 'single', 'number': 3, 'answer': 0}, {}))  # завдання немає в аркуші
         self.assertTrue(a({'type': 'single', 'number': 1, 'answer': 2}, {(1, 0): ('2', 'В (вручну)')}))
 
+    def test_agrees_single_choice_parts_of_a_three_question_task(self):
+        a = self.m.agrees
+        part = {'type': 'single', 'number': 29, 'part': 3, 'answer': 2}  # біологія, відповідь «1;1;3»: частина 3 — варіант 3 (індекс 2)
+        self.assertTrue(a(part, {(29, 0): ('113.0', '113')}))
+        self.assertFalse(a(part, {(29, 0): ('111.0', '111')}))
+        # хибно прочитаний рядок аркуша (одне число замість трьох цифр) не вважається ні згодою, ні розбіжністю
+        self.assertIsNone(a(part, {(29, 0): ('50.0', '50')}))
+
+
+class Zno3Topics(unittest.TestCase):
+    """Теми біології й географії (tools/zno3_bank.py): розділи за сторінками тем osvita.ua, а дані — з уже завантажених файлів."""
+
+    @classmethod
+    def setUpClass(cls):
+        if not os.path.exists(os.path.join(ROOT, 'sources', 'zno3', 'tema-biology.html')):
+            raise unittest.SkipTest('сторінки тем не завантажено')
+        try:
+            import PIL  # noqa: F401
+        except ImportError:
+            raise unittest.SkipTest('Pillow не встановлено')
+        sys.path.insert(0, TOOLS)
+        import zno3_bank
+        cls.m = zno3_bank
+
+    def test_structure_matches_the_programme_sections(self):
+        bio, geo = self.m.structure('bio'), self.m.structure('geo')
+        self.assertEqual([x[0] for x in bio], ['1.1', '1.2', '1.3', '1.4', '1.5'])  # 5 розділів програми з біології
+        self.assertEqual(len(geo), 6)  # 6 розділів програми з географії
+        self.assertEqual(sum(len(x[2]) for x in bio), 52)
+        self.assertEqual(sum(len(x[2]) for x in geo), 80)
+        self.assertNotIn('Різмноманітність', ' '.join(t[3] for x in bio for t in x[2]))  # описка джерела виправлена
+
+    def test_site_bank_covers_every_task_once(self):
+        bank = json.load(open(os.path.join(ROOT, 'src', 'zno3-bank.json'), encoding='utf-8'))
+        src = json.load(open(os.path.join(ROOT, 'sources', 'zno3', 'bank.json'), encoding='utf-8'))
+        ids = [q['id'] for q in bank['questions']]
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertEqual(len(ids), len(src))
+        topics = {t['id'] for s in bank['subjects'] for t in s['topics']}
+        self.assertTrue(all(q['topicId'] in topics for q in bank['questions']))
+        verified = set(json.load(open(os.path.join(ROOT, 'sources', 'zno3', 'verified.json'))))
+        self.assertEqual(sum(1 for q in bank['questions'] if not q.get('keyUnverified')), len(verified))
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,7 +1,7 @@
 // Real НМТ tests are the mock tests of every subject that has complete official tests, newest first, tasks in the original order.
 const stOfficial = (() => {
   const out = {};
-  for (const sid of ['math', 'ukr', 'eng']) {
+  for (const sid of ['math', 'ukr', 'eng', 'bio', 'geo'].filter(id => SUB[id])) {
     const by = {};
     for (const q of PQ)
       if (q.subject === sid && q.kind === 'НМТ') (by[q.test] = by[q.test] || []).push(q);
@@ -31,6 +31,8 @@ stVariants = function (sid) {
     eng: stOfficial.eng?.length || PSUB.eng.mockSets?.length || 3,
     math: stOfficial.math?.length || 8,
     hist: stHistTests.length || 8,
+    bio: stOfficial.bio?.length || 3,
+    geo: stOfficial.geo?.length || 3,
   };
-  return sid === 'all' ? Math.min(...Object.values(n)) : n[sid] || 3;
+  return sid === 'all' ? Math.min(...subjActive().map(s => n[s.id] || 3)) : n[sid] || 3;
 };

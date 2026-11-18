@@ -44,7 +44,7 @@ ok(/^2026-11-10 /.test(rows[1][0]),'dates are in the Kyiv time zone, sortable');
 let saved=null;download=(n,t,ty)=>{saved={n,t,ty}};csvSave();ok(saved&&/^skladeno-rezultaty-\d{4}-\d{2}-\d{2}\.csv$/.test(saved.n)&&saved.ty==='text/csv','the CSV is saved under a dated name');
 P.records=[];saved=null;csvSave();ok(saved===null,'without finished tests nothing is saved');
 // 3. text report
-const realForecast=stForecast;const rep=reportProgressText();ok(/^Звіт про прогрес · Складено · \d{4}-\d{2}-\d{2}/.test(rep)&&SUBJECTS.every(s=>rep.includes(s.name+': розв’язано')),'the report names every subject');
+const realForecast=stForecast;const rep=reportProgressText();ok(/^Звіт про прогрес · Складено · \d{4}-\d{2}-\d{2}/.test(rep)&&subjActive().every(s=>rep.includes(s.name+': розв’язано')),'the report names the four subjects of the exam');
 ok(/точності ще немає/.test(rep),'a subject without answers says there is no accuracy yet, not 0%');
 ok(/Останні 7 днів: завдань/.test(rep),'the week line says what it counts');
 ok(/Серія днів:/.test(rep)&&/Останні пробники: ще не було/.test(rep)&&/Прогноз орієнтовний/.test(rep),'and the streak, the mocks and the honest note about the forecast');
@@ -57,7 +57,7 @@ window.print=()=>{throw Error('x')};said='';printPage();ok(/недоступни
 const d1=dailyIds('2026-11-15'),d2=dailyIds('2026-11-16');
 ok(d1.length===12&&new Set(d1).size===12&&d1.every(id=>PM[id])&&JSON.stringify(d1)===JSON.stringify(dailyIds('2026-11-15')),'the daily set has 12 different tasks and is the same all day');
 ok(JSON.stringify(d1)!==JSON.stringify(d2),'another day, another set');
-ok(SUBJECTS.every((s,i)=>d1.slice(i*3,i*3+3).every(id=>PM[id].subject===s.id)),'three tasks per subject, in subject order');
+ok(subjActive().every((s,i)=>d1.slice(i*3,i*3+3).every(id=>PM[id].subject===s.id)),'three tasks per subject, in subject order');
 ok(d1.every(id=>!PQ.find(q=>q.id===id).examOnly),'tasks reserved for mocks are not used');
 P.sessions={};P.answers={};S.answers={};dailyStart();ok(P.sessions[dailyKey()]&&P.sessions[dailyKey()].ids.length===12&&P.current===dailyKey(),'starting makes a practice session under today\'s key');
 ok(P.sessions[dailyKey()].title==='Тест дня · '+pDay().split('-').reverse().join('.'),'the title carries the Kyiv date that the set was built from');

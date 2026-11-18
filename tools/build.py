@@ -272,6 +272,14 @@ def official_subjects(data):
         assert set(fixes) <= set(by_id), 'zno2-fixes.json: unknown ids %s' % sorted(set(fixes) - set(by_id))[:5]
         for qid, fields in fixes.items():
             by_id[qid].update(fields)
+    # Biology and geography (tools/zno3_bank.py) have no generated bank: their subjects, topics and official tasks come as they are.
+    extra_path = f'{S}/zno3-bank.json'
+    if os.path.exists(extra_path):
+        extra = json.load(open(extra_path, encoding='utf-8'))
+        known = {s['id'] for s in data['subjects']}
+        data['subjects'] += [s for s in extra['subjects'] if s['id'] not in known]
+        bank['questions'] += extra['questions']
+        bank['assets'].update(extra['assets'])
     print('official tasks with repaired letters:', sum(fix_question_scripts(q) for q in bank['questions']))
     by_sub = {}
     for q in bank['questions']:
@@ -300,7 +308,7 @@ def official_subjects(data):
             return {k: prune(x) for k, x in v.items()}
         return v
     # the new tasks must not pass through prune (they hold images and long texts); detach, prune, re-attach
-    fresh = {t['id']: [q for q in t['questions'] if q['id'].startswith(('zm-', 'ze-', 'zu-'))] for s in data['subjects'] for t in s['topics']}
+    fresh = {t['id']: [q for q in t['questions'] if q['id'].startswith(('zm-', 'ze-', 'zu-', 'zb-', 'zg-'))] for s in data['subjects'] for t in s['topics']}
     for s in data['subjects']:
         for t in s['topics']:
             t['questions'] = [q for q in t['questions'] if q['id'] not in {x['id'] for x in fresh[t['id']]}]
@@ -324,6 +332,12 @@ def official_subjects(data):
     def pick(ids, n):
         step = max(1, len(ids) // n)
         return ids[::step][:n]
+    rows = {t['id'] for t in data.get('quality', {}).get('topics', [])}
+    for s in data['subjects']:  # topics of the subjects without a hand-made quality map get their own row
+        for t in s['topics']:
+            if t['id'] not in rows and t['id'] in pool:
+                data['quality']['topics'].append({'id': t['id'], 'title': t['title'], 'summary': t.get('summary', ''), 'questions': [],
+                                                  'subject': s['id'], 'route': 'lesson/' + t['id'], 'noteCount': len(t.get('notes', []))})
     for t in data.get('quality', {}).get('topics', []):
         if t['id'] in pool:
             t['questions'] = pool[t['id']]
@@ -350,7 +364,8 @@ def official_subjects(data):
         for q in chosen[::step][:8]:
             extra.append({'id': 'control-' + q['id'], 'subject': sid, 'topicId': q['topicId'], 'type': 'single', 'prompt': q['prompt'],
                           'options': q['options'], 'answer': q['answer'],
-                          'explanation': 'Офіційне завдання УЦОЯО (%s). Правильна відповідь: %s.' % (q['source'], q['options'][q['answer']].rstrip('.'))})
+                          'explanation': 'Офіційне завдання УЦОЯО (%s). Правильна відповідь: %s.%s' % (q['source'], q['options'][q['answer']].rstrip('.'),
+                                                                                              ' Ключ не звірено з аркушем УЦОЯО.' if q.get('keyUnverified') else '')})
     data['controlBank'] = data.get('controlBank', []) + extra
     return data
 
@@ -554,9 +569,10 @@ def build_web(offline_bytes):
     os.makedirs(os.path.join(out, 'offline'), exist_ok=True)
     data = load_data()
     # An artifact version holds at most 511 files, so the ~1100 images of official history tasks travel as one JSON
-    # pack per topic (files/zno-t<N>.json: key -> data URI); the page loads a pack when a task needs it.
+    # pack per topic (files/zno-t<N>.json: key -> data URI); the page loads a pack when a task needs it. Biology and geography have
+    # 134 small topics, so their packs are per programme section (the topic's group).
     topic_of = {}
-    every = [(q, 't%d' % q['topic']) for q in data['questions']] + [(q, 's-' + t['id']) for s in data['subjects'] for t in s['topics'] for q in t['questions']]
+    every = [(q, 't%d' % q['topic']) for q in data['questions']] + [(q, 's-' + t.get('group', t['id'])) for s in data['subjects'] for t in s['topics'] for q in t['questions']]
     for q, name in every:
         for k in q.get('images', []) + [x for x in q.get('optionImages') or [] if x] + [x for x in q.get('rowImages') or [] if x]:
             topic_of.setdefault(k, name)

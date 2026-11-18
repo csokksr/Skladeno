@@ -1,7 +1,7 @@
 """Download the official ZNO/НМТ test pages of ukrainian, mathematics and english from zno.osvita.ua into sources/zno2/html
 (and the topic collections of mathematics). Ids come from the subject index pages saved as sources/zno2/idx-<subject>.html.
 Skips files that exist. Run with `python -I tools/zno2_fetch.py`; with the argument `zno3` it takes biology and geography
-instead (sources/zno3, same pages, no topic collections)."""
+instead (sources/zno3; their topic collections come from the tema-<subject>.html pages saved next to the indexes)."""
 import html, json, os, re, sys, time, urllib.request
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -30,9 +30,11 @@ def tests():
 def pages():
     os.makedirs(HTML, exist_ok=True)
     jobs = [('%s_%d.html' % (s, i), 'https://zno.osvita.ua/%s/%d/' % (s, i)) for s, i in tests()]
-    t = '' if EXTRA else open(os.path.join(BASE, 'tema-mathematics.html'), encoding='utf-8').read()
-    for slug in sorted(set(re.findall(r'href="/mathematics/tag-([^"/]+)/"', t))):
-        jobs.append(('tag-mathematics-%s.html' % slug, 'https://zno.osvita.ua/mathematics/tag-%s/' % slug))
+    # Topic collections (zno.osvita.ua/<subject>/tag-<slug>/): mathematics, and biology and geography (tema-<subject>.html lists them).
+    for s in (['biology', 'geography'] if EXTRA else ['mathematics']):
+        t = open(os.path.join(BASE, 'tema-%s.html' % s), encoding='utf-8').read()
+        for slug in sorted(set(re.findall(r'href="/%s/tag-([^"/]+)/"' % s, t))):
+            jobs.append(('tag-%s-%s.html' % (s, slug), 'https://zno.osvita.ua/%s/tag-%s/' % (s, slug)))
     for name, url in jobs:
         path = os.path.join(HTML, name)
         if os.path.exists(path):

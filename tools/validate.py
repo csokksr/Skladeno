@@ -37,7 +37,7 @@ for sid, tid, q in qs:
             if q['id'] not in _mixed_ok and any(re.search('[A-Za-z]', w) and re.search('[\u0400-\u04ff]', w) for w in _word.findall(re.sub('⟦.*?⟧', '', s, flags=re.S))): p('word mixes Latin and Cyrillic letters')
     if typ == 'single':
         if not isinstance(ans, int) or not 0 <= ans < len(opts): p('single: key out of range')
-        if len(opts) < 3: p('single: fewer than 3 options')
+        if len(opts) < (2 if q.get('source') else 3): p('single: fewer than 3 options')  # a sub-question of an official biology task can have two options
         if len(set(zip(map(str, opts), q.get('optionImages') or [None] * len(opts)))) != len(opts): p('single: repeated option')
     elif typ == 'multi':
         if not isinstance(ans, list) or len(set(ans)) != len(ans) or any(not 0 <= x < len(opts) for x in ans): p('multi: bad key')
@@ -128,7 +128,8 @@ if '<style>' in t and '<script>' in t:
     # 670000 -> 710000 (2026-11-15): profiles, own cards, speech, function graph and the colour mode (modules 93-95) took the code to about 692000 bytes on purpose.
     # 710000 -> 730000 (2026-11-17): webMerge (98-merge.js), topic weights and «де найдешевше взяти бали» took the code to about 712000; the minified build (open task 90) will lift this.
     # 730000 -> 700000 (2026-11-18): the build minifies the page code (tools/minify.js, esbuild: whitespace and syntax, names stay), about 669000 bytes now.
-    if _js_bytes > 700_000: problems['js over budget (700000 bytes)'].append(_js_bytes)
+    # 700000 -> 715000 (2026-11-18): biology and geography as subjects (fourth-subject choice, mock formats, plan and report changes) took the code to about 705000 bytes on purpose.
+    if _js_bytes > 715_000: problems['js over budget (715000 bytes)'].append(_js_bytes)
 # Media inside the page: only JPEG, PNG, GIF, WebP images and PDF, and every data URI declares what its bytes really are.
 # A viewer that checks media types (the artifact host does before public sharing) refuses SVG data URIs and mislabelled files.
 import base64

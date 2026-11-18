@@ -103,7 +103,7 @@ pMocks = function (subject) {
 // Official tasks come without a written analysis yet: name the source and send the learner to the topic notes.
 function pExplain(q) {
   if (!q.source) return q.explanation ? `<p>${esc(q.explanation)}</p>` : '';
-  return `${q.explanation ? `<p class="p-explain">${esc(q.explanation)}</p>` : ''}<p class="p-caption">Офіційне завдання УЦОЯО · ${esc(q.source)}. Ключ — за опублікованими відповідями.${q.keyNote ? ' ' + esc(q.keyNote) : ''}</p>${q.subject === 'hist' ? `<p><a href="#topic/${q.topic}">Повторити теорію теми ${q.topic} ›</a></p>` : ''}`;
+  return `${q.explanation ? `<p class="p-explain">${esc(q.explanation)}</p>` : ''}<p class="p-caption">Офіційне завдання УЦОЯО · ${esc(q.source)}. ${q.keyUnverified ? 'Ключ узято з zno.osvita.ua: з офіційним аркушем відповідей УЦОЯО його не звірено.' : 'Ключ — за опублікованими відповідями.'}${q.keyNote ? ' ' + esc(q.keyNote) : ''}</p>${q.subject === 'hist' ? `<p><a href="#topic/${q.topic}">Повторити теорію теми ${q.topic} ›</a></p>` : ''}`;
 }
 // Topic checklist = the official programme minimum («знає») for the topic, item by item.
 function znoProgramme(id) {

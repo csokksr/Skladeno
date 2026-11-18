@@ -19,8 +19,10 @@ stSet('target-eng',200);ok(P.study.targets.eng===200,'stSet accepts English 200'
 stSet('target-math',160);ok(P.study.targets.math!==160,'stSet rejects math 160');
 // the plan page and the onboarding card offer exactly the table values
 route='plan';pPlan();const plan=$('#main').innerHTML;
-for(const s of sids){const m=new RegExp('aria-label="Ціль: '+SUB[s].short+'"[^>]*>(.*?)</select>').exec(plan);const opts=m?[...m[1].matchAll(/<option value="(\d+)"/g)].map(x=>+x[1]):[];ok(JSON.stringify(opts)===JSON.stringify(nmtValues(s)),'plan page options for '+s+': '+opts.length+' values')}
+// the plan and the onboarding card ask for targets of the four subjects of the exam (the fourth one is chosen)
+const on=subjActive().map(s=>s.id);
+for(const s of on){const m=new RegExp('aria-label="Ціль: '+SUB[s].short+'"[^>]*>(.*?)</select>').exec(plan);const opts=m?[...m[1].matchAll(/<option value="(\d+)"/g)].map(x=>+x[1]):[];ok(JSON.stringify(opts)===JSON.stringify(nmtValues(s)),'plan page options for '+s+': '+opts.length+' values')}
 const card=obCard();
-for(const s of sids){const m=new RegExp('<select id="ob-t-'+s+'"[^>]*>(.*?)</select>').exec(card);const opts=m?[...m[1].matchAll(/<option value="(\d+)"/g)].map(x=>+x[1]):[];ok(JSON.stringify(opts)===JSON.stringify(nmtValues(s)),'onboarding options for '+s+': '+opts.length+' values')}
+for(const s of on){const m=new RegExp('<select id="ob-t-'+s+'"[^>]*>(.*?)</select>').exec(card);const opts=m?[...m[1].matchAll(/<option value="(\d+)"/g)].map(x=>+x[1]):[];ok(JSON.stringify(opts)===JSON.stringify(nmtValues(s)),'onboarding options for '+s+': '+opts.length+' values')}
 log('fails',fails);
 })();

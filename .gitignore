@@ -40,6 +40,9 @@ playwright-report/
 .lighthouseci/
 # біологія й географія (tools/zno2_fetch.py zno3): сторінки й аркуші відтворюються скриптами
 sources/zno3/html/
+sources/zno3/img/
+sources/zno3/scale/
+sources/zno3/program/
 sources/zno3/ans/
 sources/zno3/ans-*.html
 sources/keys/zno3/*.pdf

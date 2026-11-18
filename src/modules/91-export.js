@@ -115,7 +115,7 @@ function reportProgressText() {
           : 'дата настала або не задана'),
       '',
     ];
-  for (const s of SUBJECTS) {
+  for (const s of subjActive()) {
     const x = pSubStats(s.id),
       f = stForecast(s.id);
     lines.push(
@@ -213,7 +213,7 @@ pPlan = function () {
 /* 79. Тест дня: 3 завдання з кожного предмета, добір залежить лише від дати, тож усі дні різні, а повторне відкриття того самого дня продовжує той самий набір. */
 function dailyIds(day = pDay()) {
   const seed = Number(day.replace(/-/g, ''));
-  return SUBJECTS.flatMap((s, i) =>
+  return subjActive().flatMap((s, i) =>
     pSeedShuffle(
       PQ.filter(q => q.subject === s.id && !q.examOnly).map(q => q.id),
       seed * 7 + i + 1

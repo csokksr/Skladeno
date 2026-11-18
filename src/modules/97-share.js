@@ -55,7 +55,7 @@ function rpData(label = '') {
       .trim()
       .slice(0, 40),
     exam: P.study.examDate || '',
-    subjects: SUBJECTS.map(s => {
+    subjects: subjActive().map(s => {
       let f = stForecast(s.id);
       return {
         sid: s.id,
@@ -105,7 +105,8 @@ function rpClean(raw) {
   let subjects = [];
   for (let s of SUBJECTS) {
     let x = raw.subjects.find(y => obj(y) && y.sid === s.id);
-    if (!x) throw rpErr('У звіті бракує предмета.');
+    if (!x && !FOURTH_SUBJECTS.includes(s.id)) throw rpErr('У звіті бракує предмета.');
+    if (!x) continue; // предмет на вибір: у звіті лише той, що обрано
     subjects.push({
       sid: s.id,
       scale: scale(x.scale),
@@ -116,6 +117,7 @@ function rpClean(raw) {
       acc: num(x.acc, 0, 100),
     });
   }
+  if (!subjects.some(s => FOURTH_SUBJECTS.includes(s.sid))) throw rpErr('У звіті бракує предмета.');
   let w = obj(raw.week) ? raw.week : null,
     g = obj(raw.growth) ? raw.growth : null;
   return {

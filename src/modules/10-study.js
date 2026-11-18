@@ -54,7 +54,10 @@ function stFresh() {
       math: nmtSnap('math', 160),
       hist: nmtSnap('hist', 170),
       eng: nmtSnap('eng', 170),
+      bio: nmtSnap('bio', 170),
+      geo: nmtSnap('geo', 170),
     },
+    fourth: 'eng', // четвертий предмет НМТ на вибір: eng, bio або geo
     srs: {},
     today: null,
     coef: { k1: 0.3, k2: 0.5, k3: 0.2, k4: 0.5, k4max: 0.5 },
@@ -84,6 +87,7 @@ function stNormal(raw) {
     if (Number.isFinite(v) && v >= 0 && v <= 1) n.coef[k] = v;
   }
   n.recall = raw.recall === true;
+  n.fourth = FOURTH_SUBJECTS.includes(raw.fourth) ? raw.fourth : 'eng';
   n.setupDone = raw.setupDone === true;
   for (let s of SUBJECTS) {
     let v = raw.speed?.[s.id];
@@ -304,7 +308,7 @@ function stPrice(sid, raw) {
 // Найвигідніші теми: цінність = ціна бала × (вага теми × макс. тестових балів × слабкість теми), де слабкість = 1 − точність.
 function stBest(n = 3) {
   let rows = [];
-  for (let s of SUBJECTS) {
+  for (let s of subjActive()) {
     let f = stForecast(s.id),
       w = stWeights(s.id);
     if (!f.enough || !w) continue;
@@ -461,8 +465,10 @@ function stVariants(sid) {
     eng: PSUB.eng.mockSets?.length || 3,
     math: 8,
     hist: stHistTests.length || 8,
+    bio: 3,
+    geo: 3,
   };
-  return sid === 'all' ? Math.min(...Object.values(n)) : n[sid] || 3;
+  return sid === 'all' ? Math.min(...subjActive().map(s => n[s.id] || 3)) : n[sid] || 3;
 }
 function stVariantList(sid) {
   return Array.from({ length: stVariants(sid) }, (_, i) => i + 1);
@@ -473,11 +479,11 @@ function stNextVariant(sid) {
   return stVariantList(sid).sort((a, b) => used(a) - used(b) || a - b)[0];
 }
 function stMockToday(phase) {
-  if (!P.coach?.results?.length && !SUBJECTS.some(s => stMocks(s.id).length))
+  if (!P.coach?.results?.length && !subjActive().some(s => stMocks(s.id).length))
     return { sid: 'diagnostic', variant: 1 };
   let bySub = {},
     last = 0;
-  for (let s of SUBJECTS) {
+  for (let s of subjActive()) {
     bySub[s.id] = stMocks(s.id)[0]?.at || 0;
     last = Math.max(last, bySub[s.id]);
   }
@@ -488,7 +494,9 @@ function stMockToday(phase) {
   );
   if (['sprint', 'final'].includes(phase.id) && Date.now() - full >= 7 * DAY)
     return { sid: 'all', variant: stNextVariant('all') };
-  let sid = SUBJECTS.map(s => s.id).sort((a, b) => bySub[a] - bySub[b])[0];
+  let sid = subjActive()
+    .map(s => s.id)
+    .sort((a, b) => bySub[a] - bySub[b])[0];
   return { sid, variant: stNextVariant(sid) };
 }
 function stBuildToday() {
@@ -512,17 +520,19 @@ function stBuildToday() {
     learn = [];
   if (phase.id !== 'final' && left >= 8) {
     let ranks = coachTopicRanks(),
-      order = SUBJECTS.map(s => {
-        let f = stForecast(s.id),
-          since = (now - stLastStudy(s.id)) / DAY;
-        return {
-          sid: s.id,
-          score:
-            Math.max(0, P.study.targets[s.id] - (f.scale || 100)) +
-            6 * Math.min(5, since) +
-            (f.answered < 20 ? 25 : 0),
-        };
-      }).sort((a, b) => b.score - a.score),
+      order = subjActive()
+        .map(s => {
+          let f = stForecast(s.id),
+            since = (now - stLastStudy(s.id)) / DAY;
+          return {
+            sid: s.id,
+            score:
+              Math.max(0, P.study.targets[s.id] - (f.scale || 100)) +
+              6 * Math.min(5, since) +
+              (f.answered < 20 ? 25 : 0),
+          };
+        })
+        .sort((a, b) => b.score - a.score),
       n = left >= 40 ? 2 : 1;
     for (let { sid } of order.slice(0, n)) {
       let per = left / n;
@@ -657,7 +667,7 @@ function stTodayPage() {
     `<div class="st-tasks">${cards.join('')}</div><div class="p-actions p-section"><a href="#plan">Дата НМТ, цілі та час на день ›</a><button onclick="stToday(true);stTodayPage()">Перебудувати план на сьогодні</button></div>${stForecastHTML(true)}${pFoot()}`;
 }
 function stForecastHTML(compact = false) {
-  let fc = SUBJECTS.map(s => ({ s, f: stForecast(s.id), t: P.study.targets[s.id] })),
+  let fc = subjActive().map(s => ({ s, f: stForecast(s.id), t: P.study.targets[s.id] })),
     comp = fc.every(x => x.f.enough) ? stCompetition(fc.map(x => x.f.scale || 0)) : null,
     goal = stCompetition(fc.map(x => x.t)),
     pos = v => stClamp(v - 100, 0, 100);
@@ -665,8 +675,8 @@ function stForecastHTML(compact = false) {
 }
 
 function stCompHTML() {
-  let goal = stCompetition(SUBJECTS.map(s => P.study.targets[s.id])),
-    fc = SUBJECTS.map(s => stForecast(s.id)),
+  let goal = stCompetition(subjActive().map(s => P.study.targets[s.id])),
+    fc = subjActive().map(s => stForecast(s.id)),
     now = fc.every(f => f.enough) ? stCompetition(fc.map(f => f.scale || 0)) : null;
   return `<p class="st-comp">За твоїми цілями: <strong>${goal ? goal.toFixed(1) : '—'}</strong>${now ? ` · за поточним прогнозом: <strong>${now.toFixed(1)}</strong>` : ' · прогноз з’явиться, коли буде досить даних з усіх предметів'}</p>`;
 }
@@ -689,6 +699,10 @@ function stSet(field, value) {
     P.study.examDate = value;
     P.study.today = null;
     stClampDue();
+  } else if (field === 'fourth') {
+    if (!FOURTH_SUBJECTS.includes(value)) return;
+    P.study.fourth = value;
+    P.study.today = null;
   } else if (field === 'minutes') {
     let v = Number(value);
     if (![20, 30, 45, 60, 90].includes(v)) return;
@@ -753,28 +767,30 @@ pPlan = function () {
       'Мій план до НМТ',
       'План перебудовується щодня: що повторити, яку тему взяти, коли писати пробник. Тут задаєш дату, цілі й час.'
     ) +
-    `<section class="p-form st-plan-form"><fieldset class="p-fieldset"><legend>Іспит і час</legend><div class="p-form-grid"><label>Дата НМТ<input type="date" value="${stExamDate()}" min="${pDay()}" onchange="stSet('examDate',this.value)"></label><label>Час на навчання щодня<select onchange="stSet('minutes',this.value)">${[20, 30, 45, 60, 90].map(v => `<option value="${v}" ${P.plan.minutes === v ? 'selected' : ''}>${v} хв</option>`).join('')}</select></label></div></fieldset><fieldset class="p-fieldset"><legend>Цілі за шкалою 100–200</legend><div class="p-form-grid p-targets">${SUBJECTS.map(
-      s =>
-        `<label style="--subject:${s.color}"><span>${s.name}</span><select aria-label="Ціль: ${s.short}" onchange="stSet('target-${s.id}',this.value)">${nmtValues(
-          s.id
-        )
-          .map(
-            v =>
-              `<option value="${v}" ${P.study.targets[s.id] === v ? 'selected' : ''}>${v}</option>`
+    `<section class="p-form st-plan-form"><fieldset class="p-fieldset"><legend>Іспит і час</legend><div class="p-form-grid"><label>Дата НМТ<input type="date" value="${stExamDate()}" min="${pDay()}" onchange="stSet('examDate',this.value)"></label><label>Час на навчання щодня<select onchange="stSet('minutes',this.value)">${[20, 30, 45, 60, 90].map(v => `<option value="${v}" ${P.plan.minutes === v ? 'selected' : ''}>${v} хв</option>`).join('')}</select></label></div></fieldset><fieldset class="p-fieldset"><legend>Цілі за шкалою 100–200</legend>${FOURTH_SUBJECTS.length > 1 ? `<div class="p-form-grid"><label>Предмет на вибір (четвертий у НМТ)<select aria-label="Четвертий предмет НМТ" onchange="stSet('fourth',this.value)">${FOURTH_SUBJECTS.map(id => `<option value="${id}" ${subjFourth() === id ? 'selected' : ''}>${SUB[id].name}</option>`).join('')}</select></label></div>` : ''}<div class="p-form-grid p-targets">${subjActive()
+      .map(
+        s =>
+          `<label style="--subject:${s.color}"><span>${s.name}</span><select aria-label="Ціль: ${s.short}" onchange="stSet('target-${s.id}',this.value)">${nmtValues(
+            s.id
           )
-          .join('')}</select></label>`
-    ).join(
-      ''
-    )}</div></fieldset></section><p class="p-caption">${P.study.examDate ? '' : 'Дата за замовчуванням орієнтовна: календар НМТ-2027 ще не затверджено (у 2026 році основна сесія тривала з 20 травня до 25 червня). Зміни її, щойно отримаєш запрошення. '}До НМТ ${days} дн. Інтервали повторення обмежено так, щоб кожне вивчене завдання повернулося до тебе перед іспитом.</p>
+            .map(
+              v =>
+                `<option value="${v}" ${P.study.targets[s.id] === v ? 'selected' : ''}>${v}</option>`
+            )
+            .join('')}</select></label>`
+      )
+      .join(
+        ''
+      )}</div></fieldset></section><p class="p-caption">${P.study.examDate ? '' : 'Дата за замовчуванням орієнтовна: календар НМТ-2027 ще не затверджено (у 2026 році основна сесія тривала з 20 травня до 25 червня). Зміни її, щойно отримаєш запрошення. '}До НМТ ${days} дн. Інтервали повторення обмежено так, щоб кожне вивчене завдання повернулося до тебе перед іспитом.</p>
  <section class="p-section"><div class="p-section-head"><h2>Етапи підготовки</h2><a class="primary" href="#today">План на сьогодні ›</a></div><ol class="st-phases">${phases.map(p => `<li class="${p.id === phase.id ? 'is-current' : ''}"><p class="p-kicker">${p.from ? 'з ' + p.from.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' }) : 'зараз — до ' + new Date(exam.getTime() - 120 * DAY).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}</p><h3>${p.name}</h3><p>${p.text}</p><small>Повторення ≈${Math.round(p.review * 100)}% часу · пробник кожні ${p.mockEvery} дн.</small></li>`).join('')}</ol></section>
  <section class="p-section"><h2>Повторення на тиждень уперед</h2><ul class="st-week">${week}</ul></section>
  <section class="p-section"><h2>Активність за 4 тижні</h2><div class="st-activity">${activity.join('')}</div><p class="p-caption">Регулярність важить більше, ніж тривалі заняття раз на тиждень.</p></section>
  ${stForecastHTML()}${stBestHTML()}${growthHubHTML()}
- <section class="p-section"><h2>Конкурсний бал</h2><p>Формула Порядку прийому 2026: (К1·П1 + К2·П2 + К3·П3 + К4·П4) / (К1 + К2 + К3 + (К4max + К4)/2). П1 — українська, П2 — математика, П3 — історія, П4 — англійська. Коефіцієнти своєї спеціальності бери з Порядку прийому 2027 або на сайті університету. Регіональний, галузевий і сільський коефіцієнти тут не враховано.</p>${stCompHTML()}<div class="st-settings">${[
+ <section class="p-section"><h2>Конкурсний бал</h2><p>Формула Порядку прийому 2026: (К1·П1 + К2·П2 + К3·П3 + К4·П4) / (К1 + К2 + К3 + (К4max + К4)/2). П1 — українська, П2 — математика, П3 — історія, П4 — ${SUB[subjFourth()].name.toLowerCase()} (предмет на вибір, його змінюєш вище). Коефіцієнти своєї спеціальності бери з Порядку прийому 2027 або на сайті університету. Регіональний, галузевий і сільський коефіцієнти тут не враховано.</p>${stCompHTML()}<div class="st-settings">${[
    ['k1', 'К1 · українська'],
    ['k2', 'К2 · математика'],
    ['k3', 'К3 · історія'],
-   ['k4', 'К4 · англійська'],
+   ['k4', 'К4 · ' + SUB[subjFourth()].name.toLowerCase()],
    ['k4max', 'К4max · найбільший К4 спеціальності'],
  ]
    .map(
@@ -832,7 +848,11 @@ pResult = function (id) {
     ),
       $('#main .p-result-score')?.insertAdjacentHTML(
         'afterend',
-        `<p class="p-caption">Бали 100–200 — за таблицями НМТ-${NMT.year}. Поріг «склав / не склав»: ${SUBJECTS.map(s => s.short.toLowerCase() + ' ' + NMT.subjects[s.id].threshold).join(', ')} тестових балів.</p>`
+        `<p class="p-caption">Бали 100–200 — за таблицями НМТ-${NMT.year}. Поріг «склав / не склав»: ${SUBJECTS.filter(
+          s => r.ids.some(x => PM[x]?.subject === s.id)
+        )
+          .map(s => s.short.toLowerCase() + ' ' + NMT.subjects[s.id].threshold)
+          .join(', ')} тестових балів.</p>`
       ));
 };
 const stOffResultBase = offResult;

@@ -22,6 +22,10 @@ function weeklyNormal(raw) {
       ok = true;
     for (let sub of SUBJECTS) {
       let x = s.subjects[sub.id];
+      if (!x && ['bio', 'geo'].includes(sub.id)) {
+        subjects[sub.id] = { n: 0, a: 0, m: 0 }; // знімки до появи біології й географії
+        continue;
+      }
       if (!x || !nat(x.n) || !nat(x.a) || !nat(x.m) || x.a > x.m || x.n > x.m) {
         ok = false;
         break;

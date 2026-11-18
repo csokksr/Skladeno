@@ -6,7 +6,7 @@ Unlike tools/zno2_keycheck.py there is no hand-made table «test -> sheet»: eve
 against every test of the same subject and year (the page title names the year); a pair counts only when at least 15 tasks
 were found in the sheet and at least 90 % of them agree. A test with no such sheet stays unchecked and is listed. Booklets
 (tasks without a key table) simply never reach the threshold. Prints agreement per test and every mismatch; writes
-sources/keys/zno3/mismatches.json (or --out <file>). Run with plain `python` (needs pymupdf)."""
+sources/keys/zno3/mismatches.json (or --out <file>) and the list of agreeing ids sources/zno3/verified.json. Run with plain `python` (needs pymupdf)."""
 import glob, importlib.util, json, os, re, sys
 from collections import defaultdict
 
@@ -63,8 +63,10 @@ def agrees(q, col):
             return ','.join(sorted(canon.split(','))) == bank_key(q)
         return canon == bank_key(q)
     whole = col.get((q['number'], 0))
-    if q.get('part') and whole and re.fullmatch(r'\d{2,4}', whole[1].replace(' (вручну)', '').strip()) and q['part'] <= len(whole[1].replace(' (вручну)', '').strip()):
-        return whole[1].replace(' (вручну)', '').strip()[q['part'] - 1] == str(q['answer']).strip()
+    cell = whole[1].replace(' (вручну)', '').strip() if whole else ''
+    if q.get('part') and whole and re.fullmatch(r'\d{3}' if q['type'] == 'single' else r'\d{2,4}', cell) and q['part'] <= len(cell):  # a «1;1;3» task has exactly three parts
+        digit = cell[q['part'] - 1]
+        return digit == (str(q['answer'] + 1) if q['type'] == 'single' else str(q['answer']).strip())  # a part of a «1;1;3» task is single-choice
     return None  # not in the sheet
 
 
@@ -98,7 +100,7 @@ def main():
     manual = json.load(open(os.path.join(KEYS, 'manual.json'), encoding='utf-8')) if os.path.exists(os.path.join(KEYS, 'manual.json')) else {}
     for name, answers in manual.items():  # scans without a text layer, read by eye from the page image
         sheets[name] = [{(int(k), 0): (zk.canon(v), v + ' (вручну)') for k, v in answers.items()}]
-    report, unchecked, total, bad = [], [], 0, 0
+    report, unchecked, total, bad, verified = [], [], 0, 0, []
     for (subj, test), tasks in sorted(tests.items(), key=lambda kv: (kv[0][0], -meta[kv[0]][0], kv[0][1])):
         year, source = meta[(subj, test)]
         best = None
@@ -128,9 +130,14 @@ def main():
             print('   #%d%s %s [%s] bank %s | official %s' % (n, '.%d' % p if p else '', q['zid'], q['type'], shown(q), official))
             report.append({'subject': subj, 'test': test, 'number': n, 'part': p, 'zid': q['zid'], 'bank': shown(q), 'official': official})
         unchecked += [tasks[k]['zid'] for k in miss]
+        verified += [q['zid'] for k, q in tasks.items() if k not in miss and agrees(q, col)]
     print('checked', total, 'tasks of', len(bank), '; mismatches', bad, '; not checked', len(unchecked))
     out = sys.argv[sys.argv.index('--out') + 1] if '--out' in sys.argv[:-1] else os.path.join(KEYS, 'mismatches.json')
     json.dump(report, open(out, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # The ids whose key agrees with an official sheet: tools/zno3_bank.py marks the other tasks «ключ не звірено з аркушем».
+    # Written only by a run that read the sheets (they are not in git), so a machine without them keeps the committed list.
+    if sheets and '--out' not in sys.argv:
+        json.dump(sorted(verified), open(os.path.join(ROOT, 'sources', 'zno3', 'verified.json'), 'w'), separators=(',', ':'))
 
 
 if __name__ == '__main__':
