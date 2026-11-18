@@ -9,6 +9,7 @@ const PACK_NAMES = window.SKLADENO_PACKS || [],
   PACK_WAIT = {};
 const PACK_LIGHT = new Set([
   'hub',
+  'growth',
   'subject',
   'mocks',
   'analytics',

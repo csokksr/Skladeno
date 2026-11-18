@@ -64,6 +64,18 @@ function webMerge(local, remote) {
       .slice(-30),
     sessions: { ...keepLocal({}, R.sessions), ...keepLocal(L.sessions, {}) },
   };
+  // Блоки приросту за id; при розбіжності лишається блок, що пройшов далі (за зрізами), а за рівності — локальний.
+  if (L.growth || R.growth) {
+    const stage = b => (b?.after?.done ? 3 : b?.after ? 2 : 0) + (b?.before?.done ? 1 : 0);
+    const mine = new Map(arr(L.growth?.blocks).map(b => [b?.id, b]));
+    const merged = arr(L.growth?.blocks).slice();
+    for (const b of arr(R.growth?.blocks)) {
+      const own = mine.get(b?.id);
+      if (!own) merged.push(b);
+      else if (stage(b) > stage(own)) merged[merged.indexOf(own)] = b;
+    }
+    platform.growth = { ...obj(R.growth), ...obj(L.growth), blocks: merged.slice(-12) };
+  }
   if (L.study || R.study) platform.study = { ...obj(R.study), ...obj(L.study), srs };
   if (L.ext || R.ext)
     platform.ext = {

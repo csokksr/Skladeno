@@ -769,7 +769,7 @@ pPlan = function () {
  <section class="p-section"><div class="p-section-head"><h2>Етапи підготовки</h2><a class="primary" href="#today">План на сьогодні ›</a></div><ol class="st-phases">${phases.map(p => `<li class="${p.id === phase.id ? 'is-current' : ''}"><p class="p-kicker">${p.from ? 'з ' + p.from.toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' }) : 'зараз — до ' + new Date(exam.getTime() - 120 * DAY).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}</p><h3>${p.name}</h3><p>${p.text}</p><small>Повторення ≈${Math.round(p.review * 100)}% часу · пробник кожні ${p.mockEvery} дн.</small></li>`).join('')}</ol></section>
  <section class="p-section"><h2>Повторення на тиждень уперед</h2><ul class="st-week">${week}</ul></section>
  <section class="p-section"><h2>Активність за 4 тижні</h2><div class="st-activity">${activity.join('')}</div><p class="p-caption">Регулярність важить більше, ніж тривалі заняття раз на тиждень.</p></section>
- ${stForecastHTML()}${stBestHTML()}
+ ${stForecastHTML()}${stBestHTML()}${growthHubHTML()}
  <section class="p-section"><h2>Конкурсний бал</h2><p>Формула Порядку прийому 2026: (К1·П1 + К2·П2 + К3·П3 + К4·П4) / (К1 + К2 + К3 + (К4max + К4)/2). П1 — українська, П2 — математика, П3 — історія, П4 — англійська. Коефіцієнти своєї спеціальності бери з Порядку прийому 2027 або на сайті університету. Регіональний, галузевий і сільський коефіцієнти тут не враховано.</p>${stCompHTML()}<div class="st-settings">${[
    ['k1', 'К1 · українська'],
    ['k2', 'К2 · математика'],

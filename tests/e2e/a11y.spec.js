@@ -1,7 +1,7 @@
 // Автоматична перевірка доступності (axe-core) на сторінках сайту: світла й темна теми. Падає на серйозних і критичних порушеннях.
 const {test,expect}=require('@playwright/test');
 const AxeBuilder=require('@axe-core/playwright').default;
-const ROUTES=['hub','tests','mocks','plan','rhythm','preferences','find','strategy','library','cards','graph','about','analytics','reference','practice'];
+const ROUTES=['hub','tests','mocks','plan','rhythm','preferences','find','strategy','library','cards','graph','about','analytics','reference','practice','growth'];
 const PAGE='/skladeno-nmt.html';
 
 for(const scheme of ['light','dark']){

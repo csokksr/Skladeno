@@ -101,6 +101,7 @@ pHub = function () {
     `<div class="p-status-strip"><span><strong>${done}</strong>завдань розв’язано</span><span><strong>${wrong}</strong>чекають виправлення</span><span><strong>${mocks}</strong>пробників пройдено</span><a href="#analytics">Детальний прогрес ›</a></div>` +
     stForecastHTML(true) +
     stBestHTML() +
+    growthHubHTML() +
     `<section class="p-section"><div class="p-section-head"><h2>Предмети</h2><a href="#plan">Цілі й дата НМТ ›</a></div><div class="p-subject-list">${pSubjectRows()}</div></section>` +
     `<section class="p-bottom-grid"><article class="p-feature"><h2>Пробні НМТ</h2><p>Предметні варіанти й повна симуляція з двома блоками та перервою. Бал одразу переводиться у шкалу 100–200.</p><a class="p-link" href="#mocks">Обрати пробник ›</a></article>` +
     `<article class="p-feature"><h2>Робота над помилками</h2><p>${wrong ? stPlural(wrong, 'завдання', 'завдання', 'завдань') + ' розв’язано з помилкою. Повтори їх, поки свіже.' : 'Помилок поки немає. Вони з’являться тут після перших відповідей.'}</p>${wrong ? '<button onclick="pReview(\'wrong\')">Повторити помилки ›</button>' : ''}</article>` +
