@@ -110,6 +110,15 @@
 /* Перше налаштування: велика плитка, поля на білому, як аркуш налаштувань Apple ID. */
 #main .ob-card{--field:var(--paper);--tile-in:var(--paper);padding:clamp(28px,4vw,44px);border-radius:var(--r-xl);background:var(--sheet)}
 .ob-card h2{font-size:var(--fs-3xl)}
+.p-choices{display:grid;gap:12px;margin:12px 0 16px;max-width:720px}
+.p-choice{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:1px solid var(--line-2);border-radius:var(--r);cursor:pointer}
+.p-choice:hover{border-color:var(--ink)}
+.p-choice:has(input:checked){border-color:var(--ink);background:var(--sheet)}
+.p-choice:focus-within{box-shadow:0 0 0 2px var(--pen)}
+.p-choice strong{display:block;font-size:var(--fs-xl)}
+.p-choice span>.p-caption{display:block;margin:2px 0 0}
+.p-other-subjects{margin-top:12px}
+.p-other-subjects>summary{cursor:pointer;color:var(--muted);padding:12px 0}
 .ob-card>p{max-width:60ch;margin-top:8px;color:var(--muted)}
 .st-plan-form{margin:0 0 12px}
 .st-plan-form+.p-caption{max-width:90ch;margin-bottom:56px}

@@ -86,6 +86,12 @@ function webMerge(local, remote) {
         .slice(-8),
     };
   if (L.study || R.study) platform.study = { ...obj(R.study), ...obj(L.study), srs };
+  // A fresh device has the default fourth subject: the choice made on another device wins. Older data has no flag, so a non-default subject counts as chosen.
+  const chosen = s => s?.fourthChosen === true || (s?.fourth && s.fourth !== 'eng');
+  if (platform.study && !chosen(L.study) && chosen(R.study)) {
+    platform.study.fourth = R.study.fourth;
+    platform.study.fourthChosen = true;
+  }
   if (L.ext || R.ext)
     platform.ext = {
       ...obj(R.ext),

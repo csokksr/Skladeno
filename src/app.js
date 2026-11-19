@@ -1381,10 +1381,19 @@ function pHeading(k, title, desc = '') {
   return `<header class="p-page-head"><h1>${title}</h1>${k && !P_MENU_LABELS.includes(k) ? `<p class="p-meta">${k}</p>` : ''}${desc ? `<p class="p-lead">${desc}</p>` : ''}</header>`;
 }
 function pSubjectRows() {
-  return SUBJECTS.map((s, i) => {
+  const row = (s, i) => {
     let st = pSubStats(s.id);
     return `<a class="p-subject-row" href="#subject/${s.id}" style="--subject:${s.color}"><span class="p-number">0${i + 1}</span><span class="p-subject-mark">${s.mark}</span><div><h3>${s.name}</h3></div><div class="p-row-meta"><strong>${st.done} / ${st.total}</strong><span>опрацьовано</span></div><span class="p-arrow">›</span></a>`;
-  }).join('');
+  };
+  // The four subjects of the student's NMT come first; the other two are tucked away.
+  const on = subjActive(),
+    off = SUBJECTS.filter(s => !on.includes(s));
+  return (
+    on.map(row).join('') +
+    (off.length
+      ? `<details class="p-other-subjects"><summary>Інші предмети, не для твого НМТ (${off.length})</summary>${off.map((s, i) => row(s, on.length + i)).join('')}</details>`
+      : '')
+  );
 }
 function pHub() {
   let aa = pAnswers(),

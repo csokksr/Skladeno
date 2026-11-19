@@ -6,7 +6,7 @@ test.describe('тижневе порівняння',()=>{
  test('перший знімок, потім порівняння з тижневим',async({page})=>{
   test.setTimeout(120000);
   const ready=()=>page.waitForFunction(()=>typeof PQ!=='undefined'&&typeof render==='function');
-  await page.goto(WEB);await ready();await page.evaluate(()=>{localStorage.clear()});await page.reload();await ready();
+  await page.goto(WEB);await ready();await page.evaluate(()=>{localStorage.clear()});await page.reload();await ready();await page.evaluate(()=>{fourthPick('eng');render()});
   await expect(page.locator('.st-weekly')).toContainText('Знімок з’явиться');
   await page.evaluate(()=>{const t=Date.now();for(const q of PQ.filter(q=>q.type==='single'&&q.subject==='ukr').slice(0,30)){P.answers[q.id]={value:0,score:1,max:1,first:1,attempts:1,at:t,due:t}}pSave();render()});
   await expect(page.locator('.st-weekly')).toContainText('Перший знімок зроблено');
