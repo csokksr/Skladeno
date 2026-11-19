@@ -10,3 +10,6 @@ paths = [
   '''sources/.*''',
   '''dist/.*''',
 ]
+regexes = [
+  '''PKEY = 'skladeno-prep-v1';''',
+]
