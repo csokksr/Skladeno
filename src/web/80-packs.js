@@ -34,7 +34,13 @@ const PACK_LIGHT = new Set([
 let PACK_RAW = null,
   PACK_MISS = false;
 const PACK_ASKED = new Set(),
-  PACK_DATA = { referenceCards: 'cards', historyGuides: 'guides' };
+  PACK_DATA = {
+    referenceCards: 'cards',
+    historyGuides: 'guides',
+    syllabusUnits: 'meta',
+    officialSolutions: 'meta',
+    officialMaps: 'meta',
+  };
 // name: пакет, який зняв би помилку; без нього (поле тексту) невідомо який, тож чекаємо всі.
 function packMiss(k, name) {
   PACK_MISS = true;

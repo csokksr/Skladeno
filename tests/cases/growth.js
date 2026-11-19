@@ -29,7 +29,7 @@ ok(types(a.ids)===types(b.before.ids),'склад за типами завдан
 ok(a.ids.every(id=>!P.answers[id]),'завдання другого зрізу ще нові');
 answer(a.ids,0.9);growthSync();
 const r=growthResult(b);
-ok(r&&r.delta>0&&b.after.done.score>b.before.done.score,'приріст: було '+growthPct(r.before)+'% → стало '+growthPct(r.after)+'% ('+r.delta+')');
+ok(r&&r.delta>0&&growthPct(r.after)>growthPct(r.before),'приріст: було '+growthPct(r.before)+'% → стало '+growthPct(r.after)+'% ('+r.delta+')');
 ok(growthBlockHTML(b).includes('Було '+growthPct(r.before)+'% → стало '+growthPct(r.after)+'%'),'сторінка показує «було → стало»');
 ok(growthHubHTML().includes('було '+growthPct(r.before)+'% → стало'),'головна показує останній приріст');
 // 5. Знімок переживає скидання відповідей.

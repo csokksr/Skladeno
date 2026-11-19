@@ -136,3 +136,29 @@ test.describe('однакові зображення',()=>{
   expect(html).toContain('src="data:image/');
  });
 });
+
+test.describe('пакет meta (конспекти бібліотеки, офіційні карти й розв’язання)',()=>{
+ test.skip(({isMobile})=>isMobile,'достатньо одного розміру');
+ // Перший екран і практика не читають цих даних: без пакета вони малюються, а не показують помилку.
+ test('головна, предмети, практика, плани й тести малюються без пакета meta',async({page})=>{
+  test.setTimeout(120000);
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.route('**/files/pack-meta.json',r=>r.abort());
+  await open(page,WEB+'#hub');
+  for(const r of ['hub','subject/ukr','subject/hist','subject/bio','mocks','analytics','plan','tests','growth']){
+   await page.evaluate(r=>{location.hash=r},r);await page.waitForTimeout(400);
+   const h=await page.locator('#main h1').first().textContent();
+   expect.soft(h,r).not.toMatch(/не завантажил/);
+  }
+  await page.evaluate(()=>{const q=PQ.find(q=>q.type==='single'&&q.subject==='hist'&&!q.examOnly);pStart([q.id],'e2e','e2e')});
+  await expect(page.locator('#main .p-option').first()).toBeVisible();
+  expect(errors.filter(m=>!/pack not loaded/.test(m))).toEqual([]);
+ });
+ test('бібліотека чекає пакет meta і потім малюється',async({page})=>{
+  test.setTimeout(120000);
+  await open(page,WEB+'#hub');
+  await page.evaluate(()=>{location.hash='library'});
+  await expect(page.locator('#main h1').first()).toBeVisible();
+  expect(await page.evaluate(()=>PACK_DONE.has('meta'))).toBe(true);
+ });
+});
