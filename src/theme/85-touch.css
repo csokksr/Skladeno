@@ -6,7 +6,7 @@
   .chip{min-height:48px!important}
   .brand,.nav a,.history-outline a,a.small,.p-alert a,.p-study-tip a,.st-today-card a,.p-status-strip a,.p-section>a,.p-breadcrumb a,.p-back,.p-footer a,.sitefoot-row a,.p-link,.p-section-head>a,.p-history-tools a,.history-external a,.p-tabs>a,li>a:only-child,td>a:only-child{display:inline-flex;align-items:center;min-height:48px!important}
   details>summary{display:flex;align-items:center}
-  input[type=checkbox],input[type=radio]{width:24px;height:24px}
+  input[type=checkbox],input[type=radio]{width:24px;height:24px;flex:none}
   label:has(>input[type=checkbox]),label:has(>input[type=radio]){display:flex;align-items:center;gap:10px;min-height:48px!important}
   .qnav button{min-width:48px!important;min-height:48px!important}
 }

@@ -480,7 +480,10 @@ def minify(js):
 # the core data stays small, packs load after the first screen (src/web/80-packs.js hydrates the stubs in place).
 HEAVY_Q = ('prompt', 'passage', 'explanation', 'options', 'left', 'right', 'rows')
 LIST_Q = ('options', 'left', 'right', 'rows')
-REF_KEYS = {'referenceCards': 'cards', 'historyGuides': 'guides'}
+# Syllabus units and official maps and solutions are read only by the library, audit, map and result pages: one pack 'meta' (about 75 KB gzip less before the first screen).
+# `quality` (hub, analytics), `historyChronology` (every practice task), `historyProgramme` (every lesson) and `auditUnits` stay in the core.
+META_KEYS = ('syllabusUnits', 'officialSolutions', 'officialMaps')
+REF_KEYS = {'referenceCards': 'cards', 'historyGuides': 'guides', **{k: 'meta' for k in META_KEYS}}
 
 
 def split_packs(data):
@@ -516,7 +519,7 @@ def split_packs(data):
     # and src/web/80-packs.js guards DB.referenceCards / DB.historyGuides until the pack arrives.
     for key, name in REF_KEYS.items():
         if key in data:
-            packs[name] = {'q': {}, 't': {}, 'd': {key: data.pop(key)}}
+            packs.setdefault(name, {'q': {}, 't': {}, 'd': {}})['d'][key] = data.pop(key)
     return packs
 
 
