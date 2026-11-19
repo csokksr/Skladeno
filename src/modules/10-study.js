@@ -58,6 +58,7 @@ function stFresh() {
       geo: nmtSnap('geo', 170),
     },
     fourth: 'eng', // четвертий предмет НМТ на вибір: eng, bio або geo
+    fourthChosen: false, // true, коли користувач сам обрав його (51-fourth.js)
     srs: {},
     today: null,
     coef: { k1: 0.3, k2: 0.5, k3: 0.2, k4: 0.5, k4max: 0.5 },
@@ -88,6 +89,7 @@ function stNormal(raw) {
   }
   n.recall = raw.recall === true;
   n.fourth = FOURTH_SUBJECTS.includes(raw.fourth) ? raw.fourth : 'eng';
+  n.fourthChosen = raw.fourthChosen === true;
   n.setupDone = raw.setupDone === true;
   for (let s of SUBJECTS) {
     let v = raw.speed?.[s.id];
@@ -702,6 +704,7 @@ function stSet(field, value) {
   } else if (field === 'fourth') {
     if (!FOURTH_SUBJECTS.includes(value)) return;
     P.study.fourth = value;
+    P.study.fourthChosen = true;
     P.study.today = null;
   } else if (field === 'minutes') {
     let v = Number(value);

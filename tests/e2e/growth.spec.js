@@ -7,7 +7,7 @@ test.describe('приріст за блок',()=>{
   test.setTimeout(120000);
   await page.goto(WEB);await page.waitForFunction(()=>typeof PQ!=='undefined'&&typeof render==='function');
   await page.evaluate(()=>{localStorage.clear()});await page.reload();await page.waitForFunction(()=>typeof PQ!=='undefined'&&typeof render==='function');
-  await page.evaluate(()=>{location.hash='growth'});
+  await page.evaluate(()=>{fourthPick('eng');location.hash='growth'});
   await expect(page.locator('#main h1')).toHaveText('Приріст за блок');
   await page.getByRole('button',{name:'Математика'}).click();
   await page.locator('.p-topic-row input[type=checkbox]').first().check();
