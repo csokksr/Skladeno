@@ -19,6 +19,8 @@
 .nav a[data-subject="math"]{--subject-dot:var(--s-math)}
 .nav a[data-subject="hist"]{--subject-dot:var(--s-hist)}
 .nav a[data-subject="eng"]{--subject-dot:var(--s-eng)}
+.nav a[data-subject="bio"]{--subject-dot:var(--s-bio)}
+.nav a[data-subject="geo"]{--subject-dot:var(--s-geo)}
 .nav-find span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .p-nav-label{flex-shrink:0;width:1px;height:16px;margin:0 8px;background:var(--line);font-size:0;overflow:hidden}
 .gnav-toggle{display:none;position:relative;width:44px;height:44px;min-height:0;margin-left:auto;margin-right:-12px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none}

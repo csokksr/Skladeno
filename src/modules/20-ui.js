@@ -1,101 +1,546 @@
 /* Інтерфейс: тема оформлення, кольори предметів із токенів, головна й прогрес, єдиний тренажер,
    карта знань, темп розв'язування, самоперевірка без варіантів і сторінка стратегії на іспиті. */
-SUBJECTS.forEach(s=>{s.color='var(--s-'+s.id+')'});
+SUBJECTS.forEach(s => {
+  s.color = 'var(--s-' + s.id + ')';
+});
 
 /* Тема: «Авто» не чіпає атрибут, тож рішення переглядача артефакта зберігається. */
-const UI_THEME='skladeno-theme';
-function uiThemeGet(){try{return localStorage.getItem(UI_THEME)||'auto'}catch{return 'auto'}}
-function uiTheme(set){if(set){try{localStorage.setItem(UI_THEME,set)}catch{}}const t=set||uiThemeGet();if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);else if(set)document.documentElement.removeAttribute('data-theme');{const m=document.querySelectorAll('meta[name="theme-color"]');if(m.length===2){const c=t==='dark'?['#000000','#000000']:t==='light'?['#ffffff','#ffffff']:['#ffffff','#000000'];m[0].setAttribute('content',c[0]);m[1].setAttribute('content',c[1])}}document.querySelectorAll('[data-theme-set]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.themeSet===t)))}
-document.querySelectorAll('[data-theme-set]').forEach(b=>{b.onclick=()=>uiTheme(b.dataset.themeSet)});uiTheme();
+const UI_THEME = 'skladeno-theme';
+function uiThemeGet() {
+  try {
+    return localStorage.getItem(UI_THEME) || 'auto';
+  } catch {
+    return 'auto';
+  }
+}
+function uiTheme(set) {
+  if (set) {
+    try {
+      localStorage.setItem(UI_THEME, set);
+    } catch {}
+  }
+  const t = set || uiThemeGet();
+  if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  else if (set) document.documentElement.removeAttribute('data-theme');
+  {
+    const m = document.querySelectorAll('meta[name="theme-color"]');
+    if (m.length === 2) {
+      const c =
+        t === 'dark'
+          ? ['#000000', '#000000']
+          : t === 'light'
+            ? ['#ffffff', '#ffffff']
+            : ['#ffffff', '#000000'];
+      m[0].setAttribute('content', c[0]);
+      m[1].setAttribute('content', c[1]);
+    }
+  }
+  document
+    .querySelectorAll('[data-theme-set]')
+    .forEach(b => b.setAttribute('aria-pressed', String(b.dataset.themeSet === t)));
+}
+document.querySelectorAll('[data-theme-set]').forEach(b => {
+  b.onclick = () => uiTheme(b.dataset.themeSet);
+});
+uiTheme();
 
 /* Службові банери перевірок прибрано з конспектів. */
-trigReviewLink=()=>'';logReviewLink=()=>'';calculusReviewLink=()=>'';
+trigReviewLink = () => '';
+logReviewLink = () => '';
+calculusReviewLink = () => '';
 
 /* Історія тренується в тому самому тренажері, що й інші предмети. Старий режим лишається лише для архівного пробника. */
-const uiBeginBase=begin;begin=function(ids,title,mode='learn',cursor=''){if(mode==='mock')return uiBeginBase(ids,title,mode,cursor);ids=ids.filter(id=>PM[id]);if(!ids.length){toast('У цьому наборі поки немає завдань.');return}pStart(ids,title,'hist-'+(cursor||title).slice(0,80))};
+const uiBeginBase = begin;
+begin = function (ids, title, mode = 'learn', cursor = '') {
+  if (mode === 'mock') return uiBeginBase(ids, title, mode, cursor);
+  ids = ids.filter(id => PM[id]);
+  if (!ids.length) {
+    toast('У цьому наборі поки немає завдань.');
+    return;
+  }
+  pStart(ids, title, 'hist-' + (cursor || title).slice(0, 80));
+};
 
-function uiTodayLine(t){return [t.review.length?stPlural(t.review.length,'завдання','завдання','завдань')+' на повторення':'',...t.learn.map(l=>SUB[l.sid].short+': '+l.title),t.mock?(t.mock.sid==='diagnostic'?'стартова діагностика':t.mock.sid==='all'?'повна симуляція':'пробник з '+SUB[t.mock.sid].short.toLowerCase()):''].filter(Boolean)}
-pHub=function(){const t=stToday(),days=stDaysLeft(),phase=stPhase(days),aa=pAnswers(),done=PQ.filter(q=>aa[q.id]).length,wrong=PQ.filter(q=>aa[q.id]&&aa[q.id].score<aa[q.id].max).length,mocks=(P.records||[]).filter(r=>r.finished).length,ids=[...t.review,...t.learn.flatMap(l=>l.ids)],left=ids.length-stDone(ids),line=uiTodayLine(t);
- $('#main').innerHTML=pHeading(days?'До НМТ '+stPlural(days,'день','дні','днів'):(pDay()>stExamDate()?'НМТ уже минуло':'День НМТ'),'Твоя підготовка до НМТ',`Етап «${phase.name}»`)
- +`<section class="st-today-card"><div><p class="p-kicker">Заняття на сьогодні · ≈${P.plan.minutes} хв</p><h2>${line.length?esc(line.join(' · ')):'План на сьогодні виконано'}</h2>${ids.length?`<p class="u-soft u-mt6 p-caption">${left?'Лишилося '+stPlural(left,'завдання','завдання','завдань'):'Завдання на сьогодні виконано'}</p>`:''}</div><a class="primary" href="#today">${left<ids.length?'Продовжити':'Почати'} ›</a></section>`
- +`<div class="p-status-strip"><span><strong>${done}</strong>завдань розв’язано</span><span><strong>${wrong}</strong>чекають виправлення</span><span><strong>${mocks}</strong>пробників пройдено</span><a href="#analytics">Детальний прогрес ›</a></div>`
- +stForecastHTML(true)
- +`<section class="p-section"><div class="p-section-head"><h2>Предмети</h2><a href="#plan">Цілі й дата НМТ ›</a></div><div class="p-subject-list">${pSubjectRows()}</div></section>`
- +`<section class="p-bottom-grid"><article class="p-feature"><h2>Пробні НМТ</h2><p>Предметні варіанти й повна симуляція з двома блоками та перервою. Бал одразу переводиться у шкалу 100–200.</p><a class="p-link" href="#mocks">Обрати пробник ›</a></article>`
- +`<article class="p-feature"><h2>Робота над помилками</h2><p>${wrong?stPlural(wrong,'завдання','завдання','завдань')+' розв’язано з помилкою. Повтори їх, поки свіже.':'Помилок поки немає. Вони з’являться тут після перших відповідей.'}</p>${wrong?'<button onclick="pReview(\'wrong\')">Повторити помилки ›</button>':''}</article>`
- +`<article class="p-feature"><h2>Картки й формули</h2><p>Наголоси, правила, формули, дати й поняття — швидке повторення за 10 хвилин.</p><a class="p-link" href="#reference">Відкрити картки ›</a></article>`
- +`<article class="p-feature"><h2>Стратегія НМТ</h2><p>Як розподілити час, у якому порядку розв’язувати й чому не можна лишати порожніх відповідей.</p><a class="p-link" href="#strategy">Прочитати ›</a></article></section>`+pFoot()};
+function uiTodayLine(t) {
+  return [
+    t.review.length
+      ? stPlural(t.review.length, 'завдання', 'завдання', 'завдань') + ' на повторення'
+      : '',
+    ...t.learn.map(l => SUB[l.sid].short + ': ' + l.title),
+    t.mock
+      ? t.mock.sid === 'diagnostic'
+        ? 'стартова діагностика'
+        : t.mock.sid === 'all'
+          ? 'повна симуляція'
+          : 'пробник з ' + SUB[t.mock.sid].short.toLowerCase()
+      : '',
+  ].filter(Boolean);
+}
+pHub = function () {
+  const t = stToday(),
+    days = stDaysLeft(),
+    phase = stPhase(days),
+    aa = pAnswers(),
+    done = PQ.filter(q => aa[q.id]).length,
+    wrong = PQ.filter(q => aa[q.id] && aa[q.id].score < aa[q.id].max).length,
+    mocks = (P.records || []).filter(r => r.finished).length,
+    ids = [...t.review, ...t.learn.flatMap(l => l.ids)],
+    left = ids.length - stDone(ids),
+    line = uiTodayLine(t);
+  $('#main').innerHTML =
+    pHeading(
+      days
+        ? 'До НМТ ' + stPlural(days, 'день', 'дні', 'днів')
+        : pDay() > stExamDate()
+          ? 'НМТ уже минуло'
+          : 'День НМТ',
+      'Твоя підготовка до НМТ',
+      `Етап «${phase.name}»`
+    ) +
+    `<section class="st-today-card"><div><p class="p-kicker">Заняття на сьогодні · ≈${P.plan.minutes} хв</p><h2>${line.length ? esc(line.join(' · ')) : 'План на сьогодні виконано'}</h2>${ids.length ? `<p class="u-soft u-mt6 p-caption">${left ? 'Лишилося ' + stPlural(left, 'завдання', 'завдання', 'завдань') : 'Завдання на сьогодні виконано'}</p>` : ''}</div><a class="primary" href="#today">${left < ids.length ? 'Продовжити' : 'Почати'} ›</a></section>` +
+    `<div class="p-status-strip"><span><strong>${done}</strong>завдань розв’язано</span><span><strong>${wrong}</strong>чекають виправлення</span><span><strong>${mocks}</strong>пробників пройдено</span><a href="#analytics">Детальний прогрес ›</a></div>` +
+    stForecastHTML(true) +
+    stBestHTML() +
+    growthHubHTML() +
+    weeklyHTML() +
+    `<section class="p-section"><div class="p-section-head"><h2>Предмети</h2><a href="#plan">Цілі й дата НМТ ›</a></div><div class="p-subject-list">${pSubjectRows()}</div></section>` +
+    `<section class="p-bottom-grid"><article class="p-feature"><h2>Пробні НМТ</h2><p>Предметні варіанти й повна симуляція з двома блоками та перервою. Бал одразу переводиться у шкалу 100–200.</p><a class="p-link" href="#mocks">Обрати пробник ›</a></article>` +
+    `<article class="p-feature"><h2>Робота над помилками</h2><p>${wrong ? stPlural(wrong, 'завдання', 'завдання', 'завдань') + ' розв’язано з помилкою. Повтори їх, поки свіже.' : 'Помилок поки немає. Вони з’являться тут після перших відповідей.'}</p>${wrong ? '<button onclick="pReview(\'wrong\')">Повторити помилки ›</button>' : ''}</article>` +
+    `<article class="p-feature"><h2>Картки й формули</h2><p>Наголоси, правила, формули, дати й поняття — швидке повторення за 10 хвилин.</p><a class="p-link" href="#reference">Відкрити картки ›</a></article>` +
+    `<article class="p-feature"><h2>Стратегія НМТ</h2><p>Як розподілити час, у якому порядку розв’язувати й чому не можна лишати порожніх відповідей.</p><a class="p-link" href="#strategy">Прочитати ›</a></article></section>` +
+    pFoot();
+};
 
 /* Карта знань: кожна тема — клітинка, колір за точністю перших спроб. */
-function uiTopicLevel(t,aa){let qs=t.questions.map(id=>PM[id]).filter(q=>q&&!q.challenge),got=0,max=0,n=0;for(const q of qs){const a=aa[q.id];if(!a)continue;n++;got+=Math.min(a.first??a.score,a.max);max+=a.max}const acc=max?got/max:0,cov=qs.length?n/qs.length:0;return {n,total:qs.length,acc,level:!n?0:acc<.5?1:acc<.8||cov<.3?2:3}}
-function uiKnowledgeMap(){const aa=pAnswers();return `<section class="p-section"><div class="p-section-head"><div><h2>Карта знань</h2><p>Кожна клітинка — тема програми. Колір показує точність перших спроб.</p></div></div><div class="km-grid">${SUBJECTS.map(s=>`<div class="km-subject" style="--subject:${s.color}"><h3>${s.name}</h3><div class="km-cells">${DB.quality.topics.filter(t=>t.subject===s.id).map(t=>{const l=uiTopicLevel(t,aa);return `<a class="km-cell" data-level="${l.level}" href="#${esc(t.route)}" title="${esc(t.title)}"><span>${esc(t.title)}</span><b>${l.n}/${l.total}${l.n?' · '+Math.round(l.acc*100)+'%':''}</b></a>`}).join('')}</div></div>`).join('')}</div><div class="km-legend"><span><i class="u-bg-sheet"></i>не почато</span><span><i class="u-bg-mark-soft"></i>менше 50%</span><span><i class="u-bg-warn-soft"></i>50–80% або мало завдань</span><span><i class="u-bg-ok-soft"></i>80% і більше</span></div></section>`}
+function uiTopicLevel(t, aa) {
+  let qs = t.questions.map(id => PM[id]).filter(q => q && !q.challenge),
+    got = 0,
+    max = 0,
+    n = 0;
+  for (const q of qs) {
+    const a = aa[q.id];
+    if (!a) continue;
+    n++;
+    got += Math.min(a.first ?? a.score, a.max);
+    max += a.max;
+  }
+  const acc = max ? got / max : 0,
+    cov = qs.length ? n / qs.length : 0;
+  return {
+    n,
+    total: qs.length,
+    acc,
+    level: !n ? 0 : acc < 0.5 ? 1 : acc < 0.8 || cov < 0.3 ? 2 : 3,
+  };
+}
+function uiKnowledgeMap() {
+  const aa = pAnswers();
+  return `<section class="p-section"><div class="p-section-head"><div><h2>Карта знань</h2><p>Кожна клітинка — тема програми. Колір показує точність перших спроб.</p></div></div><div class="km-grid">${SUBJECTS.map(
+    s =>
+      `<div class="km-subject" style="--subject:${s.color}"><h3>${s.name}</h3><div class="km-cells">${DB.quality.topics
+        .filter(t => t.subject === s.id)
+        .map(t => {
+          const l = uiTopicLevel(t, aa);
+          return `<a class="km-cell" data-level="${l.level}" href="#${esc(t.route)}" title="${esc(t.title)}"><span>${esc(t.title)}</span><b>${l.n}/${l.total}${l.n ? ' · ' + Math.round(l.acc * 100) + '%' : ''}</b></a>`;
+        })
+        .join('')}</div></div>`
+  ).join(
+    ''
+  )}</div><div class="km-legend"><span><i class="u-bg-sheet"></i>не почато</span><span><i class="u-bg-mark-soft"></i>менше 50%</span><span><i class="u-bg-warn-soft"></i>50–80% або мало завдань</span><span><i class="u-bg-ok-soft"></i>80% і більше</span></div></section>`;
+}
 
 /* Темп: медіана секунд на завдання в тренуваннях проти норми НМТ (60 хв на предмет). */
-const UI_NORM={ukr:120,math:164,hist:120,eng:113};
-function uiMedian(a){if(!a?.length)return null;const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2}
-function uiTime(sec){sec=Math.round(sec);return Math.floor(sec/60)+':'+String(sec%60).padStart(2,'0')}
-function uiSpeed(){const rows=SUBJECTS.map(s=>{const a=P.study.speed?.[s.id]||[],m=uiMedian(a.slice(-60)),norm=UI_NORM[s.id];return `<tr><td>${s.name}</td><td>${a.length}</td><td>${m?uiTime(m):'—'}</td><td>${uiTime(norm)}</td><td>${!m||a.length<10?'мало даних':m<=norm*.85?'з запасом':m<=norm?'у межах норми':'повільніше за норму'}</td></tr>`}).join('');return `<section class="p-section"><div class="p-section-head"><div><h2>Темп</h2><p>Скільки часу йде на одне завдання в тренуваннях. Норма — 60 хвилин на предмет, поділені на кількість завдань у тесті.</p></div></div><div class="tablewrap"><table class="speed-table"><thead><tr><th>Предмет</th><th>Завдань</th><th>Твій темп</th><th>Норма НМТ</th><th>Оцінка</th></tr></thead><tbody>${rows}</tbody></table></div></section>`}
-let uiShown={id:'',at:0};
-const uiCheckBase=pCheck;pCheck=function(){const q=pQ(),cx=pContext(),before=q?pAnswerRecord(q.id)?.attempts||0:0,shown=uiShown;uiCheckBase();if(!q||!cx||cx.exam||cx.record)return;const a=pAnswerRecord(q.id);if(!a||(a.attempts||0)<=before||shown.id!==q.id)return;const sec=(Date.now()-shown.at)/1000;if(sec<2||sec>900)return;const list=P.study.speed[q.subject]||(P.study.speed[q.subject]=[]);list.push(Math.round(sec));P.study.speed[q.subject]=list.slice(-200);pSave()};
+const UI_NORM = { ukr: 120, math: 164, hist: 120, eng: 113, bio: 106, geo: 120 };
+function uiMedian(a) {
+  if (!a?.length) return null;
+  const s = [...a].sort((x, y) => x - y),
+    m = s.length >> 1;
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+}
+function uiTime(sec) {
+  sec = Math.round(sec);
+  return Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+}
+function uiSpeed() {
+  const rows = SUBJECTS.map(s => {
+    const a = P.study.speed?.[s.id] || [],
+      m = uiMedian(a.slice(-60)),
+      norm = UI_NORM[s.id];
+    return `<tr><td>${s.name}</td><td>${a.length}</td><td>${m ? uiTime(m) : '—'}</td><td>${uiTime(norm)}</td><td>${!m || a.length < 10 ? 'мало даних' : m <= norm * 0.85 ? 'з запасом' : m <= norm ? 'у межах норми' : 'повільніше за норму'}</td></tr>`;
+  }).join('');
+  return `<section class="p-section"><div class="p-section-head"><div><h2>Темп</h2><p>Скільки часу йде на одне завдання в тренуваннях. Норма — 60 хвилин на предмет, поділені на кількість завдань у тесті.</p></div></div><div class="tablewrap"><table class="speed-table"><thead><tr><th>Предмет</th><th>Завдань</th><th>Твій темп</th><th>Норма НМТ</th><th>Оцінка</th></tr></thead><tbody>${rows}</tbody></table></div></section>`;
+}
+let uiShown = { id: '', at: 0 };
+const uiCheckBase = pCheck;
+pCheck = function () {
+  const q = pQ(),
+    cx = pContext(),
+    before = q ? pAnswerRecord(q.id)?.attempts || 0 : 0,
+    shown = uiShown;
+  uiCheckBase();
+  if (!q || !cx || cx.exam || cx.record) return;
+  const a = pAnswerRecord(q.id);
+  if (!a || (a.attempts || 0) <= before || shown.id !== q.id) return;
+  const sec = (Date.now() - shown.at) / 1000;
+  if (sec < 2 || sec > 900) return;
+  const list = P.study.speed[q.subject] || (P.study.speed[q.subject] = []);
+  list.push(Math.round(sec));
+  P.study.speed[q.subject] = list.slice(-200);
+  pSave();
+};
 
-pAnalytics=function(){const aa=pAnswers(),done=PQ.filter(q=>aa[q.id]),right=done.filter(q=>aa[q.id].score===aa[q.id].max),first=done.reduce((s,q)=>s+Math.min(aa[q.id].first??aa[q.id].score,aa[q.id].max),0),possible=done.reduce((s,q)=>s+pMax(q),0),bad=done.filter(q=>aa[q.id].score<aa[q.id].max).map(q=>q.id),due=done.filter(q=>aa[q.id].due<=Date.now()).length;
- $('#main').innerHTML=pHeading('Прогрес','Твої результати','Прогноз бала, карта тем, темп і помилки. Перша спроба важить найбільше: на іспиті другої немає.')
- +`<div class="p-stat-grid"><article><span>Розв’язано завдань</span><strong>${done.length}<small> / ${PQ.length}</small></strong></article><article><span>Бали за першу спробу</span><strong>${pct(first,possible)}<small>%</small></strong></article><article><span>Правильно зараз</span><strong>${pct(right.length,done.length)}<small>%</small></strong></article><article><span>Чекають виправлення</span><strong>${bad.length}</strong></article></div>`
- +`<div class="u-pull p-actions"><button class="primary" ${bad.length?'':'disabled'} onclick="pReview('wrong')">Повторити помилки (${bad.length})</button><button ${due?'':'disabled'} onclick="pReview('due')">Повторення за графіком (${due})</button><button ${P.pins.length?'':'disabled'} onclick="pReview('pins')">Збережені (${P.pins.length})</button><a href="#coach">Причини помилок і діагностика ›</a></div>`
- +stForecastHTML()+uiKnowledgeMap()+uiSpeed()
- +`<section class="p-section"><div class="p-section-head"><h2>Теми з найбільшою кількістю помилок</h2></div><div class="p-topic-list">${pWeakTopics(bad).slice(0,10).map(x=>`<a class="p-topic-row" href="#${x.id.startsWith('hist-')?'topic/'+x.id.slice(5):'lesson/'+x.id}"><h3>${esc(x.title)}</h3><span>${stPlural(x.n,'помилка','помилки','помилок')} ›</span></a>`).join('')||'<p class="p-empty">Після перших відповідей тут з’являться теми, які варто повторити.</p>'}</div></section>`
- +`<section class="p-section"><div class="p-section-head"><h2>Останні пробники</h2><a href="#mocks">Усі пробники ›</a></div>${P.records.some(r=>r.finished)?`<div class="p-topic-list">${[...P.records].filter(r=>r.finished).reverse().slice(0,6).map(r=>{const parts=SUBJECTS.map(s=>{const ids=r.ids.filter(id=>PM[id]?.subject===s.id);if(ids.length<EXAMINFO[s.id].count)return '';return s.short+' '+nmtText(s.id,ids.reduce((n,id)=>n+pGrade(PM[id],r.answers[id]),0))}).filter(Boolean).join(' · ');return `<a class="p-topic-row" href="#result/${r.id}"><div><h3>${esc(r.title)}</h3><p>${new Date(r.finished).toLocaleDateString('uk-UA',{day:'numeric',month:'long'})}</p></div><strong>${parts||r.score+' / '+r.max}</strong></a>`}).join('')}</div>`:'<p class="p-empty">Пройди перший пробник, щоб побачити бал за шкалою 100–200.</p>'}</section>`+pFoot()};
+pAnalytics = function () {
+  const aa = pAnswers(),
+    done = PQ.filter(q => aa[q.id]),
+    right = done.filter(q => aa[q.id].score === aa[q.id].max),
+    first = done.reduce((s, q) => s + Math.min(aa[q.id].first ?? aa[q.id].score, aa[q.id].max), 0),
+    possible = done.reduce((s, q) => s + pMax(q), 0),
+    bad = done.filter(q => aa[q.id].score < aa[q.id].max).map(q => q.id),
+    due = done.filter(q => aa[q.id].due <= Date.now()).length;
+  $('#main').innerHTML =
+    pHeading(
+      'Прогрес',
+      'Твої результати',
+      'Прогноз бала, карта тем, темп і помилки. Перша спроба важить найбільше: на іспиті другої немає.'
+    ) +
+    `<div class="p-stat-grid"><article><span>Розв’язано завдань</span><strong>${done.length}<small> / ${PQ.length}</small></strong></article><article><span>Бали за першу спробу</span><strong>${pct(first, possible)}<small>%</small></strong></article><article><span>Правильно зараз</span><strong>${pct(right.length, done.length)}<small>%</small></strong></article><article><span>Чекають виправлення</span><strong>${bad.length}</strong></article></div>` +
+    `<div class="u-pull p-actions"><button class="primary" ${bad.length ? '' : 'disabled'} onclick="pReview('wrong')">Повторити помилки (${bad.length})</button><button ${due ? '' : 'disabled'} onclick="pReview('due')">Повторення за графіком (${due})</button><button ${P.pins.length ? '' : 'disabled'} onclick="pReview('pins')">Збережені (${P.pins.length})</button><a href="#coach">Причини помилок і діагностика ›</a></div>` +
+    stForecastHTML() +
+    weeklyHTML(true) +
+    uiKnowledgeMap() +
+    uiSpeed() +
+    `<section class="p-section"><div class="p-section-head"><h2>Теми з найбільшою кількістю помилок</h2></div><div class="p-topic-list">${
+      pWeakTopics(bad)
+        .slice(0, 10)
+        .map(
+          x =>
+            `<a class="p-topic-row" href="#${x.id.startsWith('hist-') ? 'topic/' + x.id.slice(5) : 'lesson/' + x.id}"><h3>${esc(x.title)}</h3><span>${stPlural(x.n, 'помилка', 'помилки', 'помилок')} ›</span></a>`
+        )
+        .join('') ||
+      '<p class="p-empty">Після перших відповідей тут з’являться теми, які варто повторити.</p>'
+    }</div></section>` +
+    `<section class="p-section"><div class="p-section-head"><h2>Останні пробники</h2><a href="#mocks">Усі пробники ›</a></div>${
+      P.records.some(r => r.finished)
+        ? `<div class="p-topic-list">${[...P.records]
+            .filter(r => r.finished)
+            .reverse()
+            .slice(0, 6)
+            .map(r => {
+              const parts = SUBJECTS.map(s => {
+                const ids = r.ids.filter(id => PM[id]?.subject === s.id);
+                if (ids.length < EXAMINFO[s.id].count) return '';
+                return (
+                  s.short +
+                  ' ' +
+                  nmtText(
+                    s.id,
+                    ids.reduce((n, id) => n + pGrade(PM[id], r.answers[id]), 0)
+                  )
+                );
+              })
+                .filter(Boolean)
+                .join(' · ');
+              return `<a class="p-topic-row" href="#result/${r.id}"><div><h3>${esc(r.title)}</h3><p>${new Date(r.finished).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' })}</p></div><strong>${parts || r.score + ' / ' + r.max}</strong></a>`;
+            })
+            .join('')}</div>`
+        : '<p class="p-empty">Пройди перший пробник, щоб побачити бал за шкалою 100–200.</p>'
+    }</section>` +
+    pFoot();
+};
 
 /* Коли завдання повернеться на повторення — людською мовою. */
-function uiDueText(due){const d=Math.round((new Date(due).setHours(0,0,0,0)-new Date().setHours(0,0,0,0))/DAY);return due-Date.now()<2*3600000?'Повернемося до цього завдання ще сьогодні, щоб закріпити правильну відповідь.':d<=1?'Наступне повторення — завтра.':'Наступне повторення — через '+stPlural(d,'день','дні','днів')+' ('+new Date(due).toLocaleDateString('uk-UA',{day:'numeric',month:'long'})+').'}
+function uiDueText(due) {
+  const d = Math.round(
+    (new Date(due).setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0)) / DAY
+  );
+  return due - Date.now() < 2 * 3600000
+    ? 'Повернемося до цього завдання ще сьогодні, щоб закріпити правильну відповідь.'
+    : d <= 1
+      ? 'Наступне повторення — завтра.'
+      : 'Наступне повторення — через ' +
+        stPlural(d, 'день', 'дні', 'днів') +
+        ' (' +
+        new Date(due).toLocaleDateString('uk-UA', { day: 'numeric', month: 'long' }) +
+        ').';
+}
 /* Самоперевірка: спершу згадати відповідь, потім відкрити варіанти. */
-const uiReveal=new Set();
-function uiRecallToggle(){P.study.recall=!P.study.recall;pSave();pPractice()}
-const uiPracticeBase=pPractice;pPractice=function(){uiPracticeBase();const c=pContext(),q=pQ();if(!c||!q)return;const training=!c.exam&&!c.record;if(training&&!pLocked(q)&&uiShown.id!==q.id)uiShown={id:q.id,at:Date.now()};
- const top=$('#main .p-practice-top .p-actions');if(training&&top&&!$('#ui-recall'))top.insertAdjacentHTML('afterbegin',`<button id="ui-recall" aria-pressed="${!!P.study.recall}" onclick="uiRecallToggle()" title="Варіанти відповіді приховано, доки не відповіси подумки">Самоперевірка перед відповіддю: ${P.study.recall?'увімкнено':'вимкнено'}</button>`);
- const opts=$('#main .p-options');if(training&&P.study.recall&&opts&&q.type==='single'&&!pLocked(q)&&!uiReveal.has(q.id)&&(pVal(q)===undefined||pVal(q)===null)){opts.hidden=true;const typable=uiTypable(q);opts.insertAdjacentHTML('beforebegin',`<div class="recall-cover">${typable?'<form class="recall-type" onsubmit="event.preventDefault();uiTyped()"><label for="ui-typed">Впиши відповідь</label><div><input id="ui-typed" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120"><button class="primary">Перевірити</button></div><p class="p-caption">Регістр, апострофи й знаки наголосу не важливі. Якщо не пам’ятаєш — відкрий варіанти.</p></form>':'<p>Спершу дай відповідь подумки: назви правило, формулу чи дату. Потім відкрий варіанти й перевір себе.</p>'}<button ${typable?'':'class="primary"'} onclick="uiReveal.add(pQ().id);pPractice()">Показати варіанти</button></div>`)}};
+const uiReveal = new Set();
+function uiRecallToggle() {
+  P.study.recall = !P.study.recall;
+  pSave();
+  pPractice();
+}
+const uiPracticeBase = pPractice;
+pPractice = function () {
+  uiPracticeBase();
+  const c = pContext(),
+    q = pQ();
+  if (!c || !q) return;
+  const training = !c.exam && !c.record;
+  if (training && !pLocked(q) && uiShown.id !== q.id) uiShown = { id: q.id, at: Date.now() };
+  const top = $('#main .p-practice-top .p-actions');
+  if (training && top && !$('#ui-recall'))
+    top.insertAdjacentHTML(
+      'afterbegin',
+      `<button id="ui-recall" aria-pressed="${!!P.study.recall}" onclick="uiRecallToggle()" title="Варіанти відповіді приховано, доки не відповіси подумки">Самоперевірка перед відповіддю: ${P.study.recall ? 'увімкнено' : 'вимкнено'}</button>`
+    );
+  const opts = $('#main .p-options');
+  if (
+    training &&
+    P.study.recall &&
+    opts &&
+    q.type === 'single' &&
+    !pLocked(q) &&
+    !uiReveal.has(q.id) &&
+    (pVal(q) === undefined || pVal(q) === null)
+  ) {
+    opts.hidden = true;
+    const typable = uiTypable(q);
+    opts.insertAdjacentHTML(
+      'beforebegin',
+      `<div class="recall-cover">${typable ? '<form class="recall-type" onsubmit="event.preventDefault();uiTyped()"><label for="ui-typed">Впиши відповідь</label><div><input id="ui-typed" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120"><button class="primary">Перевірити</button></div><p class="p-caption">Регістр, апострофи й знаки наголосу не важливі. Якщо не пам’ятаєш — відкрий варіанти.</p></form>' : '<p>Спершу дай відповідь подумки: назви правило, формулу чи дату. Потім відкрий варіанти й перевір себе.</p>'}<button ${typable ? '' : 'class="primary"'} onclick="uiReveal.add(pQ().id);pPractice()">Показати варіанти</button></div>`
+    );
+  }
+};
 /* Відповідь з клавіатури: збіг із варіантом без урахування регістру, апострофів і наголосів. */
-function uiNorm(s){return String(s).normalize('NFD').replace(/́/g,'').normalize('NFC').toLowerCase().replace(/[’'ʼ`]/g,'’').replace(/[«»"“”]/g,'').replace(/\s+/g,' ').replace(/[\s.,;!]+$/,'').trim()}
-function uiTypable(q){const o=(q.options||[]).map(uiNorm);return o.length>1&&o.every(x=>x&&x.length<=40)&&new Set(o).size===o.length&&!/[√∫∑π^]|\\|\/.*\//.test(o.join(' '))}
-function uiTyped(){const q=pQ(),inp=$('#ui-typed');if(!q||!inp)return;const v=uiNorm(inp.value);if(!v)return;const hit=q.options.map((o,i)=>uiNorm(o)===v?i:-1).filter(i=>i>=0);
- if(hit.length===1){uiReveal.add(q.id);pChoose(hit[0]);pCheck();return}
- uiReveal.add(q.id);pPractice();toast('Такого варіанта немає. Вибери відповідь із варіантів — твій запис: «'+inp.value.trim().slice(0,60)+'».')}
+function uiNorm(s) {
+  return String(s)
+    .normalize('NFD')
+    .replace(/́/g, '')
+    .normalize('NFC')
+    .toLowerCase()
+    .replace(/[’'ʼ`]/g, '’')
+    .replace(/[«»"“”]/g, '')
+    .replace(/\s+/g, ' ')
+    .replace(/[\s.,;!]+$/, '')
+    .trim();
+}
+function uiTypable(q) {
+  const o = (q.options || []).map(uiNorm);
+  return (
+    o.length > 1 &&
+    o.every(x => x && x.length <= 40) &&
+    new Set(o).size === o.length &&
+    !/[√∫∑π^]|\\|\/.*\//.test(o.join(' '))
+  );
+}
+function uiTyped() {
+  const q = pQ(),
+    inp = $('#ui-typed');
+  if (!q || !inp) return;
+  const v = uiNorm(inp.value);
+  if (!v) return;
+  const hit = q.options.map((o, i) => (uiNorm(o) === v ? i : -1)).filter(i => i >= 0);
+  if (hit.length === 1) {
+    uiReveal.add(q.id);
+    pChoose(hit[0]);
+    pCheck();
+    return;
+  }
+  uiReveal.add(q.id);
+  pPractice();
+  toast(
+    'Такого варіанта немає. Вибери відповідь із варіантів — твій запис: «' +
+      inp.value.trim().slice(0, 60) +
+      '».'
+  );
+}
 
 /* Стратегія на іспиті. */
-function uiStrategyPage(){$('#main').innerHTML=pHeading('На іспиті','Стратегія НМТ','Як працювати з тестом, щоб не втратити бали, які ти вже знаєш.')+`<article class="strategy">
-<section><h2>Формат</h2><p>НМТ складається з двох блоків по 120 хвилин із перервою між ними. Перший блок — українська мова й математика, другий — історія України та предмет на вибір. У межах блоку можна переходити між предметами й повертатися до завдань.</p><table><thead><tr><th>Предмет</th><th>Завдань</th><th>Макс. балів</th><th>Поріг</th></tr></thead><tbody>${SUBJECTS.map(s=>`<tr><td>${s.name}</td><td>${EXAMINFO[s.id].count}</td><td>${NMT.subjects[s.id].max}</td><td>${NMT.subjects[s.id].threshold}</td></tr>`).join('')}</tbody></table><p class="p-caption">Кількість завдань і бали — за моделлю НМТ-2026. Поріг «склав / не склав» — у тестових балах.</p></section>
+function uiStrategyPage() {
+  $('#main').innerHTML =
+    pHeading(
+      'На іспиті',
+      'Стратегія НМТ',
+      'Як працювати з тестом, щоб не втратити бали, які ти вже знаєш.'
+    ) +
+    `<article class="strategy">
+<section><h2>Формат</h2><p>НМТ складається з двох блоків по 120 хвилин із перервою між ними. Перший блок — українська мова й математика, другий — історія України та предмет на вибір. У межах блоку можна переходити між предметами й повертатися до завдань.</p><table><thead><tr><th>Предмет</th><th>Завдань</th><th>Макс. балів</th><th>Поріг</th></tr></thead><tbody>${SUBJECTS.map(s => `<tr><td>${s.name}</td><td>${EXAMINFO[s.id].count}</td><td>${NMT.subjects[s.id].max}</td><td>${NMT.subjects[s.id].threshold}</td></tr>`).join('')}</tbody></table><p class="p-caption">Кількість завдань і бали — за моделлю НМТ-2026. Поріг «склав / не склав» — у тестових балах.</p></section>
 <section><h2>Порожня відповідь дає нуль балів</h2><p>За неправильну відповідь бали не знімають. Тому відповідай на кожне завдання, навіть якщо не впевнений: відкинь варіанти, які точно не підходять, і обери з решти.</p></section>
 <section><h2>Два проходи</h2><ul><li>Перший прохід: розв’язуй усе, що знаєш одразу. Над завданням, яке не йде, не сиди понад 3–4 хвилини — відзнач його й рухайся далі.</li><li>Другий прохід: повертайся до відзначених завдань. Час на них уже не забирає час у легких.</li><li>Останні 5 хвилин блоку: перевір, що на кожне завдання є відповідь.</li></ul></section>
 <section><h2>Час</h2><p>Орієнтир — близько 60 хвилин на предмет. У першому блоці математика зазвичай забирає більше часу, тож українську варто проходити в робочому темпі, без зайвих повернень. Свій темп на тренуваннях дивись у розділі «Прогрес».</p></section>
 <section><h2>Типи завдань і часткові бали</h2><ul><li>Відповідності оцінюються за кожну правильну пару: навіть якщо впевнений лише в одній-двох, заповни всі.</li><li>Математика з короткою відповіддю: вписуй число, десятковий дріб — через кому. Перевір одиниці виміру й те, що саме питають (більший корінь, суму коренів тощо).</li><li>Історія «три з семи» й послідовності теж дають часткові бали — не лишай їх порожніми.</li><li>Англійська: спершу прочитай питання, потім текст — так легше знайти потрібне місце.</li></ul></section>
 <section><h2>Як запам’ятовувати</h2><ul><li>Після конспекту закрий його й напиши, що пам’ятаєш. Для цього наприкінці теми є блок «Пригадай без підглядання». У картках спершу згадай відповідь, потім відкривай.</li><li>Правильна відповідь повертається через день, потім через 3 дні, далі інтервал зростає. Помилка повертається за 10 хвилин. У «Моєму плані» видно, що повторити сьогодні.</li><li>«Змішана практика» дає завдання з різних тем підряд. Так важче, але на іспиті ніхто не підкаже, з якої воно теми.</li><li>Перед відповіддю познач, наскільки ти певний. Якщо помилився, хоча був певний, прочитай розбір повільно: такі помилки виправляються найлегше.</li><li>У «Моїх нотатках» запиши правило й власний приклад. Якщо не виходить пояснити своїми словами, тема ще не засвоєна.</li></ul></section>
-<section><h2>Останній тиждень і день іспиту</h2><ul><li>За тиждень — без нових тем: повторення помилок, картки й 1–2 повні симуляції в той самий час доби, що й іспит.</li><li>Напередодні: сон важливіший за ще годину навчання.</li><li>Візьми запрошення-перепустку й документ, указаний у ньому. Приходь заздалегідь.</li></ul></section></article><div class="p-actions"><a class="primary" href="#mocks">Потренуватися на пробнику ›</a><a href="#plan">Мій план</a></div>${pFoot()}`}
-const uiCrumbsBase=siteCrumbs;siteCrumbs=function(){return (location.hash.slice(1)||'hub')==='strategy'?[{label:'Головна',to:'hub'},{label:'Стратегія НМТ',to:'strategy'}]:uiCrumbsBase()};
-const uiRenderBase=render;render=function(){if((location.hash.slice(1)||'hub')==='strategy'){route='strategy';uiStrategyPage();syncSiteNavigation();document.title='Стратегія НМТ · Складено';return}uiRenderBase();const m=$('#main'),head=m&&m.querySelector(':scope>.p-page-head');if(head)for(const el of [...m.children]){if(el===head)break;if(el.classList.contains('p-alert'))head.after(el)}const w=$('#wrongcount');if(w)w.toggleAttribute('data-zero',w.textContent==='0')};
+<section><h2>Останній тиждень і день іспиту</h2><ul><li>За тиждень — без нових тем: повторення помилок, картки й 1–2 повні симуляції в той самий час доби, що й іспит.</li><li>Напередодні: сон важливіший за ще годину навчання.</li><li>Візьми запрошення-перепустку й документ, указаний у ньому. Приходь заздалегідь.</li></ul></section></article><div class="p-actions"><a class="primary" href="#mocks">Потренуватися на пробнику ›</a><a href="#plan">Мій план</a></div>${pFoot()}`;
+}
+const uiCrumbsBase = siteCrumbs;
+siteCrumbs = function () {
+  return (location.hash.slice(1) || 'hub') === 'strategy'
+    ? [
+        { label: 'Головна', to: 'hub' },
+        { label: 'Стратегія НМТ', to: 'strategy' },
+      ]
+    : uiCrumbsBase();
+};
+const uiRenderBase = render;
+render = function () {
+  if ((location.hash.slice(1) || 'hub') === 'strategy') {
+    route = 'strategy';
+    uiStrategyPage();
+    syncSiteNavigation();
+    document.title = 'Стратегія НМТ · Складено';
+    return;
+  }
+  uiRenderBase();
+  const m = $('#main'),
+    head = m && m.querySelector(':scope>.p-page-head');
+  if (head)
+    for (const el of [...m.children]) {
+      if (el === head) break;
+      if (el.classList.contains('p-alert')) head.after(el);
+    }
+  const w = $('#wrongcount');
+  if (w) w.toggleAttribute('data-zero', w.textContent === '0');
+};
 
 /* Матеріали: каталог інструментів замість переліку службових розділів. */
-function uiCard(title,text,action){return `<article class="p-feature"><h3>${title}</h3><p>${text}</p>${action}</article>`}
-const uiLibraryBase=pLibrary;pLibrary=function(){uiLibraryBase();const head=[...$('#main').querySelectorAll('.p-section-head')].find(h=>h.textContent.includes('Першоджерела')),sources=head?.nextElementSibling?.outerHTML||'';
- $('#main').innerHTML=pHeading('Матеріали','Довідники й тренажери','Картки, формули, дати, програми й офіційні демоваріанти для повторення теорії та самоперевірки.')
- +`<section class="p-section"><div class="p-section-head"><h2>Швидке повторення</h2></div><div class="u-m0 p-bottom-grid">`
- +uiCard('Картки-довідки','Наголоси, правила, англійські сполуки, формули й історичні поняття. Спершу пригадай, потім відкрий відповідь.','<a class="p-link" href="#reference">Відкрити картки ›</a>')
- +uiCard('Формули','Алгебра, функції, ймовірність, планіметрія й стереометрія. Це той самий довідник, що й під час практики.','<button onclick="pFormulaDialog()">Відкрити формули</button>')
- +uiCard('Хронологія','Ключові дати всього курсу з поясненнями та вправами на точну дату.','<a class="p-link" href="#chronology">До хронології ›</a>')
- +uiCard('Діячі й пам’ятки','Портрети діячів, пам’ятки архітектури й мистецтва та історичні карти із завданнями.','<div class="u-mt6 p-actions"><a href="#portraits">Портрети</a><a href="#gallery">Пам’ятки</a><a href="#map">Карти</a></div>')
- +`</div></section><section class="p-section"><div class="p-section-head"><h2>Перевірка та програма</h2></div><div class="u-m0 p-bottom-grid">`
- +uiCard('Офіційні тести','Демоваріанти НМТ-2026 і справжні тести НМТ-2025 з усіх чотирьох предметів: таймер, окремий бланк і ключ після завершення.','<a class="p-link" href="#official">Пройти офіційний тест ›</a>')
- +uiCard('Програма по пунктах','Кожен розділ офіційної програми з конспектом і завданнями до нього.','<div class="u-mt6 p-actions">'+SUBJECTS.map(s=>`<a href="#syllabus/${s.id}">${s.short}</a>`).join('')+'</div>')
- +uiCard('Складна практика','Завдання з кількома кроками для тих, хто вже впевнено розв’язує базові.','<a class="p-link" href="#advanced">Спробувати ›</a>')
- +uiCard('Стратегія НМТ','Розподіл часу, два проходи та робота з частковими балами.','<a class="p-link" href="#strategy">Прочитати ›</a>')
- +`</div></section>${typeof mathDeepLessonsHTML==='function'?mathDeepLessonsHTML():''}`
- +`<section class="p-section"><div class="p-section-head"><h2>Інструменти</h2></div><div class="u-m0 p-bottom-grid">`
- +uiCard('Знайти будь-що','Конспекти, правила, діячі, дати й завдання в одному пошуку.','<a class="p-link" href="#find">Шукати ›</a>')
- +uiCard('Автономна версія','Один HTML-файл з усіма матеріалами для навчання офлайн.','<a class="p-link" href="#offline">Завантажити ›</a>')
- +uiCard('Резервна копія','Збережи прогрес у файл або код, щоб перенести його в інший браузер.','<a class="p-link" href="#preferences">Налаштування ›</a>')
- +`</div></section>${sources?`<section class="p-section"><div class="p-section-head"><h2>Першоджерела</h2><a href="#sources">Джерела з історії ›</a></div>${sources}</section>`:''}`+pFoot()};
+function uiCard(title, text, action) {
+  return `<article class="p-feature"><h3>${title}</h3><p>${text}</p>${action}</article>`;
+}
+const uiLibraryBase = pLibrary;
+pLibrary = function () {
+  uiLibraryBase();
+  const head = [...$('#main').querySelectorAll('.p-section-head')].find(h =>
+      h.textContent.includes('Першоджерела')
+    ),
+    sources = head?.nextElementSibling?.outerHTML || '';
+  $('#main').innerHTML =
+    pHeading(
+      'Матеріали',
+      'Довідники й тренажери',
+      'Картки, формули, дати, програми й офіційні демоваріанти для повторення теорії та самоперевірки.'
+    ) +
+    `<section class="p-section"><div class="p-section-head"><h2>Швидке повторення</h2></div><div class="u-m0 p-bottom-grid">` +
+    uiCard(
+      'Картки-довідки',
+      'Наголоси, правила, англійські сполуки, формули й історичні поняття. Спершу пригадай, потім відкрий відповідь.',
+      '<a class="p-link" href="#reference">Відкрити картки ›</a>'
+    ) +
+    uiCard(
+      'Формули',
+      'Алгебра, функції, ймовірність, планіметрія й стереометрія. Це той самий довідник, що й під час практики.',
+      '<button onclick="pFormulaDialog()">Відкрити формули</button>'
+    ) +
+    uiCard(
+      'Хронологія',
+      'Ключові дати всього курсу з поясненнями та вправами на точну дату.',
+      '<a class="p-link" href="#chronology">До хронології ›</a>'
+    ) +
+    uiCard(
+      'Діячі й пам’ятки',
+      'Портрети діячів, пам’ятки архітектури й мистецтва та історичні карти із завданнями.',
+      '<div class="u-mt6 p-actions"><a href="#portraits">Портрети</a><a href="#gallery">Пам’ятки</a><a href="#map">Карти</a></div>'
+    ) +
+    `</div></section><section class="p-section"><div class="p-section-head"><h2>Перевірка та програма</h2></div><div class="u-m0 p-bottom-grid">` +
+    uiCard(
+      'Офіційні тести',
+      'Демоваріанти НМТ-2026 і справжні тести НМТ-2025 з усіх чотирьох предметів: таймер, окремий бланк і ключ після завершення.',
+      '<a class="p-link" href="#official">Пройти офіційний тест ›</a>'
+    ) +
+    uiCard(
+      'Програма по пунктах',
+      'Кожен розділ офіційної програми з конспектом і завданнями до нього.',
+      '<div class="u-mt6 p-actions">' +
+        SUBJECTS.map(s => `<a href="#syllabus/${s.id}">${s.short}</a>`).join('') +
+        '</div>'
+    ) +
+    uiCard(
+      'Складна практика',
+      'Завдання з кількома кроками для тих, хто вже впевнено розв’язує базові.',
+      '<a class="p-link" href="#advanced">Спробувати ›</a>'
+    ) +
+    uiCard(
+      'Стратегія НМТ',
+      'Розподіл часу, два проходи та робота з частковими балами.',
+      '<a class="p-link" href="#strategy">Прочитати ›</a>'
+    ) +
+    `</div></section>${typeof mathDeepLessonsHTML === 'function' ? mathDeepLessonsHTML() : ''}` +
+    `<section class="p-section"><div class="p-section-head"><h2>Інструменти</h2></div><div class="u-m0 p-bottom-grid">` +
+    uiCard(
+      'Знайти будь-що',
+      'Конспекти, правила, діячі, дати й завдання в одному пошуку.',
+      '<a class="p-link" href="#find">Шукати ›</a>'
+    ) +
+    uiCard(
+      'Автономна версія',
+      'Один HTML-файл з усіма матеріалами для навчання офлайн.',
+      '<a class="p-link" href="#offline">Завантажити ›</a>'
+    ) +
+    uiCard(
+      'Резервна копія',
+      'Збережи прогрес у файл або код, щоб перенести його в інший браузер.',
+      '<a class="p-link" href="#preferences">Налаштування ›</a>'
+    ) +
+    `</div></section>${sources ? `<section class="p-section"><div class="p-section-head"><h2>Першоджерела</h2><a href="#sources">Джерела з історії ›</a></div>${sources}</section>` : ''}` +
+    pFoot();
+};
 
 /* Службові примітки попередньої версії (звірки, межі перевірки, калібрування) прибираємо з навчальних сторінок. */
-const UI_AUDIT=[/Звірено \d{1,4}/,/^Межі перевірки/,/Візуально звірено/,/Покриття часткове/,/не відкалібровано/,/OCR/,/Кількість блоків не є показником/,/поелементну перевірку/,/не гарантує 200/,/не незалежний контроль/,/а не новий офіційний варіант/,/Звірено за сторінкою/,/Прочитано ці вимоги на скані/,/Для кожного перевіреного блоку/,/Складність авторська/,/не звірено повністю/,/ще не пройшли суцільну/,/Звірка всіх оригінальних джерел/,/Авторська практика з поясненнями/,/не підтверджує засвоєння/,/Зіставлено \d+ датованих/,/Біографічні підписи джерела не перенесено/,/звірено|звірки|звірку|звіркою|звірка/i,/аудит(?!ор)/i,/поелемент/i,/калібр/i,/не є повним покриттям/,/Наявність вправи не означає/,/не є твердженням/,/Решта підпунктів/,/не звірені/,/сертифікац/i];
-function uiStripAudit(){const main=$('#main');if(!main)return;main.querySelectorAll('a[href="#coverage"],a[href="#quality"],a[href^="#audit"]').forEach(a=>a.remove());main.querySelectorAll('h2,h3').forEach(h=>{if(/^Межі перевірки/.test(h.textContent.trim())){const box=h.closest('section,.panel,article');(box&&box!==main?box:h).remove()}});
- main.querySelectorAll('p,li,small,figcaption').forEach(el=>{el.querySelectorAll(':scope>strong,:scope>b').forEach(s=>{if(UI_AUDIT.some(r=>r.test(s.textContent)))s.remove()});const txt=el.textContent;if(!UI_AUDIT.some(r=>r.test(txt)))return;if(el.querySelector('a,button,input,select,textarea'))return;const kept=txt.replace(/([.!?])\s+/g,'$1\u0001').split('\u0001').filter(s=>!UI_AUDIT.some(r=>r.test(s))).join(' ').trim();if(!kept)el.remove();else if(!el.children.length)el.textContent=kept})}
-const uiAuditRender=render;render=function(){uiAuditRender();uiStripAudit()};
+const UI_AUDIT = [
+  /Звірено \d{1,4}/,
+  /^Межі перевірки/,
+  /Візуально звірено/,
+  /Покриття часткове/,
+  /не відкалібровано/,
+  /OCR/,
+  /Кількість блоків не є показником/,
+  /поелементну перевірку/,
+  /не гарантує 200/,
+  /не незалежний контроль/,
+  /а не новий офіційний варіант/,
+  /Звірено за сторінкою/,
+  /Прочитано ці вимоги на скані/,
+  /Для кожного перевіреного блоку/,
+  /Складність авторська/,
+  /не звірено повністю/,
+  /ще не пройшли суцільну/,
+  /Звірка всіх оригінальних джерел/,
+  /Авторська практика з поясненнями/,
+  /не підтверджує засвоєння/,
+  /Зіставлено \d+ датованих/,
+  /Біографічні підписи джерела не перенесено/,
+  /звірено|звірки|звірку|звіркою|звірка/i,
+  /аудит(?!ор)/i,
+  /поелемент/i,
+  /калібр/i,
+  /не є повним покриттям/,
+  /Наявність вправи не означає/,
+  /не є твердженням/,
+  /Решта підпунктів/,
+  /не звірені/,
+  /сертифікац/i,
+];
+function uiStripAudit() {
+  const main = $('#main');
+  if (!main) return;
+  main
+    .querySelectorAll('a[href="#coverage"],a[href="#quality"],a[href^="#audit"]')
+    .forEach(a => a.remove());
+  main.querySelectorAll('h2,h3').forEach(h => {
+    if (/^Межі перевірки/.test(h.textContent.trim())) {
+      const box = h.closest('section,.panel,article');
+      (box && box !== main ? box : h).remove();
+    }
+  });
+  main.querySelectorAll('p,li,small,figcaption').forEach(el => {
+    el.querySelectorAll(':scope>strong,:scope>b').forEach(s => {
+      if (UI_AUDIT.some(r => r.test(s.textContent))) s.remove();
+    });
+    const txt = el.textContent;
+    if (!UI_AUDIT.some(r => r.test(txt))) return;
+    if (el.querySelector('a,button,input,select,textarea')) return;
+    const kept = txt
+      .replace(/([.!?])\s+/g, '$1\u0001')
+      .split('\u0001')
+      .filter(s => !UI_AUDIT.some(r => r.test(s)))
+      .join(' ')
+      .trim();
+    if (!kept) el.remove();
+    else if (!el.children.length) el.textContent = kept;
+  });
+}
+const uiAuditRender = render;
+render = function () {
+  uiAuditRender();
+  uiStripAudit();
+};

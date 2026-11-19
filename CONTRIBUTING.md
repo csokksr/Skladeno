@@ -17,7 +17,8 @@ python -I tools/check_text.py                  # механічні помилк
 node tools/changelog.js --check                # журнал змін відповідає сторінці «Про сайт» (без --check перезаписує файл)
 node tests/run.js                              # регресійні тести сторінки (потрібна свіжа збірка)
 python -m unittest discover -s tests/py -v     # тести скриптів Python
-npm ci                                         # один раз: інструменти розробки (лінтер, типи, Playwright, Lighthouse)
+npm ci                                         # один раз: інструменти розробки (лінтер, типи, Playwright, Lighthouse, prettier, esbuild)
+npm run format:write                           # форматування джерел перед комітом (npm run format лише перевіряє)
 node tools/lint.js                             # ESLint; імена верхнього рівня збираються з усіх модулів
 node tools/typecheck.js                        # tsc checkJs без відомого шуму
 npx playwright install chromium                # один раз; далі: npx playwright test (комп'ютер, телефон і axe)

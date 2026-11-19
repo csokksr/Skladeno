@@ -6,15 +6,19 @@
     "lint": "node tools/lint.js",
     "typecheck": "tsc -p jsconfig.json",
     "e2e": "playwright test",
-    "lhci": "lhci autorun"
+    "lhci": "lhci autorun",
+    "format": "prettier --check \"src/app.js\" \"src/modules/*.js\" \"src/web/*.js\" tools/minify.js",
+    "format:write": "prettier --write \"src/app.js\" \"src/modules/*.js\" \"src/web/*.js\" tools/minify.js"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
     "@eslint/js": "10.0.1",
     "@lhci/cli": "0.16.1",
     "@playwright/test": "1.65.1",
+    "esbuild": "0.28.2",
     "eslint": "10.15.0",
     "globals": "17.14.0",
+    "prettier": "3.10.1",
     "typescript": "7.0.2"
   }
 }

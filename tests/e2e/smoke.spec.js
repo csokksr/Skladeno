@@ -1,6 +1,6 @@
 // Кожна сторінка відкривається в справжньому браузері без помилок у консолі й без винятків.
 const {test,expect}=require('@playwright/test');
-const ROUTES=['hub','tests','mocks','plan','rhythm','preferences','find','strategy','library','cards','graph','about','analytics','reference','official','coach'];
+const ROUTES=['hub','tests','mocks','plan','rhythm','preferences','find','strategy','library','cards','graph','about','analytics','reference','official','coach','growth'];
 const PAGE='/skladeno-nmt.html';
 
 test.describe('сторінки відкриваються без помилок',()=>{

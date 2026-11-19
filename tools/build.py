@@ -1,12 +1,15 @@
 """Assemble src/ into the site.
 
   python -I tools/build.py        -> dist/skladeno-nmt.html (one self-contained offline file)
+  python -I tools/build.py --lite -> dist/skladeno-nmt-lite.html (no embedded PDFs, links to the official sources)
+  python -I tools/build.py --no-minify -> the page code stays unminified (debugging)
   python -I tools/build.py --web  -> dist/web/ (claude.ai artifact: index.html + files/ + offline parts)
 """
 import base64, glob, hashlib, json, os, re, shutil, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 S = os.path.join(ROOT, 'src')
 WEB = '--web' in sys.argv
+LITE = '--lite' in sys.argv
 
 
 # Official texts typed on the source site sometimes mix look-alike letters of the two alphabets in one word («нa», «Нow», «ХVІІ»).
@@ -215,11 +218,61 @@ def load_data():
         for t in data.get('quality', {}).get('topics', []):
             if t['id'] in by_topic:
                 t['questions'] = by_topic[t['id']]
-    return refresh_quality(official_subjects(data))
+    return dedupe_assets(topic_weights(refresh_quality(official_subjects(data))))
 
 
 # Drills that belong to one lesson (syllabus gaps, tool pages, audits) stay; the generated per-topic banks go.
 KEEP_DRILLS = re.compile(r'^(syllabus|audit|project|skill-gap)-|^(number-tools|powers-roots|real-fluency|ratios-models|algebra-tools|log-tools|trig-tools)-')
+
+
+def dedupe_assets(data):
+    """The same figure sits under several task ids (repeated tasks of different sessions): identical images are stored once. Later keys
+    become the placeholder '@=' and data['assetAlias'] = {key: canonical key}; the page resolves them at startup (src/app.js) and
+    when an image pack loads (src/modules/60-zno.js)."""
+    seen, alias = {}, {}
+    for k in sorted(data.get('assets', {})):
+        v = data['assets'][k]
+        if not (isinstance(v, str) and v.startswith('@@blob:')):
+            continue
+        h = hashlib.sha256(open(f'{S}/blobs/{v[7:]}.txt', 'rb').read()).hexdigest()
+        if h in seen:
+            alias[k], data['assets'][k] = seen[h], '@='
+        else:
+            seen[h] = k
+    data['assetAlias'] = alias
+    return data
+
+
+WEIGHT_YEARS = (2022, 2026)
+
+
+def topic_weights(data):
+    """Share of each topic in the official НМТ tasks of WEIGHT_YEARS: the forecast weighs topics by it instead of equally.
+    Smoothed by half a task per topic, so a topic absent from the sample keeps a small weight; shares of a subject sum to 1."""
+    count = {}
+
+    def add(sid, tid, q):
+        if str(q.get('testName', '')).startswith('НМТ') and WEIGHT_YEARS[0] <= int(q.get('year') or 0) <= WEIGHT_YEARS[1]:
+            count.setdefault(sid, {})[tid] = count.get(sid, {}).get(tid, 0) + 1
+
+    for q in data['questions']:
+        add('hist', 'hist-%d' % q['topic'] if isinstance(q['topic'], int) else 'hist-%s' % q['topic'], q)
+    for s in data['subjects']:
+        for t in s['topics']:
+            for q in t['questions']:
+                add(s['id'], t['id'], q)
+    tids = {'hist': ['hist-%d' % t['id'] for t in data['topics']]}
+    tids.update({s['id']: [t['id'] for t in s['topics']] for s in data['subjects']})
+    weights, tasks = {}, {}
+    for sid, ids in tids.items():
+        n = sum(count.get(sid, {}).values())
+        if not n:
+            continue
+        tasks[sid] = n
+        total = n + 0.5 * len(ids)
+        weights[sid] = {i: round((count[sid].get(i, 0) + 0.5) / total, 4) for i in ids}
+    data['topicWeights'] = {'years': list(WEIGHT_YEARS), 'tasks': tasks, 'w': weights}
+    return data
 
 
 def official_subjects(data):
@@ -237,6 +290,14 @@ def official_subjects(data):
         assert set(fixes) <= set(by_id), 'zno2-fixes.json: unknown ids %s' % sorted(set(fixes) - set(by_id))[:5]
         for qid, fields in fixes.items():
             by_id[qid].update(fields)
+    # Biology and geography (tools/zno3_bank.py) have no generated bank: their subjects, topics and official tasks come as they are.
+    extra_path = f'{S}/zno3-bank.json'
+    if os.path.exists(extra_path):
+        extra = json.load(open(extra_path, encoding='utf-8'))
+        known = {s['id'] for s in data['subjects']}
+        data['subjects'] += [s for s in extra['subjects'] if s['id'] not in known]
+        bank['questions'] += extra['questions']
+        bank['assets'].update(extra['assets'])
     print('official tasks with repaired letters:', sum(fix_question_scripts(q) for q in bank['questions']))
     by_sub = {}
     for q in bank['questions']:
@@ -265,7 +326,7 @@ def official_subjects(data):
             return {k: prune(x) for k, x in v.items()}
         return v
     # the new tasks must not pass through prune (they hold images and long texts); detach, prune, re-attach
-    fresh = {t['id']: [q for q in t['questions'] if q['id'].startswith(('zm-', 'ze-', 'zu-'))] for s in data['subjects'] for t in s['topics']}
+    fresh = {t['id']: [q for q in t['questions'] if q['id'].startswith(('zm-', 'ze-', 'zu-', 'zb-', 'zg-'))] for s in data['subjects'] for t in s['topics']}
     for s in data['subjects']:
         for t in s['topics']:
             t['questions'] = [q for q in t['questions'] if q['id'] not in {x['id'] for x in fresh[t['id']]}]
@@ -289,6 +350,12 @@ def official_subjects(data):
     def pick(ids, n):
         step = max(1, len(ids) // n)
         return ids[::step][:n]
+    rows = {t['id'] for t in data.get('quality', {}).get('topics', [])}
+    for s in data['subjects']:  # topics of the subjects without a hand-made quality map get their own row
+        for t in s['topics']:
+            if t['id'] not in rows and t['id'] in pool:
+                data['quality']['topics'].append({'id': t['id'], 'title': t['title'], 'summary': t.get('summary', ''), 'questions': [],
+                                                  'subject': s['id'], 'route': 'lesson/' + t['id'], 'noteCount': len(t.get('notes', []))})
     for t in data.get('quality', {}).get('topics', []):
         if t['id'] in pool:
             t['questions'] = pool[t['id']]
@@ -315,7 +382,8 @@ def official_subjects(data):
         for q in chosen[::step][:8]:
             extra.append({'id': 'control-' + q['id'], 'subject': sid, 'topicId': q['topicId'], 'type': 'single', 'prompt': q['prompt'],
                           'options': q['options'], 'answer': q['answer'],
-                          'explanation': 'Офіційне завдання УЦОЯО (%s). Правильна відповідь: %s.' % (q['source'], q['options'][q['answer']].rstrip('.'))})
+                          'explanation': 'Офіційне завдання УЦОЯО (%s). Правильна відповідь: %s.%s' % (q['source'], q['options'][q['answer']].rstrip('.'),
+                                                                                              ' Ключ не звірено з аркушем УЦОЯО.' if q.get('keyUnverified') else '')})
     data['controlBank'] = data.get('controlBank', []) + extra
     return data
 
@@ -381,9 +449,10 @@ def app_js(extra_dirs, offline_mb=100):
     app = open(f'{S}/app.js', encoding='utf-8').read()
     # Feature modules load after the base app and wrap its functions, like the layers inside app.js.
     # They go before the final first render so the first screen already uses them.
+    tail = re.search(r'save\(\);\s*render\(\);\s*$', app)  # prettier puts the two calls on separate lines
+    assert tail
     boot = 'save();render();'
-    assert app.rstrip().endswith(boot)
-    app = app.rstrip()[:-len(boot)]
+    app = app[:tail.start()]
     app += '\nconst BUILD_ID=%s;' % json.dumps(build_id())
     # Vendored libraries (src/vendor/*.js, see its README) come first: modules may rely on their globals.
     for path in sorted(glob.glob(f'{S}/vendor/*.js')):
@@ -393,14 +462,25 @@ def app_js(extra_dirs, offline_mb=100):
             app += '\n' + open(path, encoding='utf-8').read()
     app += '\n' + boot + '\n'
     app = app.replace('@@OFFLINE_MB@@', str(offline_mb))  # size quoted by the «offline version» page
+    app = minify(app)
     assert '</script' not in app.lower()
     return app
+
+
+def minify(js):
+    """Whitespace and syntax minification with esbuild (tools/minify.js); the page runs unminified when esbuild is not installed."""
+    if '--no-minify' in sys.argv or not os.path.isdir(os.path.join(ROOT, 'node_modules', 'esbuild')):
+        return js
+    r = subprocess.run(['node', os.path.join(ROOT, 'tools', 'minify.js')], input=js.encode('utf-8'), capture_output=True, cwd=ROOT)
+    assert r.returncode == 0, r.stderr.decode('utf-8', 'replace')[:2000]
+    return r.stdout.decode('utf-8')
 
 
 # Text-heavy fields of questions and topic notes travel in per-subject packs (files/pack-<name>.json) in the web build:
 # the core data stays small, packs load after the first screen (src/web/80-packs.js hydrates the stubs in place).
 HEAVY_Q = ('prompt', 'passage', 'explanation', 'options', 'left', 'right', 'rows')
 LIST_Q = ('options', 'left', 'right', 'rows')
+REF_KEYS = {'referenceCards': 'cards', 'historyGuides': 'guides'}
 
 
 def split_packs(data):
@@ -432,6 +512,11 @@ def split_packs(data):
                 t['_h'] = ['notes']
             for q in t['questions']:
                 strip(q, pack, s['id'])
+    # Reference cards and the long history guides are not needed by the hub or by practice: each has its own pack,
+    # and src/web/80-packs.js guards DB.referenceCards / DB.historyGuides until the pack arrives.
+    for key, name in REF_KEYS.items():
+        if key in data:
+            packs[name] = {'q': {}, 't': {}, 'd': {key: data.pop(key)}}
     return packs
 
 
@@ -476,6 +561,25 @@ def build_offline():
     return html.encode()
 
 
+def lite(data):
+    """Light offline file: official PDFs are not embedded, the documents link to the official sources instead."""
+    for d in data['officialDocs']:
+        d['data'] = d['url']
+    for p in data['officialPapers']:
+        for kind, doc in p['documents'].items():
+            doc['data'] = '%s#page=%s' % (p['sourceUrl'], 1 if kind == 'questions' else p.get('keyPage', 1))
+    return data
+
+
+def build_lite():
+    out = os.path.join(ROOT, 'dist', 'skladeno-nmt-lite.html')
+    data = fill(lite(load_data()))
+    html = page(data, ['modules'], 1)
+    html = page(data, ['modules'], max(1, round(len(html.encode()) / 1e6)))  # the page quotes its own size
+    open(out, 'w', encoding='utf-8', newline='').write(html)
+    print(out, round(len(html.encode()) / 1e6, 1), 'MB (without embedded PDFs)')
+
+
 def build_web(offline_bytes):
     out = os.path.join(ROOT, 'dist', 'web')
     shutil.rmtree(out, ignore_errors=True)
@@ -483,16 +587,19 @@ def build_web(offline_bytes):
     os.makedirs(os.path.join(out, 'offline'), exist_ok=True)
     data = load_data()
     # An artifact version holds at most 511 files, so the ~1100 images of official history tasks travel as one JSON
-    # pack per topic (files/zno-t<N>.json: key -> data URI); the page loads a pack when a task needs it.
+    # pack per topic (files/zno-t<N>.json: key -> data URI); the page loads a pack when a task needs it. Biology and geography have
+    # 134 small topics, so their packs are per programme section (the topic's group).
     topic_of = {}
-    every = [(q, 't%d' % q['topic']) for q in data['questions']] + [(q, 's-' + t['id']) for s in data['subjects'] for t in s['topics'] for q in t['questions']]
+    every = [(q, 't%d' % q['topic']) for q in data['questions']] + [(q, 's-' + t.get('group', t['id'])) for s in data['subjects'] for t in s['topics'] for q in t['questions']]
     for q, name in every:
         for k in q.get('images', []) + [x for x in q.get('optionImages') or [] if x] + [x for x in q.get('rowImages') or [] if x]:
-            topic_of.setdefault(k, name)
+            topic_of.setdefault(data['assetAlias'].get(k, k), name)  # a repeated figure travels once, in the pack of its first task
     packs = {}
     for k, name in topic_of.items():
         packs.setdefault(name, {})[k] = fill(data['assets'][k])
         data['assets'][k] = '@zno:' + name
+    for k, canon in data['assetAlias'].items():
+        data['assets'][k] = data['assets'][canon]
     for name, pack in packs.items():
         json.dump(pack, open(os.path.join(out, 'files', 'zno-%s.json' % name), 'w', encoding='ascii'), separators=(',', ':'))
     data = fill(data, os.path.join(out, 'files'))
@@ -532,5 +639,7 @@ def build_web(offline_bytes):
 
 
 offline = build_offline()
+if LITE:
+    build_lite()
 if WEB:
     build_web(offline)

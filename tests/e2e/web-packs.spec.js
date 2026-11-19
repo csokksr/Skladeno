@@ -19,7 +19,8 @@ test.describe('веб-збірка з пакетами',()=>{
  test('сторінки без текстів завдань однакові з повними даними, коли пакети не приходять',async({page})=>{
   test.setTimeout(240000);
   const full=await texts(page,STD,LIGHT);
-  await page.route('**/files/pack-*.json',r=>r.abort());
+  // Тексти завдань не приходять, а довідкові пакети (cards, guides) приходять: їх потребують сторінки історії й довідники.
+  await page.route(/files\/pack-(ukr|math|eng|hist)\.json/,r=>r.abort());
   const web=await texts(page,WEB,LIGHT);
   for(const r of LIGHT)expect.soft(web[r],r).toBe(full[r]);
  });
@@ -63,6 +64,33 @@ test.describe('веб-збірка з пакетами',()=>{
  });
 });
 
+test.describe('порядок пакетів',()=>{
+ test.skip(({isMobile})=>isMobile,'достатньо одного розміру');
+ // Практика з математики: першим іде пакет математики, і сторінка не чекає решту (їх затримано на 6 с).
+ test('практика з математики вантажить свій пакет першим і не чекає решту',async({page})=>{
+  test.setTimeout(120000);
+  const asked=[];
+  await page.route('**/files/pack-*.json',async r=>{const n=/pack-(\w+)\.json/.exec(r.request().url())[1];asked.push(n);if(n!=='math')await new Promise(ok=>setTimeout(ok,6000));await r.continue()});
+  await open(page,WEB+'#hub');
+  await page.evaluate(()=>{const q=PQ.find(q=>q.type==='single'&&q.subject==='math'&&!q.examOnly);pStart([q.id],'e2e','e2e')});
+  asked.length=0;await page.goto(WEB+'#practice');await page.reload();
+  await page.waitForFunction(()=>typeof PQ!=='undefined'&&typeof render==='function');
+  await expect(page.locator('#main .p-option').first()).toBeVisible({timeout:4000});
+  expect(await page.evaluate(()=>PACK_NAMES.filter(n=>PACK_DONE.has(n)))).toEqual(['math']);
+  expect(asked[0]).toBe('math');
+ });
+
+ test('картки й розбори історії приходять окремими пакетами, а сторінка чекає лише їх',async({page})=>{
+  test.setTimeout(120000);
+  const asked=[];
+  await page.route('**/files/pack-*.json',async r=>{const n=/pack-(\w+)\.json/.exec(r.request().url())[1];asked.push(n);if(n!=='cards')await new Promise(ok=>setTimeout(ok,6000));await r.continue()});
+  await open(page,WEB+'#hub');asked.length=0;
+  await page.evaluate(()=>{location.hash='reference/ukr'});
+  await expect(page.getByText('карток').first()).toBeVisible({timeout:4000});
+  expect(await page.evaluate(()=>PACK_NAMES.filter(n=>PACK_DONE.has(n)))).toEqual(['cards']);
+ });
+});
+
 test.describe('прогрес у веб-збірці',()=>{
  test.skip(({isMobile})=>isMobile,'достатньо одного розміру');
  // Прогрес перевіряється на старті за довжинами списків завдання; веб-збірка (заглушки) має зберегти те саме, що автономний файл.
@@ -94,4 +122,17 @@ test('якщо ядро даних не завантажилося, сторін
  await page.route('**/files/data.json',r=>r.abort());
  await page.goto(WEB);
  await expect(page.getByText('Дані не завантажилися')).toBeVisible();
+});
+
+test.describe('однакові зображення',()=>{
+ test.skip(({isMobile})=>isMobile,'достатньо одного розміру');
+ // Повторюване зображення лежить у пакеті лише під основним ключем, а повторний ключ бере його за аліасом.
+ test('аліас зображення показує малюнок після завантаження пакета',async({page})=>{
+  test.setTimeout(120000);
+  await open(page,WEB+'#hub');
+  const k=await page.evaluate(()=>{const q=PQ.find(q=>(q.images||[]).some(k=>k in DB.assetAlias&&DB.assets[k].startsWith('@zno:')));return q&&q.images.find(k=>k in DB.assetAlias)});
+  expect(k).toBeTruthy();
+  const html=await page.evaluate(async k=>{await znoPack(DB.assets[k].slice(5));return pImg(k,'x')},k);
+  expect(html).toContain('src="data:image/');
+ });
 });

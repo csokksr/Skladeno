@@ -8,9 +8,9 @@ const root=path.resolve(__dirname,'..'),FILE=path.join(root,'CHANGELOG.md');
 const MONTHS=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
 
 // Вихідний код сторінки «Про сайт» → {year, list}. Масив береться до першого «];» на початку рядка: усередині записів такої послідовності немає.
-function parse(code){const y=/const ABOUT_YEAR=(\d{4});/.exec(code);if(!y)throw new Error('ABOUT_YEAR не знайдено в src/modules/79-about.js');
-  const a=code.indexOf('const ABOUT_CHANGES=');if(a<0)throw new Error('ABOUT_CHANGES не знайдено в src/modules/79-about.js');
-  const start=a+'const ABOUT_CHANGES='.length,end=code.indexOf('];\n',start)+1;if(end<=start)throw new Error('кінець ABOUT_CHANGES не знайдено');
+function parse(code){const y=/const ABOUT_YEAR\s*=\s*(\d{4});/.exec(code);if(!y)throw new Error('ABOUT_YEAR не знайдено в src/modules/79-about.js');
+  const m=/const ABOUT_CHANGES\s*=\s*/.exec(code);if(!m)throw new Error('ABOUT_CHANGES не знайдено в src/modules/79-about.js');
+  const start=m.index+m[0].length,end=code.indexOf('];\n',start)+1;if(end<=start)throw new Error('кінець ABOUT_CHANGES не знайдено');
   return {year:Number(y[1]),list:Function('return '+code.slice(start,end))()}}
 function entries(){return parse(fs.readFileSync(path.join(root,'src','modules','79-about.js'),'utf8'))}
 

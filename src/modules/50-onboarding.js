@@ -1,7 +1,53 @@
 // First visit: ask for the exam date, daily time and targets instead of silently using defaults.
-function obNeeded(){return !P.study.setupDone&&!Object.keys(pAnswers()).length}
-function obCard(){const mins=[20,30,45,60,90];return `<section class="p-section ob-card" aria-labelledby="ob-title"><h2 id="ob-title">Налаштуй план за хвилину</h2><p>Усе можна змінити пізніше в «Мій план».</p><div class="p-form"><fieldset class="p-fieldset"><legend>Іспит і час</legend><div class="p-form-grid"><label>Дата НМТ<input id="ob-date" type="date" value="${stExamDate()}"></label><label>Час на день<select id="ob-min">${mins.map(m=>`<option value="${m}" ${m===P.plan.minutes?'selected':''}>${m} хв</option>`).join('')}</select></label></div></fieldset><fieldset class="p-fieldset"><legend>Цілі за шкалою 100–200</legend><div class="p-form-grid p-targets">${SUBJECTS.map(s=>`<label style="--subject:${s.color}"><span>${esc(s.name)}</span><select id="ob-t-${s.id}" aria-label="Ціль: ${esc(s.name.toLowerCase())}">${nmtValues(s.id).map(v=>`<option value="${v}" ${P.study.targets[s.id]===v?'selected':''}>${v}</option>`).join('')}</select></label>`).join('')}</div><p class="p-caption">Бал, потрібний для обраної спеціальності. Доступні лише бали з таблиці переведення НМТ; поріг «склав» — 100.</p></fieldset></div><div class="p-actions"><button class="primary" onclick="obSave()">Зберегти й почати</button><button onclick="obSkip()">Залишити як є</button></div></section>`}
+function obNeeded() {
+  return !P.study.setupDone && !Object.keys(pAnswers()).length;
+}
+function obCard() {
+  const mins = [20, 30, 45, 60, 90];
+  return `<section class="p-section ob-card" aria-labelledby="ob-title"><h2 id="ob-title">Налаштуй план за хвилину</h2><p>Усе можна змінити пізніше в «Мій план».</p><div class="p-form"><fieldset class="p-fieldset"><legend>Іспит і час</legend><div class="p-form-grid"><label>Дата НМТ<input id="ob-date" type="date" value="${stExamDate()}"></label><label>Час на день<select id="ob-min">${mins.map(m => `<option value="${m}" ${m === P.plan.minutes ? 'selected' : ''}>${m} хв</option>`).join('')}</select></label></div></fieldset><fieldset class="p-fieldset"><legend>Цілі за шкалою 100–200</legend><div class="p-form-grid p-targets">${subjActive()
+    .map(
+      s =>
+        `<label style="--subject:${s.color}"><span>${esc(s.name)}</span><select id="ob-t-${s.id}" aria-label="Ціль: ${esc(s.name.toLowerCase())}">${nmtValues(
+          s.id
+        )
+          .map(
+            v =>
+              `<option value="${v}" ${P.study.targets[s.id] === v ? 'selected' : ''}>${v}</option>`
+          )
+          .join('')}</select></label>`
+    )
+    .join(
+      ''
+    )}</div><p class="p-caption">Бал, потрібний для обраної спеціальності. Доступні лише бали з таблиці переведення НМТ; поріг «склав» — 100. Четвертий предмет можна змінити на біологію чи географію в «Мій план».</p></fieldset></div><div class="p-actions"><button class="primary" onclick="obSave()">Зберегти й почати</button><button onclick="obSkip()">Залишити як є</button></div></section>`;
+}
 // Same checks as stSet, which would also redraw the plan page.
-function obSave(){const date=$('#ob-date').value,mins=Number($('#ob-min').value);if(date&&!stFutureDate(date)){toast('Дата НМТ має бути справжньою датою в майбутньому.');return}if(date){P.study.examDate=date;stClampDue()}if([20,30,45,60,90].includes(mins))P.plan.minutes=mins;for(const s of SUBJECTS){const v=Math.round(Number($('#ob-t-'+s.id).value));if(nmtValues(s.id).includes(v))P.study.targets[s.id]=v}obSkip();toast('План налаштовано.')}
-function obSkip(){P.study.setupDone=true;P.study.today=null;pSave();render()}
-const obHub=pHub;pHub=function(){obHub();if(obNeeded())$('#main .p-page-head')?.insertAdjacentHTML('afterend',obCard())};
+function obSave() {
+  const date = $('#ob-date').value,
+    mins = Number($('#ob-min').value);
+  if (date && !stFutureDate(date)) {
+    toast('Дата НМТ має бути справжньою датою в майбутньому.');
+    return;
+  }
+  if (date) {
+    P.study.examDate = date;
+    stClampDue();
+  }
+  if ([20, 30, 45, 60, 90].includes(mins)) P.plan.minutes = mins;
+  for (const s of subjActive()) {
+    const v = Math.round(Number($('#ob-t-' + s.id).value));
+    if (nmtValues(s.id).includes(v)) P.study.targets[s.id] = v;
+  }
+  obSkip();
+  toast('План налаштовано.');
+}
+function obSkip() {
+  P.study.setupDone = true;
+  P.study.today = null;
+  pSave();
+  render();
+}
+const obHub = pHub;
+pHub = function () {
+  obHub();
+  if (obNeeded()) $('#main .p-page-head')?.insertAdjacentHTML('afterend', obCard());
+};
