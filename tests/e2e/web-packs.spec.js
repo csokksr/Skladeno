@@ -123,3 +123,16 @@ test('якщо ядро даних не завантажилося, сторін
  await page.goto(WEB);
  await expect(page.getByText('Дані не завантажилися')).toBeVisible();
 });
+
+test.describe('однакові зображення',()=>{
+ test.skip(({isMobile})=>isMobile,'достатньо одного розміру');
+ // Повторюване зображення лежить у пакеті лише під основним ключем, а повторний ключ бере його за аліасом.
+ test('аліас зображення показує малюнок після завантаження пакета',async({page})=>{
+  test.setTimeout(120000);
+  await open(page,WEB+'#hub');
+  const k=await page.evaluate(()=>{const q=PQ.find(q=>(q.images||[]).some(k=>k in DB.assetAlias&&DB.assets[k].startsWith('@zno:')));return q&&q.images.find(k=>k in DB.assetAlias)});
+  expect(k).toBeTruthy();
+  const html=await page.evaluate(async k=>{await znoPack(DB.assets[k].slice(5));return pImg(k,'x')},k);
+  expect(html).toContain('src="data:image/');
+ });
+});

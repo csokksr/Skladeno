@@ -218,11 +218,29 @@ def load_data():
         for t in data.get('quality', {}).get('topics', []):
             if t['id'] in by_topic:
                 t['questions'] = by_topic[t['id']]
-    return topic_weights(refresh_quality(official_subjects(data)))
+    return dedupe_assets(topic_weights(refresh_quality(official_subjects(data))))
 
 
 # Drills that belong to one lesson (syllabus gaps, tool pages, audits) stay; the generated per-topic banks go.
 KEEP_DRILLS = re.compile(r'^(syllabus|audit|project|skill-gap)-|^(number-tools|powers-roots|real-fluency|ratios-models|algebra-tools|log-tools|trig-tools)-')
+
+
+def dedupe_assets(data):
+    """The same figure sits under several task ids (repeated tasks of different sessions): identical images are stored once. Later keys
+    become the placeholder '@=' and data['assetAlias'] = {key: canonical key}; the page resolves them at startup (src/app.js) and
+    when an image pack loads (src/modules/60-zno.js)."""
+    seen, alias = {}, {}
+    for k in sorted(data.get('assets', {})):
+        v = data['assets'][k]
+        if not (isinstance(v, str) and v.startswith('@@blob:')):
+            continue
+        h = hashlib.sha256(open(f'{S}/blobs/{v[7:]}.txt', 'rb').read()).hexdigest()
+        if h in seen:
+            alias[k], data['assets'][k] = seen[h], '@='
+        else:
+            seen[h] = k
+    data['assetAlias'] = alias
+    return data
 
 
 WEIGHT_YEARS = (2022, 2026)
@@ -575,11 +593,13 @@ def build_web(offline_bytes):
     every = [(q, 't%d' % q['topic']) for q in data['questions']] + [(q, 's-' + t.get('group', t['id'])) for s in data['subjects'] for t in s['topics'] for q in t['questions']]
     for q, name in every:
         for k in q.get('images', []) + [x for x in q.get('optionImages') or [] if x] + [x for x in q.get('rowImages') or [] if x]:
-            topic_of.setdefault(k, name)
+            topic_of.setdefault(data['assetAlias'].get(k, k), name)  # a repeated figure travels once, in the pack of its first task
     packs = {}
     for k, name in topic_of.items():
         packs.setdefault(name, {})[k] = fill(data['assets'][k])
         data['assets'][k] = '@zno:' + name
+    for k, canon in data['assetAlias'].items():
+        data['assets'][k] = data['assets'][canon]
     for name, pack in packs.items():
         json.dump(pack, open(os.path.join(out, 'files', 'zno-%s.json' % name), 'w', encoding='ascii'), separators=(',', ':'))
     data = fill(data, os.path.join(out, 'files'))

@@ -145,6 +145,8 @@ const DB =
   QM = Obj0(Q.map(q => [q.id, q])),
   FM = Obj0(F.map(f => [f.id, f])),
   KEY = 'istoria200-complete-v4';
+// Identical images are stored once (tools/build.py dedupe_assets): the other keys point to the same value.
+for (const [k, canon] of Object.entries(DB.assetAlias || {})) DB.assets[k] = DB.assets[canon];
 const fresh = () => ({
   schema: 4,
   answers: {},

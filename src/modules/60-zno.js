@@ -40,6 +40,8 @@ function znoPack(c) {
       })
       .then(m => {
         Object.assign(ZNO_IMG, m);
+        for (const [k, canon] of Object.entries(DB.assetAlias || {}))
+          if (m[canon]) ZNO_IMG[k] = m[canon];
         document.querySelectorAll('img[data-zno]').forEach(i => {
           if (ZNO_IMG[i.dataset.zno]) i.src = ZNO_IMG[i.dataset.zno];
         });
