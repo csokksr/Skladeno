@@ -298,6 +298,14 @@ def official_subjects(data):
         data['subjects'] += [s for s in extra['subjects'] if s['id'] not in known]
         bank['questions'] += extra['questions']
         bank['assets'].update(extra['assets'])
+    # Biology and geography konspekty written by hand: src/zno3-notes.json {topicId: {summary, notes}}.
+    notes_path = f'{S}/zno3-notes.json'
+    if os.path.exists(notes_path):
+        notes = json.load(open(notes_path, encoding='utf-8'))
+        topics = {t['id']: t for s in data['subjects'] for t in s['topics']}
+        assert set(notes) <= set(topics), 'zno3-notes.json: unknown topics %s' % sorted(set(notes) - set(topics))[:5]
+        for tid, v in notes.items():
+            topics[tid]['summary'], topics[tid]['notes'] = v['summary'], v['notes']
     print('official tasks with repaired letters:', sum(fix_question_scripts(q) for q in bank['questions']))
     by_sub = {}
     for q in bank['questions']:

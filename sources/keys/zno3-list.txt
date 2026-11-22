@@ -100,3 +100,6 @@
 97817-Bio_2.pdf https://osvita.ua/doc/files/news/978/97817/Bio_2.pdf
 97817-Bio_vidp_1.pdf https://osvita.ua/doc/files/news/978/97817/Bio_vidp_1.pdf
 97817-Bio_vidp_2.pdf https://osvita.ua/doc/files/news/978/97817/Bio_vidp_2.pdf
+95567-Heo_vidp_2.pdf https://osvita.ua/doc/files/news/955/95567/Heo_vidp_2.pdf
+97056-NMT-2026_geografiya_demovariant.pdf https://osvita.ua/doc/files/news/970/97056/NMT-2026_geografiya_demovariant.pdf
+97056-NMT_2024-Geografiya-Demo_sajt.pdf https://osvita.ua/doc/files/news/970/97056/NMT_2024-Geografiya-Demo_sajt.pdf
