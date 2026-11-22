@@ -6,14 +6,15 @@ async function open(page,hash=''){await page.goto(WEB+hash);await page.waitForFu
 test.describe('біологія й географія',()=>{
  test.skip(({isMobile})=>isMobile,'достатньо одного розміру');
 
- test('предмет відкривається: розділи програми, теми й чесна примітка без конспекту',async({page})=>{
+ test('предмет відкривається: розділи програми, теми й конспект теми',async({page})=>{
   test.setTimeout(120000);
   await open(page);await page.evaluate(()=>localStorage.clear());await open(page,'#subject/bio');
   await expect(page.locator('h1')).toHaveText('Біологія');
   await expect(page.locator('#main')).toContainText('Організм людини як біологічна система');
   await expect(page.locator('#main .p-topic-row').first()).toContainText('Біологія як наука про живе');
   await page.getByText('Біологія як наука про живе').first().click();
-  await expect(page.locator('#main')).toContainText('Конспекту до цієї теми немає');
+  await expect(page.locator('#main')).toContainText('Живе відрізняє від неживого');
+  await expect(page.locator('#main')).not.toContainText('Конспекту до цієї теми немає');
   await page.getByRole('button',{name:/Виконати завдання теми/}).click();
   await expect(page.locator('.p-question')).toBeVisible();
   await expect(page.locator('.p-question-meta')).toContainText(/ЗНО|НМТ/);
