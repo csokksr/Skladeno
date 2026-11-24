@@ -900,7 +900,7 @@ const stMockSetBase = pMockSet,
 // History mocks are the real НМТ tests (2023 onwards, 30 tasks each) in their original order, newest first.
 const stHistTests = (() => {
   const by = {};
-  for (const q of PQ)
+  for (const q of PQA)
     if (q.subject === 'hist' && q.year >= 2023 && q.testName?.startsWith('НМТ'))
       (by[q.test] = by[q.test] || []).push(q);
   return Object.values(by)

@@ -218,7 +218,7 @@ def load_data():
         for t in data.get('quality', {}).get('topics', []):
             if t['id'] in by_topic:
                 t['questions'] = by_topic[t['id']]
-    return dedupe_assets(topic_weights(refresh_quality(official_subjects(data))))
+    return twin_index(dedupe_assets(topic_weights(refresh_quality(official_subjects(data)))))
 
 
 # Drills that belong to one lesson (syllabus gaps, tool pages, audits) stay; the generated per-topic banks go.
@@ -240,6 +240,50 @@ def dedupe_assets(data):
         else:
             seen[h] = k
     data['assetAlias'] = alias
+    return data
+
+
+def twin_index(data):
+    """Index of identical official tasks that come back in other years or sessions: data['twins'] = {repeat id: kept id}.
+    Same subject, type, text, passage, pictures, options and the same correct answer (compared by option text, so reshuffled
+    options still match). The kept task is the one with a verified key, then the newest year. The page hides repeats in every
+    practice list and pool; real tests (stOfficial) still contain them, as the original tests did."""
+    alias = data.get('assetAlias', {})
+    txt = lambda v: re.sub(r'\W+', '', str(v).lower())
+    img = lambda v: [alias.get(k, k) for k in (v or [])]
+    groups = {}
+
+    def add(q, sid):
+        if not q.get('year'):
+            return  # generated drills have no year: only official tasks are compared
+        t, opts, ans = q['type'], q.get('options') or [], q.get('answer', q.get('correct'))
+        o = lambda i: txt(opts[i]) if isinstance(i, int) and 0 <= i < len(opts) else '?'
+        if t in ('single', 'multi'):
+            body = [sorted(txt(x) for x in opts), sorted(o(i) for i in (ans if isinstance(ans, list) else [ans]))]
+        elif t == 'order':
+            body = [sorted(txt(x) for x in opts), [o(i) for i in ans]]
+        elif t == 'match':
+            rows = q.get('left') or q.get('rows') or []
+            body = [sorted(txt(x) for x in opts), [[txt(r), o(i)] for r, i in zip(rows, ans)]]
+        else:
+            body = [str(ans).strip(), q.get('tolerance')]
+        key = json.dumps([sid, t, txt(q['prompt']), txt(q.get('passage', '')), img(q.get('images')), img(q.get('optionImages')), img(q.get('rowImages')), body], ensure_ascii=False)
+        groups.setdefault(key, []).append(q)
+
+    for q in data['questions']:
+        add(q, 'hist')
+    for s in data['subjects']:
+        for t in s['topics']:
+            for q in t['questions']:
+                if isinstance(q, dict):
+                    add(q, s['id'])
+    twins = {}
+    for g in groups.values():
+        if len(g) > 1:
+            g.sort(key=lambda q: (bool(q.get('keyUnverified')), -int(q['year']), q['id']))
+            for q in g[1:]:
+                twins[q['id']] = g[0]['id']
+    data['twins'] = twins
     return data
 
 

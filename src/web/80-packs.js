@@ -78,7 +78,7 @@ if (PACK_NAMES.length) {
   const raw = packRaw();
   for (const id in raw) packGuard(raw[id]);
   for (const q of Q) packGuard(q);
-  for (const q of PQ) packGuard(q);
+  for (const q of PQA) packGuard(q);
   for (const id in PT) packGuard(PT[id]);
 }
 // Довідкові картки (пакет cards) і розгорнуті пояснення історії (пакет guides): поки пакета немає, читання кидає помилку, як і в полів текстів.

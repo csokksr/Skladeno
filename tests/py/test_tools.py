@@ -17,13 +17,52 @@ def load_build_functions(names, consts):
         elif isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id in consts for t in node.targets):
             keep.append(node)
     ns = {}
-    module = ast.Module(body=[ast.Import(names=[ast.alias(name='re')])] + keep, type_ignores=[])
+    module = ast.Module(body=[ast.Import(names=[ast.alias(name='re'), ast.alias(name='json')])] + keep, type_ignores=[])
     exec(compile(ast.fix_missing_locations(module), 'build.py', 'exec'), ns)
     return ns
 
 
-B = load_build_functions({'_scripts', '_fix_word', 'fix_scripts', 'fix_question_scripts', 'sniff'},
+B = load_build_functions({'_scripts', '_fix_word', 'fix_scripts', 'fix_question_scripts', 'sniff', 'twin_index'},
                          {'_C2L', '_L2C', '_WORD', '_TEXT_FIELDS', '_ROMAN'})
+
+
+class TwinIndex(unittest.TestCase):
+    def mk(self, qid, year, opts, ans, **kw):
+        return {'id': qid, 'year': year, 'type': 'single', 'prompt': 'Яка столиця?', 'options': opts, 'answer': ans, **kw}
+
+    def run_index(self, *qs, hist=()):
+        data = {'questions': list(hist), 'subjects': [{'id': 'geo', 'topics': [{'questions': list(qs)}]}], 'assetAlias': {'b': 'a'}}
+        return B['twin_index'](data)['twins']
+
+    def test_same_task_in_other_year_is_a_twin_and_newest_is_kept(self):
+        t = self.run_index(self.mk('a', 2019, ['Київ', 'Львів'], 0), self.mk('b', 2023, ['Київ', 'Львів'], 0))
+        self.assertEqual(t, {'a': 'b'})
+
+    def test_reshuffled_options_still_match_by_answer_text(self):
+        t = self.run_index(self.mk('a', 2019, ['Київ', 'Львів'], 0), self.mk('b', 2023, ['Львів', 'Київ'], 1))
+        self.assertEqual(t, {'a': 'b'})
+
+    def test_different_correct_answer_is_not_a_twin(self):
+        t = self.run_index(self.mk('a', 2019, ['Київ', 'Львів'], 0), self.mk('b', 2023, ['Київ', 'Львів'], 1))
+        self.assertEqual(t, {})
+
+    def test_verified_key_beats_newer_year(self):
+        t = self.run_index(self.mk('a', 2019, ['Київ', 'Львів'], 0), self.mk('b', 2023, ['Київ', 'Львів'], 0, keyUnverified=True))
+        self.assertEqual(t, {'b': 'a'})
+
+    def test_other_picture_or_tasks_without_year_are_left(self):
+        t = self.run_index(self.mk('a', 2019, ['Київ', 'Львів'], 0, images=['x']), self.mk('b', 2023, ['Київ', 'Львів'], 0, images=['y']),
+                           self.mk('c', None, ['Київ', 'Львів'], 0), self.mk('d', None, ['Київ', 'Львів'], 0))
+        self.assertEqual(t, {})
+
+    def test_same_picture_under_alias_keys_is_a_twin(self):
+        t = self.run_index(self.mk('a', 2019, ['Київ', 'Львів'], 0, images=['a']), self.mk('b', 2023, ['Київ', 'Львів'], 0, images=['b']))
+        self.assertEqual(t, {'a': 'b'})
+
+    def test_match_compares_pairs_and_history_uses_correct(self):
+        m = lambda i, y, ans: {'id': i, 'year': y, 'type': 'match', 'prompt': 'p', 'rows': ['x', 'y'], 'options': ['1', '2'], 'correct': ans}
+        self.assertEqual(self.run_index(hist=[m('h1', 2019, [0, 1]), m('h2', 2020, [0, 1])]), {'h1': 'h2'})
+        self.assertEqual(self.run_index(hist=[m('h1', 2019, [0, 1]), m('h2', 2020, [1, 0])]), {})
 
 
 class BuildScripts(unittest.TestCase):

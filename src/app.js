@@ -1110,7 +1110,9 @@ const HQ = Q.map(q => ({
   left: q.rows,
   right: q.options,
 }));
-const PQ = [
+// TWIN {repeat id: kept id} (tools/build.py twin_index): the same official task in another year. PQA keeps every task, PQ hides repeats.
+const TWIN = DB.twins || {};
+const PQA = [
   ...HQ,
   ...PB.flatMap(s =>
     s.topics.flatMap(t => t.questions.map(q => ({ ...q, subject: s.id, topicId: t.id })))
@@ -1119,8 +1121,10 @@ const PQ = [
   ...(DB.auditQuestions || []),
   ...(DB.visualBank || []),
 ];
-const PM = Obj0(PQ.map(q => [q.id, q])),
+const PQ = PQA.filter(q => !TWIN[q.id]),
+  PM = Obj0(PQA.map(q => [q.id, q])),
   PT = Obj0(PB.flatMap(s => s.topics.map(t => [t.id, t])));
+for (const s of PB) for (const t of s.topics) t.questions = t.questions.filter(q => !TWIN[q.id]);
 const SUBJECTS = [
   {
     id: 'ukr',
