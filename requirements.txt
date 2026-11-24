@@ -1,3 +1,3 @@
 # Лише для скриптів у tools/ (сам сайт — статичний, без залежностей). Запуск: python -m pip install -r requirements.txt
 pymupdf==1.28.2   # zno_keycheck.py, zno2_keycheck.py: читання PDF-аркушів УЦОЯО
-pillow==12.3.0    # zno_images.py, zno2_bank.py: обробка зображень
+pillow==13.0.0    # zno_images.py, zno2_bank.py: обробка зображень
