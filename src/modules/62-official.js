@@ -3,7 +3,7 @@ const stOfficial = (() => {
   const out = {};
   for (const sid of ['math', 'ukr', 'eng', 'bio', 'geo'].filter(id => SUB[id])) {
     const by = {};
-    for (const q of PQ)
+    for (const q of PQA)
       if (q.subject === sid && q.kind === 'НМТ') (by[q.test] = by[q.test] || []).push(q);
     const modal = {};
     for (const l of Object.values(by)) {
